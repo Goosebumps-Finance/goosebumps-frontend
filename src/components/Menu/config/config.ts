@@ -8,8 +8,7 @@ const config: (t: ContextApi['t']) => ConfigMenuItemsType[] = (t) => [
   {
     label: t("Home"),
     href: "/",
-    showItemsOnMobile: false,
-    items: [],
+    items: []
   },
   {
     label: t("Portfolio Tracker"),
@@ -29,13 +28,20 @@ const config: (t: ContextApi['t']) => ConfigMenuItemsType[] = (t) => [
   {
     label: t('DEX'),
     icon: 'Swap',
-    href: '/swap',
-    items: [],
+    href: "/swap",
+    items: [
+      {
+        label: t("Exchange"),
+        href: "/swap",
+      }, {
+        label: t("Liquidity"),
+        href: "/liquidity"
+      }
+    ],
   },
   {
     label: t('Bridge'),
-    href: '/Bridge',
-    icon: 'Bridge',
+    href: '/bridge',
     items: [ ],
   }
 ]

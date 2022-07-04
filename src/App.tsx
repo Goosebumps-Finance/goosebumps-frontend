@@ -35,11 +35,17 @@ import useSentryUser from './hooks/useSentryUser'
 // Route-based code splitting
 // Only pool is included in the main bundle because of it's the most visited page
 const Home = lazy(() => import('./views/Home'))
+const NotFound = lazy(() => import('./views/NotFound'))
+const AddLiquidity = lazy(() => import('./views/AddLiquidity'))
+const RemoveLiquidity = lazy(() => import('./views/RemoveLiquidity'))
+const Bridge = lazy(() => import("./views/Bridge"));
+const Liquidity = lazy(() => import('./views/Pool'))
+const PoolFinder = lazy(() => import('./views/PoolFinder'))
+
 const Farms = lazy(() => import('./views/Farms'))
 const FarmAuction = lazy(() => import('./views/FarmAuction'))
 const Lottery = lazy(() => import('./views/Lottery'))
 const Ifos = lazy(() => import('./views/Ifos'))
-const NotFound = lazy(() => import('./views/NotFound'))
 const Teams = lazy(() => import('./views/Teams'))
 const Team = lazy(() => import('./views/Teams/Team'))
 const TradingCompetition = lazy(() => import('./views/TradingCompetition'))
@@ -48,10 +54,6 @@ const PredictionsLeaderboard = lazy(() => import('./views/Predictions/Leaderboar
 const Voting = lazy(() => import('./views/Voting'))
 const Proposal = lazy(() => import('./views/Voting/Proposal'))
 const CreateProposal = lazy(() => import('./views/Voting/CreateProposal'))
-const AddLiquidity = lazy(() => import('./views/AddLiquidity'))
-const Liquidity = lazy(() => import('./views/Pool'))
-const PoolFinder = lazy(() => import('./views/PoolFinder'))
-const RemoveLiquidity = lazy(() => import('./views/RemoveLiquidity'))
 const Info = lazy(() => import('./views/Info'))
 const NftMarket = lazy(() => import('./views/Nft/market'))
 const ProfileCreation = lazy(() => import('./views/ProfileCreation'))
@@ -92,9 +94,13 @@ const App: React.FC = () => {
             <Route path="/farms">
               <Farms />
             </Route>
-            <Route path="/pools">
+            <Route path="/stake">
               <Pools />
             </Route>
+            <Route path="/bridge">
+              <Bridge />
+            </Route>
+            
             <Route path="/lottery">
               <Lottery />
             </Route>
@@ -146,25 +152,26 @@ const App: React.FC = () => {
             {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
             <Route exact strict path="/swap" component={Swap} />
             <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
-            <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
-            <Route exact strict path="/find" component={PoolFinder} />
+            <Route exact strict path="/liquidityFindToken" component={PoolFinder} />
             <Route exact strict path="/liquidity" component={Liquidity} />
+            <Route exact path="/liquidityAdd" component={AddLiquidity} />
+            <Route exact path="/liquidityAdd/:currencyIdA" component={RedirectOldAddLiquidityPathStructure} />
+            <Route exact path="/liquidityAdd/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
+            
             <Route exact strict path="/create" component={RedirectToAddLiquidity} />
-            <Route exact path="/add" component={AddLiquidity} />
-            <Route exact path="/add/:currencyIdA" component={RedirectOldAddLiquidityPathStructure} />
-            <Route exact path="/add/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
+            <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
             <Route exact path="/create" component={AddLiquidity} />
             <Route exact path="/create/:currencyIdA" component={RedirectOldAddLiquidityPathStructure} />
             <Route exact path="/create/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
-            <Route exact strict path="/remove/:tokens" component={RedirectOldRemoveLiquidityPathStructure} />
-            <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+            <Route exact strict path="/liquidityRemove/:tokens" component={RedirectOldRemoveLiquidityPathStructure} />
+            <Route exact strict path="/liquidityRemove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
 
             {/* Redirect */}
             <Route path="/pool">
               <Redirect to="/liquidity" />
             </Route>
-            <Route path="/staking">
-              <Redirect to="/pools" />
+            <Route path="/pools">
+              <Redirect to="/stake" />
             </Route>
             <Route path="/syrup">
               <Redirect to="/pools" />

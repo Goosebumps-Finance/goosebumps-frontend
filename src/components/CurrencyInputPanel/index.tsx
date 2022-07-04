@@ -35,7 +35,7 @@ const InputPanel = styled.div`
   flex-flow: column nowrap;
   position: relative;
   border-radius: '20px';
-  background-color: ${({ theme }) => theme.colors.backgroundAlt};
+  // background-color: ${({ theme }) => theme.colors.backgroundAlt};
   z-index: 1;
 `
 const Container = styled.div`
@@ -143,7 +143,7 @@ export default function CurrencyInputPanel({
           </LabelRow>
           <InputRow selected={disableCurrencySelect}>
             {account && currency && showMaxButton && label !== 'To' && (
-              <Button onClick={onMax} scale="xs" variant="secondary">
+              <Button onClick={onMax} scale="xs" variant="secondary" style={{border: "1px solid #808080"}}>
                 MAX
               </Button>
             )}

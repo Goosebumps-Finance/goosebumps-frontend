@@ -1,7 +1,8 @@
 import { ConfigMenuItemsType } from './config/config'
 
-export const getActiveMenuItem = ({ pathname, menuConfig }: { pathname: string; menuConfig: ConfigMenuItemsType[] }) =>
-  menuConfig.find((menuItem) => pathname.startsWith(menuItem.href) || getActiveSubMenuItem({ menuItem, pathname }))
+export const getActiveMenuItem = ({ pathname, menuConfig }: { pathname: string; menuConfig: ConfigMenuItemsType[] }) => {
+  return menuConfig.find((menuItem) => pathname.startsWith(menuItem.href) || (menuItem?.items.length !== 0 && getActiveSubMenuItem({ menuItem, pathname })))
+}
 
 export const getActiveSubMenuItem = ({ pathname, menuItem }: { pathname: string; menuItem?: ConfigMenuItemsType }) => {
   const activeSubMenuItems = menuItem?.items.filter((subMenuItem) => pathname.startsWith(subMenuItem.href)) ?? []
@@ -10,7 +11,6 @@ export const getActiveSubMenuItem = ({ pathname, menuItem }: { pathname: string;
   if (!activeSubMenuItems || activeSubMenuItems.length === 0) {
     return undefined
   }
-
   // Pathname includes one sub menu item href - return it
   if (activeSubMenuItems.length === 1) {
     return activeSubMenuItems[0]

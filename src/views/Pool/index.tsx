@@ -5,6 +5,7 @@ import { Text, Flex, CardBody, CardFooter, Button, AddIcon } from '@pancakeswap/
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'contexts/Localization'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+
 import FullPositionCard from '../../components/PositionCard'
 import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
 import { usePairs } from '../../hooks/usePairs'
@@ -14,7 +15,9 @@ import { AppHeader, AppBody } from '../../components/App'
 import Page from '../Page'
 
 const Body = styled(CardBody)`
-  background-color: ${({ theme }) => theme.colors.dropdownDeep};
+  // background-color: ${({ theme }) => theme.colors.dropdownDeep};
+  background-color: #121e30;
+  border: none;
 `
 
 export default function Pool() {
@@ -93,14 +96,14 @@ export default function Pool() {
               <Text color="textSubtle" mb="8px">
                 {t("Don't see a pool you joined?")}
               </Text>
-              <Button id="import-pool-link" variant="secondary" scale="sm" as={Link} to="/find">
+              <Button id="import-pool-link" variant="secondary" scale="md" as={Link} to="/liquidityFindToken" style={{borderColor: "#ffffff"}}>
                 {t('Find other LP tokens')}
               </Button>
             </Flex>
           )}
         </Body>
         <CardFooter style={{ textAlign: 'center' }}>
-          <Button id="join-pool-button" as={Link} to="/add" width="100%" startIcon={<AddIcon color="white" />}>
+          <Button id="join-pool-button" as={Link} to="/liquidityAdd" width="200px" startIcon={<AddIcon color="white" />} style={{borderColor: "#ffffff", borderRadius:"10px"}}>
             {t('Add Liquidity')}
           </Button>
         </CardFooter>

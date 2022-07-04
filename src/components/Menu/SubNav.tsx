@@ -12,9 +12,9 @@ const getActiveIndex = (pathname: string): number => {
   if (
     pathname.includes('/pool') ||
     pathname.includes('/create') ||
-    pathname.includes('/add') ||
-    pathname.includes('/remove') ||
-    pathname.includes('/find') ||
+    pathname.includes('/liquidityAdd') ||
+    pathname.includes('/liquidityRemove') ||
+    pathname.includes('/liquidityFindToken') ||
     pathname.includes('/liquidity')
   ) {
     return 1

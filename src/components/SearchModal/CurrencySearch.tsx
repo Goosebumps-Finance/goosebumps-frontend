@@ -1,4 +1,5 @@
 import React, { KeyboardEvent, RefObject, useCallback, useMemo, useRef, useState, useEffect } from 'react'
+import styled from 'styled-components'
 import { Currency, ETHER, Token } from '@pancakeswap/sdk'
 import { Text, Input, Box } from '@pancakeswap/uikit'
 import { useTranslation } from 'contexts/Localization'
@@ -17,6 +18,17 @@ import useTokenComparator from './sorting'
 import { getSwapSound } from './swapSound'
 
 import ImportRow from './ImportRow'
+
+const StyledInput = styled(Input)`
+  background-color: #0e121a;
+  border: 1px solid #808080;
+  border-radius: 0px;
+
+  &:focus {
+    border: 1px solid #05c1d7;
+    box-shadow: unset !important;
+  }
+`;
 
 interface CurrencySearchProps {
   selectedCurrency?: Currency | null
@@ -123,7 +135,7 @@ function CurrencySearch({
       <div>
         <AutoColumn gap="16px">
           <Row>
-            <Input
+            <StyledInput
               id="token-search-input"
               placeholder={t('Search name or paste address')}
               scale="lg"
@@ -143,7 +155,7 @@ function CurrencySearch({
             <ImportRow token={searchToken} showImportView={showImportView} setImportToken={setImportToken} />
           </Column>
         ) : filteredSortedTokens?.length > 0 || filteredInactiveTokens?.length > 0 ? (
-          <Box margin="24px -24px">
+          <Box margin="24px 0px" style={{border: "1px solid #dee2e6"}}>
             <CurrencyList
               height={390}
               showETH={showETH}
@@ -160,8 +172,8 @@ function CurrencySearch({
             />
           </Box>
         ) : (
-          <Column style={{ padding: '20px', height: '100%' }}>
-            <Text color="textSubtle" textAlign="center" mb="20px">
+          <Column style={{ padding: '20px', height: '100%', border: "1px solid #dee2e6", margin: "20px 0px" }}>
+            <Text color="textSubtle" textAlign="center">
               {t('No results found.')}
             </Text>
           </Column>

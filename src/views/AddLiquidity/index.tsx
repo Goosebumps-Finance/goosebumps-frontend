@@ -265,11 +265,11 @@ export default function AddLiquidity({
     (currencyA_: Currency) => {
       const newCurrencyIdA = currencyId(currencyA_)
       if (newCurrencyIdA === currencyIdB) {
-        history.push(`/add/${currencyIdB}/${currencyIdA}`)
+        history.push(`/liquidityAdd/${currencyIdB}/${currencyIdA}`)
       } else if (currencyIdB) {
-        history.push(`/add/${newCurrencyIdA}/${currencyIdB}`)
+        history.push(`/liquidityAdd/${newCurrencyIdA}/${currencyIdB}`)
       } else {
-        history.push(`/add/${newCurrencyIdA}`)
+        history.push(`/liquidityAdd/${newCurrencyIdA}`)
       }
     },
     [currencyIdB, history, currencyIdA],
@@ -279,12 +279,12 @@ export default function AddLiquidity({
       const newCurrencyIdB = currencyId(currencyB_)
       if (currencyIdA === newCurrencyIdB) {
         if (currencyIdB) {
-          history.push(`/add/${currencyIdB}/${newCurrencyIdB}`)
+          history.push(`/liquidityAdd/${currencyIdB}/${newCurrencyIdB}`)
         } else {
-          history.push(`/add/${newCurrencyIdB}`)
+          history.push(`/liquidityAdd/${newCurrencyIdB}`)
         }
       } else {
-        history.push(`/add/${currencyIdA || 'BNB'}/${newCurrencyIdB}`)
+        history.push(`/liquidityAdd/${currencyIdA || 'BNB'}/${newCurrencyIdB}`)
       }
     },
     [currencyIdA, history, currencyIdB],
@@ -332,11 +332,11 @@ export default function AddLiquidity({
               <ColumnCenter>
                 <Message variant="warning">
                   <div>
-                    <Text bold mb="8px">
+                    <Text bold mb="8px" color="rgb(4, 192, 215)">
                       {t('You are the first liquidity provider.')}
                     </Text>
-                    <Text mb="8px">{t('The ratio of tokens you add will set the price of this pool.')}</Text>
-                    <Text>{t('Once you are happy with the rate click supply to review.')}</Text>
+                    <Text mb="8px" color="rgb(4, 192, 215)">{t('The ratio of tokens you add will set the price of this pool.')}</Text>
+                    <Text color="rgb(4, 192, 215)">{t('Once you are happy with the rate click supply to add liquidity.')}</Text>
                   </div>
                 </Message>
               </ColumnCenter>

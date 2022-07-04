@@ -6,7 +6,8 @@ import { useTranslation } from 'contexts/Localization'
 const Wrapper = styled.div<{ $isSide: boolean }>`
   width: 100%;
   height: ${({ $isSide }) => ($isSide ? '100%' : 'auto')};
-  display: flex;
+  // display: flex;
+  display: none;
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;

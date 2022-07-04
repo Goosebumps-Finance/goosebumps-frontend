@@ -72,7 +72,7 @@ const Home: React.FC = () => {
       <PageSection
         index={2}
         innerProps={{style: {margin: '0', width: '100%', maxWidth: '2000px', paddingLeft: 0, paddingRight: 0, paddingTop: 0}}}
-        style={{marginTop: "140px"}}
+        style={{marginTop: "-90px"}}
         hasCurvedDivider={false}
       >
         <BannerSection />

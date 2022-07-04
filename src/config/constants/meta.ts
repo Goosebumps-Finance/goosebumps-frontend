@@ -14,8 +14,8 @@ export const getCustomMeta = (path: string, t: ContextApi['t']): PageMeta => {
     basePath = '/swap'
   } else if (path.startsWith('/add')) {
     basePath = '/add'
-  } else if (path.startsWith('/remove')) {
-    basePath = '/remove'
+  } else if (path.startsWith('/liquidityRemove')) {
+    basePath = '/liquidityRemove'
   } else if (path.startsWith('/teams')) {
     basePath = '/teams'
   } else if (path.startsWith('/voting/proposal') && path !== '/voting/proposal/create') {
@@ -39,11 +39,11 @@ export const getCustomMeta = (path: string, t: ContextApi['t']): PageMeta => {
       return {
         title: `${t('Goosebumps')}`,
       }
-    case '/add':
+    case '/liquidityAdd':
       return {
         title: `${t('Goosebumps')}`,
       }
-    case '/remove':
+    case '/liquidityRemove':
       return {
         title: `${t('Goosebumps')}`,
       }
@@ -51,7 +51,7 @@ export const getCustomMeta = (path: string, t: ContextApi['t']): PageMeta => {
       return {
         title: `${t('Goosebumps')}`,
       }
-    case '/find':
+    case '/liquidityFindToken':
       return {
         title: `${t('Goosebumps')}`,
       }

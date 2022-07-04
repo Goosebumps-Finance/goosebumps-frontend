@@ -22,8 +22,11 @@ import ImportList from './ImportList'
 import { CurrencyModalView } from './types'
 
 const Footer = styled.div`
-  width: 100%;
+  width: calc(100% + 48px);
   background-color: ${({ theme }) => theme.colors.backgroundAlt};
+  border-top: 1px solid #0dcaf0;
+  margin: 0px -24px;
+  padding: 20px 0px;
   text-align: center;
 `
 
@@ -33,7 +36,7 @@ const StyledModalContainer = styled(ModalContainer)`
 `
 
 const StyledModalBody = styled(ModalBody)`
-  padding: 24px;
+  padding: 24px 24px 0px 24px;
   overflow-y: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -93,8 +96,8 @@ export default function CurrencySearchModal({
     <StyledModalContainer minWidth="320px">
       <ModalHeader>
         <ModalTitle>
-          {config[modalView].onBack && <ModalBackButton onBack={config[modalView].onBack} />}
-          <Heading>{config[modalView].title}</Heading>
+          {/* {config[modalView].onBack && <ModalBackButton onBack={config[modalView].onBack} />} */}
+          <Heading style={{marginBottom: "auto"}}>{config[modalView].title}</Heading>
         </ModalTitle>
         <ModalCloseButton onDismiss={onDismiss} />
       </ModalHeader>
@@ -124,13 +127,26 @@ export default function CurrencySearchModal({
         )}
         {modalView === CurrencyModalView.search && (
           <Footer>
-            <Button
+            {/* <Button
               scale="sm"
               variant="text"
               onClick={() => setModalView(CurrencyModalView.manage)}
               className="list-token-manage-button"
             >
               {t('Manage Tokens')}
+            </Button> */}
+            <Button
+              scale="sm"
+              variant="secondary"
+              style={{
+                border: "1px solid #808080",
+                borderRadius: "10px",
+                marginRight: "24px",
+                float: 'right'
+              }}
+              onClick={onDismiss}
+            >
+              {t('Close')}
             </Button>
           </Footer>
         )}

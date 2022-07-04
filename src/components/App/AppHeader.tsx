@@ -20,7 +20,8 @@ const AppHeaderContainer = styled(Flex)`
   justify-content: space-between;
   padding: 24px;
   width: 100%;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
+  background-color: hsla(0,0%,100%,.1);
+  // border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
 `
 
 const AppHeader: React.FC<Props> = ({ title, subtitle, helper, backTo, noConfig = false }) => {
@@ -28,32 +29,29 @@ const AppHeader: React.FC<Props> = ({ title, subtitle, helper, backTo, noConfig 
 
   return (
     <AppHeaderContainer>
-      <Flex alignItems="center" mr={noConfig ? 0 : '16px'}>
-        {backTo && (
-          <IconButton as={Link} to={backTo}>
-            <ArrowBackIcon width="32px" />
-          </IconButton>
-        )}
-        <Flex flexDirection="column">
-          <Heading as="h2" mb="8px">
-            {title}
-          </Heading>
-          <Flex alignItems="center">
-            {helper && <QuestionHelper text={helper} mr="4px" placement="top-start" />}
-            <Text color="textSubtle" fontSize="14px">
-              {subtitle}
-            </Text>
-          </Flex>
+        <Flex>
+          {backTo && (
+            <IconButton as={Link} to={backTo}>
+              <ArrowBackIcon width="32px" />
+            </IconButton>
+          )}
+          {/* <Flex alignItems="center"> */}
+            <Heading as="h2" mb="8px" style={{margin: 'auto'}}>
+              {title}
+            </Heading>
+          {/* </Flex> */}
         </Flex>
-      </Flex>
-      {!noConfig && (
+        <Text color="textSubtle" fontSize="14px">
+          {subtitle}
+        </Text>
+      {/* {!noConfig && (
         <Flex alignItems="center">
           <NotificationDot show={expertMode}>
             <GlobalSettings />
           </NotificationDot>
           <Transactions />
         </Flex>
-      )}
+      )} */}
     </AppHeaderContainer>
   )
 }

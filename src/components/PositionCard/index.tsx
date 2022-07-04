@@ -237,7 +237,7 @@ export default function FullPositionCard({ pair, ...props }: PositionCardProps) 
             <Flex flexDirection="column">
               <Button
                 as={Link}
-                to={`/remove/${currencyId(currency0)}/${currencyId(currency1)}`}
+                to={`/liquidityRemove/${currencyId(currency0)}/${currencyId(currency1)}`}
                 variant="primary"
                 width="100%"
                 mb="8px"

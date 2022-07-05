@@ -249,24 +249,14 @@ const Pools: React.FC = () => {
     <>
       <PageHeader>
         <Flex justifyContent="space-between" flexDirection={['column', null, null, 'row']}>
-          <Flex flex="1" flexDirection="column" mr={['8px', 0]}>
-            <Heading as="h1" scale="xxl" color="secondary" mb="24px">
-              {t('Syrup Pools')}
-            </Heading>
-            <Heading scale="md" color="text">
-              {t('Just stake some tokens to earn.')}
-            </Heading>
-            <Heading scale="md" color="text">
-              {t('High APR, low risk.')}
-            </Heading>
-          </Flex>
+          <Flex flex="1" flexDirection="column" mr={['8px', 0]} />
           <Flex flex="1" height="fit-content" justifyContent="center" alignItems="center" mt={['24px', null, '0']}>
             <HelpButton />
             <BountyCard />
           </Flex>
         </Flex>
       </PageHeader>
-      <Page>
+      <Page style={{backgroundColor: "#121e30", borderRadius: "20px"}}>
         <PoolControls>
           <PoolTabButtons
             stakedOnly={stakedOnly}

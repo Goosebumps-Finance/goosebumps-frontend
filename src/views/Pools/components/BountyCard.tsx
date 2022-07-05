@@ -24,6 +24,7 @@ import BountyModal from './BountyModal'
 const StyledCard = styled(Card)`
   width: 100%;
   flex: 1;
+
   ${({ theme }) => theme.mediaQueries.sm} {
     min-width: 240px;
   }
@@ -70,12 +71,12 @@ const BountyCard = () => {
   return (
     <>
       {tooltipVisible && tooltip}
-      <StyledCard>
-        <CardBody>
+      <StyledCard style={{borderRadius:"15px", background: "transparent"}}>
+        <CardBody style={{backgroundColor: "#2a3545", padding: "20px 30px"}}>
           <Flex flexDirection="column">
             <Flex alignItems="center" mb="12px">
               <Text fontSize="16px" bold color="textSubtle" mr="4px">
-                {t('Auto CAKE Bounty')}
+                {t('Auto Goose Bounty')}
               </Text>
               <Box ref={targetRef}>
                 <HelpIcon color="textSubtle" />
@@ -109,6 +110,7 @@ const BountyCard = () => {
               onClick={onPresentBountyModal}
               scale="sm"
               id="clickClaimVaultBounty"
+              style={{border: "2px solid #51ffa1", backgroundColor: "#121e30", fontSize: "20px", padding:"20px 40px"}}
             >
               {t('Claim')}
             </Button>

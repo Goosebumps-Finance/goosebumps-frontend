@@ -38,3 +38,5 @@ yarn.lock
 
 src/config/abi/types
 
+.firebase/hosting.YnVpbGQ.cache
+.vs/

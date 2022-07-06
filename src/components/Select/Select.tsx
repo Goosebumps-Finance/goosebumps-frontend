@@ -42,7 +42,7 @@ const DropDownContainer = styled(Box)<{ isOpen: boolean }>`
   width: 100%;
   position: relative;
   // background: ${({ theme }) => theme.colors.input};
-  background: transparent;
+  // background: transparent;
   border-radius: 16px;
   height: 40px;
   min-width: 136px;

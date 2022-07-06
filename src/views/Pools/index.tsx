@@ -291,6 +291,7 @@ const Pools: React.FC = () => {
                     },
                   ]}
                   onOptionChange={handleSortOptionChange}
+                  style={{backgroundColor: "#171717", border: "2px solid #c4c4c4"}}
                 />
               </ControlStretch>
             </LabelWrapper>

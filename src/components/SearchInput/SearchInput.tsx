@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react'
-import { Input } from '@pancakeswap/uikit'
+import { Input, InputGroup, SearchIcon } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
 import { useTranslation } from 'contexts/Localization'
@@ -11,6 +11,10 @@ const StyledInput = styled(Input)`
 
 const InputWrapper = styled.div`
   position: relative;
+  border: 2px solid #c4c4c4;
+  background-color: #171717;
+  border-radius: 9px;
+  color: #fff;
   ${({ theme }) => theme.mediaQueries.sm} {
     display: block;
   }
@@ -38,7 +42,9 @@ const SearchInput: React.FC<Props> = ({ onChange: onChangeCallback, placeholder 
 
   return (
     <InputWrapper>
-      <StyledInput value={searchText} onChange={onChange} placeholder={t(placeholder)} />
+      <InputGroup endIcon={<SearchIcon width="24px" />} >
+        <StyledInput value={searchText} onChange={onChange} placeholder={t(placeholder)} />
+      </InputGroup>
     </InputWrapper>
   )
 }

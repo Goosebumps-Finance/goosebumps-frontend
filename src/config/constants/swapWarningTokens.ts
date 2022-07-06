@@ -1,4 +1,4 @@
-import { Token } from '@pancakeswap/sdk'
+import { Token } from '@goosebumps/sdk'
 import tokens from 'config/constants/tokens'
 
 const { bondly, safemoon } = tokens

@@ -5,8 +5,6 @@
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
-    "copy2": ". ./copy.sh",
-    "copy": "cp -r ../pancake-toolkit-master/packages/pancake-uikit/dist ./node_modules/@pancakeswap/uikit/",
     "build": "CI=false && GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test --testPathIgnorePatterns=/src/__tests__/config/",
     "test:config": "react-scripts test --testPathPattern=/src/__tests__/config/",
@@ -35,7 +33,7 @@
   "dependencies": {
     "@binance-chain/bsc-connector": "^1.0.0",
     "@ethersproject/experimental": "^5.5.0",
-    "@pancakeswap/sdk": "^2.4.0",
+    "@goosebumps/sdk": "^0.0.2",
     "@pancakeswap/uikit": "^0.62.0",
     "@reduxjs/toolkit": "^1.5.0",
     "@sentry/react": "^6.15.0",

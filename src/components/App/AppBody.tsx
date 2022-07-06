@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Card } from '@pancakeswap/uikit'
+import { Card } from '@goosebumps/uikit'
 import { StyledInputCurrencyWrapper } from 'views/Swap/styles';
 
 export const BodyWrapper = styled(Card)`

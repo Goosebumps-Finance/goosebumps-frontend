@@ -1,6 +1,6 @@
 import React from 'react'
 import { Trade, TradeType } from '@goosebumps/sdk'
-import { Text } from '@pancakeswap/uikit'
+import { Text } from '@goosebumps/uikit'
 import { Field } from 'state/swap/actions'
 import { useTranslation } from 'contexts/Localization'
 import { useUserSlippageTolerance } from 'state/user/hooks'

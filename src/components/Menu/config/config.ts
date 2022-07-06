@@ -1,4 +1,4 @@
-import { MenuItemsType, DropdownMenuItemType, menuStatus } from '@pancakeswap/uikit'
+import { MenuItemsType, DropdownMenuItemType, menuStatus } from '@goosebumps/uikit'
 import { ContextApi } from 'contexts/Localization/types'
 import { nftsBaseUrl } from 'views/Nft/market/constants'
 

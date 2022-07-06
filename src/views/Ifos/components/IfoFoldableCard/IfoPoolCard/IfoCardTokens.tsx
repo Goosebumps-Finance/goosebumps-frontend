@@ -15,7 +15,7 @@ import {
   MessageText,
   useModal,
   Link,
-} from '@pancakeswap/uikit'
+} from '@goosebumps/uikit'
 import styled from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
 import { Token } from '@goosebumps/sdk'

@@ -1,4 +1,4 @@
-import { Button, Flex } from '@pancakeswap/uikit';
+import { Button, Flex } from '@goosebumps/uikit';
 import React from 'react';
 import styled from 'styled-components';
 

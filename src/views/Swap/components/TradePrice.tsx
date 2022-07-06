@@ -1,6 +1,6 @@
 import React from 'react'
 import { Price } from '@goosebumps/sdk'
-import { Text, AutoRenewIcon } from '@pancakeswap/uikit'
+import { Text, AutoRenewIcon } from '@goosebumps/uikit'
 import { StyledBalanceMaxMini } from './styleds'
 
 interface TradePriceProps {

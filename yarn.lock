@@ -1829,6 +1829,18 @@
     tiny-warning "^1.0.3"
     toformat "^2.0.0"
 
+"@goosebumps/uikit@^0.0.1  ":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@goosebumps/uikit/-/uikit-0.0.1.tgz#f7d10ce1dfc9d18a1c3d388e00fcdac7a300ddb5"
+  integrity sha512-fNRrV8iCgUpRR53Hzb1bJ6Gc742YvjDbrcvPxZyQNjCWQ4uhbalKh50V05xJXwP+RGYIjfLJ5Q1pD0yC++3+jA==
+  dependencies:
+    "@popperjs/core" "^2.9.2"
+    "@types/lodash" "^4.14.168"
+    "@types/styled-system" "^5.1.10"
+    lodash "^4.17.20"
+    react-popper "^2.2.5"
+    styled-system "^5.1.5"
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
@@ -2126,18 +2138,6 @@
     eslint-plugin-jsx-a11y "^6.4.1"
     eslint-plugin-react "^7.21.5"
     eslint-plugin-react-hooks "^4.0.0"
-
-"@pancakeswap/uikit@^0.62.0":
-  version "0.62.0"
-  resolved "https://registry.yarnpkg.com/@pancakeswap/uikit/-/uikit-0.62.0.tgz#43afaa27268035c4316aba97ae70d58c04c11092"
-  integrity sha512-cKPA81UQQA+RnVnBuvigLbX7PBav2f1BvbR9AanUokmsqqYldwXmBZI3wnVPJHraHTrlx7H/nq35Uejb/k9RnQ==
-  dependencies:
-    "@popperjs/core" "^2.9.2"
-    "@types/lodash" "^4.14.168"
-    "@types/styled-system" "^5.1.10"
-    lodash "^4.17.20"
-    react-popper "^2.2.5"
-    styled-system "^5.1.5"
 
 "@pmmmwh/react-refresh-webpack-plugin@0.4.3":
   version "0.4.3"

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLocation } from 'react-router'
-import { InputGroup, Menu as UikitMenu, menuConfig } from '@pancakeswap/uikit'
+import { InputGroup, Menu as UikitMenu, menuConfig } from '@goosebumps/uikit'
 import { languageList } from 'config/localization/languages'
 import { useTranslation } from 'contexts/Localization'
 import PhishingWarningBanner from 'components/PhishingWarningBanner'

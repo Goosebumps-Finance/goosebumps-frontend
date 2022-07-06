@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react'
-import { Input, InputGroup, SearchIcon } from '@pancakeswap/uikit'
+import { Input, InputGroup, SearchIcon } from '@goosebumps/uikit'
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
 import { useTranslation } from 'contexts/Localization'

@@ -1817,6 +1817,20 @@
     "@ethersproject/properties" "^5.5.0"
     "@ethersproject/strings" "^5.5.0"
 
+"@goosebumps/eslint-config-goosebumps@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@goosebumps/eslint-config-goosebumps/-/eslint-config-goosebumps-0.0.1.tgz#7cb5f1d5939354c4bcd09523a37f24f5d73eb316"
+  integrity sha512-B+OdVyrKaerFyKKeW/i8pK6ZRn/DWD9u2UmIII23O8C0z+m8SUxZpUdk0e3ULmh1i4qKNZapXtYBYk42jzOqsw==
+  dependencies:
+    "@typescript-eslint/eslint-plugin" "^4.7.0"
+    "@typescript-eslint/parser" "^4.7.0"
+    eslint-config-airbnb "^18.2.1"
+    eslint-config-prettier "^6.15.0"
+    eslint-plugin-import "^2.22.1"
+    eslint-plugin-jsx-a11y "^6.4.1"
+    eslint-plugin-react "^7.21.5"
+    eslint-plugin-react-hooks "^4.0.0"
+
 "@goosebumps/sdk@^0.0.2":
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@goosebumps/sdk/-/sdk-0.0.2.tgz#bd3da911573373706df87e34039bae949fa57ea1"
@@ -1829,10 +1843,10 @@
     tiny-warning "^1.0.3"
     toformat "^2.0.0"
 
-"@goosebumps/uikit@^0.0.1  ":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@goosebumps/uikit/-/uikit-0.0.1.tgz#f7d10ce1dfc9d18a1c3d388e00fcdac7a300ddb5"
-  integrity sha512-fNRrV8iCgUpRR53Hzb1bJ6Gc742YvjDbrcvPxZyQNjCWQ4uhbalKh50V05xJXwP+RGYIjfLJ5Q1pD0yC++3+jA==
+"@goosebumps/uikit@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@goosebumps/uikit/-/uikit-0.0.2.tgz#db86c59fae03b2f337ab383acdd29872e44d1f1a"
+  integrity sha512-+t1Akz4w40bV9AvEzbbDz9XCtqhKPr9ZsOVhjsMGNeNx1ep8VFu3owHvF8Vw6YTuevt+r1nDnXhUjxIRDCw37Q==
   dependencies:
     "@popperjs/core" "^2.9.2"
     "@types/lodash" "^4.14.168"
@@ -2124,20 +2138,6 @@
   dependencies:
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
-
-"@pancakeswap/eslint-config-pancake@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@pancakeswap/eslint-config-pancake/-/eslint-config-pancake-1.1.0.tgz#ddb916af3726359095207306cfc87098cec43f41"
-  integrity sha512-TGyHaDZjXPtubV39S4vPVVRZk9FgsSyBwP6qTP1/H0+nUoKEh+RIUs/nCVxZgN7f8MbbVioLg00gVqV0XI8a7Q==
-  dependencies:
-    "@typescript-eslint/eslint-plugin" "^4.7.0"
-    "@typescript-eslint/parser" "^4.7.0"
-    eslint-config-airbnb "^18.2.1"
-    eslint-config-prettier "^6.15.0"
-    eslint-plugin-import "^2.22.1"
-    eslint-plugin-jsx-a11y "^6.4.1"
-    eslint-plugin-react "^7.21.5"
-    eslint-plugin-react-hooks "^4.0.0"
 
 "@pmmmwh/react-refresh-webpack-plugin@0.4.3":
   version "0.4.3"

@@ -1,4 +1,4 @@
-# 🥞 Goosebumps Frontend
+# Goosebumps Frontend
 
 This project contains the main features of the goosebumps application.
 

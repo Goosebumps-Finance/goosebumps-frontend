@@ -1,4 +1,4 @@
-# Contributing to the Goosebumps ecosystem 🥞
+# Contributing to the Goosebumps ecosystem
 
 Thanks for taking the time to contribute !
 You can start by reading our [Contribution guidelines](https://docs.goosebumps.finance/code/contributing) first.

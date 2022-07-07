@@ -1829,10 +1829,10 @@
     tiny-warning "^1.0.3"
     toformat "^2.0.0"
 
-"@goosebumps/uikit@^0.0.1  ":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@goosebumps/uikit/-/uikit-0.0.1.tgz#f7d10ce1dfc9d18a1c3d388e00fcdac7a300ddb5"
-  integrity sha512-fNRrV8iCgUpRR53Hzb1bJ6Gc742YvjDbrcvPxZyQNjCWQ4uhbalKh50V05xJXwP+RGYIjfLJ5Q1pD0yC++3+jA==
+"@goosebumps/uikit@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@goosebumps/uikit/-/uikit-0.0.2.tgz#db86c59fae03b2f337ab383acdd29872e44d1f1a"
+  integrity sha512-+t1Akz4w40bV9AvEzbbDz9XCtqhKPr9ZsOVhjsMGNeNx1ep8VFu3owHvF8Vw6YTuevt+r1nDnXhUjxIRDCw37Q==
   dependencies:
     "@popperjs/core" "^2.9.2"
     "@types/lodash" "^4.14.168"

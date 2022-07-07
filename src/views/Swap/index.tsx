@@ -356,7 +356,7 @@ export default function Swap({ history }: RouteComponentProps) {
   )
 
   return (
-    <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded}  style={{marginTop: "-230px", paddingTop: "230px"}}>
+    <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded} >
       <Flex width="100%" justifyContent="center" position="relative">
         <Flex flexDirection="column">
           <StyledSwapContainer $isChartExpanded={isChartExpanded}>

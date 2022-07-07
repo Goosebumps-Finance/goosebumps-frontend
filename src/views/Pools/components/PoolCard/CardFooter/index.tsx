@@ -37,15 +37,15 @@ const Footer: React.FC<FooterProps> = ({ pool, account, defaultExpanded }) => {
   })
 
   return (
-    <CardFooter>
-      <ExpandableButtonWrapper>
-        <Flex alignItems="center">
+    <CardFooter style={{backgroundColor: "#18283a", padding: "0px", borderRadius: "0px", border: "none"}}>
+      <ExpandableButtonWrapper style={{justifyContent:"center"}}>
+        {/* <Flex alignItems="center">
           {vaultKey ? <CompoundingPoolTag /> : <ManualPoolTag />}
           {tooltipVisible && tooltip}
           <Flex ref={targetRef}>
             <HelpIcon ml="4px" width="20px" height="20px" color="textSubtle" />
           </Flex>
-        </Flex>
+        </Flex> */}
         <ExpandableLabel expanded={isExpanded} onClick={() => setIsExpanded(!isExpanded)}>
           {isExpanded ? t('Hide') : t('Details')}
         </ExpandableLabel>

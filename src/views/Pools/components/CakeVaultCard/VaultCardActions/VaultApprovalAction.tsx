@@ -26,6 +26,7 @@ const VaultApprovalAction: React.FC<ApprovalActionProps> = ({ vaultKey, isLoadin
           disabled={requestedApproval}
           onClick={handleApprove}
           width="100%"
+          variant="secondary"
         >
           {t('Enable')}
         </Button>

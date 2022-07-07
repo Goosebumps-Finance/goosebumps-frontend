@@ -291,7 +291,16 @@ const Pools: React.FC = () => {
                     },
                   ]}
                   onOptionChange={handleSortOptionChange}
-                  style={{backgroundColor: "#171717", border: "2px solid #c4c4c4"}}
+                  style={{borderRadius: "9px"}}
+                  header={{
+                    backgroundColor: "#171717",
+                    border: "2px solid #c4c4c4"
+                  }}
+                  listContainer={{
+                    backgroundColor: "#171717",
+                    border: "2px solid #c4c4c4",
+                    borderTop: "none"
+                  }}
                 />
               </ControlStretch>
             </LabelWrapper>
@@ -314,7 +323,7 @@ const Pools: React.FC = () => {
           </Flex>
         )}
         {viewMode === ViewMode.CARD ? cardLayout : tableLayout}
-        <div ref={observerRef} />
+        {/* <div ref={observerRef} />
         <Image
           mx="auto"
           mt="12px"
@@ -322,7 +331,7 @@ const Pools: React.FC = () => {
           alt="Pancake illustration"
           width={192}
           height={184.5}
-        />
+        /> */}
       </Page>
     </>
   )

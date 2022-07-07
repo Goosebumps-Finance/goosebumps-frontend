@@ -370,7 +370,7 @@ const Farms: React.FC = () => {
   return (
     <>
       <PageHeader>
-        <Heading as="h1" scale="xxl" color="secondary" mb="24px">
+        <Heading as="h1" scale="xxl" color="primary" mb="24px">
           {t('Farms')}
         </Heading>
         <Heading scale="lg" color="text">
@@ -427,6 +427,16 @@ const Farms: React.FC = () => {
                   },
                 ]}
                 onOptionChange={handleSortOptionChange}
+                style={{borderRadius: "9px"}}
+                header={{
+                  backgroundColor: "#171717",
+                  border: "2px solid #c4c4c4"
+                }}
+                listContainer={{
+                  backgroundColor: "#171717",
+                  border: "2px solid #c4c4c4",
+                  borderTop: "none"
+                }}
               />
             </LabelWrapper>
             <LabelWrapper style={{ marginLeft: 16 }}>
@@ -441,8 +451,8 @@ const Farms: React.FC = () => {
             <Loading />
           </Flex>
         )}
-        <div ref={observerRef} />
-        <StyledImage src="/images/decorations/3dpan.png" alt="Pancake illustration" width={120} height={103} />
+        {/* <div ref={observerRef} />
+        <StyledImage src="/images/decorations/3dpan.png" alt="Pancake illustration" width={120} height={103} /> */}
       </Page>
     </>
   )

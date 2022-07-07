@@ -2,8 +2,9 @@ import styled from 'styled-components'
 
 export const ActionContainer = styled.div<{ isAutoVault?: boolean }>`
   padding: 16px;
-  border: 2px solid ${({ theme }) => theme.colors.input};
-  border-radius: 16px;
+  // border: 2px solid ${({ theme }) => theme.colors.input};
+  border: 2px solid #fff;
+  border-radius: 11px;
   flex-grow: 1;
   flex-basis: 0;
   margin-bottom: 16px;
@@ -24,7 +25,8 @@ export const ActionContainer = styled.div<{ isAutoVault?: boolean }>`
 
 export const ActionTitles = styled.div`
   font-weight: 600;
-  font-size: 12px;
+  font-size: 16px;
+  color: #fff;
 `
 
 export const ActionContent = styled.div`

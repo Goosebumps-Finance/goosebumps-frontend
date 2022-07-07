@@ -30,6 +30,7 @@ import UnstakingFeeCountdownRow from './UnstakingFeeCountdownRow'
 import RecentCakeProfitRow from './RecentCakeProfitRow'
 
 const StyledCardBody = styled(CardBody)<{ isLoading: boolean }>`
+  background-color: #18283a;
   min-height: ${({ isLoading }) => (isLoading ? '0' : '254px')};
 `
 
@@ -113,11 +114,11 @@ const CakeVaultCard: React.FC<CakeVaultProps> = ({ pool, showStakedOnly, default
   return (
     <StyledCard isActive {...props}>
       <PoolCardHeader isStaking={accountHasSharesStaked}>
+        <TokenPairImage {...vaultPoolConfig[pool.vaultKey].tokenImage} width={64} height={64} />
         <PoolCardHeaderTitle
           title={t(vaultPoolConfig[pool.vaultKey].name)}
-          subTitle={t(vaultPoolConfig[pool.vaultKey].description)}
+          subTitle={/* t(vaultPoolConfig[pool.vaultKey].description) */ t("")}
         />
-        <TokenPairImage {...vaultPoolConfig[pool.vaultKey].tokenImage} width={64} height={64} />
       </PoolCardHeader>
       <StyledCardBody isLoading={isLoading}>
         <AprRow pool={pool} stakedBalance={cakeAsBigNumber} performanceFee={performanceFeeAsDecimal} />

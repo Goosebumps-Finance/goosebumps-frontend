@@ -66,7 +66,7 @@ const StakedCell: React.FC<StakedCellProps> = ({ pool, account, userDataLoaded }
                   mt="4px"
                   bold={!isMobile}
                   fontSize={isMobile ? '14px' : '16px'}
-                  color={hasStaked ? 'primary' : 'textDisabled'}
+                  color={hasStaked ? 'primary' : 'textSubtle'}
                   decimals={hasStaked ? 5 : 1}
                   value={
                     pool.vaultKey ? (Number.isNaN(cakeAsNumberBalance) ? 0 : cakeAsNumberBalance) : stakedTokenBalance
@@ -83,7 +83,7 @@ const StakedCell: React.FC<StakedCellProps> = ({ pool, account, userDataLoaded }
                     unit=" USD"
                   />
                 ) : (
-                  <Text mt="4px" fontSize="12px" color="textDisabled">
+                  <Text mt="4px" fontSize="12px" color="textSubtle">
                     0 USD
                   </Text>
                 )}

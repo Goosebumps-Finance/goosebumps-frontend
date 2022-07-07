@@ -33,6 +33,9 @@ interface ExpandedFooterProps {
 }
 
 const ExpandedWrapper = styled(Flex)`
+  background-color: #20334f;
+  padding: 24px;
+  border-radius: 0px 0px 16px 16px;
   svg {
     height: 14px;
     width: 14px;

@@ -11,10 +11,10 @@ const DropDownHeader = styled.div`
   padding: 0px 16px;
   box-shadow: ${({ theme }) => theme.shadows.inset};
   // border: 1px solid ${({ theme }) => theme.colors.inputSecondary};
-  border: 1px solid #52555c;
-  border-radius: 16px;
+  // border: 1px solid #52555c;
+  border-radius: 9px;
   // background: ${({ theme }) => theme.colors.input};
-  background: transparent;
+  // background: transparent;
   transition: border-radius 0.15s;
 `
 
@@ -24,7 +24,7 @@ const DropDownListContainer = styled.div`
   position: absolute;
   overflow: hidden;
   // background: ${({ theme }) => theme.colors.input};
-  background: transparent;
+  // background: transparent;
   z-index: ${({ theme }) => theme.zIndices.dropdown};
   transition: transform 0.15s, opacity 0.15s;
   transform: scaleY(0);
@@ -43,7 +43,7 @@ const DropDownContainer = styled(Box)<{ isOpen: boolean }>`
   position: relative;
   // background: ${({ theme }) => theme.colors.input};
   // background: transparent;
-  border-radius: 16px;
+  border-radius: 9px;
   height: 40px;
   min-width: 136px;
   user-select: none;
@@ -61,7 +61,9 @@ const DropDownContainer = styled(Box)<{ isOpen: boolean }>`
         // border-bottom: 1px solid ${({ theme }) => theme.colors.inputSecondary};
         border-bottom: 1px solid #52555c;
         box-shadow: ${({ theme }) => theme.tooltip.boxShadow};
-        border-radius: 16px 16px 0 0;
+        border-radius: 9px 9px 0 0;
+        // border-radius: ${props.style?.borderTopLeftRadius}px ${props.style?.borderTopRightRadius}px 0px 0px;
+        background-color: ${props.style?.backgroundColor};
       }
 
       ${DropDownListContainer} {
@@ -69,9 +71,9 @@ const DropDownContainer = styled(Box)<{ isOpen: boolean }>`
         transform: scaleY(1);
         opacity: 1;
         // border: 1px solid ${({ theme }) => theme.colors.inputSecondary};
-        border: 1px solid #52555c;
+        // border: 1px solid #52555c;
         border-top-width: 0;
-        border-radius: 0 0 16px 16px;
+        border-radius: 0 0 9px 9px;
         box-shadow: ${({ theme }) => theme.tooltip.boxShadow};
       }
     `}
@@ -102,7 +104,9 @@ const ListItem = styled.li`
 export interface SelectProps extends BoxProps {
   options: OptionProps[]
   onOptionChange?: (option: OptionProps) => void
-  defaultOptionIndex?: number
+  defaultOptionIndex?: number,
+  header?: any
+  listContainer?: any
 }
 
 export interface OptionProps {
@@ -147,11 +151,11 @@ const Select: React.FunctionComponent<SelectProps> = ({
 
   return (
     <DropDownContainer isOpen={isOpen} {...props}>
-      <DropDownHeader onClick={toggling}>
+      <DropDownHeader onClick={toggling} style={props.header}>
         <Text>{options[selectedOptionIndex].label}</Text>
       </DropDownHeader>
       <ArrowDropDownIcon color="text" onClick={toggling} />
-      <DropDownListContainer>
+      <DropDownListContainer style={props.listContainer}>
         <DropDownList ref={dropdownRef}>
           {options.map((option, index) =>
             index !== selectedOptionIndex ? (

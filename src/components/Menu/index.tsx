@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLocation } from 'react-router'
-import { InputGroup, Menu as UikitMenu, menuConfig } from '@goosebumps/uikit'
+import { InputGroup, Menu as UikitMenu } from '@goosebumps/uikit'
 import { languageList } from 'config/localization/languages'
 import { useTranslation } from 'contexts/Localization'
 import PhishingWarningBanner from 'components/PhishingWarningBanner'
@@ -32,6 +32,14 @@ const SearchItem = () => {
           value: "polygon"
         }
       ]}
+      header={{
+        border: "1px solid #52555c",
+        background: "transparent"
+      }}
+      listContainer={{
+        border: "1px solid #52555c",
+        borderTop: "none"
+      }}
     />
   </>
 }
@@ -43,14 +51,8 @@ const Menu = (props) => {
   const { pathname } = useLocation()
   const [showPhishingWarningBanner] = usePhishingBannerManager()
 
-  console.log("pooh, menuConfig = ", menuConfig)
-
   const activeMenuItem = getActiveMenuItem({ menuConfig: config(t), pathname })
   const activeSubMenuItem = getActiveSubMenuItem({ menuItem: activeMenuItem, pathname })
-
-  console.log("pooh, here config = ", config(t));
-  console.log("pooh, pathName = ", pathname);
-  console.log("pooh, here", activeMenuItem);
 
   return (
     <UikitMenu

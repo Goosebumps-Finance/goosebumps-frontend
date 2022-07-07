@@ -33,7 +33,7 @@ const VaultStakeActions: React.FC<VaultStakeActionsProps> = ({
     return accountHasSharesStaked ? (
       <HasSharesActions pool={pool} stakingTokenBalance={stakingTokenBalance} performanceFee={performanceFee} />
     ) : (
-      <Button onClick={stakingTokenBalance.gt(0) ? onPresentStake : onPresentTokenRequired}>{t('Stake')}</Button>
+      <Button onClick={stakingTokenBalance.gt(0) ? onPresentStake : onPresentTokenRequired} variant="secondary">{t('Stake')}</Button>
     )
   }
 

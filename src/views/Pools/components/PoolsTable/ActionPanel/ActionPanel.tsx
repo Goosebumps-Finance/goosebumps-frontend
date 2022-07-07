@@ -12,6 +12,7 @@ import {
   Text,
   TimerIcon,
   useTooltip,
+  VerifiedIcon
 } from '@goosebumps/uikit'
 import { BASE_BSC_SCAN_URL } from 'config'
 import { getBscScanLink } from 'utils'
@@ -61,11 +62,13 @@ const StyledActionPanel = styled.div<{ expanded: boolean }>`
           ${collapseAnimation} 300ms linear forwards
         `};
   overflow: hidden;
-  background: ${({ theme }) => theme.colors.dropdown};
+  // background: ${({ theme }) => theme.colors.dropdown};
+  background: #0e121a;
   display: flex;
   flex-direction: column-reverse;
   justify-content: center;
   padding: 12px;
+  border-radius: 0px 0px 17px 17px;
 
   ${({ theme }) => theme.mediaQueries.lg} {
     flex-direction: row;
@@ -275,7 +278,8 @@ const ActionPanel: React.FC<ActionPanelProps> = ({ account, pool, userDataLoaded
             </LinkExternal>
           </Flex>
         )}
-        {account && isMetaMaskInScope && tokenAddress && (
+        <Button scale='sm' variant="primary"><VerifiedIcon color="#04c0d7" mr="4px" />Core</Button>
+        {/* {account && isMetaMaskInScope && tokenAddress && (
           <Flex mb="8px" justifyContent={['flex-end', 'flex-end', 'flex-start']}>
             <Button
               variant="text"
@@ -287,19 +291,19 @@ const ActionPanel: React.FC<ActionPanelProps> = ({ account, pool, userDataLoaded
               <MetamaskIcon ml="4px" />
             </Button>
           </Flex>
-        )}
-        {vaultKey ? <CompoundingPoolTag /> : <ManualPoolTag />}
+        )} */}
+        {/* {vaultKey ? <CompoundingPoolTag /> : <ManualPoolTag />}
         {tagTooltipVisible && tagTooltip}
         <span ref={tagTargetRef}>
           <HelpIcon ml="4px" width="20px" height="20px" color="textSubtle" />
-        </span>
+        </span> */}
       </InfoSection>
       <ActionContainer>
         {showSubtitle && (
           <Text mt="4px" mb="16px" color="textSubtle">
             {vaultKey
               ? t(vaultPoolConfig[vaultKey].description)
-              : `${t('Earn')} CAKE ${t('Stake').toLocaleLowerCase()} CAKE`}
+              : `${t('Earn')} Goose ${t('Stake').toLocaleLowerCase()} Goose`}
           </Text>
         )}
         {pool.vaultKey ? (

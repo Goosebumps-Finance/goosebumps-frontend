@@ -75,7 +75,7 @@ const IFOCreditCell: React.FC<IFOCreditCellProps> = ({ account }) => {
                   mt="4px"
                   bold={!isMobile}
                   fontSize={isMobile ? '14px' : '16px'}
-                  color={hasCredit ? 'primary' : 'textDisabled'}
+                  color={hasCredit ? 'primary' : 'textSubtle'}
                   decimals={hasCredit ? 5 : 1}
                   value={hasCredit ? cakeAsNumberBalance : 0}
                 />
@@ -90,7 +90,7 @@ const IFOCreditCell: React.FC<IFOCreditCellProps> = ({ account }) => {
                     unit=" USD"
                   />
                 ) : (
-                  <Text mt="4px" fontSize="12px" color="textDisabled">
+                  <Text mt="4px" fontSize="12px" color="textSubtle">
                     0 USD
                   </Text>
                 )}

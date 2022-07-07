@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { useMatchBreakpoints } from '@goosebumps/uikit'
 import { DeserializedPool, VaultKey } from 'state/types'
 import useDelayedUnmount from 'hooks/useDelayedUnmount'
@@ -21,10 +21,17 @@ interface PoolRowProps {
   userDataLoaded: boolean
 }
 
-const StyledRow = styled.div`
-  background-color: transparent;
+const StyledRow = styled.div<{ expanded: boolean }>`
+  background-color: #18283a;
+  border-radius: 17px;
+  transition: all ease 1s;
+  ${(props) => props.expanded &&
+    css`
+      border-radius: 17px 17px 0px 0px;
+  `}
   display: flex;
   cursor: pointer;
+  margin-top: 1rem;
 `
 
 const PoolRow: React.FC<PoolRowProps> = ({ pool, account, userDataLoaded }) => {
@@ -42,7 +49,7 @@ const PoolRow: React.FC<PoolRowProps> = ({ pool, account, userDataLoaded }) => {
 
   return (
     <>
-      <StyledRow role="row" onClick={toggleExpanded}>
+      <StyledRow role="row" onClick={toggleExpanded} expanded={expanded}>
         <NameCell pool={pool} />
         {pool.vaultKey ? (
           ((isXLargerScreen && pool.vaultKey === VaultKey.IfoPool) || pool.vaultKey === VaultKey.CakeVault) && (

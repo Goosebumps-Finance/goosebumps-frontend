@@ -23,7 +23,16 @@ const config: (t: ContextApi['t']) => ConfigMenuItemsType[] = (t) => [
   {
     label: t("Stake"),
     href: "/stake",
-    items: [],
+    items: [
+      {
+        label: t("Staking"),
+        href: "/stake"
+      },
+      {
+        label: t("Farms"),
+        href: "/farms"
+      }
+    ],
   },
   {
     label: t('DEX'),

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, Flex, TooltipText, useTooltip, Skeleton, Heading } from '@goosebumps/uikit'
+import { Text, Flex, TooltipText, useTooltip, Skeleton, Heading, Button } from '@goosebumps/uikit'
 import { useWeb3React } from '@web3-react/core'
 import { getCakeVaultEarnings } from 'views/Pools/helpers'
 import { useTranslation } from 'contexts/Localization'
@@ -45,8 +45,8 @@ const AutoHarvestAction: React.FunctionComponent<AutoHarvestActionProps> = ({
   )
 
   const actionTitle = (
-    <Text fontSize="12px" bold color="secondary" as="span" textTransform="uppercase">
-      {t('Recent CAKE profit')}
+    <Text fontSize="16px" bold color="white" as="span" textTransform="uppercase">
+      {t('Recent Goose profit')}
     </Text>
   )
 
@@ -104,7 +104,8 @@ const AutoHarvestAction: React.FunctionComponent<AutoHarvestActionProps> = ({
           </>
         </Flex>
         <Flex flex="1.3" flexDirection="column" alignSelf="flex-start" alignItems="flex-start">
-          <UnstakingFeeCountdownRow vaultKey={vaultKey} isTableVariant />
+          <Button variant="secondary" mt="16px" color="white" style={{border: "2px solid #51ffa1", borderRadius: "7px", padding: "10px"}}>Harvest</Button>
+          {/* <UnstakingFeeCountdownRow vaultKey={vaultKey} isTableVariant />
           <Flex mb="2px" justifyContent="space-between" alignItems="center">
             {tooltipVisible && tooltip}
             <TooltipText ref={targetRef} small>
@@ -115,7 +116,7 @@ const AutoHarvestAction: React.FunctionComponent<AutoHarvestActionProps> = ({
                 {performanceFee / 100}%
               </Text>
             </Flex>
-          </Flex>
+          </Flex> */}
         </Flex>
       </ActionContent>
     </ActionContainer>

@@ -3,8 +3,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Wrapper = styled(CardHeader)<{ isFinished?: boolean; background?: string }>`
-  background: ${({ isFinished, background, theme }) =>
-    isFinished ? theme.colors.backgroundDisabled : theme.colors.gradients[background]};
+  background: ${({ isFinished, background, theme }) => '#18283a'
+    /* isFinished ? theme.colors.backgroundDisabled  : '#18283a'/* theme.colors.gradients[background] */};
   border-radius: ${({ theme }) => `${theme.radii.card} ${theme.radii.card} 0 0`};
 `
 

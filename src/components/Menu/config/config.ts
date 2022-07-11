@@ -12,7 +12,7 @@ const config: (t: ContextApi['t']) => ConfigMenuItemsType[] = (t) => [
   },
   {
     label: t("Portfolio Tracker"),
-    href: "/portfolio",
+    href: "/portfolio-tracker",
     items: [],
   },
   {

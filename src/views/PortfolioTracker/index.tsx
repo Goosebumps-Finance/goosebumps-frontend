@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation, useParams, Link } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
 import linq from 'linq';
 import { ethers } from 'ethers';
@@ -36,68 +36,89 @@ const LabelSpan = styled.span`
     font-family: 'Circular Std Book';
 `
 
+export interface PortfolioParamProps {
+    networkName?: string
+    address?: string
+}
+
 const PortfolioTracker = () => {
     const dispatch = useAppDispatch();
     const fastRefresh = useFastFresh();
     const slowRefresh = useSlowFresh();
     const { pathname } = useLocation();
-    const { network, searchKey } = useSelector((state: State) => state.home)
+    // const { network, searchKey } = useSelector((state: State) => state.home)
     const { tokens } = useSelector((state:State) => state.portfolio)
-    const [ searchAddress, setSearchAddress ] = useState(searchKey)
+    // const [ searchAddress, setSearchAddress ] = useState(searchKey)
     const [ isHintText, setIsHintText ] = useState(false);
     const [ isLoading, setIsLoading ] = useState(false);
     const [ tokenInfos, setTokenInfos ] = useState([]);
     const [ curEthPrice, setCurEthPrice ] = useState(0);
     const [selectedToken, setSelectedToken] = useState();
-    const detailedNetwork = network ? linq.from(networks).where((x) => x.Name === network.value).single() : null;
-    // const { networkName } = useParams<{networkName?: string}>();
+    const { networkName, address } = useParams<PortfolioParamProps>();
+    const detailedNetwork = networkName ? linq.from(networks).where((x) => x.Name === networkName).single() : null;
+    
+    // const detailedNetwork = network ? linq.from(networks).where((x) => x.Name === network.value).single() : null;
     // const [currentParams, setParams] = useState();
     // const network = params.networkName;
+
+    useEffect(() => {
+        console.log("useEffect networkName: ", networkName, !networkName)
+        console.log("useEffect address: ", address, !address)
+        if(!networkName || !address) {
+            setIsHintText(true);
+            setIsLoading(false);
+        } else {
+            setIsHintText(false);
+            setTokenInfos([]);
+            setCurEthPrice(0);
+        }
+    }, [networkName, address])
+
+    useEffect(() => {
+        console.log("useEffect tokenInfos = ", tokenInfos, " curEthPrice = ", curEthPrice);
+        console.log("tokenInfos: ", !tokenInfos)
+        console.log("curEthPrice: ", !curEthPrice)
+        if(!isHintText && (!tokenInfos || !curEthPrice)) {
+            setIsLoading(true);
+        } else {
+            setIsLoading(false);
+        }
+    }, [curEthPrice, tokenInfos, isHintText])
     
+    useEffect(() => {
+        if(address !== undefined) {
+            dispatch(fetchTokenData({network: networkName, address}));
+        }
+    }, [ dispatch, networkName, address, slowRefresh ])
+
     // useEffect(() => {
-    //     if(ethers.utils.isAddress(searchAddress)) {
-    //         // setIsHintText(false);
-    //         // setIsLoading(true);
-    //         // handleSearch();
+    //     const args = pathname.split("/");
+    //     if(args[1] === "portfolio-tracker" && isSupportedChain(args[2]) && ethers.utils.isAddress(args[3])) {
+    //         const networkInfo = linq.from(networks).where((x) => x.Name === args[2]).single();
+    //         const selNetwork = {
+    //             label: networkInfo.Display,
+    //             value: networkInfo.Name
+    //         }
+    //         if(network.value !== selNetwork.value) {
+    //             dispatch(setNetworkInfo({ network: selNetwork, searchKey: args[3] }))
+    //         }
+    //         setSearchAddress(args[3]);
     //     }
-    // }, [searchAddress])
+    // }, [network, pathname, dispatch])
 
     useEffect(() => {
-        if(searchAddress !== undefined) {
-            dispatch(fetchTokenData({network, address:searchAddress}));
-        }
-    }, [ dispatch, network, searchAddress, slowRefresh ])
-
-    useEffect(() => {
-        const args = pathname.split("/");
-        if(args[1] === "portfolio-tracker" && isSupportedChain(args[2]) && ethers.utils.isAddress(args[3])) {
-            const networkInfo = linq.from(networks).where((x) => x.Name === args[2]).single();
-            const selNetwork = {
-                label: networkInfo.Display,
-                value: networkInfo.Name
-            }
-            if(network.value !== selNetwork.value) {
-                dispatch(setNetworkInfo({ network: selNetwork, searchKey: args[3] }))
-            }
-            setSearchAddress(args[3]);
-        }
-    }, [network, pathname, dispatch])
-
-    useEffect(() => {
-        console.log("tokens = ", tokens)
-        if(tokens.length !== 0 && searchAddress !== undefined) {
+        // console.log("tokens = ", tokens)
+        if(tokens.length !== 0 && address !== undefined) {
             const getLiveInfo = async () => {
                 const infos = await getTokenInfos(
                     linq.from(tokens).select((x:any) => x.pair).toArray(),
                     detailedNetwork,
-                    [ searchAddress ]
+                    [ address ]
                 )
-                console.log("getLiveInfo, infos = ", infos)
+                // console.log("getLiveInfo, infos = ", infos)
                 
                 const query = linq.from(infos.infos);
                 const newTokenInfos:any = tokens.map((item:TokenItemProps) => {
-                    console.log("here: query result = ", query.where((x) => x.token === item.pair.buyCurrency.address).singleOrDefault() || {});
-                    console.log("here: item = ", item)
                     const newItem:any = {...item};
                     newItem.info = query.where((x) => x.token === newItem.pair.buyCurrency.address).singleOrDefault() || {};
                     newItem.info.rewards = newItem.outs + newItem.info.balance - newItem.ins;
@@ -120,7 +141,7 @@ const PortfolioTracker = () => {
                             return buyPrice;
                         });
                 
-                        console.log("trade.buyPrices: ", newTrade.buyPrices)
+                        // console.log("trade.buyPrices: ", newTrade.buyPrices)
                         try {
                             newTrade.avarageBuyPriceOfHoldings = newTrade.buyPrices.length
                                 ? linq
@@ -150,13 +171,13 @@ const PortfolioTracker = () => {
                 
                         return newTrade;
                     });
-                    console.log(newItem);
+                    // console.log(newItem);
                     
                     const buysAndIns = linq
                         .from(newItem.trades)
                         .where((x:any) => x.transactionType === 1 || x.transactionType === 3);
 
-                    console.log("buysAndIns: ", buysAndIns)
+                    // console.log("buysAndIns: ", buysAndIns)
                     try {
                         newItem.avarageBuyPriceOfHoldings =
                         newItem.info.balance > 0
@@ -173,7 +194,7 @@ const PortfolioTracker = () => {
                         console.log(error)
                         newItem.avarageBuyPriceOfHoldings = 0
                     }
-                    console.log("item.trades: ", newItem.trades)
+                    // console.log("item.trades: ", newItem.trades)
                     try {
                         newItem.info.profit = {
                         holdings:
@@ -211,7 +232,7 @@ const PortfolioTracker = () => {
 
                 setCurEthPrice(infos.ethPrice);
                 setTokenInfos(newTokenInfos);
-                console.log("newTokenInfos = ", newTokenInfos)
+                // console.log("newTokenInfos = ", newTokenInfos)
                 // return {
                 //     ethPrice: infos.ethPrice,
                 //     tokens
@@ -219,7 +240,7 @@ const PortfolioTracker = () => {
             }
             getLiveInfo();
         }
-    }, [ tokens, detailedNetwork, searchAddress, tokenInfos ])
+    }, [ tokens, detailedNetwork, address, tokenInfos ])
 
     const renderLoading = () => {
         return (<LoadingPanel >
@@ -229,7 +250,6 @@ const PortfolioTracker = () => {
 
     const renderContent = () => {
         if(isLoading || isHintText) return <></>;
-
         // Get data from the server
         // const tokenData = mockData;
 
@@ -241,7 +261,7 @@ const PortfolioTracker = () => {
                         <h2>Portfolio For</h2>
                         <div>
                             <div className="mt-2" style={{color: 'white'}}>
-                                {searchAddress}{" "}
+                                {address}{" "}
                             </div>
                         </div>
                     </div>

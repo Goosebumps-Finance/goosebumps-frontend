@@ -40,6 +40,7 @@ const AddLiquidity = lazy(() => import('./views/AddLiquidity'))
 const RemoveLiquidity = lazy(() => import('./views/RemoveLiquidity'))
 const Bridge = lazy(() => import("./views/Bridge"));
 const PortfolioTracker = lazy(() => import("./views/PortfolioTracker"))
+const Charts = lazy(() => import('./views/Charts'))
 const Liquidity = lazy(() => import('./views/Pool'))
 const PoolFinder = lazy(() => import('./views/PoolFinder'))
 
@@ -101,13 +102,14 @@ const App: React.FC = () => {
             <Route path="/bridge">
               <Bridge />
             </Route>
-            <Route path="/portfolio-tracker">
-              <PortfolioTracker />
-            </Route>
+            <Route exact path="/portfolio-tracker" render={() => <PortfolioTracker />} />
             {/* <Route path="/portfolio-tracker/:networkName/:addresses"> */}
-            <Route exact path="/portfolio-tracker/:networkName" render={() => <PortfolioTracker />}/>
+            <Route exact path="/portfolio-tracker/:networkName/:address" render={() => <PortfolioTracker />}/>
               {/* <PortfolioTracker />
             </Route> */}
+            <Route exact path="/charts" render={() => <Charts />} />
+            <Route exact path="/charts/:networkName/:address" render={() => <Charts/>} />
+            <Route exact path="/charts/:networkName/:address/:pairAddress" render={() => <Charts/>} />
 
             {/* Unused */}
             <Route path="/lottery">

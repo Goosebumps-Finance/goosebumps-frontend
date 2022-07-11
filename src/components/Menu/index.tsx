@@ -74,7 +74,7 @@ const Menu = (props) => {
   const onSearchKeyChange = (e) => {
     setSearchKey(e.target.value);
     dispatch(setNetworkInfo({network, searchKey}))
-    if(ethers.utils.isAddress(e.target.value)) {
+    if(ethers.utils.isAddress(e.target.value) || !e.target.value) {
       handleSearch(e.target.value);
     }
   }
@@ -86,11 +86,14 @@ const Menu = (props) => {
     //   { address: searchInput.current.value, network: networkName }
     // );
     if(network === null) return;
+    // Check here
     const isToken = false;
     if (isToken) {
       history.push(`/charts/${network?.value}/${address}`)
-    } else {
+    } else if(address) {
       history.push(`/portfolio-tracker/${network?.value}/${address}`)    
+    } else {
+      history.push(`/portfolio-tracker`)
     }
   }
 

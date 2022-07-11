@@ -4,8 +4,8 @@ import pairAbi from 'config/abi/pair.json'
 import tokenAbi from 'config/abi/token.json'
 
 export const getTokenInfos = async (pairs, network, addresses = []) => {
-    console.log("*** getTokenInfos ***")
-    console.log("pairs = ", pairs)
+    // console.log("*** getTokenInfos ***")
+    // console.log("pairs = ", pairs)
     const provider = new ethers.providers.JsonRpcProvider(network.RPC);
     const ethcallProvider = new Provider(provider);
     await ethcallProvider.init();

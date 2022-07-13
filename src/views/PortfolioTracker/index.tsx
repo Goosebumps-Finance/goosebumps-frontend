@@ -16,7 +16,6 @@ import { isSupportedChain } from 'utils';
 import { getTokenInfos } from 'utils/getTokenInfos';
 import { calculatePricescale, calculateTokenscale } from 'utils/numberHelpers';
 import networks from 'config/constants/networks.json';
-import { mockData } from './mockData';
 import TradesModal from './components/TradesModal';
 
 const HintText = styled.p`
@@ -68,7 +67,7 @@ const PortfolioTracker = () => {
             setIsHintText(true);
             setIsLoading(false);
         } else {
-            setIsHintText(false);
+            setIsHintText(false)            
             setTokenInfos([]);
             setCurEthPrice(0);
         }
@@ -86,6 +85,7 @@ const PortfolioTracker = () => {
     }, [curEthPrice, tokenInfos, isHintText])
     
     useEffect(() => {
+        console.log("useEffect fetchTokenData address =", address)
         if(address !== undefined) {
             dispatch(fetchTokenData({network: networkName, address}));
         }

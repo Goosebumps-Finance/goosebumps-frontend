@@ -2,10 +2,51 @@ import { ethers } from 'ethers'
 import { Contract, Provider } from 'ethers-multicall'
 import pairAbi from 'config/abi/pair.json'
 import tokenAbi from 'config/abi/token.json'
+import { calculatePricescaleNew } from './numberHelpers'
+
+export const getTokenPricescale = async (pair, network) => {
+    const provider = new ethers.providers.JsonRpcProvider(network.RPC)
+    const ethcallProvider = new Provider(provider)
+    await ethcallProvider.init()
+
+    const calls = []
+
+    const pairContract = new Contract(pair.smartContract.address.address, pairAbi)
+    const buyContract = new Contract(pair.buyCurrency.address, tokenAbi)
+    const sellContract = new Contract(pair.sellCurrency.address, tokenAbi)
+    const ethUsdPairContract = new Contract(network.USD.Pair, pairAbi)
+
+    calls.push(pairContract.getReserves())
+    calls.push(buyContract.decimals())
+    calls.push(sellContract.decimals())
+    calls.push(ethUsdPairContract.getReserves())
+
+    const [
+        reserves,
+        buyDecimals,
+        sellDecimals,
+        ethUsdReserves
+    ] = await ethcallProvider.all(calls)
+
+    let price =
+        formatUnits(reserves._reserve1, sellDecimals) /
+        formatUnits(reserves._reserve0, buyDecimals);
+
+    if (
+        network.USDs.find((x) => x.toLowerCase() === pair.buyCurrency.address) &&
+        price > 2
+    ) {
+        price = 1 / price;
+    }
+    if (pair.sellCurrency.address === network.Currency.Address) {
+        price *=
+            formatUnits(ethUsdReserves._reserve1, network.USD.Decimals) /
+            formatUnits(ethUsdReserves._reserve0, network.Currency.Decimals);
+    }
+    return calculatePricescaleNew(price);
+}
 
 export const getTokenInfos = async (pairs, network, addresses = []) => {
-    // console.log("*** getTokenInfos ***")
-    // console.log("pairs = ", pairs)
     const provider = new ethers.providers.JsonRpcProvider(network.RPC);
     const ethcallProvider = new Provider(provider);
     await ethcallProvider.init();
@@ -129,6 +170,14 @@ export const getTokenInfos = async (pairs, network, addresses = []) => {
         return pair;
     });
     return result;
+}
+
+export const getTokenInfo = async (pair, network) => {
+    const tokenInfos = await getTokenInfos([pair], network)
+    return {
+        ...tokenInfos.infos[0],
+        ethPrice: tokenInfos.ethPrice
+    }
 }
 
 const formatUnits = (value, decimals) => {

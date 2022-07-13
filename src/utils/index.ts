@@ -109,3 +109,13 @@ export function isSupportedChain(chain: string): boolean {
   const supportedChains = ["ethereum", "bsc", "polygon"];
   return supportedChains.find((supported) => supported === chain) !== undefined;
 }
+
+export function getErrorMessage(error) {
+  if (error === undefined) {
+    return '';
+  }
+  if (typeof error === 'string') {
+    return error;
+  }
+  return error.message;
+}

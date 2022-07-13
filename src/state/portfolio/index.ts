@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { mockData } from "views/PortfolioTracker/mockData";
+import { API_SERVER } from "config";
+import { postAsyncData } from "utils/requester";
 
 // export interface TokenInfoProps {
 //     balance: number
@@ -71,8 +72,15 @@ export const fetchTokenData = createAsyncThunk(
         //     addresses
         //   );
         // const response = await fetch(`https://reqres.in/api/users/${userId}`)
-        const response = mockData;
-        return response;
+        // const response = mockData;
+        console.log("fetchTokenData args = ", args)
+        const tokens = await postAsyncData(
+            `${API_SERVER}api/Portfolio/GetTrades`,
+            { network: args.network },
+            [ args.address ]
+        )
+        console.log("fetchTokenData tokens = ", tokens)
+        return tokens;
     }
 )
 

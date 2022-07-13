@@ -48,7 +48,7 @@ const PortfolioTracker = () => {
     // const { network, searchKey } = useSelector((state: State) => state.home)
     const { tokens } = useSelector((state:State) => state.portfolio)
     // const [ searchAddress, setSearchAddress ] = useState(searchKey)
-    const [ isHintText, setIsHintText ] = useState(false);
+    const [ isHintText, setIsHintText ] = useState(true);
     const [ isLoading, setIsLoading ] = useState(false);
     const [ tokenInfos, setTokenInfos ] = useState([]);
     const [ curEthPrice, setCurEthPrice ] = useState(0);
@@ -61,8 +61,8 @@ const PortfolioTracker = () => {
     // const network = params.networkName;
 
     useEffect(() => {
-        console.log("useEffect networkName: ", networkName, !networkName)
-        console.log("useEffect address: ", address, !address)
+        // console.log("useEffect networkName: ", networkName, !networkName)
+        // console.log("useEffect address: ", address, !address)
         if(!networkName || !address) {
             setIsHintText(true);
             setIsLoading(false);
@@ -74,9 +74,9 @@ const PortfolioTracker = () => {
     }, [networkName, address])
 
     useEffect(() => {
-        console.log("useEffect tokenInfos = ", tokenInfos, " curEthPrice = ", curEthPrice);
-        console.log("tokenInfos: ", !tokenInfos)
-        console.log("curEthPrice: ", !curEthPrice)
+        // console.log("useEffect tokenInfos = ", tokenInfos, " curEthPrice = ", curEthPrice);
+        // console.log("tokenInfos: ", !tokenInfos)
+        // console.log("curEthPrice: ", !curEthPrice)
         if(!isHintText && (!tokenInfos || !curEthPrice)) {
             setIsLoading(true);
         } else {
@@ -85,7 +85,7 @@ const PortfolioTracker = () => {
     }, [curEthPrice, tokenInfos, isHintText])
     
     useEffect(() => {
-        console.log("useEffect fetchTokenData address =", address)
+        // console.log("useEffect fetchTokenData address =", address)
         if(address !== undefined) {
             dispatch(fetchTokenData({network: networkName, address}));
         }

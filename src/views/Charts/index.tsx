@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import linq from 'linq'
 import styled from 'styled-components'
 
+import Page from 'views/Page';
 import networks from "config/constants/networks.json"
 import { getChartsInfo } from 'utils/getChartsInfo'
 import Info from "./components/Info"
@@ -14,6 +15,11 @@ export interface ParamProps {
     address?: string
     pairAddress?: string
 }
+
+const HintText = styled.p`
+    font-weight: bold;
+    font-size: 1.75rem;
+`
 
 const LoadingPanel = styled.div`
     display: flex;
@@ -66,7 +72,7 @@ const Charts = (props) => {
     }
 
     const renderContent = () => {
-        if(!info) return <></>
+        if(!info) return (<HintText>No result</HintText>)
         return (<>
         <div className="container-fluid">
             <div className="row">
@@ -119,11 +125,11 @@ const Charts = (props) => {
         </>)
     }
 
-    return <>
+    return <Page>
         {isLoading ? 
             renderLoading()
         : renderContent()}
-    </>
+    </Page>
 }
 
 export default Charts;

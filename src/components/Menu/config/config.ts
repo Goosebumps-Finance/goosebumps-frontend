@@ -36,7 +36,6 @@ const config: (t: ContextApi['t']) => ConfigMenuItemsType[] = (t) => [
   },
   {
     label: t('DEX'),
-    icon: 'Swap',
     href: "/swap",
     items: [
       {

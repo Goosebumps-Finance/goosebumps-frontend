@@ -71,7 +71,7 @@ const Home: React.FC = () => {
     <>
       <PageSection
         index={2}
-        innerProps={{style: {margin: '0', width: '100%', maxWidth: '2000px', paddingLeft: 0, paddingRight: 0, paddingTop: 0}}}
+        innerProps={{style: {margin: '0', width: '100%', maxWidth: '2000px', padding: 0}}}
         style={{marginTop: "-90px"}}
         hasCurvedDivider={false}
       >
@@ -79,18 +79,17 @@ const Home: React.FC = () => {
       </PageSection>
       <PageSection
         index={2}
-        innerProps={{style: {margin: '0', width: '100%', padding: 0}}}
-        background="url('/images/goosebumps/2portfolio-bg.jpg') center center no-repeat"
-        style={{marginTop: "-48px", padding: "100px 0"}}
+        innerProps={{style: {margin: '0', width: '100%', padding: 0, maxWidth: 'none'}}}
+        // background="url('/images/goosebumps/2portfolio-bg.jpg') center center no-repeat"
         hasCurvedDivider={false}
       >
         <PortfolioSection />
       </PageSection>
       <PageSection
         index={2}
-        innerProps={{style: {margin: '0', width: '100%', padding: 0}}}
-        background="url('/images/goosebumps/3wrap-bg.jpg') center center no-repeat"
-        style={{marginTop: "-48px", padding: "100px 0"}}
+        innerProps={{style: {margin: '0', width: '100%', padding: 0, maxWidth: 'none'}}}
+        // background="url('/images/goosebumps/3wrap-bg.jpg') center center no-repeat"
+        // style={{marginTop: "-48px", padding: "100px 0"}}
         hasCurvedDivider={false}
       >
         <ChartSection />        

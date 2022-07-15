@@ -1,5 +1,6 @@
 import { Box, Button, Flex } from '@goosebumps/uikit';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 const SectionContainer = styled(Flex)`
@@ -52,6 +53,8 @@ const BannerImage = styled.img`
 `
 
 const BannerSection = () => {
+    const history = useHistory();
+
     return (
         <SectionContainer
             flexDirection={["column", "column", "column", "column", "row"]}
@@ -62,10 +65,10 @@ const BannerSection = () => {
                     <TitleDiv>Manage Your Crypto and Portfolio From One Place</TitleDiv>
                     <p style={{marginBottom: "40px"}}>Goosebumps powered by Empire Token is a decentralized exchange with a unique portfolio tracking and charting system.</p>
                     <div>
-                        <Button variant="secondary" m="5px">Portfolio Tracker</Button>
-                        <Button variant="secondary" m="5px">Charts</Button>
-                        <Button variant="secondary" m="5px">Stake</Button>
-                        <Button variant="secondary" m="5px">DEX</Button>
+                        <Button variant="secondary" m="5px" onClick={() => history.push("/portfolio-tracker")}>Portfolio Tracker</Button>
+                        <Button variant="secondary" m="5px" onClick={() => history.push("/charts")}>Charts</Button>
+                        <Button variant="secondary" m="5px" onClick={() => history.push("/stake")}>Stake</Button>
+                        <Button variant="secondary" m="5px" onClick={() => history.push("/swap")}>DEX</Button>
                     </div>
                 </ContentPanel>
             </Flex>

@@ -127,14 +127,14 @@ export default function CurrencySearchModal({
         )}
         {modalView === CurrencyModalView.search && (
           <Footer>
-            {/* <Button
+            <Button
               scale="sm"
               variant="text"
               onClick={() => setModalView(CurrencyModalView.manage)}
               className="list-token-manage-button"
             >
               {t('Manage Tokens')}
-            </Button> */}
+            </Button>
             <Button
               scale="sm"
               variant="secondary"

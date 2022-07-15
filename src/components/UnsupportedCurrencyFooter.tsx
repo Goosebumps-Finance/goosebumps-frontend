@@ -21,7 +21,8 @@ const DetailsFooter = styled.div`
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   color: ${({ theme }) => theme.colors.text};
-  background-color: ${({ theme }) => theme.colors.invertedContrast};
+  // background-color: ${({ theme }) => theme.colors.invertedContrast};
+  background-color: #121e30;
   text-align: center;
 `
 

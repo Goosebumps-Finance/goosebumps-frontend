@@ -36,8 +36,8 @@ export default function Manage({
         variant="subtle"
         mb="32px"
       >
-        <ButtonMenuItem width="50%">{t('Lists')}</ButtonMenuItem>
-        <ButtonMenuItem width="50%">{t('Tokens')}</ButtonMenuItem>
+        <ButtonMenuItem width="50%" color='white'>{t('Lists')}</ButtonMenuItem>
+        <ButtonMenuItem width="50%" color='white'>{t('Tokens')}</ButtonMenuItem>
       </StyledButtonMenu>
       {showLists ? (
         <ManageLists setModalView={setModalView} setImportList={setImportList} setListUrl={setListUrl} />

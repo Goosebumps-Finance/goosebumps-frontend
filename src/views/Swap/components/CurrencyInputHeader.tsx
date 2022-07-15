@@ -54,14 +54,14 @@ const CurrencyInputHeader: React.FC<Props> = ({ title, setIsChartDisplayed, isCh
             {title}
           </Heading>
         </Flex>
-        {/* <Flex>
+        <Flex>
           <NotificationDot show={expertMode}>
             <GlobalSettings color="textSubtle" mr="0" />
           </NotificationDot>
           <IconButton onClick={onPresentTransactionsModal} variant="text" scale="sm">
             <HistoryIcon color="textSubtle" width="24px" />
           </IconButton>
-        </Flex> */}
+        </Flex>
       </Flex> 
     </CurrencyInputContainer>
   )

@@ -356,7 +356,7 @@ export default function Swap({ history }: RouteComponentProps) {
   )
 
   return (
-    <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded} >
+    <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded} style={{paddingBottom: "20px"}} >
       <Flex width="100%" justifyContent="center" position="relative">
         <Flex flexDirection="column">
           <StyledSwapContainer $isChartExpanded={isChartExpanded}>
@@ -565,11 +565,11 @@ export default function Swap({ history }: RouteComponentProps) {
                   </Box>
                 </Wrapper>
               </AppBody>
-              {/* {!swapIsUnsupported ? (
+              {!swapIsUnsupported ? (
                 trade && <AdvancedSwapDetailsDropdown trade={trade} />
               ) : (
                 <UnsupportedCurrencyFooter currencies={[currencies.INPUT, currencies.OUTPUT]} />
-              )} */}
+              )}
             </StyledInputCurrencyWrapper>
           </StyledSwapContainer>
           {isChartExpanded && (

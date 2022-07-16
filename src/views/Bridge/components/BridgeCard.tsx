@@ -54,6 +54,10 @@ const BridgeCard = ({variant = variants.CONNECT_FROM,  ...props}) => {
                     {
                         label: t("Polygon"),
                         value: "polygon"
+                    },
+                    {
+                        label: t("BSC Testnet"),
+                        value: "bsctestnet"
                     }
                 ]}
                 header = {{

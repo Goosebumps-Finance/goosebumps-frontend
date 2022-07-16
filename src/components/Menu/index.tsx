@@ -42,6 +42,10 @@ const SearchItem = ({network, setNetwork}) => {
         {
           label: t("Polygon"),
           value: "polygon"
+        },
+        {
+          label: t("BSC Testnet"),
+          value: "bsctestnet"
         }
       ]}
       header={{

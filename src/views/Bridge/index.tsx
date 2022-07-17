@@ -12,6 +12,7 @@ import "./bridge.scss"
 const Bridge = () => {
 
     const { account } = useActiveWeb3React()
+    
 
     return (
       <Page style={{marginBottom: "30px"}}>

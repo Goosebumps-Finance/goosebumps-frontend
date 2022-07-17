@@ -168,6 +168,15 @@ export interface PoolsState {
   userDataLoaded: boolean
 }
 
+export interface HomeState {
+  network: any,
+  searchKey: string
+}
+
+export interface PortfolioState {
+  tokens: any
+}
+
 export interface ProfileState {
   isInitialized: boolean
   isLoading: boolean
@@ -568,6 +577,8 @@ export interface State {
   block: BlockState
   farms: SerializedFarmsState
   pools: PoolsState
+  home: HomeState
+  portfolio: PortfolioState
   predictions: PredictionsState
   profile: ProfileState
   teams: TeamsState

@@ -1240,7 +1240,7 @@ DEX PAGE STYLE
 Wrap Area Style
 ======================================================*/
 .wrap-bg {
-    /* background-image: url(../assets/images/index-2/wrap-bg.jpg); */
+    background-image: url("./images/wrap-bg.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;

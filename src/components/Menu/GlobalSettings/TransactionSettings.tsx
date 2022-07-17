@@ -97,6 +97,7 @@ const SlippageTabs = () => {
               setSlippageInput('')
               setUserSlippageTolerance(10)
             }}
+            style={{padding: (userSlippageTolerance === 10 ? "0px 20px" : "0px 20px")}}
             variant={userSlippageTolerance === 10 ? 'primary' : 'tertiary'}
           >
             0.1%
@@ -109,6 +110,7 @@ const SlippageTabs = () => {
               setSlippageInput('')
               setUserSlippageTolerance(50)
             }}
+            style={{padding: (userSlippageTolerance === 50 ? "0px 20px" : "0px 20px")}}
             variant={userSlippageTolerance === 50 ? 'primary' : 'tertiary'}
           >
             0.5%
@@ -121,6 +123,7 @@ const SlippageTabs = () => {
               setSlippageInput('')
               setUserSlippageTolerance(100)
             }}
+            style={{padding: (userSlippageTolerance === 100 ? "0px 20px" : "0px 20px")}}
             variant={userSlippageTolerance === 100 ? 'primary' : 'tertiary'}
           >
             1.0%

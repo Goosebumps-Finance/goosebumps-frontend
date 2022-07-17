@@ -4,6 +4,8 @@ import cloneDeep from 'lodash/cloneDeep'
 import { useDispatch } from 'react-redux'
 import farmsReducer from './farms'
 import poolsReducer from './pools'
+import homeReducer from './home'
+import portfolioReducer from './portfolio'
 import predictionsReducer from './predictions'
 import profileReducer, { initialState as profileInitialState } from './profile'
 import teamsReducer from './teams'
@@ -40,6 +42,8 @@ const store = configureStore({
     block: blockReducer,
     farms: farmsReducer,
     pools: poolsReducer,
+    home: homeReducer,
+    portfolio: portfolioReducer,
     predictions: predictionsReducer,
     profile: profileReducer,
     teams: teamsReducer,

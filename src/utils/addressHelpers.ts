@@ -91,3 +91,27 @@ export const getNftSaleAddress = () => {
 export const getPancakeSquadAddress = () => {
   return getAddress(addresses.pancakeSquad)
 }
+export const getStakeAddress = () => {
+  return getAddress(addresses.staking)
+}
+export const getStakingWithFixedLockTimeAddress = () => {
+  return getAddress(addresses.stakingWithFixedLockTime)
+}
+export const getStakingWithReflectionAddress = () => {
+  return getAddress(addresses.stakingWithReflection)
+}
+export const getStakingWithReflectionAndLockAddress = () => {
+  return getAddress(addresses.stakingWithReflectionAndLock)
+}
+export const getFarmingAddress = () => {
+  return getAddress(addresses.farming)
+}
+export const getFarmingBUSDAddress = () => {
+  return getAddress(addresses.farmingBUSD)
+}
+export const getFarmingWithFixedLockTimeAddress = () => {
+  return getAddress(addresses.farmingWithFixedLockTime)
+}
+export const getFarmingWithFixedLockTimeBUSDAddress = () => {
+  return getAddress(addresses.farmingWithFixedLockTimeBUSD)
+}

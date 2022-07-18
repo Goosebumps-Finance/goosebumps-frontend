@@ -104,7 +104,7 @@ const ListItem = styled.li`
 export interface SelectProps extends BoxProps {
   options: OptionProps[]
   onOptionChange?: (option: OptionProps) => void
-  defaultOptionIndex?: number,
+  defaultOptionIndex?: number
   header?: any
   listContainer?: any
 }

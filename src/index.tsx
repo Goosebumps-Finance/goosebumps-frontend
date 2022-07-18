@@ -10,7 +10,7 @@ import MulticallUpdater from './state/multicall/updater'
 import TransactionUpdater from './state/transactions/updater'
 import App from './App'
 import Providers from './Providers'
-import "./style/style.css";
+import './style/style.css'
 
 function Updaters() {
   return (

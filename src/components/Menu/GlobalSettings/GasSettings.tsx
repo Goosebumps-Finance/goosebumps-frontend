@@ -29,7 +29,7 @@ const GasSettings = () => {
           onClick={() => {
             setGasPrice(GAS_PRICE_GWEI.default)
           }}
-          style={{padding: (gasPrice === GAS_PRICE_GWEI.default ? "0px 20px" : "0px 20px")}}
+          style={{ padding: gasPrice === GAS_PRICE_GWEI.default ? '0px 20px' : '0px 20px' }}
           variant={gasPrice === GAS_PRICE_GWEI.default ? 'primary' : 'tertiary'}
         >
           {t('Standard (%gasPrice%)', { gasPrice: GAS_PRICE.default })}
@@ -41,7 +41,7 @@ const GasSettings = () => {
           onClick={() => {
             setGasPrice(GAS_PRICE_GWEI.fast)
           }}
-          style={{padding: (gasPrice === GAS_PRICE_GWEI.fast ? "0px 20px" : "0px 20px")}}
+          style={{ padding: gasPrice === GAS_PRICE_GWEI.fast ? '0px 20px' : '0px 20px' }}
           variant={gasPrice === GAS_PRICE_GWEI.fast ? 'primary' : 'tertiary'}
         >
           {t('Fast (%gasPrice%)', { gasPrice: GAS_PRICE.fast })}
@@ -53,7 +53,7 @@ const GasSettings = () => {
           onClick={() => {
             setGasPrice(GAS_PRICE_GWEI.instant)
           }}
-          style={{padding: (gasPrice === GAS_PRICE_GWEI.instant ? "0px 20px" : "0px 20px")}}
+          style={{ padding: gasPrice === GAS_PRICE_GWEI.instant ? '0px 20px' : '0px 20px' }}
           variant={gasPrice === GAS_PRICE_GWEI.instant ? 'primary' : 'tertiary'}
         >
           {t('Instant (%gasPrice%)', { gasPrice: GAS_PRICE.instant })}

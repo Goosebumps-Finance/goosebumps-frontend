@@ -20,97 +20,96 @@ import GlobalSettings from './GlobalSettings'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
 
-const SearchItem = ({network, setNetwork}) => {
-  const { t } = useTranslation();
+const SearchItem = ({ network, setNetwork }) => {
+  const { t } = useTranslation()
   useEffect(() => {
     setNetwork({
-      label: t("Ethereum"),
-      value: "ethereum"
+      label: t('Ethereum'),
+      value: 'ethereum',
     })
   }, [t, setNetwork])
-  return <>
-    <Select
-      options={[
-        {
-          label: t("Ethereum"),
-          value: "ethereum"
-        },
-        {
-          label: t("BSC"),
-          value: "bsc"
-        },
-        {
-          label: t("Polygon"),
-          value: "polygon"
-        },
-        {
-          label: t("BSC Testnet"),
-          value: "bsctestnet"
-        }
-      ]}
-      header={{
-        border: "1px solid #52555c",
-        background: "transparent"
-      }}
-      listContainer={{
-        border: "1px solid #52555c",
-        borderTop: "none"
-      }}
-      defaultOptionIndex={0}
-      onOptionChange={setNetwork}
-    />
-  </>
+  return (
+    <>
+      <Select
+        options={[
+          {
+            label: t('Ethereum'),
+            value: 'ethereum',
+          },
+          {
+            label: t('BSC'),
+            value: 'bsc',
+          },
+          {
+            label: t('Polygon'),
+            value: 'polygon',
+          },
+          {
+            label: t('BSC Testnet'),
+            value: 'bsctestnet',
+          },
+        ]}
+        header={{
+          border: '1px solid #52555c',
+          background: 'transparent',
+        }}
+        listContainer={{
+          border: '1px solid #52555c',
+          borderTop: 'none',
+        }}
+        defaultOptionIndex={0}
+        onOptionChange={setNetwork}
+      />
+    </>
+  )
 }
 
 const Menu = (props) => {
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const dispatch = useDispatch()
+  const history = useHistory()
   const { isDark, toggleTheme } = useTheme()
   const cakePriceUsd = usePriceCakeBusd()
   const { currentLanguage, setLanguage, t } = useTranslation()
   const { pathname } = useLocation()
   const [showPhishingWarningBanner] = usePhishingBannerManager()
 
-  const [ network, setNetwork ] = useState<OptionProps | null>(null)
-  const [ searchKey, setSearchKey ] = useState('')
+  const [network, setNetwork] = useState<OptionProps | null>(null)
+  const [searchKey, setSearchKey] = useState('')
 
   const activeMenuItem = getActiveMenuItem({ menuConfig: config(t), pathname })
   const activeSubMenuItem = getActiveSubMenuItem({ menuItem: activeMenuItem, pathname })
 
   const onSearchKeyChange = (e) => {
-    setSearchKey(e.target.value);
-    dispatch(setNetworkInfo({network, searchKey}))
-    if(ethers.utils.isAddress(e.target.value) || !e.target.value) {
-      handleSearch(e.target.value);
+    setSearchKey(e.target.value)
+    dispatch(setNetworkInfo({ network, searchKey }))
+    if (ethers.utils.isAddress(e.target.value) || !e.target.value) {
+      handleSearch(e.target.value)
     }
   }
 
-  const handleSearch = async (address : string) => {
-    console.log("handleSearch")
-    if(network === null || address === "") return;
-    const isToken = await getAsyncData(
-      `${API_SERVER}api/Search/IsToken`, 
-      { address, network: network.value }
-    )
-    console.log("After getAsyncData isToken = ", isToken)
+  const handleSearch = async (address: string) => {
+    console.log('handleSearch')
+    if (network === null || address === '') return
+    const isToken = await getAsyncData(`${API_SERVER}api/Search/IsToken`, { address, network: network.value })
+    console.log('After getAsyncData isToken = ', isToken)
     if (isToken) {
       history.push(`/charts/${network?.value}/${address}`)
-    } else if(address) {
-      history.push(`/portfolio-tracker/${network?.value}/${address}`)    
+    } else if (address) {
+      history.push(`/portfolio-tracker/${network?.value}/${address}`)
     } else {
       history.push(`/portfolio-tracker`)
     }
   }
 
   useEffect(() => {
-    dispatch(setNetworkInfo({network, searchKey}))
-  }, [ network, searchKey, dispatch ])
+    dispatch(setNetworkInfo({ network, searchKey }))
+  }, [network, searchKey, dispatch])
 
   return (
     <UikitMenu
       userMenu={<UserMenu />}
       globalMenu={<GlobalSettings />}
-      searchItem={<SearchItem setNetwork={setNetwork} network={network}/>}
+      searchItem={<SearchItem setNetwork={setNetwork} network={network} />}
       searchKey={searchKey}
       setSearchKey={onSearchKeyChange}
       // banner={showPhishingWarningBanner && <PhishingWarningBanner />}

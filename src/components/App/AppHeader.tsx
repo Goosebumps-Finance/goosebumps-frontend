@@ -20,7 +20,7 @@ const AppHeaderContainer = styled(Flex)`
   justify-content: space-between;
   padding: 24px;
   width: 100%;
-  background-color: hsla(0,0%,100%,.1);
+  background-color: hsla(0, 0%, 100%, 0.1);
   // border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
 `
 
@@ -29,21 +29,21 @@ const AppHeader: React.FC<Props> = ({ title, subtitle, helper, backTo, noConfig 
 
   return (
     <AppHeaderContainer>
-        <Flex>
-          {backTo && (
-            <IconButton as={Link} to={backTo}>
-              <ArrowBackIcon width="32px" />
-            </IconButton>
-          )}
-          {/* <Flex alignItems="center"> */}
-            <Heading as="h2" mb="8px" style={{margin: 'auto'}}>
-              {title}
-            </Heading>
-          {/* </Flex> */}
-        </Flex>
-        <Text color="textSubtle" fontSize="14px">
-          {subtitle}
-        </Text>
+      <Flex>
+        {backTo && (
+          <IconButton as={Link} to={backTo}>
+            <ArrowBackIcon width="32px" />
+          </IconButton>
+        )}
+        {/* <Flex alignItems="center"> */}
+        <Heading as="h2" mb="8px" style={{ margin: 'auto' }}>
+          {title}
+        </Heading>
+        {/* </Flex> */}
+      </Flex>
+      <Text color="textSubtle" fontSize="14px">
+        {subtitle}
+      </Text>
       {/* {!noConfig && (
         <Flex alignItems="center">
           <NotificationDot show={expertMode}>

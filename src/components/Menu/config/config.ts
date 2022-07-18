@@ -6,52 +6,53 @@ export type ConfigMenuItemsType = MenuItemsType & { hideSubNav?: boolean }
 
 const config: (t: ContextApi['t']) => ConfigMenuItemsType[] = (t) => [
   {
-    label: t("Home"),
-    href: "/",
-    items: []
-  },
-  {
-    label: t("Portfolio Tracker"),
-    href: "/portfolio-tracker",
+    label: t('Home'),
+    href: '/',
     items: [],
   },
   {
-    label: t("Charts"),
-    href: "/charts",
+    label: t('Portfolio Tracker'),
+    href: '/portfolio-tracker',
     items: [],
   },
   {
-    label: t("Stake"),
-    href: "/stake",
+    label: t('Charts'),
+    href: '/charts',
+    items: [],
+  },
+  {
+    label: t('Stake'),
+    href: '/stake',
     items: [
       {
-        label: t("Staking"),
-        href: "/stake"
+        label: t('Staking'),
+        href: '/stake',
       },
       {
-        label: t("Farms"),
-        href: "/farms"
-      }
+        label: t('Farms'),
+        href: '/farms',
+      },
     ],
   },
   {
     label: t('DEX'),
-    href: "/swap",
+    href: '/swap',
     items: [
       {
-        label: t("Exchange"),
-        href: "/swap",
-      }, {
-        label: t("Liquidity"),
-        href: "/liquidity"
-      }
+        label: t('Exchange'),
+        href: '/swap',
+      },
+      {
+        label: t('Liquidity'),
+        href: '/liquidity',
+      },
     ],
   },
   {
     label: t('Bridge'),
     href: '/bridge',
-    items: [ ],
-  }
+    items: [],
+  },
 ]
 
 export default config

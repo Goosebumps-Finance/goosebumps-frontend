@@ -62,7 +62,7 @@ const CurrencyInputHeader: React.FC<Props> = ({ title, setIsChartDisplayed, isCh
             <HistoryIcon color="textSubtle" width="24px" />
           </IconButton>
         </Flex>
-      </Flex> 
+      </Flex>
     </CurrencyInputContainer>
   )
 }

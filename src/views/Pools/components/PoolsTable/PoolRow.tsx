@@ -25,10 +25,11 @@ const StyledRow = styled.div<{ expanded: boolean }>`
   background-color: #18283a;
   border-radius: 17px;
   transition: all ease 1s;
-  ${(props) => props.expanded &&
+  ${(props) =>
+    props.expanded &&
     css`
       border-radius: 17px 17px 0px 0px;
-  `}
+    `}
   display: flex;
   cursor: pointer;
   margin-top: 1rem;

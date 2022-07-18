@@ -1,7 +1,18 @@
 import { ConfigMenuItemsType } from './config/config'
 
-export const getActiveMenuItem = ({ pathname, menuConfig }: { pathname: string; menuConfig: ConfigMenuItemsType[] }) => {
-  return menuConfig.find((menuItem) => (pathname === "/" || (menuItem.href !== "/" && pathname.startsWith(menuItem.href))) || getActiveSubMenuItem({ menuItem, pathname }));
+export const getActiveMenuItem = ({
+  pathname,
+  menuConfig,
+}: {
+  pathname: string
+  menuConfig: ConfigMenuItemsType[]
+}) => {
+  return menuConfig.find(
+    (menuItem) =>
+      pathname === '/' ||
+      (menuItem.href !== '/' && pathname.startsWith(menuItem.href)) ||
+      getActiveSubMenuItem({ menuItem, pathname }),
+  )
 }
 
 export const getActiveSubMenuItem = ({ pathname, menuItem }: { pathname: string; menuItem?: ConfigMenuItemsType }) => {

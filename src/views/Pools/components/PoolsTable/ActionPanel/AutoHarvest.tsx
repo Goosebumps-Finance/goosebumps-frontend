@@ -104,7 +104,14 @@ const AutoHarvestAction: React.FunctionComponent<AutoHarvestActionProps> = ({
           </>
         </Flex>
         <Flex flex="1.3" flexDirection="column" alignSelf="flex-start" alignItems="flex-start">
-          <Button variant="secondary" mt="16px" color="white" style={{border: "2px solid #51ffa1", borderRadius: "7px", padding: "10px"}}>Harvest</Button>
+          <Button
+            variant="secondary"
+            mt="16px"
+            color="white"
+            style={{ border: '2px solid #51ffa1', borderRadius: '7px', padding: '10px' }}
+          >
+            Harvest
+          </Button>
           {/* <UnstakingFeeCountdownRow vaultKey={vaultKey} isTableVariant />
           <Flex mb="2px" justifyContent="space-between" alignItems="center">
             {tooltipVisible && tooltip}

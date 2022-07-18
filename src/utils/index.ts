@@ -106,16 +106,16 @@ export function isTokenOnList(defaultTokens: TokenAddressMap, currency?: Currenc
 }
 
 export function isSupportedChain(chain: string): boolean {
-  const supportedChains = ["ethereum", "bsc", "polygon"];
-  return supportedChains.find((supported) => supported === chain) !== undefined;
+  const supportedChains = ['ethereum', 'bsc', 'polygon']
+  return supportedChains.find((supported) => supported === chain) !== undefined
 }
 
 export function getErrorMessage(error) {
   if (error === undefined) {
-    return '';
+    return ''
   }
   if (typeof error === 'string') {
-    return error;
+    return error
   }
-  return error.message;
+  return error.message
 }

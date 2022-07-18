@@ -28,7 +28,7 @@ const StyledInput = styled(Input)`
     border: 1px solid #05c1d7;
     box-shadow: unset !important;
   }
-`;
+`
 
 interface CurrencySearchProps {
   selectedCurrency?: Currency | null
@@ -155,7 +155,7 @@ function CurrencySearch({
             <ImportRow token={searchToken} showImportView={showImportView} setImportToken={setImportToken} />
           </Column>
         ) : filteredSortedTokens?.length > 0 || filteredInactiveTokens?.length > 0 ? (
-          <Box margin="24px 0px" style={{border: "1px solid #dee2e6"}}>
+          <Box margin="24px 0px" style={{ border: '1px solid #dee2e6' }}>
             <CurrencyList
               height={390}
               showETH={showETH}
@@ -172,7 +172,7 @@ function CurrencySearch({
             />
           </Box>
         ) : (
-          <Column style={{ padding: '20px', height: '100%', border: "1px solid #dee2e6", margin: "20px 0px" }}>
+          <Column style={{ padding: '20px', height: '100%', border: '1px solid #dee2e6', margin: '20px 0px' }}>
             <Text color="textSubtle" textAlign="center">
               {t('No results found.')}
             </Text>

@@ -143,7 +143,7 @@ export default function CurrencyInputPanel({
           </LabelRow>
           <InputRow selected={disableCurrencySelect}>
             {account && currency && showMaxButton && label !== 'To' && (
-              <Button onClick={onMax} scale="xs" variant="secondary" style={{border: "1px solid #808080"}}>
+              <Button onClick={onMax} scale="xs" variant="secondary" style={{ border: '1px solid #808080' }}>
                 MAX
               </Button>
             )}

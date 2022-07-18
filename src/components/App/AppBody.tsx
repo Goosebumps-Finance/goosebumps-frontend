@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Card } from '@goosebumps/uikit'
-import { StyledInputCurrencyWrapper } from 'views/Swap/styles';
+import { StyledInputCurrencyWrapper } from 'views/Swap/styles'
 
 export const BodyWrapper = styled(Card)`
   border-radius: 24px;
@@ -15,7 +15,9 @@ export const BodyWrapper = styled(Card)`
  * The styled container element that wraps the content of most pages and the tabs.
  */
 export default function AppBody({ children }: { children: React.ReactNode }) {
-  return <StyledInputCurrencyWrapper>
+  return (
+    <StyledInputCurrencyWrapper>
       <BodyWrapper background="#121e30">{children}</BodyWrapper>
     </StyledInputCurrencyWrapper>
+  )
 }

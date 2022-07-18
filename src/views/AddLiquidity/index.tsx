@@ -335,8 +335,12 @@ export default function AddLiquidity({
                     <Text bold mb="8px" color="rgb(4, 192, 215)">
                       {t('You are the first liquidity provider.')}
                     </Text>
-                    <Text mb="8px" color="rgb(4, 192, 215)">{t('The ratio of tokens you add will set the price of this pool.')}</Text>
-                    <Text color="rgb(4, 192, 215)">{t('Once you are happy with the rate click supply to add liquidity.')}</Text>
+                    <Text mb="8px" color="rgb(4, 192, 215)">
+                      {t('The ratio of tokens you add will set the price of this pool.')}
+                    </Text>
+                    <Text color="rgb(4, 192, 215)">
+                      {t('Once you are happy with the rate click supply to add liquidity.')}
+                    </Text>
                   </div>
                 </Message>
               </ColumnCenter>

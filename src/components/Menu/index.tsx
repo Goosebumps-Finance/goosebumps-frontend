@@ -67,40 +67,37 @@ const SearchItem = ({network, setNetwork}) => {
 }
 
 const Menu = (props) => {
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const dispatch = useDispatch()
+  const history = useHistory()
   const { isDark, toggleTheme } = useTheme()
   const cakePriceUsd = usePriceCakeBusd()
   const { currentLanguage, setLanguage, t } = useTranslation()
   const { pathname } = useLocation()
   const [showPhishingWarningBanner] = usePhishingBannerManager()
 
-  const [ network, setNetwork ] = useState<OptionProps | null>(null)
-  const [ searchKey, setSearchKey ] = useState('')
+  const [network, setNetwork] = useState<OptionProps | null>(null)
+  const [searchKey, setSearchKey] = useState('')
 
   const activeMenuItem = getActiveMenuItem({ menuConfig: config(t), pathname })
   const activeSubMenuItem = getActiveSubMenuItem({ menuItem: activeMenuItem, pathname })
 
   const onSearchKeyChange = (e) => {
-    setSearchKey(e.target.value);
-    dispatch(setNetworkInfo({network, searchKey}))
-    if(ethers.utils.isAddress(e.target.value) || !e.target.value) {
-      handleSearch(e.target.value);
+    setSearchKey(e.target.value)
+    dispatch(setNetworkInfo({ network, searchKey }))
+    if (ethers.utils.isAddress(e.target.value) || !e.target.value) {
+      handleSearch(e.target.value)
     }
   }
 
-  const handleSearch = async (address : string) => {
-    console.log("handleSearch")
-    if(network === null || address === "") return;
-    const isToken = await getAsyncData(
-      `${API_SERVER}api/Search/IsToken`, 
-      { address, network: network.value }
-    )
-    console.log("After getAsyncData isToken = ", isToken)
+  const handleSearch = async (address: string) => {
+    console.log('handleSearch')
+    if (network === null || address === '') return
+    const isToken = await getAsyncData(`${API_SERVER}api/Search/IsToken`, { address, network: network.value })
+    console.log('After getAsyncData isToken = ', isToken)
     if (isToken) {
       history.push(`/charts/${network?.value}/${address}`)
-    } else if(address) {
-      history.push(`/portfolio-tracker/${network?.value}/${address}`)    
+    } else if (address) {
+      history.push(`/portfolio-tracker/${network?.value}/${address}`)
     } else {
       history.push(`/portfolio-tracker`)
     }

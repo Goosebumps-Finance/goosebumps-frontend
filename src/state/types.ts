@@ -169,7 +169,7 @@ export interface PoolsState {
 }
 
 export interface HomeState {
-  network: any,
+  network: any
   searchKey: string
 }
 

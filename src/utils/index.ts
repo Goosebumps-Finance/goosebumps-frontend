@@ -112,10 +112,10 @@ export function isSupportedChain(chain: string): boolean {
 
 export function getErrorMessage(error) {
   if (error === undefined) {
-    return '';
+    return ''
   }
   if (typeof error === 'string') {
-    return error;
+    return error
   }
-  return error.message;
+  return error.message
 }

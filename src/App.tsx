@@ -38,8 +38,8 @@ const Home = lazy(() => import('./views/Home'))
 const NotFound = lazy(() => import('./views/NotFound'))
 const AddLiquidity = lazy(() => import('./views/AddLiquidity'))
 const RemoveLiquidity = lazy(() => import('./views/RemoveLiquidity'))
-const Bridge = lazy(() => import("./views/Bridge"));
-const PortfolioTracker = lazy(() => import("./views/PortfolioTracker"))
+const Bridge = lazy(() => import('./views/Bridge'))
+const PortfolioTracker = lazy(() => import('./views/PortfolioTracker'))
 const Charts = lazy(() => import('./views/Charts'))
 const Liquidity = lazy(() => import('./views/Pool'))
 const PoolFinder = lazy(() => import('./views/PoolFinder'))
@@ -104,12 +104,12 @@ const App: React.FC = () => {
             </Route>
             <Route exact path="/portfolio-tracker" render={() => <PortfolioTracker />} />
             {/* <Route path="/portfolio-tracker/:networkName/:addresses"> */}
-            <Route exact path="/portfolio-tracker/:networkName/:address" render={() => <PortfolioTracker />}/>
-              {/* <PortfolioTracker />
+            <Route exact path="/portfolio-tracker/:networkName/:address" render={() => <PortfolioTracker />} />
+            {/* <PortfolioTracker />
             </Route> */}
             <Route exact path="/charts" render={() => <Charts />} />
-            <Route exact path="/charts/:networkName/:address" render={() => <Charts/>} />
-            <Route exact path="/charts/:networkName/:address/:pairAddress" render={() => <Charts/>} />
+            <Route exact path="/charts/:networkName/:address" render={() => <Charts />} />
+            <Route exact path="/charts/:networkName/:address/:pairAddress" render={() => <Charts />} />
 
             {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
             <Route exact strict path="/swap" component={Swap} />
@@ -119,7 +119,7 @@ const App: React.FC = () => {
             <Route exact path="/liquidityAdd" component={AddLiquidity} />
             <Route exact path="/liquidityAdd/:currencyIdA" component={RedirectOldAddLiquidityPathStructure} />
             <Route exact path="/liquidityAdd/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
-            
+
             <Route exact strict path="/create" component={RedirectToAddLiquidity} />
             <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
             <Route exact path="/create" component={AddLiquidity} />

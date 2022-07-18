@@ -103,4 +103,36 @@ export default {
     56: '0x0a8901b0E25DEb55A87524f0cC164E9644020EBA',
     97: '0xfC0c3F11fDA72Cb9A56F28Ec8D44C0ae4B3ABF86',
   },
+  staking: {
+    56: '',
+    97: '0x42339D883DA11C14a407CF67eB2F34BF81F53a22',
+  },
+  stakingWithFixedLockTime: {
+    56: '',
+    97: '0x03fD18a960Ab8e16527814457a0E44a183b93be9',
+  },
+  stakingWithReflection: {
+    56: '',
+    97: '0x91dacAB1617b8873533FE4819bBCa4BDAD0078D8',
+  },
+  stakingWithReflectionAndLock: {
+    56: '',
+    97: '0xCe097fB947B1bf543c3007323Cd881B79492EcEb',
+  },
+  farming: {
+    56: '',
+    97: '0xAFc34AC89AD84cf46a6d9e8D3228B5c25E4a4804',
+  },
+  farmingBUSD: {
+    56: '',
+    97: '0x15Fa177595b01E3e100d1f1367a2f6f6c74E2a29',
+  },
+  farmingWithFixedLockTime: {
+    56: '',
+    97: '0xec604726325dd99dfD801933283219f9784e7A09',
+  },
+  farmingWithFixedLockTimeBUSD: {
+    56: '',
+    97: '0x21146F323e24F6f64B807F66D2Ca2532cB80865e',
+  },
 }

@@ -97,7 +97,7 @@ export default function CurrencySearchModal({
       <ModalHeader>
         <ModalTitle>
           {/* {config[modalView].onBack && <ModalBackButton onBack={config[modalView].onBack} />} */}
-          <Heading style={{marginBottom: "auto"}}>{config[modalView].title}</Heading>
+          <Heading style={{ marginBottom: 'auto' }}>{config[modalView].title}</Heading>
         </ModalTitle>
         <ModalCloseButton onDismiss={onDismiss} />
       </ModalHeader>
@@ -139,10 +139,10 @@ export default function CurrencySearchModal({
               scale="sm"
               variant="secondary"
               style={{
-                border: "1px solid #808080",
-                borderRadius: "10px",
-                marginRight: "24px",
-                float: 'right'
+                border: '1px solid #808080',
+                borderRadius: '10px',
+                marginRight: '24px',
+                float: 'right',
               }}
               onClick={onDismiss}
             >

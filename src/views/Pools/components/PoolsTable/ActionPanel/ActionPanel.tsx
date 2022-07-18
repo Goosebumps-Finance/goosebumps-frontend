@@ -12,7 +12,7 @@ import {
   Text,
   TimerIcon,
   useTooltip,
-  VerifiedIcon
+  VerifiedIcon,
 } from '@goosebumps/uikit'
 import { BASE_BSC_SCAN_URL } from 'config'
 import { getBscScanLink } from 'utils'
@@ -278,7 +278,10 @@ const ActionPanel: React.FC<ActionPanelProps> = ({ account, pool, userDataLoaded
             </LinkExternal>
           </Flex>
         )}
-        <Button scale='sm' variant="primary"><VerifiedIcon color="#04c0d7" mr="4px" />Core</Button>
+        <Button scale="sm" variant="primary">
+          <VerifiedIcon color="#04c0d7" mr="4px" />
+          Core
+        </Button>
         {/* {account && isMetaMaskInScope && tokenAddress && (
           <Flex mb="8px" justifyContent={['flex-end', 'flex-end', 'flex-start']}>
             <Button

@@ -31,7 +31,11 @@ const HelpButton = () => {
   return (
     <Container>
       <StyledLink external href="https://docs.pancakeswap.finance/products/syrup-pool/syrup-pool-faq">
-        <Button px={['14px', null, null, null, '20px']} variant="primary" style={{borderRadius: "7px", border: "2px solid grey"}}>
+        <Button
+          px={['14px', null, null, null, '20px']}
+          variant="primary"
+          style={{ borderRadius: '7px', border: '2px solid grey' }}
+        >
           <ButtonText color="white" bold fontSize="16px">
             {t('Help')}
           </ButtonText>

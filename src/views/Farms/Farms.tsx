@@ -369,7 +369,7 @@ const Farms: React.FC = () => {
 
   return (
     <>
-      <PageHeader>
+      {/* <PageHeader>
         <Heading as="h1" scale="xxl" color="primary" mb="24px">
           {t('Farms')}
         </Heading>
@@ -384,7 +384,7 @@ const Farms: React.FC = () => {
             <ArrowForwardIcon color="primary" />
           </Button>
         </NavLink>
-      </PageHeader>
+      </PageHeader> */}
       <Page>
         <ControlContainer>
           <ViewControls>
@@ -427,15 +427,15 @@ const Farms: React.FC = () => {
                   },
                 ]}
                 onOptionChange={handleSortOptionChange}
-                style={{borderRadius: "9px"}}
+                style={{ borderRadius: '9px' }}
                 header={{
-                  backgroundColor: "#171717",
-                  border: "2px solid #c4c4c4"
+                  backgroundColor: '#171717',
+                  border: '2px solid #c4c4c4',
                 }}
                 listContainer={{
-                  backgroundColor: "#171717",
-                  border: "2px solid #c4c4c4",
-                  borderTop: "none"
+                  backgroundColor: '#171717',
+                  border: '2px solid #c4c4c4',
+                  borderTop: 'none',
                 }}
               />
             </LabelWrapper>

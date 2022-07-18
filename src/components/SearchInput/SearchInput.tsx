@@ -42,7 +42,7 @@ const SearchInput: React.FC<Props> = ({ onChange: onChangeCallback, placeholder 
 
   return (
     <InputWrapper>
-      <InputGroup endIcon={<SearchIcon width="24px" />} >
+      <InputGroup endIcon={<SearchIcon width="24px" />}>
         <StyledInput value={searchText} onChange={onChange} placeholder={t(placeholder)} />
       </InputGroup>
     </InputWrapper>

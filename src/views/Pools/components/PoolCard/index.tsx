@@ -29,10 +29,12 @@ const PoolCard: React.FC<{ pool: DeserializedPool; account: string }> = ({ pool,
         <TokenPairImage primaryToken={earningToken} secondaryToken={stakingToken} width={64} height={64} />
         <PoolCardHeaderTitle
           title={isCakePool ? t('Manual') : t('Earn %asset%', { asset: earningToken.symbol })}
-          subTitle={/* isCakePool ? t('Earn CAKE, stake CAKE') : t('Stake %symbol%', { symbol: stakingToken.symbol }) */ t("")}
+          subTitle={
+            /* isCakePool ? t('Earn CAKE, stake CAKE') : t('Stake %symbol%', { symbol: stakingToken.symbol }) */ t('')
+          }
         />
       </PoolCardHeader>
-      <CardBody style={{backgroundColor: "#18283a"}}>
+      <CardBody style={{ backgroundColor: '#18283a' }}>
         <AprRow pool={pool} stakedBalance={stakedBalance} />
         <Flex mt="24px" flexDirection="column">
           {account ? (

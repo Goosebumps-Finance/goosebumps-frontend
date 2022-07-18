@@ -37,8 +37,8 @@ const Footer: React.FC<FooterProps> = ({ pool, account, defaultExpanded }) => {
   })
 
   return (
-    <CardFooter style={{backgroundColor: "#18283a", padding: "0px", borderRadius: "0px", border: "none"}}>
-      <ExpandableButtonWrapper style={{justifyContent:"center"}}>
+    <CardFooter style={{ backgroundColor: '#18283a', padding: '0px', borderRadius: '0px', border: 'none' }}>
+      <ExpandableButtonWrapper style={{ justifyContent: 'center' }}>
         {/* <Flex alignItems="center">
           {vaultKey ? <CompoundingPoolTag /> : <ManualPoolTag />}
           {tooltipVisible && tooltip}

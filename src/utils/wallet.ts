@@ -7,29 +7,69 @@ import { nodes } from './getRpcUrl'
  * Prompt the user to add BSC as a network on Metamask, or switch to BSC if the wallet is on a different network
  * @returns {boolean} true if the setup succeeded, false otherwise
  */
-export const setupNetwork = async () => {
+// export const setupNetwork = async () => {
+//   const provider = window.ethereum
+//   if (provider) {
+//     const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 10)
+//     try {
+//       await provider.request({
+//         method: 'wallet_addEthereumChain',
+//         params: [
+//           {
+//             chainId: `0x${chainId.toString(16)}`,
+//             chainName: 'Binance Smart Chain Mainnet',
+//             nativeCurrency: {
+//               name: 'BNB',
+//               symbol: 'bnb',
+//               decimals: 18,
+//             },
+//             rpcUrls: nodes,
+//             blockExplorerUrls: [`${BASE_BSC_SCAN_URL}/`],
+//           },
+//         ],
+//       })
+//       return true
+//     } catch (error) {
+//       console.error('Failed to setup the network in Metamask:', error)
+//       return false
+//     }
+//   } else {
+//     console.error("Can't setup the BSC network on metamask because window.ethereum is undefined")
+//     return false
+//   }
+// }
+export const setupNetwork = async (network) => {
   const provider = window.ethereum
   if (provider) {
-    const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 10)
+    // const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 10)
     try {
       await provider.request({
-        method: 'wallet_addEthereumChain',
-        params: [
-          {
-            chainId: `0x${chainId.toString(16)}`,
-            chainName: 'Binance Smart Chain Mainnet',
-            nativeCurrency: {
-              name: 'BNB',
-              symbol: 'bnb',
-              decimals: 18,
-            },
-            rpcUrls: nodes,
-            blockExplorerUrls: [`${BASE_BSC_SCAN_URL}/`],
-          },
-        ],
+        method: "wallet_switchEthereumChain",
+        params: [{
+          chainId: network.chainHexId
+        }]
       })
       return true
-    } catch (error) {
+    } catch (error:any) {
+      if(error.code === 4902) {  
+        await provider.request({
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              chainId: network.chainHexId,
+              chainName: network.Display,
+              nativeCurrency: {
+                name: network.Currency.Name,
+                symbol: network.Currency.Name,
+                decimals: network.Currency.Decimals,
+              },
+              rpcUrls: [ network.RPC ],
+              blockExplorerUrls: [`${network.Explorer}/`],
+            },
+          ],
+        })
+        return true;
+      }
       console.error('Failed to setup the network in Metamask:', error)
       return false
     }

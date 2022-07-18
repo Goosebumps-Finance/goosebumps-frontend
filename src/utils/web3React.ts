@@ -4,20 +4,27 @@ import { AbstractConnector } from '@web3-react/abstract-connector'
 import { BscConnector } from '@binance-chain/bsc-connector'
 import { ConnectorNames } from '@goosebumps/uikit'
 import { ethers } from 'ethers'
-import getNodeUrl from './getRpcUrl'
+import getNodeUrl, { getEthNodeUrl, getPolygonNodeUrl } from './getRpcUrl'
 
 const POLLING_INTERVAL = 12000
 const rpcUrl = getNodeUrl()
 const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 10)
+const ETH_CHAIN_ID = parseInt(process.env.ETH_CHAIN_ID, 10)
+const BSC_CHAIN_ID = parseInt(process.env.BSC_CHAIN_ID, 10)
+const POLYGON_CHAIN_ID = parseInt(process.env.POLYGON_CHAIN_ID, 10)
+const BSC_TESTNET_CHAIN_ID = parseInt(process.env.BSC_TESTNET_CHAIN_ID, 10)
 
+// const injected = new InjectedConnector({ supportedChainIds: [ETH_CHAIN_ID, BSC_CHAIN_ID, POLYGON_CHAIN_ID, BSC_TESTNET_CHAIN_ID] })
 const injected = new InjectedConnector({ supportedChainIds: [chainId] })
 
 const walletconnect = new WalletConnectConnector({
-  rpc: { [chainId]: rpcUrl },
+  // rpc: { [chainId]: rpcUrl, [ETH_CHAIN_ID]: getEthNodeUrl(), [POLYGON_CHAIN_ID]: getPolygonNodeUrl() },
+  rpc: { [chainId]: rpcUrl}, 
   qrcode: true,
   pollingInterval: POLLING_INTERVAL,
 })
 
+// const bscConnector = new BscConnector({ supportedChainIds: [ETH_CHAIN_ID, BSC_CHAIN_ID, POLYGON_CHAIN_ID, BSC_TESTNET_CHAIN_ID] })
 const bscConnector = new BscConnector({ supportedChainIds: [chainId] })
 
 export const connectorsByName: { [connectorName in ConnectorNames]: any } = {

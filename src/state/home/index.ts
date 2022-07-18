@@ -4,7 +4,7 @@ import {
 } from 'state/types'
 
 const initialState: HomeState = {
-    network: { label: '', value: ''},
+    network: { label: 'BSC Testnet', value: 'bsctestnet'},
     searchKey: ''
 }
 

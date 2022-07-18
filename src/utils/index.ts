@@ -106,7 +106,7 @@ export function isTokenOnList(defaultTokens: TokenAddressMap, currency?: Currenc
 }
 
 export function isSupportedChain(chain: string): boolean {
-  const supportedChains = ["ethereum", "bsc", "polygon"];
+  const supportedChains = ["ethereum", "bsc", "polygon", "bsctestnet"];
   return supportedChains.find((supported) => supported === chain) !== undefined;
 }
 

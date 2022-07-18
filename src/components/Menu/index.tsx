@@ -3,17 +3,21 @@ import { useDispatch } from 'react-redux'
 import { useLocation } from 'react-router'
 import { useHistory } from 'react-router-dom'
 import { InputGroup, Menu as UikitMenu } from '@goosebumps/uikit'
+import linq from 'linq'
 import { ethers } from 'ethers'
 import { languageList } from 'config/localization/languages'
 import { useTranslation } from 'contexts/Localization'
 import PhishingWarningBanner from 'components/PhishingWarningBanner'
 import Select, { OptionProps } from 'components/Select/Select'
 import useTheme from 'hooks/useTheme'
-import { getAsyncData } from 'utils/requester'
 import { usePriceCakeBusd } from 'state/farms/hooks'
 import { setNetworkInfo } from 'state/home'
 import { usePhishingBannerManager } from 'state/user/hooks'
 import { API_SERVER } from 'config'
+import networks from 'config/constants/networks.json';
+import { getAsyncData } from 'utils/requester'
+import { changeNetwork } from 'utils/changeNetwork'
+
 import config from './config/config'
 import UserMenu from './UserMenu'
 import GlobalSettings from './GlobalSettings'
@@ -22,12 +26,12 @@ import { footerLinks } from './config/footerConfig'
 
 const SearchItem = ({network, setNetwork}) => {
   const { t } = useTranslation();
-  useEffect(() => {
-    setNetwork({
-      label: t("Ethereum"),
-      value: "ethereum"
-    })
-  }, [t, setNetwork])
+  // useEffect(() => {
+  //   setNetwork({
+  //     label: t("Ethereum"),
+  //     value: "ethereum"
+  //   })
+  // }, [t, setNetwork])
   return <>
     <Select
       options={[
@@ -56,7 +60,7 @@ const SearchItem = ({network, setNetwork}) => {
         border: "1px solid #52555c",
         borderTop: "none"
       }}
-      defaultOptionIndex={0}
+      defaultOptionIndex={3}
       onOptionChange={setNetwork}
     />
   </>
@@ -103,14 +107,23 @@ const Menu = (props) => {
   }
 
   useEffect(() => {
+    console.log("before dispatch Networkinfo network = ", network)
     dispatch(setNetworkInfo({network, searchKey}))
   }, [ network, searchKey, dispatch ])
+
+  const onChangeNetwork = (info) => {
+    console.log("onChangeNetwork info = ", info)
+    const selNetwork = linq.from(networks).where((x) => x.Name === (info.value ? info.value : "bsctestnet")).single()
+    // console.log("selNetwork = ", selNetwork)
+    setNetwork(info)
+    changeNetwork(selNetwork)
+  }
 
   return (
     <UikitMenu
       userMenu={<UserMenu />}
       globalMenu={<GlobalSettings />}
-      searchItem={<SearchItem setNetwork={setNetwork} network={network}/>}
+      searchItem={<SearchItem setNetwork={onChangeNetwork} network={network}/>}
       searchKey={searchKey}
       setSearchKey={onSearchKeyChange}
       // banner={showPhishingWarningBanner && <PhishingWarningBanner />}

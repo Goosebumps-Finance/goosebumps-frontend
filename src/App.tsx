@@ -111,55 +111,6 @@ const App: React.FC = () => {
             <Route exact path="/charts/:networkName/:address" render={() => <Charts/>} />
             <Route exact path="/charts/:networkName/:address/:pairAddress" render={() => <Charts/>} />
 
-            {/* Unused */}
-            <Route path="/lottery">
-              <Lottery />
-            </Route>
-            <Route path="/ifo">
-              <Ifos />
-            </Route>
-            <Route exact path="/teams">
-              <Teams />
-            </Route>
-            <Route path="/teams/:id">
-              <Team />
-            </Route>
-            <Route path="/create-profile">
-              <ProfileCreation />
-            </Route>
-            <Route path="/competition">
-              <TradingCompetition />
-            </Route>
-            <Route exact path="/prediction">
-              <Predictions />
-            </Route>
-            <Route path="/prediction/leaderboard">
-              <PredictionsLeaderboard />
-            </Route>
-            <Route exact path="/voting">
-              <Voting />
-            </Route>
-            <Route exact path="/voting/proposal/create">
-              <CreateProposal />
-            </Route>
-            <Route path="/voting/proposal/:id">
-              <Proposal />
-            </Route>
-
-            {/* NFT */}
-            <Route path="/nfts">
-              <NftMarket />
-            </Route>
-
-            <Route path="/pancake-squad">
-              <PancakeSquad />
-            </Route>
-
-            {/* Info pages */}
-            <Route path="/info">
-              <Info />
-            </Route>
-
             {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
             <Route exact strict path="/swap" component={Swap} />
             <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
@@ -184,16 +135,6 @@ const App: React.FC = () => {
             <Route path="/pools">
               <Redirect to="/stake" />
             </Route>
-            <Route path="/syrup">
-              <Redirect to="/pools" />
-            </Route>
-            <Route path="/collectibles">
-              <Redirect to="/nfts" />
-            </Route>
-            <Route path="/profile">
-              <Redirect to={`${nftsBaseUrl}/profile/${account?.toLowerCase() || ''}`} />
-            </Route>
-
             {/* 404 */}
             <Route component={NotFound} />
           </Switch>

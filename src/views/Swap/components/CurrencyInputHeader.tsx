@@ -17,6 +17,7 @@ import { useExpertModeManager } from 'state/user/hooks'
 
 interface Props {
   title: string
+  subtitle?: string
   noConfig?: boolean
   setIsChartDisplayed?: React.Dispatch<React.SetStateAction<boolean>>
   isChartDisplayed?: boolean
@@ -34,7 +35,7 @@ const ColoredIconButton = styled(IconButton)`
   color: ${({ theme }) => theme.colors.textSubtle};
 `
 
-const CurrencyInputHeader: React.FC<Props> = ({ title, setIsChartDisplayed, isChartDisplayed }) => {
+const CurrencyInputHeader: React.FC<Props> = ({ title, subtitle, setIsChartDisplayed, isChartDisplayed }) => {
   const [expertMode] = useExpertModeManager()
   const toggleChartDisplayed = () => {
     setIsChartDisplayed((currentIsChartDisplayed) => !currentIsChartDisplayed)
@@ -49,10 +50,15 @@ const CurrencyInputHeader: React.FC<Props> = ({ title, setIsChartDisplayed, isCh
             {isChartDisplayed ? <ChartDisableIcon color="textSubtle" /> : <ChartIcon width="24px" color="textSubtle" />}
           </ColoredIconButton>
         )} */}
-        <Flex flexDirection="column" alignItems="center">
+        <Flex flexDirection="column" alignItems="left">
           <Heading as="h2" mb="8px">
             {title}
           </Heading>
+          <Flex alignItems="left">
+            <Text color="textSubtle" fontSize="14px">
+              {subtitle}
+            </Text>
+          </Flex>
         </Flex>
         <Flex>
           <NotificationDot show={expertMode}>

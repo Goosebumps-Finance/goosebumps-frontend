@@ -364,6 +364,7 @@ export default function Swap({ history }: RouteComponentProps) {
               <AppBody>
                 <CurrencyInputHeader
                   title={t('Exchange')}
+                  subtitle={t('Trade tokens in an instant')}
                   setIsChartDisplayed={setIsChartDisplayed}
                   isChartDisplayed={isChartDisplayed}
                 />
@@ -446,7 +447,7 @@ export default function Swap({ history }: RouteComponentProps) {
                             />
                           </RowBetween>
                         )}
-                        {allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && (
+                        {/* allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && */ (
                           <RowBetween align="center">
                             <Label>{t('Slippage Tolerance')}</Label>
                             <Text bold color="primary">

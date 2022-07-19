@@ -29,6 +29,22 @@ export const mainnetTokens = defineTokens({
     'Empire Token',
     'https://s2.coinmarketcap.com/static/img/coins/64x64/10613.png',
   ),
+  sReward: new Token(
+    MAINNET,
+    '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82', // fake address, cake address to test
+    18,
+    'sReward',
+    'StakingReward',
+    'https://s2.coinmarketcap.com/static/img/coins/64x64/10613.png',
+  ),
+  fReward: new Token(
+    MAINNET,
+    '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82', // fake address, cake address to test
+    18,
+    'fReward',
+    'FarmingReward',
+    'https://s2.coinmarketcap.com/static/img/coins/64x64/10613.png',
+  ),
   cake: new Token(
     MAINNET,
     '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',

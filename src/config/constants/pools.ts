@@ -4,29 +4,6 @@ import { SerializedPoolConfig, PoolCategory } from './types'
 
 const serializedTokens = serializeTokens()
 
-export const vaultPoolConfig = {
-  [VaultKey.CakeVault]: {
-    name: 'Auto CAKE',
-    description: 'Automatic restaking',
-    autoCompoundFrequency: 5000,
-    gasLimit: 380000,
-    tokenImage: {
-      primarySrc: `/images/tokens/${tokens.cake.address}.svg`,
-      secondarySrc: '/images/tokens/autorenew.svg',
-    },
-  },
-  [VaultKey.IfoPool]: {
-    name: 'IFO CAKE',
-    description: 'Stake CAKE to participate in IFOs',
-    autoCompoundFrequency: 1,
-    gasLimit: 500000,
-    tokenImage: {
-      primarySrc: `/images/tokens/${tokens.cake.address}.svg`,
-      secondarySrc: `/images/tokens/${tokens.cake.address}.svg`,
-    },
-  },
-} as const
-
 export const newpools: SerializedPoolConfig[] = [
   {
     sousId: 2000,
@@ -82,6 +59,29 @@ export const newpools: SerializedPoolConfig[] = [
     tokenPerBlock: '0.3281',
   },
 ]
+
+export const vaultPoolConfig = {
+  [VaultKey.CakeVault]: {
+    name: 'Auto CAKE',
+    description: 'Automatic restaking',
+    autoCompoundFrequency: 5000,
+    gasLimit: 380000,
+    tokenImage: {
+      primarySrc: `/images/tokens/${tokens.cake.address}.svg`,
+      secondarySrc: '/images/tokens/autorenew.svg',
+    },
+  },
+  [VaultKey.IfoPool]: {
+    name: 'IFO CAKE',
+    description: 'Stake CAKE to participate in IFOs',
+    autoCompoundFrequency: 1,
+    gasLimit: 500000,
+    tokenImage: {
+      primarySrc: `/images/tokens/${tokens.cake.address}.svg`,
+      secondarySrc: `/images/tokens/${tokens.cake.address}.svg`,
+    },
+  },
+} as const
 
 const pools: SerializedPoolConfig[] = [
   {

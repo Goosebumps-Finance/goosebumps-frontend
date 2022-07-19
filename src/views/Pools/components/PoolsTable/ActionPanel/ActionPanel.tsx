@@ -14,7 +14,7 @@ import {
   useTooltip,
   VerifiedIcon,
 } from '@goosebumps/uikit'
-import { BASE_BSC_SCAN_URL } from 'config'
+import { BASE_BSC_SCAN_URL, BASE_URL } from 'config'
 import { getBscScanLink } from 'utils'
 import { useBlock } from 'state/block/hooks'
 import { useVaultPoolByKey, useVaultPools } from 'state/pools/hooks'
@@ -261,12 +261,14 @@ const ActionPanel: React.FC<ActionPanelProps> = ({ account, pool, userDataLoaded
         {(isXs || isSm || isMd) && totalStakedRow}
         {shouldShowBlockCountdown && blocksRow}
         <Flex mb="8px" justifyContent={['flex-end', 'flex-end', 'flex-start']}>
-          <LinkExternal href={`/info/token/${earningToken.address}`} bold={false}>
+          {/* <LinkExternal href={`/info/token/${earningToken.address}`} bold={false}> */}
+          <LinkExternal href={`${BASE_BSC_SCAN_URL}/address/${earningToken.address}`} bold={false}>
             {t('See Token Info')}
           </LinkExternal>
         </Flex>
         <Flex mb="8px" justifyContent={['flex-end', 'flex-end', 'flex-start']}>
-          <LinkExternal href={earningToken.projectLink} bold={false}>
+          {/* <LinkExternal href={earningToken.projectLink} bold={false}> */}
+          <LinkExternal href={BASE_URL} bold={false}>
             {t('View Project Site')}
           </LinkExternal>
         </Flex>
@@ -280,10 +282,10 @@ const ActionPanel: React.FC<ActionPanelProps> = ({ account, pool, userDataLoaded
             </LinkExternal>
           </Flex>
         )}
-        <Button scale="sm" variant="primary">
+        {/* <Button scale="sm" variant="primary">
           <VerifiedIcon color="#04c0d7" mr="4px" />
           Core
-        </Button>
+        </Button> */}
         {/* {account && isMetaMaskInScope && tokenAddress && (
           <Flex mb="8px" justifyContent={['flex-end', 'flex-end', 'flex-start']}>
             <Button

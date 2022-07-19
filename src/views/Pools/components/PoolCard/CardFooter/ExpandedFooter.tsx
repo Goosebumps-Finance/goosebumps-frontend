@@ -17,7 +17,7 @@ import {
   Link,
   HelpIcon,
 } from '@goosebumps/uikit'
-import { BASE_BSC_SCAN_URL } from 'config'
+import { BASE_BSC_SCAN_URL, BASE_URL } from 'config'
 import { useBlock } from 'state/block/hooks'
 import { useVaultPoolByKey, useVaultPools } from 'state/pools/hooks'
 import { DeserializedPool } from 'state/types'
@@ -163,12 +163,14 @@ const ExpandedFooter: React.FC<ExpandedFooterProps> = ({ pool, account }) => {
         </Flex>
       )}
       <Flex mb="2px" justifyContent="flex-end">
-        <LinkExternal href={`/info/token/${earningToken.address}`} bold={false} small>
+        {/* <LinkExternal href={`/info/token/${earningToken.address}`} bold={false} small> */}
+        <LinkExternal href={`${BASE_BSC_SCAN_URL}/address/${earningToken.address}`} bold={false} small>
           {t('See Token Info')}
         </LinkExternal>
       </Flex>
       <Flex mb="2px" justifyContent="flex-end">
-        <LinkExternal href={earningToken.projectLink} bold={false} small>
+        {/* <LinkExternal href={earningToken.projectLink} bold={false} small> */}
+        <LinkExternal href={BASE_URL} bold={false} small>
           {t('View Project Site')}
         </LinkExternal>
       </Flex>

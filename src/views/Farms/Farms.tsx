@@ -221,6 +221,8 @@ const Farms: React.FC = () => {
       chosenFarms = stakedOnly ? farmsList(stakedArchivedFarms) : farmsList(archivedFarms)
     }
 
+    console.log("chosenFarms: ", chosenFarms)
+
     return sortFarms(chosenFarms).slice(0, numberOfFarmsVisible)
   }, [
     sortOption,
@@ -292,7 +294,9 @@ const Farms: React.FC = () => {
   })
 
   const renderContent = (): JSX.Element => {
+    console.log("renderContent")
     if (viewMode === ViewMode.TABLE && rowData.length) {
+      console.log("viewMode: ", viewMode)
       const columnSchema = DesktopColumnSchema
 
       const columns = columnSchema.map((column) => ({
@@ -321,6 +325,8 @@ const Farms: React.FC = () => {
       return <Table data={rowData} columns={columns} userDataReady={userDataReady} />
     }
 
+    console.log("viewMode1: ", viewMode)
+    console.log("chosenFarmsMemoized: ", chosenFarmsMemoized)
     return (
       <FlexLayout>
         <Route exact path={`${path}`}>

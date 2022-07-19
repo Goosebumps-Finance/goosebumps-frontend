@@ -6,7 +6,8 @@ import type {
 } from '@reduxjs/toolkit/dist/matchers'
 import { createAsyncThunk, createSlice, isPending, isFulfilled, isRejected } from '@reduxjs/toolkit'
 import stringify from 'fast-json-stable-stringify'
-import farmsConfig from 'config/constants/farms'
+// import farmsConfig from 'config/constants/farms'
+import { newfarms } from 'config/constants/farms'
 import isArchivedPid from 'utils/farmHelpers'
 import type { AppState } from 'state'
 import priceHelperLpsConfig from 'config/constants/priceHelperLps'
@@ -19,6 +20,9 @@ import {
   fetchFarmUserStakedBalances,
 } from './fetchFarmUser'
 import { SerializedFarmsState, SerializedFarm } from '../types'
+
+const farmsConfig = newfarms
+console.log("farmsConfig: ", farmsConfig)
 
 const noAccountFarmConfig = farmsConfig.map((farm) => ({
   ...farm,

@@ -117,7 +117,7 @@ export default {
   },
   stakingWithReflectionAndLock: {
     56: '',
-    97: '0xCe097fB947B1bf543c3007323Cd881B79492EcEb',
+    97: '0x0a538ffefd71046A17c02FaBe5B7572a166B8F04',
   },
   farming: {
     56: '',

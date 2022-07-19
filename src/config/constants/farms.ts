@@ -4966,4 +4966,49 @@ const farms: SerializedFarmConfig[] = [
   },
 ]
 
+export const newfarms: SerializedFarmConfig[] = [
+  {
+    pid: 3000,
+    lpSymbol: 'EMPIRE-BNB',
+    lpAddresses: {
+      97: '0x499bd6f6f6faca9a2af3d4135e50670153d1192c',
+      56: '0x499bd6f6f6faca9a2af3d4135e50670153d1192c',
+    },
+    token: serializedTokens.empire,
+    quoteToken: serializedTokens.wbnb,
+  },
+  {
+    pid: 3001,
+    lpSymbol: 'EMPIRE-BNB with LockTime',
+    lpAddresses: {
+      97: '0x499bd6f6f6faca9a2af3d4135e50670153d1192c',
+      56: '0x499bd6f6f6faca9a2af3d4135e50670153d1192c', // fake to avoid erro, TODO
+    },
+    token: serializedTokens.empire,
+    quoteToken: serializedTokens.wbnb,
+  },
+  {
+    pid: 3002,
+    lpSymbol: 'EMPIRE-BUSD',
+    lpAddresses: {
+      97: '0xab3305057195eee6dd8a736674c530ecfd24f63b',
+      56: '',
+    },
+    token: serializedTokens.empire,
+    quoteToken: serializedTokens.busd,
+    isCommunity: true,
+  },
+  {
+    pid: 3003,
+    lpSymbol: 'EMPIRE-BUSD with LockTime',
+    lpAddresses: {
+      97: '0xab3305057195eee6dd8a736674c530ecfd24f63b',
+      56: '',
+    },
+    token: serializedTokens.empire,
+    quoteToken: serializedTokens.busd,
+    isCommunity: true,
+  },
+]
+
 export default farms

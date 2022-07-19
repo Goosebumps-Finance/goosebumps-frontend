@@ -3381,4 +3381,60 @@ const pools: SerializedPoolConfig[] = [
   },
 ]
 
+export const newpools: SerializedPoolConfig[] = [
+  {
+    sousId: 2000,
+    stakingToken: serializedTokens.empire,
+    earningToken: serializedTokens.empire,
+    contractAddress: {
+      97: '0x42339D883DA11C14a407CF67eB2F34BF81F53a22',
+      56: '0x42339D883DA11C14a407CF67eB2F34BF81F53a22',
+    },
+    poolCategory: PoolCategory.CORE,
+    harvest: true,
+    tokenPerBlock: '10',
+    sortOrder: 1,
+    isFinished: false,
+  },
+  {
+    sousId: 2001,
+    stakingToken: serializedTokens.empire,
+    earningToken: serializedTokens.empire,
+    contractAddress: {
+      97: '0x03fD18a960Ab8e16527814457a0E44a183b93be9',
+      56: '0x03fD18a960Ab8e16527814457a0E44a183b93be9',
+    },
+    poolCategory: PoolCategory.CORE,
+    harvest: true,
+    sortOrder: 2,
+    tokenPerBlock: '0.1493',
+  },
+  {
+    sousId: 2002,
+    stakingToken: serializedTokens.empire,
+    earningToken: serializedTokens.empire,
+    contractAddress: {
+      97: '0x91dacAB1617b8873533FE4819bBCa4BDAD0078D8',
+      56: '0x91dacAB1617b8873533FE4819bBCa4BDAD0078D8',
+    },
+    poolCategory: PoolCategory.CORE,
+    harvest: true,
+    sortOrder: 1,
+    tokenPerBlock: '0.1493',
+  },
+  {
+    sousId: 2003,
+    stakingToken: serializedTokens.empire,
+    earningToken: serializedTokens.empire,
+    contractAddress: {
+      97: '0xCe097fB947B1bf543c3007323Cd881B79492EcEb',
+      56: '0xCe097fB947B1bf543c3007323Cd881B79492EcEb',
+    },
+    poolCategory: PoolCategory.CORE,
+    harvest: true,
+    sortOrder: 2,
+    tokenPerBlock: '0.3281',
+  },
+]
+
 export default pools

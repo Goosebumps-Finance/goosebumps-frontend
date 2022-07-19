@@ -42,7 +42,7 @@ const Staked: React.FunctionComponent<StackedActionProps> = ({
   lpSymbol,
   lpLabel,
   lpAddresses,
-  // targetAddress,
+  targetAddresses,
   quoteToken,
   token,
   userDataReady,
@@ -62,6 +62,7 @@ const Staked: React.FunctionComponent<StackedActionProps> = ({
   const isApproved = account && allowance && allowance.isGreaterThan(0)
 
   const lpAddress = getAddress(lpAddresses)
+  const targetAddress = getAddress(targetAddresses)
   const liquidityUrlPathParts = getLiquidityUrlPathParts({
     quoteTokenAddress: quoteToken.address,
     tokenAddress: token.address,
@@ -109,8 +110,8 @@ const Staked: React.FunctionComponent<StackedActionProps> = ({
   )
   const lpContract = useERC20(lpAddress)
   const dispatch = useAppDispatch()
-  // const { onApprove } = useApproveFarm(lpContract, targetAddress)
-  const { onApprove } = useApproveFarm(lpContract)
+  const { onApprove } = useApproveFarm(lpContract, targetAddress)
+  // const { onApprove } = useApproveFarm(lpContract)
 
   const handleApprove = useCallback(async () => {
     try {

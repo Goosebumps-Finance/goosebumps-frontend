@@ -87,6 +87,7 @@ export interface SerializedFarmConfig extends FarmConfigBaseProps {
 export interface DeserializedFarmConfig extends FarmConfigBaseProps {
   token: Token
   quoteToken: Token
+  targetAddresses?: Address
 }
 
 interface PoolConfigBaseProps {

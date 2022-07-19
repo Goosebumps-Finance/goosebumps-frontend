@@ -23,10 +23,11 @@ const deserializeFarmUserData = (farm: SerializedFarm): DeserializedFarmUserData
 const deserializeFarm = (farm: SerializedFarm): DeserializedFarm => {
   if (farm === undefined) return null;
   console.log("farm: ", farm)
-  const { lpAddresses, lpSymbol, pid, dual, multiplier, isCommunity, quoteTokenPriceBusd, tokenPriceBusd } = farm
+  const { lpAddresses, targetAddresses, lpSymbol, pid, dual, multiplier, isCommunity, quoteTokenPriceBusd, tokenPriceBusd } = farm
 
   return {
     lpAddresses,
+    targetAddresses,
     lpSymbol,
     pid,
     dual,

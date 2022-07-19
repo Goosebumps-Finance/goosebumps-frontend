@@ -17,8 +17,8 @@ import {
   fetchIfoPoolPublicData,
   fetchIfoPoolUserAndCredit,
   initialPoolVaultState,
-  fetchCakePoolPublicDataAsync,
-  fetchCakePoolUserDataAsync,
+  // fetchCakePoolPublicDataAsync,
+  // fetchCakePoolUserDataAsync,
 } from '.'
 import { State, DeserializedPool, VaultKey } from '../types'
 import { transformPool } from './helpers'
@@ -93,9 +93,9 @@ export const useFetchIfoPool = (fetchCakePool = true) => {
 
   useEffect(() => {
     batch(() => {
-      if (fetchCakePool) {
-        dispatch(fetchCakePoolPublicDataAsync())
-      }
+      // if (fetchCakePool) {
+        // dispatch(fetchCakePoolPublicDataAsync())
+      // }
       dispatch(fetchIfoPoolPublicData())
     })
   }, [dispatch, fastRefresh, fetchCakePool])
@@ -104,9 +104,9 @@ export const useFetchIfoPool = (fetchCakePool = true) => {
     if (account) {
       batch(() => {
         dispatch(fetchIfoPoolUserAndCredit({ account }))
-        if (fetchCakePool) {
-          dispatch(fetchCakePoolUserDataAsync(account))
-        }
+        // if (fetchCakePool) {
+        //   dispatch(fetchCakePoolUserDataAsync(account))
+        // }
       })
     }
   }, [dispatch, fastRefresh, account, fetchCakePool])

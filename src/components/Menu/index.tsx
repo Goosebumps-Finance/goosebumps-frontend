@@ -10,7 +10,7 @@ import { useTranslation } from 'contexts/Localization'
 import PhishingWarningBanner from 'components/PhishingWarningBanner'
 import Select, { OptionProps } from 'components/Select/Select'
 import useTheme from 'hooks/useTheme'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceEmpireBusd } from 'state/farms/hooks'
 import { setNetworkInfo } from 'state/home'
 import { usePhishingBannerManager } from 'state/user/hooks'
 import { API_SERVER } from 'config'
@@ -70,7 +70,7 @@ const Menu = (props) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { isDark, toggleTheme } = useTheme()
-  const cakePriceUsd = usePriceCakeBusd()
+  const cakePriceUsd = usePriceEmpireBusd()
   const { currentLanguage, setLanguage, t } = useTranslation()
   const { pathname } = useLocation()
   const [showPhishingWarningBanner] = usePhishingBannerManager()

@@ -15,6 +15,7 @@ import {
 } from '@goosebumps/uikit'
 import tokens from 'config/constants/tokens'
 import { useTranslation } from 'contexts/Localization'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { PublicIfoData } from 'views/Ifos/types'
 import { Ifo } from 'config/constants/types'
 import { BIG_TEN } from 'utils/bigNumber'
@@ -67,6 +68,7 @@ const InlinePrize = styled(Flex)`
 
 const IfoAchievement: React.FC<Props> = ({ ifo, publicIfoData }) => {
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
   const tokenName = ifo.token.symbol?.toLowerCase()
   const campaignTitle = ifo.name
   const minLpForAchievement = publicIfoData.thresholdPoints
@@ -106,7 +108,7 @@ const IfoAchievement: React.FC<Props> = ({ ifo, publicIfoData }) => {
             <Link external href={ifo.articleUrl}>
               <LanguageIcon color="textSubtle" />
             </Link>
-            <Link external href={getBscScanLink(ifo.address, 'address')}>
+            <Link external href={getBscScanLink(ifo.address, 'address', chainId)}>
               <SmartContractIcon color="textSubtle" />
             </Link>
             {ifo.twitterUrl && (

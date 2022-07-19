@@ -18,6 +18,7 @@ import {
 import { getBscScanLink } from 'utils'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { useTranslation } from 'contexts/Localization'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { usePriceCakeBusd } from 'state/farms/hooks'
 import { Bidder } from 'config/constants/types'
 import WhitelistedBiddersModal from '../WhitelistedBiddersModal'
@@ -46,6 +47,8 @@ interface LeaderboardRowProps {
 
 const LeaderboardRow: React.FC<LeaderboardRowProps> = ({ bidder, cakePriceBusd, isMobile }) => {
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
+
   const { isTopPosition, position, samePositionAsAbove, farmName, tokenName, amount, projectSite, lpAddress, account } =
     bidder
   return (
@@ -99,7 +102,7 @@ const LeaderboardRow: React.FC<LeaderboardRowProps> = ({ bidder, cakePriceBusd, 
             </SubMenuItem>
           )}
           {account && (
-            <SubMenuItem as={LinkExternal} href={getBscScanLink(account, 'address')} bold={false} color="text">
+            <SubMenuItem as={LinkExternal} href={getBscScanLink(account, 'address', chainId)} bold={false} color="text">
               {t('Bidder Address')}
             </SubMenuItem>
           )}

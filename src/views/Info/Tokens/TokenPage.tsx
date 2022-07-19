@@ -38,6 +38,7 @@ import TransactionTable from 'views/Info/components/InfoTables/TransactionsTable
 import { useWatchlistTokens } from 'state/user/hooks'
 import { ONE_HOUR_SECONDS } from 'config/constants/info'
 import { useTranslation } from 'contexts/Localization'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import ChartCard from 'views/Info/components/InfoCharts/ChartCard'
 
 const ContentLayout = styled.div`
@@ -69,6 +70,7 @@ const TokenPage: React.FC<RouteComponentProps<{ address: string }>> = ({
 }) => {
   const { isXs, isSm } = useMatchBreakpoints()
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
 
   // Needed to scroll up if user comes to this page by clicking on entry in the table
   useEffect(() => {
@@ -138,7 +140,7 @@ const TokenPage: React.FC<RouteComponentProps<{ address: string }>> = ({
                 </Flex>
               </Breadcrumbs>
               <Flex justifyContent={[null, null, 'flex-end']} mt={['8px', '8px', 0]}>
-                <LinkExternal mr="8px" color="primary" href={getBscScanLink(address, 'address')}>
+                <LinkExternal mr="8px" color="primary" href={getBscScanLink(address, 'address', chainId)}>
                   {t('View on BscScan')}
                 </LinkExternal>
                 {cmcLink && (

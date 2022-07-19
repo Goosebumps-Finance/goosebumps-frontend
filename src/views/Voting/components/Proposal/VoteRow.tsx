@@ -3,6 +3,7 @@ import { Flex, LinkExternal, Text, Tag, CheckmarkCircleIcon } from '@goosebumps/
 import truncateHash from 'utils/truncateHash'
 import { getBscScanLink } from 'utils'
 import { useTranslation } from 'contexts/Localization'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { Vote } from 'state/types'
 import { IPFS_GATEWAY } from '../../config'
 import TextEllipsis from '../TextEllipsis'
@@ -15,6 +16,7 @@ interface VoteRowProps {
 
 const VoteRow: React.FC<VoteRowProps> = ({ vote, isVoter }) => {
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
   const hasVotingPower = !!vote.metadata?.votingPower
   const votingPower = hasVotingPower
     ? parseFloat(vote.metadata.votingPower).toLocaleString(undefined, {
@@ -27,7 +29,7 @@ const VoteRow: React.FC<VoteRowProps> = ({ vote, isVoter }) => {
     <Row>
       <AddressColumn>
         <Flex alignItems="center">
-          <LinkExternal href={getBscScanLink(vote.voter, 'address')}>{truncateHash(vote.voter)}</LinkExternal>
+          <LinkExternal href={getBscScanLink(vote.voter, 'address', chainId)}>{truncateHash(vote.voter)}</LinkExternal>
           {isVoter && (
             <Tag variant="success" outline ml="8px">
               <CheckmarkCircleIcon mr="4px" /> {t('Voted')}

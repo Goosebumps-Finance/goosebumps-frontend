@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Bet } from 'state/types'
 import { useTranslation } from 'contexts/Localization'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { getBscScanLink } from 'utils'
 import { Flex, Text, Link, Heading } from '@goosebumps/uikit'
 import { Result } from 'state/predictions/helpers'
@@ -22,6 +23,7 @@ const StyledBetDetails = styled.div`
 
 const BetDetails: React.FC<BetDetailsProps> = ({ bet, result }) => {
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
   const { totalAmount, bullAmount, bearAmount } = bet.round
   const bullMultiplier = getMultiplier(totalAmount, bullAmount)
   const bearMultiplier = getMultiplier(totalAmount, bearAmount)
@@ -44,7 +46,7 @@ const BetDetails: React.FC<BetDetailsProps> = ({ bet, result }) => {
       {bet.round.lockBlock && (
         <Flex alignItems="center" justifyContent="space-between" mb="8px">
           <Text>{t('Opening Block')}</Text>
-          <Link href={getBscScanLink(bet.round.lockBlock, 'block')} external>
+          <Link href={getBscScanLink(bet.round.lockBlock, 'block', chainId)} external>
             {bet.round.lockBlock}
           </Link>
         </Flex>
@@ -52,7 +54,7 @@ const BetDetails: React.FC<BetDetailsProps> = ({ bet, result }) => {
       {bet.round.closeBlock && (
         <Flex alignItems="center" justifyContent="space-between">
           <Text>{t('Closing Block')}</Text>
-          <Link href={getBscScanLink(bet.round.closeBlock, 'block')} external>
+          <Link href={getBscScanLink(bet.round.closeBlock, 'block', chainId)} external>
             {bet.round.closeBlock}
           </Link>
         </Flex>

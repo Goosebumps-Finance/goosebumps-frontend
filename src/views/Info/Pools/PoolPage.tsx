@@ -28,6 +28,7 @@ import { usePoolDatas, usePoolChartData, usePoolTransactions } from 'state/info/
 import TransactionTable from 'views/Info/components/InfoTables/TransactionsTable'
 import { useWatchlistPools } from 'state/user/hooks'
 import { useTranslation } from 'contexts/Localization'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import ChartCard from 'views/Info/components/InfoCharts/ChartCard'
 
 const ContentLayout = styled.div`
@@ -68,6 +69,7 @@ const PoolPage: React.FC<RouteComponentProps<{ address: string }>> = ({
 }) => {
   const { isXs, isSm } = useMatchBreakpoints()
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
   const [showWeeklyData, setShowWeeklyData] = useState(0)
   const { tooltip, tooltipVisible, targetRef } = useTooltip(
     t(`Based on last 7 days' performance. Does not account for impermanent loss`),
@@ -105,7 +107,7 @@ const PoolPage: React.FC<RouteComponentProps<{ address: string }>> = ({
               </Flex>
             </Breadcrumbs>
             <Flex justifyContent={[null, null, 'flex-end']} mt={['8px', '8px', 0]}>
-              <LinkExternal mr="8px" href={getBscScanLink(address, 'address')}>
+              <LinkExternal mr="8px" href={getBscScanLink(address, 'address', chainId)}>
                 {t('View on BscScan')}
               </LinkExternal>
               <SaveIcon fill={watchlistPools.includes(address)} onClick={() => addPoolToWatchlist(address)} />

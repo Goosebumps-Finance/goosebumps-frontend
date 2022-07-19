@@ -60,7 +60,7 @@ const CreateProposal = () => {
   const { account } = useWeb3React()
   const initialBlock = useInitialBlock()
   const { push } = useHistory()
-  const { library, connector } = useWeb3Provider()
+  const { library, connector, chainId } = useWeb3Provider()
   const { toastSuccess, toastError } = useToast()
   const [onPresentVoteDetailsModal] = useModal(<VoteDetailsModal block={state.snapshot} />)
   const { name, body, choices, startDate, startTime, endDate, endTime, snapshot } = state
@@ -263,14 +263,14 @@ const CreateProposal = () => {
                     <Text color="textSubtle" mr="16px">
                       {t('Creator')}
                     </Text>
-                    <LinkExternal href={getBscScanLink(account, 'address')}>{truncateHash(account)}</LinkExternal>
+                    <LinkExternal href={getBscScanLink(account, 'address', chainId)}>{truncateHash(account)}</LinkExternal>
                   </Flex>
                 )}
                 <Flex alignItems="center" mb="16px">
                   <Text color="textSubtle" mr="16px">
                     {t('Snapshot')}
                   </Text>
-                  <LinkExternal href={getBscScanLink(snapshot, 'block')}>{snapshot}</LinkExternal>
+                  <LinkExternal href={getBscScanLink(snapshot, 'block', chainId)}>{snapshot}</LinkExternal>
                 </Flex>
                 {account ? (
                   <>

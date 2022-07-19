@@ -3,6 +3,7 @@ import { Link as ReactRouterLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { BscScanIcon, Flex, IconButton, Link, Button, useModal } from '@goosebumps/uikit'
 import { useTranslation } from 'contexts/Localization'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { getBscScanLink } from 'utils'
 import { formatNumber } from 'utils/formatBalance'
 import truncateHash from 'utils/truncateHash'
@@ -40,6 +41,7 @@ const ProfileHeader: React.FC<HeaderProps> = ({
   isProfileLoading,
 }) => {
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
   const { account } = useWeb3React()
   const [onEditProfileModal] = useModal(<EditProfileModal />, false)
 
@@ -80,7 +82,7 @@ const ProfileHeader: React.FC<HeaderProps> = ({
             <StyledIconButton
               target="_blank"
               as="a"
-              href={getBscScanLink(accountPath, 'address')}
+              href={getBscScanLink(accountPath, 'address', chainId)}
               alt={t('View BscScan for user address')}
             >
               <BscScanIcon width="20px" color="primary" />
@@ -140,7 +142,7 @@ const ProfileHeader: React.FC<HeaderProps> = ({
     return (
       <Flex flexDirection="column" mb={[16, null, 0]} mr={[0, null, 16]}>
         {accountPath && profile?.username && (
-          <Link href={getBscScanLink(accountPath, 'address')} external bold color="primary">
+          <Link href={getBscScanLink(accountPath, 'address', chainId)} external bold color="primary">
             {truncateHash(accountPath)}
           </Link>
         )}

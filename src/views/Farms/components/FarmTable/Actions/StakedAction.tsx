@@ -42,6 +42,7 @@ const Staked: React.FunctionComponent<StackedActionProps> = ({
   lpSymbol,
   lpLabel,
   lpAddresses,
+  // targetAddress,
   quoteToken,
   token,
   userDataReady,
@@ -108,6 +109,7 @@ const Staked: React.FunctionComponent<StackedActionProps> = ({
   )
   const lpContract = useERC20(lpAddress)
   const dispatch = useAppDispatch()
+  // const { onApprove } = useApproveFarm(lpContract, targetAddress)
   const { onApprove } = useApproveFarm(lpContract)
 
   const handleApprove = useCallback(async () => {

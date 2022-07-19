@@ -335,7 +335,7 @@ const Farms: React.FC = () => {
             />
           ))}
         </Route>
-        <Route exact path={`${path}/history`}>
+        {/* <Route exact path={`${path}/history`}>
           {chosenFarmsMemoized.map((farm) => (
             <FarmCard
               key={farm.pid}
@@ -358,7 +358,7 @@ const Farms: React.FC = () => {
               removed
             />
           ))}
-        </Route>
+        </Route> */}
       </FlexLayout>
     )
   }

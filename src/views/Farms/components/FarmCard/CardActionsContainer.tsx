@@ -31,9 +31,11 @@ interface FarmCardActionsProps {
 }
 
 const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidityUrl, cakePrice, lpLabel }) => {
+  // console.log("CardActions pass", farm)
   const { t } = useTranslation()
   const { toastError } = useToast()
   const [requestedApproval, setRequestedApproval] = useState(false)
+  // const { pid, lpAddresses, targetAddress } = farm
   const { pid, lpAddresses } = farm
   const { allowance, tokenBalance, stakedBalance, earnings } = farm.userData || {}
   const lpAddress = getAddress(lpAddresses)
@@ -43,6 +45,7 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
   const lpContract = useERC20(lpAddress)
 
   const { onApprove } = useApproveFarm(lpContract)
+  // const { onApprove } = useApproveFarm(lpContract, targetAddress)
 
   const handleApprove = useCallback(async () => {
     try {

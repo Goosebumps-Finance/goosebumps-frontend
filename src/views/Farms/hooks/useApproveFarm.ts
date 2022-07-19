@@ -15,4 +15,15 @@ const useApproveFarm = (lpContract: Contract) => {
   return { onApprove: handleApprove }
 }
 
+// const useApproveFarm = (lpContract: Contract, targetAddress: string) => {
+//   const { callWithGasPrice } = useCallWithGasPrice()
+//   const handleApprove = useCallback(async () => {
+//     const tx = await callWithGasPrice(lpContract, 'approve', [targetAddress, ethers.constants.MaxUint256])
+//     const receipt = await tx.wait()
+//     return receipt.status
+//   }, [lpContract, callWithGasPrice])
+
+//   return { onApprove: handleApprove }
+// }
+
 export default useApproveFarm

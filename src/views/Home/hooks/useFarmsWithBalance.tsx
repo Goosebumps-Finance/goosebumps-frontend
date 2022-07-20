@@ -4,10 +4,13 @@ import { useWeb3React } from '@web3-react/core'
 import multicall from 'utils/multicall'
 import { getMasterChefAddress } from 'utils/addressHelpers'
 import masterChefABI from 'config/abi/masterchef.json'
-import { farmsConfig } from 'config/constants'
+// import { farmsConfig } from 'config/constants'
+import { newfarms } from 'config/constants/farms'
 import { SerializedFarmConfig } from 'config/constants/types'
 import { useFastFresh } from 'hooks/useRefresh'
 import { DEFAULT_TOKEN_DECIMAL } from 'config'
+
+const farmsConfig = newfarms
 
 export interface FarmWithBalance extends SerializedFarmConfig {
   balance: BigNumber

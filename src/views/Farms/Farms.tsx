@@ -12,6 +12,7 @@ import useIntersectionObserver from 'hooks/useIntersectionObserver'
 import { DeserializedFarm } from 'state/types'
 import { useTranslation } from 'contexts/Localization'
 import { getBalanceNumber } from 'utils/formatBalance'
+import { getAddress } from 'utils/addressHelpers'
 import { getFarmApr } from 'utils/apr'
 import { orderBy } from 'lodash'
 import isArchivedPid from 'utils/farmHelpers'
@@ -104,9 +105,9 @@ const StyledImage = styled(Image)`
 const NUMBER_OF_FARMS_VISIBLE = 12
 
 const getDisplayApr = (cakeRewardsApr?: number, lpRewardsApr?: number) => {
-  if (cakeRewardsApr && lpRewardsApr) {
-    return (cakeRewardsApr + lpRewardsApr).toLocaleString('en-US', { maximumFractionDigits: 2 })
-  }
+  // if (cakeRewardsApr && lpRewardsApr) {
+  //   return (cakeRewardsApr + lpRewardsApr).toLocaleString('en-US', { maximumFractionDigits: 2 })
+  // }
   if (cakeRewardsApr) {
     return cakeRewardsApr.toLocaleString('en-US', { maximumFractionDigits: 2 })
   }
@@ -126,21 +127,25 @@ const Farms: React.FC = () => {
   const { observerRef, isIntersecting } = useIntersectionObserver()
   const chosenFarmsLength = useRef(0)
 
-  const isArchived = pathname.includes('archived')
-  const isInactive = pathname.includes('history')
-  const isActive = !isInactive && !isArchived
+  // const isArchived = pathname.includes('archived')
+  // const isInactive = pathname.includes('history')
+  // const isActive = !isInactive && !isArchived
 
-  usePollFarmsWithUserData(isArchived)
+  // usePollFarmsWithUserData(isArchived)
 
   // Users with no wallet connected should see 0 as Earned amount
   // Connected users should see loading indicator until first userData has loaded
   const userDataReady = !account || (!!account && userDataLoaded)
 
-  const [stakedOnly, setStakedOnly] = useUserFarmStakedOnly(isActive)
+  // const [stakedOnly, setStakedOnly] = useUserFarmStakedOnly(isActive)
+  const [stakedOnly, setStakedOnly] = useUserFarmStakedOnly(true)
 
-  const activeFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier !== '0X' && !isArchivedPid(farm.pid))
-  const inactiveFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier === '0X' && !isArchivedPid(farm.pid))
-  const archivedFarms = farmsLP.filter((farm) => isArchivedPid(farm.pid))
+  // const activeFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier !== '0X' && !isArchivedPid(farm.pid))
+  const activeFarms = farmsLP
+  // const inactiveFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier === '0X' && !isArchivedPid(farm.pid))
+  const inactiveFarms = farmsLP
+  // const archivedFarms = farmsLP.filter((farm) => isArchivedPid(farm.pid))
+  const archivedFarms = farmsLP
 
   const stakedOnlyFarms = activeFarms.filter(
     (farm) => farm.userData && new BigNumber(farm.userData.stakedBalance).isGreaterThan(0),
@@ -161,9 +166,12 @@ const Farms: React.FC = () => {
           return farm
         }
         const totalLiquidity = new BigNumber(farm.lpTotalInQuoteToken).times(farm.quoteTokenPriceBusd)
-        const { cakeRewardsApr, lpRewardsApr } = isActive
-          ? getFarmApr(new BigNumber(farm.poolWeight), cakePrice, totalLiquidity, farm.lpAddresses[ChainId.MAINNET])
-          : { cakeRewardsApr: 0, lpRewardsApr: 0 }
+        // const { cakeRewardsApr, lpRewardsApr } = isActive
+        //   ? getFarmApr(new BigNumber(farm.poolWeight), cakePrice, totalLiquidity, getAddress(farm.lpAddresses))
+        //   : { cakeRewardsApr: 0, lpRewardsApr: 0 }
+
+        const { cakeRewardsApr, lpRewardsApr } = getFarmApr(getAddress(farm.targetAddresses))
+        console.log("cakeRewardsApr, lpRewardsApr: ", cakeRewardsApr, lpRewardsApr)
 
         return { ...farm, apr: cakeRewardsApr, lpRewardsApr, liquidity: totalLiquidity }
       })
@@ -176,7 +184,8 @@ const Farms: React.FC = () => {
       }
       return farmsToDisplayWithAPR
     },
-    [cakePrice, query, isActive],
+    // [cakePrice, query, isActive],
+    [query],
   )
 
   const handleChangeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -211,15 +220,16 @@ const Farms: React.FC = () => {
       }
     }
 
-    if (isActive) {
-      chosenFarms = stakedOnly ? farmsList(stakedOnlyFarms) : farmsList(activeFarms)
-    }
-    if (isInactive) {
-      chosenFarms = stakedOnly ? farmsList(stakedInactiveFarms) : farmsList(inactiveFarms)
-    }
-    if (isArchived) {
-      chosenFarms = stakedOnly ? farmsList(stakedArchivedFarms) : farmsList(archivedFarms)
-    }
+    // if (isActive) {
+    //   chosenFarms = stakedOnly ? farmsList(stakedOnlyFarms) : farmsList(activeFarms)
+    // }
+    // if (isInactive) {
+    //   chosenFarms = stakedOnly ? farmsList(stakedInactiveFarms) : farmsList(inactiveFarms)
+    // }
+    // if (isArchived) {
+    //   chosenFarms = stakedOnly ? farmsList(stakedArchivedFarms) : farmsList(archivedFarms)
+    // }
+    chosenFarms = stakedOnly ? farmsList(stakedOnlyFarms) : farmsList(activeFarms)
 
     console.log("chosenFarms: ", chosenFarms)
 
@@ -228,13 +238,13 @@ const Farms: React.FC = () => {
     sortOption,
     activeFarms,
     farmsList,
-    inactiveFarms,
-    archivedFarms,
-    isActive,
-    isInactive,
-    isArchived,
-    stakedArchivedFarms,
-    stakedInactiveFarms,
+    // inactiveFarms,
+    // archivedFarms,
+    // isActive,
+    // isInactive,
+    // isArchived,
+    // stakedArchivedFarms,
+    // stakedInactiveFarms,
     stakedOnly,
     stakedOnlyFarms,
     numberOfFarmsVisible,
@@ -411,18 +421,18 @@ const Farms: React.FC = () => {
               <Text textTransform="uppercase">{t('Sort by')}</Text>
               <Select
                 options={[
-                  {
-                    label: t('Hot'),
-                    value: 'hot',
-                  },
+                  // {
+                  //   label: t('Hot'),
+                  //   value: 'hot',
+                  // },
                   {
                     label: t('APR'),
                     value: 'apr',
                   },
-                  {
-                    label: t('Multiplier'),
-                    value: 'multiplier',
-                  },
+                  // {
+                  //   label: t('Multiplier'),
+                  //   value: 'multiplier',
+                  // },
                   {
                     label: t('Earned'),
                     value: 'earned',

@@ -30,7 +30,7 @@ export const getPoolApr = (
  * @param farmAddress Farm Address
  * @returns Farm Apr
  */
-export const getFarmApr = (
+export const getFarmAprOld = (
   poolWeight: BigNumber,
   cakePriceUsd: BigNumber,
   poolLiquidityUsd: BigNumber,
@@ -44,6 +44,13 @@ export const getFarmApr = (
   }
   const lpRewardsApr = lpAprs[farmAddress?.toLocaleLowerCase()] ?? 0
   return { cakeRewardsApr: cakeRewardsAprAsNumber, lpRewardsApr }
+}
+
+export const getFarmApr = (
+  farmAddress: string,
+): { cakeRewardsApr: number; lpRewardsApr: number } => {
+  const cakeRewardsApr = lpAprs[farmAddress?.toLocaleLowerCase()] ?? 0
+  return { cakeRewardsApr, lpRewardsApr: 0 }
 }
 
 export default null

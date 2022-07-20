@@ -6,13 +6,15 @@ import { fetchMasterChefData } from './fetchMasterChefData'
 
 const fetchFarms = async (farmsToFetch: SerializedFarmConfig[]) => {
   const farmResult = await fetchPublicFarmsData(farmsToFetch)
-  const masterChefResult = await fetchMasterChefData(farmsToFetch)
+  console.log("farmResult: ", farmResult)
+  
+  // const masterChefResult = farmsToFetch[0].targetAddresses !== undefined ? null : (await fetchMasterChefData(farmsToFetch))
 
   return farmsToFetch.map((farm, index) => {
     const [tokenBalanceLP, quoteTokenBalanceLP, lpTokenBalanceMC, lpTotalSupply, tokenDecimals, quoteTokenDecimals] =
       farmResult[index]
 
-    const [info, totalAllocPoint] = masterChefResult[index]
+    // const [info, totalAllocPoint] = masterChefResult[index]
 
     // Ratio in % of LP tokens that are staked in the MC, vs the total number in circulation
     const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(new BigNumber(lpTotalSupply))
@@ -27,8 +29,10 @@ const fetchFarms = async (farmsToFetch: SerializedFarmConfig[]) => {
     // Total staked in LP, in quote token value
     const lpTotalInQuoteToken = quoteTokenAmountMc.times(new BigNumber(2))
 
-    const allocPoint = info ? new BigNumber(info.allocPoint?._hex) : BIG_ZERO
-    const poolWeight = totalAllocPoint ? allocPoint.div(new BigNumber(totalAllocPoint)) : BIG_ZERO
+    // const allocPoint = info ? new BigNumber(info.allocPoint?._hex) : BIG_ZERO
+    const allocPoint = BIG_ZERO
+    // const poolWeight = totalAllocPoint ? allocPoint.div(new BigNumber(totalAllocPoint)) : BIG_ZERO
+    const poolWeight = BIG_ZERO
 
     return {
       ...farm,

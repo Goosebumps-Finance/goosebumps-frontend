@@ -31,7 +31,7 @@ interface FarmCardActionsProps {
 }
 
 const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidityUrl, cakePrice, lpLabel }) => {
-  // console.log("CardActions pass", farm)
+  console.log("CardActions pass", farm.userData)
   const { t } = useTranslation()
   const { toastError } = useToast()
   const [requestedApproval, setRequestedApproval] = useState(false)

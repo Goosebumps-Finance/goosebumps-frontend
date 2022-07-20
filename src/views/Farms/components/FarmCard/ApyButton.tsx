@@ -61,13 +61,14 @@ const ApyButton: React.FC<ApyButtonProps> = ({
   }
 
   return (
-    <ApyLabelContainer alignItems="center" onClick={handleClickButton}>
+    // <ApyLabelContainer alignItems="center" onClick={handleClickButton}>
+    <ApyLabelContainer alignItems="center">
       {displayApr}%
-      {variant === 'text-and-button' && (
+      {/* {variant === 'text-and-button' && (
         <IconButton variant="text" scale="sm" ml="4px">
           <CalculateIcon width="18px" />
         </IconButton>
-      )}
+      )} */}
     </ApyLabelContainer>
   )
 }

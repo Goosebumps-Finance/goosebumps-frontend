@@ -6,8 +6,10 @@ import { SerializedFarm } from '../types'
 import { SerializedFarmConfig } from '../../config/constants/types'
 
 const fetchFarmCalls = (farm: SerializedFarm) => {
-  const { lpAddresses, token, quoteToken } = farm
+  // const { lpAddresses, token, quoteToken } = farm
+  const { lpAddresses, targetAddresses, token, quoteToken } = farm
   const lpAddress = getAddress(lpAddresses)
+  const targetAddress = getAddress(targetAddresses)
   return [
     // Balance of token in the LP contract
     {
@@ -25,7 +27,7 @@ const fetchFarmCalls = (farm: SerializedFarm) => {
     {
       address: lpAddress,
       name: 'balanceOf',
-      params: [getMasterChefAddress()],
+      params: [targetAddress !== undefined ? targetAddress : getMasterChefAddress()],
     },
     // Total supply of LP tokens
     {
@@ -47,6 +49,7 @@ const fetchFarmCalls = (farm: SerializedFarm) => {
 
 export const fetchPublicFarmsData = async (farms: SerializedFarmConfig[]): Promise<any[]> => {
   const farmCalls = farms.flatMap((farm) => fetchFarmCalls(farm))
+  console.log("farmCalls: ", farmCalls)
   const chunkSize = farmCalls.length / farms.length
   const farmMultiCallResult = await multicallv2(erc20, farmCalls)
   return chunk(farmMultiCallResult, chunkSize)

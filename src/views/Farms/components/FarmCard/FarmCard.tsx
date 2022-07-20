@@ -51,10 +51,17 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
 
   const [showExpandableSection, setShowExpandableSection] = useState(false)
 
+  // const totalValueFormatted =
+  //   farm.liquidity && farm.liquidity.gt(0)
+  //     ? `$${farm.liquidity.toNumber().toLocaleString(undefined, { maximumFractionDigits: 0 })}`
+  //     : ''
+
   const totalValueFormatted =
-    farm.liquidity && farm.liquidity.gt(0)
-      ? `$${farm.liquidity.toNumber().toLocaleString(undefined, { maximumFractionDigits: 0 })}`
+    farm.lpTotalSupply && farm.lpTotalSupply.gt(0)
+      ? `$${farm.lpTotalSupply.toNumber().toLocaleString('en-US', { maximumFractionDigits: 0 })}`
       : ''
+
+  console.log("totalValueFormatted: farm:", farm)
 
   const lpLabel = farm.lpSymbol && farm.lpSymbol.toUpperCase().replace('PANCAKE', '')
   const earnLabel = farm.dual ? farm.dual.earnLabel : t('CAKE + Fees')

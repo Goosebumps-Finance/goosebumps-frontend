@@ -5,11 +5,14 @@ import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { getBalanceAmount } from 'utils/formatBalance'
-import { farmsConfig } from 'config/constants'
+// import { farmsConfig } from 'config/constants'
+import { newfarms } from 'config/constants/farms'
 import { useSlowFresh, useFastFresh } from 'hooks/useRefresh'
 import { deserializeToken } from 'state/user/hooks/helpers'
 import { fetchFarmsPublicDataAsync, fetchFarmUserDataAsync, nonArchivedFarms } from '.'
 import { State, SerializedFarm, DeserializedFarmUserData, DeserializedFarm, DeserializedFarmsState } from '../types'
+
+const farmsConfig = newfarms
 
 const deserializeFarmUserData = (farm: SerializedFarm): DeserializedFarmUserData => {
   return {
@@ -21,8 +24,8 @@ const deserializeFarmUserData = (farm: SerializedFarm): DeserializedFarmUserData
 }
 
 const deserializeFarm = (farm: SerializedFarm): DeserializedFarm => {
-  if (farm === undefined) return null;
-  console.log("farm: ", farm)
+  // if (farm === undefined) return null;
+  // console.log("farm: ", farm)
   const { lpAddresses, targetAddresses, lpSymbol, pid, dual, multiplier, isCommunity, quoteTokenPriceBusd, tokenPriceBusd } = farm
 
   return {

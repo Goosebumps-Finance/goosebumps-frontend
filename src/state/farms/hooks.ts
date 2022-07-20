@@ -69,7 +69,7 @@ export const usePollFarmsWithUserData = (includeArchive = true) => {
 
   useEffect(() => {
     const farmsToFetch = includeArchive ? farmsConfig : nonArchivedFarms
-    const pids = farmsToFetch.map((farmToFetch) => farmToFetch.pid)
+    const pids = farmsToFetch.map((farmToFetch) => farmToFetch.pid).filter((pid) => pid !== 252)
 
     dispatch(fetchFarmsPublicDataAsync(pids))
 

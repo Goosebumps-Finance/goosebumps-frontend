@@ -8,7 +8,7 @@ import { useGasPriceManager } from 'state/user/hooks'
 const GasSettings = () => {
   const { t } = useTranslation()
   const [gasPrice, setGasPrice] = useGasPriceManager()
-
+console.log("gasSettings gasPrice=", gasPrice)
   return (
     <Flex flexDirection="column">
       <Flex mb="12px" alignItems="center">

@@ -357,8 +357,9 @@ export function useGasPrice(): string {
   if(Number.isNaN(chainId)) {
     chainId = 97
   }
-  const userGas = useSelector<AppState, AppState['user']['gasPrice']>((state) => state.user.gasPrice)
-  return chainId === ChainId.MAINNET ? userGas : GAS_PRICE_GWEI.testnet
+  const userGas = useSelector<AppState, AppState['user']['gasPrice']>((state) => state.user.gasPrice)  
+  // return chainId === ChainId.MAINNET ? userGas : GAS_PRICE_GWEI.testnet
+  return userGas
 }
 
 export function useGasPriceManager(): [string, (userGasPrice: string) => void] {

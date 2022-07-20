@@ -49,7 +49,7 @@ const deserializeFarm = (farm: SerializedFarm): DeserializedFarm => {
   }
 }
 
-export const usePollFarmsPublicData = (includeArchive = false) => {
+export const usePollFarmsPublicData = (includeArchive = true) => {
   const dispatch = useAppDispatch()
   const slowRefresh = useSlowFresh()
 
@@ -61,7 +61,8 @@ export const usePollFarmsPublicData = (includeArchive = false) => {
   }, [includeArchive, dispatch, slowRefresh])
 }
 
-export const usePollFarmsWithUserData = (includeArchive = false) => {
+export const usePollFarmsWithUserData = (includeArchive = true) => {
+  console.log("usePollFarmsWithUserData: ", includeArchive)
   const dispatch = useAppDispatch()
   const slowRefresh = useSlowFresh()
   const { account } = useWeb3React()
@@ -73,6 +74,7 @@ export const usePollFarmsWithUserData = (includeArchive = false) => {
     dispatch(fetchFarmsPublicDataAsync(pids))
 
     if (account) {
+      console.log("usePollFarmsWithUserData: ", pids)
       dispatch(fetchFarmUserDataAsync({ account, pids }))
     }
   }, [includeArchive, dispatch, slowRefresh, account])

@@ -6,7 +6,7 @@ const options = {
   gasLimit: DEFAULT_GAS_LIMIT,
 }
 
-export const stakeFarm = async (masterChefContract, pid, amount) => {
+export const stakeFarmOld = async (masterChefContract, pid, amount) => {
   const gasPrice = getGasPrice()
   const value = new BigNumber(amount).times(DEFAULT_TOKEN_DECIMAL).toString()
   if (pid === 0) {
@@ -16,6 +16,15 @@ export const stakeFarm = async (masterChefContract, pid, amount) => {
   }
 
   const tx = await masterChefContract.deposit(pid, value, { ...options, gasPrice })
+  const receipt = await tx.wait()
+  return receipt.status
+}
+
+export const stakeFarm = async (stakingContract, amount, decimals?) => {
+  const gasPrice = getGasPrice()
+  const value = new BigNumber(amount).times(decimals??DEFAULT_TOKEN_DECIMAL).toString()
+
+  const tx = await stakingContract.stake(value, { ...options, gasPrice })
   const receipt = await tx.wait()
   return receipt.status
 }

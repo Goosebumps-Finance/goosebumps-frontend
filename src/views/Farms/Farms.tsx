@@ -132,6 +132,7 @@ const Farms: React.FC = () => {
   // const isActive = !isInactive && !isArchived
 
   // usePollFarmsWithUserData(isArchived)
+  usePollFarmsWithUserData()
 
   // Users with no wallet connected should see 0 as Earned amount
   // Connected users should see loading indicator until first userData has loaded

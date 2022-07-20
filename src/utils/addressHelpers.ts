@@ -91,7 +91,7 @@ export const getNftSaleAddress = () => {
 export const getPancakeSquadAddress = () => {
   return getAddress(addresses.pancakeSquad)
 }
-export const getStakeAddress = () => {
+export const getStakingAddress = () => {
   return getAddress(addresses.staking)
 }
 export const getStakingWithFixedLockTimeAddress = () => {

@@ -22,7 +22,7 @@ import {
 import { SerializedFarmsState, SerializedFarm } from '../types'
 
 const farmsConfig = newfarms
-console.log("farmsConfig: ", farmsConfig)
+// console.log("farmsConfig: ", farmsConfig)
 
 const noAccountFarmConfig = farmsConfig.map((farm) => ({
   ...farm,
@@ -56,10 +56,14 @@ export const fetchFarmsPublicDataAsync = createAsyncThunk<
     const farmsToFetch = farmsConfig.filter((farmConfig) => pids.includes(farmConfig.pid))
 
     // Add price helper farms
-    const farmsWithPriceHelpers = farmsToFetch.concat(priceHelperLpsConfig)
+    // const farmsWithPriceHelpers = farmsToFetch.concat(priceHelperLpsConfig)
 
-    const farms = await fetchFarms(farmsWithPriceHelpers)
+    // const farms = await fetchFarms(farmsWithPriceHelpers)
+    // console.log("farmsToFetch: ", farmsToFetch)
+    const farms = await fetchFarms(farmsToFetch)
+    // console.log("farms: ", farms)
     const farmsWithPrices = getFarmsPrices(farms)
+    // console.log("farmsWithPrices: ", farmsWithPrices)
 
     // Filter out price helper LP config farms
     const farmsWithoutHelperLps = farmsWithPrices.filter((farm: SerializedFarm) => {
@@ -98,6 +102,7 @@ export const fetchFarmUserDataAsync = createAsyncThunk<
   'farms/fetchFarmUserDataAsync',
   async ({ account, pids }) => {
     const farmsToFetch = farmsConfig.filter((farmConfig) => pids.includes(farmConfig.pid))
+    // console.log("farmsToFetch: ", farmsToFetch)
     const userFarmAllowances = await fetchFarmUserAllowances(account, farmsToFetch)
     const userFarmTokenBalances = await fetchFarmUserTokenBalances(account, farmsToFetch)
     const userStakedBalances = await fetchFarmUserStakedBalances(account, farmsToFetch)

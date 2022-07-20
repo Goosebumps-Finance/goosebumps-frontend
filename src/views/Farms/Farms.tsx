@@ -162,9 +162,9 @@ const Farms: React.FC = () => {
   const farmsList = useCallback(
     (farmsToDisplay: DeserializedFarm[]): FarmWithStakedValue[] => {
       let farmsToDisplayWithAPR: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
-        if (!farm.lpTotalInQuoteToken || !farm.quoteTokenPriceBusd) {
-          return farm
-        }
+        // if (!farm.lpTotalInQuoteToken || !farm.quoteTokenPriceBusd) {
+        //   return farm
+        // }
         const totalLiquidity = new BigNumber(farm.lpTotalInQuoteToken).times(farm.quoteTokenPriceBusd)
         // const { cakeRewardsApr, lpRewardsApr } = isActive
         //   ? getFarmApr(new BigNumber(farm.poolWeight), cakePrice, totalLiquidity, getAddress(farm.lpAddresses))

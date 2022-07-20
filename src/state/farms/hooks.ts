@@ -80,7 +80,7 @@ export const usePollFarmsWithUserData = (includeArchive = false) => {
 
 /**
  * Fetches the "core" farm data used globally
- * 251 = CAKE-BNB LP
+ * 1000 = EMPIRE-BNB LP
  * 252 = BUSD-BNB LP
  */
 export const usePollCoreFarmData = () => {
@@ -88,7 +88,7 @@ export const usePollCoreFarmData = () => {
   const fastRefresh = useFastFresh()
 
   useEffect(() => {
-    dispatch(fetchFarmsPublicDataAsync([252, 1000, 1001, 1002, 1003]))
+    dispatch(fetchFarmsPublicDataAsync([252, 1000]))
   }, [dispatch, fastRefresh])
 }
 
@@ -149,16 +149,16 @@ export const useLpTokenPrice = (symbol: string) => {
 }
 
 /**
- * @@deprecated use the BUSD hook in /hooks
+ * @deprecated use the BUSD hook in /hooks
  */
 export const usePriceEmpireBusd = (): BigNumber => {
-  const cakeBnbFarm = useFarmFromPid(1002)
+  const empireBnbFarm = useFarmFromPid(1000)
 
-  const cakePriceBusdAsString = cakeBnbFarm.tokenPriceBusd
+  const empirePriceBusdAsString = empireBnbFarm.tokenPriceBusd
 
-  const cakePriceBusd = useMemo(() => {
-    return new BigNumber(cakePriceBusdAsString)
-  }, [cakePriceBusdAsString])
+  const empirePriceBusd = useMemo(() => {
+    return new BigNumber(empirePriceBusdAsString)
+  }, [empirePriceBusdAsString])
 
-  return cakePriceBusd
+  return empirePriceBusd
 }

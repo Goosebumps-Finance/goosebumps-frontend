@@ -40,11 +40,11 @@ const HarvestCard = () => {
     for (const farmWithBalance of farmsWithStakedBalance) {
       try {
         // eslint-disable-next-line no-await-in-loop
-        await harvestFarm(masterChefContract, farmWithBalance.pid)
-        toastSuccess(
-          `${t('Harvested')}!`,
-          t('Your %symbol% earnings have been sent to your wallet!', { symbol: 'CAKE' }),
-        )
+        // await harvestFarm(masterChefContract, farmWithBalance.pid)
+        // toastSuccess(
+        //   `${t('Harvested')}!`,
+        //   t('Your %symbol% earnings have been sent to your wallet!', { symbol: 'CAKE' }),
+        // )
       } catch (error) {
         logError(error)
         toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))

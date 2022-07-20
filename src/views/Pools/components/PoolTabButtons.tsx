@@ -64,7 +64,8 @@ const PoolTabButtons = ({ stakedOnly, setStakedOnly, hasStakeInFinishedPools, vi
         <ButtonMenuItem as={Link} to={`${url}`}>
           {t('Live')}
         </ButtonMenuItem>
-        <NotificationDot show={hasStakeInFinishedPools}>
+        {/* <NotificationDot show={hasStakeInFinishedPools}> */}
+        <NotificationDot show={false}>
           <ButtonMenuItem id="finished-pools-button" as={Link} to={`${url}/history`}>
             {t('Finished')}
           </ButtonMenuItem>

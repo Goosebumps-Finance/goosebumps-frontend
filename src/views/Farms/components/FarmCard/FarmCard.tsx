@@ -74,6 +74,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
   })
   const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
   const lpAddress = getAddress(farm.lpAddresses)
+  const targetAddress = getAddress(farm.targetAddresses)
   const isPromotedFarm = farm.token.symbol === 'CAKE'
 
   return (
@@ -131,6 +132,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
             removed={removed}
             bscScanAddress={getBscScanLink(lpAddress, 'address', chainId)}
             // infoAddress={`/info/pool/${lpAddress}`}
+            infoAddress={getBscScanLink(targetAddress, 'address', chainId)}
             totalValueFormatted={totalValueFormatted}
             lpLabel={lpLabel}
             addLiquidityUrl={addLiquidityUrl}

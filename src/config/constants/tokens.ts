@@ -2011,10 +2011,10 @@ export const testnetTokens = defineTokens({
   ),
   busd: new Token(
     TESTNET,
-    '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee',
+    '0xF3B0aEb14c0b71B86214f7Fc99d793138Afac08E',
     18,
-    'BUSD',
-    'Binance USD',
+    'MockBUSD',
+    'MockBUSD',
     'https://www.paxos.com/busd/',
   ),
   syrup: new Token(

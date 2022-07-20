@@ -88,7 +88,7 @@ export const usePollCoreFarmData = () => {
   const fastRefresh = useFastFresh()
 
   useEffect(() => {
-    dispatch(fetchFarmsPublicDataAsync([251, 252]))
+    dispatch(fetchFarmsPublicDataAsync([252, 1000, 1001, 1002, 1003]))
   }, [dispatch, fastRefresh])
 }
 
@@ -152,7 +152,7 @@ export const useLpTokenPrice = (symbol: string) => {
  * @@deprecated use the BUSD hook in /hooks
  */
 export const usePriceEmpireBusd = (): BigNumber => {
-  const cakeBnbFarm = useFarmFromPid(251)
+  const cakeBnbFarm = useFarmFromPid(1002)
 
   const cakePriceBusdAsString = cakeBnbFarm.tokenPriceBusd
 

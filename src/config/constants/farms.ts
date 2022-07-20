@@ -5,7 +5,21 @@ const serializedTokens = serializeTokens()
 
 export const newfarms: SerializedFarmConfig[] = [
   {
-    pid: 253,
+    pid: 252,
+    lpSymbol: 'BUSD-BNB LP',
+    lpAddresses: {
+      97: '0xfD5f450114203a1fB3396907946fb217E0D60F44',
+      56: '0x58F876857a02D6762E0101bb5C46A8c1ED44Dc16',
+    },
+    targetAddresses: {
+      97: '0x1d32c2945C8FDCBc7156c553B7cEa4325a17f4f9',
+      56: '0x73feaa1eE314F8c655E354234017bE2193C9E24E',
+    },
+    token: serializedTokens.busd,
+    quoteToken: serializedTokens.wbnb,
+  },
+  {
+    pid: 1000,
     lpSymbol: 'EMPIRE-BNB',
     lpAddresses: {
       97: '0x499bd6f6f6faca9a2af3d4135e50670153d1192c',
@@ -19,7 +33,7 @@ export const newfarms: SerializedFarmConfig[] = [
     quoteToken: serializedTokens.wbnb,
   },
   {
-    pid: 254,
+    pid: 1001,
     lpSymbol: 'EMPIRE-BNB with LockTime',
     lpAddresses: {
       97: '0x499bd6f6f6faca9a2af3d4135e50670153d1192c',
@@ -33,7 +47,7 @@ export const newfarms: SerializedFarmConfig[] = [
     quoteToken: serializedTokens.wbnb,
   },
   {
-    pid: 251,
+    pid: 1002,
     lpSymbol: 'EMPIRE-BUSD',
     lpAddresses: {
       97: '0xab3305057195eee6dd8a736674c530ecfd24f63b',
@@ -48,7 +62,7 @@ export const newfarms: SerializedFarmConfig[] = [
     isCommunity: true,
   },
   {
-    pid: 252,
+    pid: 1003,
     lpSymbol: 'EMPIRE-BUSD with LockTime',
     lpAddresses: {
       97: '0xab3305057195eee6dd8a736674c530ecfd24f63b',

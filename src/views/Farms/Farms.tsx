@@ -233,7 +233,7 @@ const Farms: React.FC = () => {
 
     console.log("chosenFarms: ", chosenFarms)
 
-    return sortFarms(chosenFarms).slice(0, numberOfFarmsVisible)
+    return sortFarms(chosenFarms).filter((farm) => farm.pid !== 252).slice(0, numberOfFarmsVisible)
   }, [
     sortOption,
     activeFarms,

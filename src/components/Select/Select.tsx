@@ -156,6 +156,11 @@ const Select: React.FunctionComponent<SelectProps> = ({
       setSelectedOptionIndex(selIndex)
   }, [selIndex])
 
+  useEffect(() => {
+    if(selectedOptionIndex !== selIndex)
+      setSelectedOptionIndex(selIndex)
+  }, [selectedOptionIndex])
+
   return (
     <DropDownContainer isOpen={isOpen} {...props}>
       <DropDownHeader onClick={toggling} style={props.header}>

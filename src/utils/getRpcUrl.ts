@@ -25,6 +25,12 @@ const getNodeUrl = (chainId = 97) => {
   if (chainId === ChainId.MAINNET) {
     return getBscNodeUrl()
   }
+  if(chainId === 1) { // ChainId.ETH_MAIN) 
+    return getEthNodeUrl()
+  }
+  if(chainId === 137) { // ChainId.POLYGON_MAIN) 
+    return getPolygonNodeUrl()
+  }
   return getBscTestnetNodeUrl()
 }
 

@@ -14,7 +14,7 @@ import {
 import { ConnectorNames, connectorLocalStorageKey } from '@goosebumps/uikit'
 
 import { connectorsByName } from 'utils/web3React'
-import { changeNetwork } from 'utils/changeNetwork'
+import changeNetwork from 'utils/changeNetwork'
 import { setupNetwork } from 'utils/wallet'
 import useToast from 'hooks/useToast'
 import { useAppDispatch } from 'state'

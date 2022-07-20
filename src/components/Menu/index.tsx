@@ -18,7 +18,7 @@ import { API_SERVER } from 'config'
 import { ChainIdStorageName } from 'config/constants'
 import networks from 'config/constants/networks.json';
 import { getAsyncData } from 'utils/requester'
-import { changeNetwork } from 'utils/changeNetwork'
+import changeNetwork from 'utils/changeNetwork'
 
 import config from './config/config'
 import UserMenu from './UserMenu'
@@ -74,6 +74,7 @@ const Menu = (props) => {
 
   const { network, searchKey } = useSelector((state:State) => state.home)
   const [networkIndex, setNetworkIndex] = useState(0)
+  const [loadingStatus, setLoadingStatus] = useState(-1)
 
   const activeMenuItem = getActiveMenuItem({ menuConfig: config(t), pathname })
   const activeSubMenuItem = getActiveSubMenuItem({ menuItem: activeMenuItem, pathname })
@@ -103,8 +104,11 @@ const Menu = (props) => {
     const detailedNetwork = linq.from(networks).where((x) => x.Name === newNetwork.value).single()
     const info = {...newNetwork, chainId: detailedNetwork.chainId};
     console.log("onChangeNetwork info = ", info)
-    dispatch(setNetworkInfo({network: {...newNetwork, chainId: detailedNetwork.chainId}}))
-    changeNetwork(detailedNetwork)
+    await changeNetwork(detailedNetwork)
+    if(loadingStatus === 1) {
+      dispatch(setNetworkInfo({network: {...newNetwork, chainId: detailedNetwork.chainId}}))
+    }
+    setLoadingStatus(-1)
   }
 
   useEffect(() => {

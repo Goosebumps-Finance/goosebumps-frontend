@@ -6,7 +6,11 @@ import { useTranslation } from 'contexts/Localization'
 import useAuth from 'hooks/useAuth'
 import useTokenBalance, { useGetBnbBalance } from 'hooks/useTokenBalance'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import linq from 'linq'
+import { State } from 'state/types'
 import { getBscScanLink } from 'utils'
+import networks from 'config/constants/networks.json'
 import { formatBigNumber, getFullDisplayBalance } from 'utils/formatBalance'
 import CopyAddress from './CopyAddress'
 
@@ -21,6 +25,9 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowBnbBalance, onDismiss }) 
   const { balance, fetchStatus } = useGetBnbBalance()
   const { balance: cakeBalance, fetchStatus: cakeFetchStatus } = useTokenBalance(tokens.cake.address)
   const { logout } = useAuth()
+  const { network } = useSelector((state:State) => state.home)
+  const detailedNetwork = linq.from(networks).where((x) => x.Name === network.value).single()
+  const currencyName = detailedNetwork.Currency.Name
 
   const handleLogout = () => {
     onDismiss()
@@ -36,13 +43,13 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowBnbBalance, onDismiss }) 
       {hasLowBnbBalance && (
         <Message variant="warning" mb="24px">
           <Box>
-            <Text fontWeight="bold">{t('BNB Balance Low')}</Text>
-            <Text as="p">{t('You need BNB for transaction fees.')}</Text>
+            <Text fontWeight="bold">{t(`${currencyName} Balance Low`)}</Text>
+            <Text as="p">{t(`You need ${currencyName} for transaction fees.`)}</Text>
           </Box>
         </Message>
       )}
       <Flex alignItems="center" justifyContent="space-between">
-        <Text color="textSubtle">{t('BNB Balance')}</Text>
+        <Text color="textSubtle">{t(`${currencyName} Balance`)}</Text>
         {fetchStatus !== FetchStatus.Fetched ? (
           <Skeleton height="22px" width="60px" />
         ) : (

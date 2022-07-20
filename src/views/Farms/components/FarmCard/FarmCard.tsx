@@ -20,19 +20,32 @@ export interface FarmWithStakedValue extends DeserializedFarm {
   liquidity?: BigNumber
 }
 
-const StyledCard = styled(Card)`
+const StyledCard = styled(Card)<{ isActive?: boolean}>`
+  background: none;
+  max-width: 352px;
+  margin: 0 8px 24px;
+  width: 100%;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
   align-self: baseline;
+  position: relative;
+
+  color: ${({ isActive, theme }) => theme.colors[isActive ? 'secondary': 'textDisabled']};
+  
 `
 
 const FarmCardInnerContainer = styled(Flex)`
   flex-direction: column;
   justify-content: space-around;
   padding: 24px;
+  background: #18283a;
 `
 
 const ExpandingWrapper = styled.div`
-  padding: 24px;
-  border-top: 2px solid ${({ theme }) => theme.colors.cardBorder};
+  background: #18283a;
+  padding: 0px;
+  // border-top: 2px solid ${({ theme }) => theme.colors.cardBorder};
   overflow: hidden;
 `
 

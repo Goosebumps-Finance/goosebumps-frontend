@@ -1,5 +1,11 @@
 import { ChainId, JSBI, Percent, Token } from '@goosebumps/sdk'
+// import { ethTokens, mainnetTokens, polygonTokens, testnetTokens } from './tokens'
 import { mainnetTokens, testnetTokens } from './tokens'
+
+export const ETH_CHAIN_ID = 1
+export const POLYGON_CHAIN_ID = 137
+export const BSC_CHAIN_ID = 56
+export const BSC_TESTNET_CHAIN_ID = 97
 
 // export const ROUTER_ADDRESS = '0x10ED43C718714eb63d5aA57B78B54704E256024E'
 export const ROUTER_ADDRESS = '0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3'
@@ -22,6 +28,8 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     mainnetTokens.usdc,
   ],
   [ChainId.TESTNET]: [testnetTokens.wbnb, testnetTokens.cake, testnetTokens.busd],
+  // [ChainId.ETH_MAIN] : [ethTokens.weth],
+  // [ChainId.POLYGON_MAIN] : [polygonTokens.wmatic]
 }
 
 /**
@@ -45,12 +53,16 @@ export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: To
 export const SUGGESTED_BASES: ChainTokenList = {
   [ChainId.MAINNET]: [mainnetTokens.busd, mainnetTokens.cake, mainnetTokens.btcb],
   [ChainId.TESTNET]: [testnetTokens.wbnb, testnetTokens.cake, testnetTokens.busd],
+  // [ChainId.ETH_MAIN]: [ethTokens.weth],
+  // [ChainId.POLYGON_MAIN]: [polygonTokens.wmatic]
 }
 
 // used to construct the list of all pairs we consider by default in the frontend
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   [ChainId.MAINNET]: [mainnetTokens.wbnb, mainnetTokens.dai, mainnetTokens.busd, mainnetTokens.usdt],
   [ChainId.TESTNET]: [testnetTokens.wbnb, testnetTokens.cake, testnetTokens.busd],
+  // [ChainId.ETH_MAIN]: [ethTokens.weth],
+  // [ChainId.POLYGON_MAIN]: [polygonTokens.wmatic]
 }
 
 export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } = {
@@ -59,9 +71,16 @@ export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } 
     [mainnetTokens.busd, mainnetTokens.usdt],
     [mainnetTokens.dai, mainnetTokens.usdt],
   ],
+  // [ChainId.ETH_MAIN]:[
+  //   [ethTokens.weth, ethTokens.uni]
+  // ],
+  // [ChainId.POLYGON_MAIN]: [
+  //   [polygonTokens.wmatic, polygonTokens.aave]
+  // ]
 }
 
 export const NetworkContextName = 'NETWORK'
+export const ChainIdStorageName = "SELECTED_CHAIN_ID"
 
 // default allowed slippage, in bips
 export const INITIAL_ALLOWED_SLIPPAGE = 50

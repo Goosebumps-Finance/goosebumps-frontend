@@ -3,9 +3,11 @@ import BigNumber from 'bignumber.js'
 import tokens from 'config/constants/tokens'
 import { FAST_INTERVAL, SLOW_INTERVAL } from 'contexts/RefreshContext'
 import { ethers } from 'ethers'
+import { useSelector } from 'react-redux'
+import { State } from 'state/types'
 import useSWR from 'swr'
 import { BIG_ZERO } from 'utils/bigNumber'
-import { simpleRpcProvider } from 'utils/providers'
+import { getSimpleRpcProvider, simpleRpcProvider } from 'utils/providers'
 import { useCake, useTokenContract } from './useContract'
 import { useSWRContract } from './useSWRContract'
 
@@ -53,8 +55,10 @@ export const useBurnedBalance = (tokenAddress: string) => {
 
 export const useGetBnbBalance = () => {
   const { account } = useWeb3React()
+  const { network } = useSelector((state:State) => state.home)
   const { status, data, mutate } = useSWR([account, 'bnbBalance'], async () => {
-    return simpleRpcProvider.getBalance(account)
+    const rpcProvider = getSimpleRpcProvider(network.chainId)
+    return rpcProvider.getBalance(account)
   })
 
   return { balance: data || ethers.constants.Zero, fetchStatus: status, refresh: mutate }

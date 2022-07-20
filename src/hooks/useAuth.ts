@@ -14,6 +14,7 @@ import {
 import { ConnectorNames, connectorLocalStorageKey } from '@goosebumps/uikit'
 
 import { connectorsByName } from 'utils/web3React'
+import { changeNetwork } from 'utils/changeNetwork'
 import { setupNetwork } from 'utils/wallet'
 import useToast from 'hooks/useToast'
 import { useAppDispatch } from 'state'
@@ -33,18 +34,20 @@ const useAuth = () => {
   const login = useCallback(
     (connectorID: ConnectorNames) => {
       const connector = connectorsByName[connectorID]
+      const detailedNetwork = linq.from(networks).where((x) => x.Name === network.value).single()
       if (connector) {
+        // @ts-ignore
+        const currentVersion = window.ethereum.networkVersion
+        if(currentVersion !== detailedNetwork.chainId) {
+          changeNetwork(detailedNetwork)
+        }
         activate(connector, async (error: Error) => {
           if (error instanceof UnsupportedChainIdError) {
-            console.log("useAuth: network = ", network)
-            const selNetwork = linq.from(networks).where((x) => x.Name === (network === null ? "bsctestnet" : network.value)).single()
-
-            const hasSetup = await setupNetwork(selNetwork)
+            const hasSetup = await setupNetwork(detailedNetwork)
             if (hasSetup) {
               activate(connector)
             }
           } else {
-            
             window.localStorage.removeItem(connectorLocalStorageKey)
             if (error instanceof NoEthereumProviderError || error instanceof NoBscProviderError) {
               toastError(t('Provider Error'), t('No provider was found'))

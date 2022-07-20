@@ -1,4 +1,6 @@
 import { ChainId, Token } from '@goosebumps/sdk'
+import { useSelector } from 'react-redux'
+import { State } from 'state/types'
 import { serializeToken } from 'state/user/hooks/helpers'
 import { SerializedToken } from './types'
 
@@ -9,6 +11,18 @@ interface TokenList {
 }
 
 const defineTokens = <T extends TokenList>(t: T) => t
+
+// export const ethTokens = defineTokens({
+//   weth: new Token(ETH_MAIN, '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', 18, 'WETH', 'Wrapped ETHER', 'https://weth.io/'),
+//   uni: new Token(ETH_MAIN, '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984', 18, "UNI", "Uniswap", 'https://uniswap.org/'),
+//   cake: new Token(ETH_MAIN, '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984', 18, "UNI", "Uniswap", 'https://uniswap.org/')
+// })
+
+// export const polygonTokens = defineTokens({
+//   wmatic: new Token(POLYGON_MAIN, '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270', 18, 'WMATIC', 'Wrapped MATIC', 'https://polygon.technology/'),
+//   aave: new Token(POLYGON_MAIN, '0xd6df932a45c0f255f85145f286ea0b292b21c90b', 18, 'AAVE', 'AAVE', 'https://aave.com/'),
+//   cake: new Token(POLYGON_MAIN, '0xd6df932a45c0f255f85145f286ea0b292b21c90b', 18, 'AAVE', 'AAVE', 'https://aave.com/')
+// })
 
 export const mainnetTokens = defineTokens({
   wbnb: new Token(
@@ -1988,15 +2002,21 @@ export const testnetTokens = defineTokens({
 } as const)
 
 const tokens = () => {
-  const chainId = process.env.REACT_APP_CHAIN_ID
+  let chainId = parseInt(window.localStorage.getItem("SELECTED_CHAIN_ID"), 10)
+  if(Number.isNaN(chainId)) chainId = 97
 
   // If testnet - return list comprised of testnetTokens wherever they exist, and mainnetTokens where they don't
-  if (parseInt(chainId, 10) === ChainId.TESTNET) {
+  if (chainId === ChainId.TESTNET) {
     return Object.keys(mainnetTokens).reduce((accum, key) => {
       return { ...accum, [key]: testnetTokens[key] || mainnetTokens[key] }
     }, {} as typeof testnetTokens & typeof mainnetTokens)
   }
-
+  // if (parseInt(chainId, 10) === ChainId.ETH_MAIN) {
+  //   return ethTokens
+  // }
+  // if (parseInt(chainId, 10) === ChainId.POLYGON_MAIN) {
+  //   return polygonTokens
+  // }
   return mainnetTokens
 }
 

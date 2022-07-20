@@ -247,7 +247,7 @@ const Pools: React.FC = () => {
 
   return (
     <>
-      <PageHeader>
+      {/* <PageHeader>
         <Flex justifyContent="space-between" flexDirection={['column', null, null, 'row']}>
           <Flex flex="1" flexDirection="column" mr={['8px', 0]} />
           <Flex flex="1" height="fit-content" justifyContent="center" alignItems="center" mt={['24px', null, '0']}>
@@ -255,7 +255,7 @@ const Pools: React.FC = () => {
             <BountyCard />
           </Flex>
         </Flex>
-      </PageHeader>
+      </PageHeader> */}
       <Page style={{ backgroundColor: '#121e30', borderRadius: '20px' }}>
         <PoolControls>
           <PoolTabButtons

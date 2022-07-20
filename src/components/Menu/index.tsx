@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router'
 import { useHistory } from 'react-router-dom'
 import { InputGroup, Menu as UikitMenu } from '@goosebumps/uikit'
@@ -12,8 +12,10 @@ import Select, { OptionProps } from 'components/Select/Select'
 import useTheme from 'hooks/useTheme'
 import { usePriceCakeBusd } from 'state/farms/hooks'
 import { setNetworkInfo } from 'state/home'
+import { State } from 'state/types'
 import { usePhishingBannerManager } from 'state/user/hooks'
 import { API_SERVER } from 'config'
+import { ChainIdStorageName } from 'config/constants'
 import networks from 'config/constants/networks.json';
 import { getAsyncData } from 'utils/requester'
 import { changeNetwork } from 'utils/changeNetwork'
@@ -24,14 +26,8 @@ import GlobalSettings from './GlobalSettings'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
 
-const SearchItem = ({network, setNetwork}) => {
+const SearchItem = ({onChangeNetwork, selIndex}) => {
   const { t } = useTranslation();
-  // useEffect(() => {
-  //   setNetwork({
-  //     label: t("Ethereum"),
-  //     value: "ethereum"
-  //   })
-  // }, [t, setNetwork])
   return <>
     <Select
       options={[
@@ -61,7 +57,8 @@ const SearchItem = ({network, setNetwork}) => {
         borderTop: "none"
       }}
       defaultOptionIndex={3}
-      onOptionChange={setNetwork}
+      onOptionChange={onChangeNetwork}
+      selIndex={selIndex}
     />
   </>
 }
@@ -75,22 +72,21 @@ const Menu = (props) => {
   const { pathname } = useLocation()
   const [showPhishingWarningBanner] = usePhishingBannerManager()
 
-  const [network, setNetwork] = useState<OptionProps | null>(null)
-  const [searchKey, setSearchKey] = useState('')
+  const { network, searchKey } = useSelector((state:State) => state.home)
+  const [networkIndex, setNetworkIndex] = useState(0)
 
   const activeMenuItem = getActiveMenuItem({ menuConfig: config(t), pathname })
   const activeSubMenuItem = getActiveSubMenuItem({ menuItem: activeMenuItem, pathname })
 
   const onSearchKeyChange = (e) => {
-    setSearchKey(e.target.value)
-    dispatch(setNetworkInfo({ network, searchKey }))
+    dispatch(setNetworkInfo({ searchKey: e.target.value }))
     if (ethers.utils.isAddress(e.target.value) || !e.target.value) {
       handleSearch(e.target.value)
     }
   }
 
   const handleSearch = async (address: string) => {
-    console.log('handleSearch')
+    console.log('handleSearch network = ', network)
     if (network === null || address === '') return
     const isToken = await getAsyncData(`${API_SERVER}api/Search/IsToken`, { address, network: network.value })
     console.log('After getAsyncData isToken = ', isToken)
@@ -103,24 +99,28 @@ const Menu = (props) => {
     }
   }
 
-  useEffect(() => {
-    console.log("before dispatch Networkinfo network = ", network)
-    dispatch(setNetworkInfo({network, searchKey}))
-  }, [ network, searchKey, dispatch ])
-
-  const onChangeNetwork = (info) => {
+  const onChangeNetwork = async (newNetwork) => {
+    const detailedNetwork = linq.from(networks).where((x) => x.Name === newNetwork.value).single()
+    const info = {...newNetwork, chainId: detailedNetwork.chainId};
     console.log("onChangeNetwork info = ", info)
-    const selNetwork = linq.from(networks).where((x) => x.Name === (info.value ? info.value : "bsctestnet")).single()
-    // console.log("selNetwork = ", selNetwork)
-    setNetwork(info)
-    changeNetwork(selNetwork)
+    dispatch(setNetworkInfo({network: {...newNetwork, chainId: detailedNetwork.chainId}}))
+    changeNetwork(detailedNetwork)
   }
+
+  useEffect(() => {
+    let _index = 0;
+    if(network.chainId === 1) _index = 0
+    if(network.chainId === 56) _index = 1
+    if(network.chainId === 137) _index = 2
+    if(network.chainId === 97) _index = 3
+    setNetworkIndex(_index)
+  }, [network])
 
   return (
     <UikitMenu
       userMenu={<UserMenu />}
       globalMenu={<GlobalSettings />}
-      searchItem={<SearchItem setNetwork={onChangeNetwork} network={network}/>}
+      searchItem={<SearchItem onChangeNetwork={onChangeNetwork} selIndex={networkIndex} />}
       searchKey={searchKey}
       setSearchKey={onSearchKeyChange}
       // banner={showPhishingWarningBanner && <PhishingWarningBanner />}

@@ -13,7 +13,9 @@ export interface ExpandableSectionProps {
 }
 
 const Wrapper = styled.div`
-  margin-top: 24px;
+  padding: 24px;
+  background-color: #20334F;
+  border-radius: 0px 0px 24px 24px;
 `
 
 const StyledLinkExternal = styled(LinkExternal)`

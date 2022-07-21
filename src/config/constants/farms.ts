@@ -15,6 +15,10 @@ export const newfarms: SerializedFarmConfig[] = [
       97: '0x1d32c2945C8FDCBc7156c553B7cEa4325a17f4f9',
       56: '0x73feaa1eE314F8c655E354234017bE2193C9E24E',
     },
+    treasuryAddresses: {
+      97: '0xCD021A8Ecd028dF947d60c0bF0e30Bfdd93859c5',
+      56: '0xCD021A8Ecd028dF947d60c0bF0e30Bfdd93859c5',
+    },
     token: serializedTokens.busd,
     quoteToken: serializedTokens.wbnb,
   },
@@ -28,6 +32,10 @@ export const newfarms: SerializedFarmConfig[] = [
     targetAddresses: {
       97: '0xAFc34AC89AD84cf46a6d9e8D3228B5c25E4a4804',
       56: '0xAFc34AC89AD84cf46a6d9e8D3228B5c25E4a4804',
+    },
+    treasuryAddresses: {
+      97: '0xCD021A8Ecd028dF947d60c0bF0e30Bfdd93859c5',
+      56: '0xCD021A8Ecd028dF947d60c0bF0e30Bfdd93859c5',
     },
     token: serializedTokens.empire,
     quoteToken: serializedTokens.wbnb,
@@ -43,6 +51,10 @@ export const newfarms: SerializedFarmConfig[] = [
       97: '0xec604726325dd99dfD801933283219f9784e7A09',
       56: '0xec604726325dd99dfD801933283219f9784e7A09',
     },
+    treasuryAddresses: {
+      97: '0x13891C162e6C077A9c8374fDa109aCfD10fB489F',
+      56: '0x13891C162e6C077A9c8374fDa109aCfD10fB489F',
+    },
     token: serializedTokens.empire,
     quoteToken: serializedTokens.wbnb,
   },
@@ -56,6 +68,10 @@ export const newfarms: SerializedFarmConfig[] = [
     targetAddresses: {
       97: '0x15Fa177595b01E3e100d1f1367a2f6f6c74E2a29',
       56: '0x15Fa177595b01E3e100d1f1367a2f6f6c74E2a29',
+    },
+    treasuryAddresses: {
+      97: '0x149eC604aa44a40089469d3e465F52e271C777Fb',
+      56: '0x149eC604aa44a40089469d3e465F52e271C777Fb',
     },
     token: serializedTokens.empire,
     quoteToken: serializedTokens.busd,
@@ -71,6 +87,10 @@ export const newfarms: SerializedFarmConfig[] = [
     targetAddresses: {
       97: '0x21146F323e24F6f64B807F66D2Ca2532cB80865e',
       56: '0x21146F323e24F6f64B807F66D2Ca2532cB80865e',
+    },
+    treasuryAddresses: {
+      97: '0x5e9B1E67b71d0525058e95fE5C4FC34fEf51Ef1b',
+      56: '0x5e9B1E67b71d0525058e95fE5C4FC34fEf51Ef1b',
     },
     token: serializedTokens.empire,
     quoteToken: serializedTokens.busd,

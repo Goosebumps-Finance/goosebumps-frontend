@@ -6,12 +6,15 @@ import RoiCalculatorModal from 'components/RoiCalculatorModal'
 import { useTranslation } from 'contexts/Localization'
 import { useFarmUser, useLpTokenPrice } from 'state/farms/hooks'
 
-const ApyLabelContainer = styled(Flex)`
-  cursor: pointer;
+// const ApyLabelContainer = styled(Flex)`
+//   cursor: pointer;
 
-  &:hover {
-    opacity: 0.5;
-  }
+//   &:hover {
+//     opacity: 0.5;
+//   }
+// `
+
+const ApyLabelContainer = styled(Flex)`
 `
 
 export interface ApyButtonProps {

@@ -7,9 +7,10 @@ import { SerializedFarmConfig } from '../../config/constants/types'
 
 const fetchFarmCalls = (farm: SerializedFarm) => {
   // const { lpAddresses, token, quoteToken } = farm
-  const { lpAddresses, targetAddresses, token, quoteToken } = farm
+  const { lpAddresses, treasuryAddresses, token, quoteToken } = farm
   const lpAddress = getAddress(lpAddresses)
-  const targetAddress = getAddress(targetAddresses)
+  const treasuryAddress = getAddress(treasuryAddresses)
+  // console.log("xxxx treasuryAddress: ", treasuryAddress !== undefined ? treasuryAddress : getMasterChefAddress())
   return [
     // Balance of token in the LP contract
     {
@@ -24,10 +25,11 @@ const fetchFarmCalls = (farm: SerializedFarm) => {
       params: [lpAddress],
     },
     // Balance of LP tokens in the master chef contract
+    // Balance of LP tokens in the staking contract
     {
       address: lpAddress,
       name: 'balanceOf',
-      params: [targetAddress !== undefined ? targetAddress : getMasterChefAddress()],
+      params: [treasuryAddress??getMasterChefAddress()],
     },
     // Total supply of LP tokens
     {
@@ -52,5 +54,7 @@ export const fetchPublicFarmsData = async (farms: SerializedFarmConfig[]): Promi
   console.log("farmCalls: ", farmCalls)
   const chunkSize = farmCalls.length / farms.length
   const farmMultiCallResult = await multicallv2(erc20, farmCalls)
+  // console.log("xxxx targetAddress: result1", farmMultiCallResult)
+  // console.log("xxxx targetAddress: result", chunk(farmMultiCallResult, chunkSize))
   return chunk(farmMultiCallResult, chunkSize)
 }

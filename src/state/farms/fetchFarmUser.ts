@@ -9,7 +9,7 @@ import { SerializedFarmConfig } from 'config/constants/types'
 export const fetchFarmUserAllowances = async (account: string, farmsToFetch: SerializedFarmConfig[]) => {
   const masterChefAddress = getMasterChefAddress()
 
-  const gooseFarmFlag = (farmsToFetch.length > 0 && farmsToFetch[0].targetAddresses !== undefined)
+  const gooseFarmFlag = (farmsToFetch.length > 0 && farmsToFetch[0].targetAddresses)
 
   const calls = farmsToFetch.map((farm) => {
     const lpContractAddress = getAddress(farm.lpAddresses)
@@ -44,7 +44,7 @@ export const fetchFarmUserTokenBalances = async (account: string, farmsToFetch: 
 export const fetchFarmUserStakedBalances = async (account: string, farmsToFetch: SerializedFarmConfig[]) => {
   const masterChefAddress = getMasterChefAddress()
 
-  const gooseFarmFlag = (farmsToFetch.length > 0 && farmsToFetch[0].targetAddresses !== undefined)
+  const gooseFarmFlag = (farmsToFetch.length > 0 && farmsToFetch[0].targetAddresses)
   
   const calls = farmsToFetch.map((farm) => {
     const targetAddress = getAddress(farm.targetAddresses)
@@ -66,7 +66,7 @@ export const fetchFarmUserStakedBalances = async (account: string, farmsToFetch:
 export const fetchFarmUserEarnings = async (account: string, farmsToFetch: SerializedFarmConfig[]) => {
   const masterChefAddress = getMasterChefAddress()
 
-  const gooseFarmFlag = (farmsToFetch.length > 0 && farmsToFetch[0].targetAddresses !== undefined)
+  const gooseFarmFlag = (farmsToFetch.length > 0 && farmsToFetch[0].targetAddresses)
 
   const calls = farmsToFetch.map((farm) => {
     const targetAddress = getAddress(farm.targetAddresses)

@@ -19,7 +19,7 @@ const useApproveFarm = (lpContract: Contract, targetAddress?: string) => {
   const masterChefContract = useMasterchef()
   const { callWithGasPrice } = useCallWithGasPrice()
   const handleApprove = useCallback(async () => {
-    const tx = await callWithGasPrice(lpContract, 'approve', [targetAddress !== undefined ? targetAddress : masterChefContract.address  , ethers.constants.MaxUint256])
+    const tx = await callWithGasPrice(lpContract, 'approve', [targetAddress??masterChefContract.address  , ethers.constants.MaxUint256])
     const receipt = await tx.wait()
     return receipt.status
   }, [lpContract, masterChefContract, targetAddress, callWithGasPrice])

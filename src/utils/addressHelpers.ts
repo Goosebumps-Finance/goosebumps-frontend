@@ -5,7 +5,7 @@ import { VaultKey } from 'state/types'
 
 export const getAddress = (address: Address, chainId?: string): string => {
   const defaultChainId = process.env.REACT_APP_CHAIN_ID
-  return address[chainId !== undefined ? chainId : defaultChainId] ? address[chainId !== undefined ? chainId : defaultChainId] : address[ChainId.MAINNET]
+  return address[chainId??defaultChainId] ? address[chainId??defaultChainId] : address[ChainId.MAINNET]
 }
 
 export const getMasterChefAddress = () => {

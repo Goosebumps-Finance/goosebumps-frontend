@@ -164,7 +164,7 @@ const ExpandedFooter: React.FC<ExpandedFooterProps> = ({ pool, account }) => {
       )}
       <Flex mb="2px" justifyContent="flex-end">
         {/* <LinkExternal href={`/info/token/${earningToken.address}`} bold={false} small> */}
-        <LinkExternal href={`${BASE_BSC_SCAN_URL}/address/${earningToken.address}`} bold={false} small>
+        <LinkExternal href={getBscScanLink(earningToken.address, 'address', chainId)} bold={false} small>
           {t('See Token Info')}
         </LinkExternal>
       </Flex>
@@ -177,11 +177,12 @@ const ExpandedFooter: React.FC<ExpandedFooterProps> = ({ pool, account }) => {
       {poolContractAddress && (
         <Flex mb="2px" justifyContent="flex-end">
           <LinkExternal
-            href={`${BASE_BSC_SCAN_URL}/address/${vaultKey ? cakeVaultContractAddress : poolContractAddress}`}
+            // href={`${BASE_BSC_SCAN_URL}/address/${vaultKey ? cakeVaultContractAddress : poolContractAddress}`}
+            href={getBscScanLink(poolContractAddress, 'address', chainId)}
             bold={false}
             small
           >
-            {t('View Contract')}
+            {t('View Staking Contract')}
           </LinkExternal>
         </Flex>
       )}

@@ -263,7 +263,7 @@ const ActionPanel: React.FC<ActionPanelProps> = ({ account, pool, userDataLoaded
         {shouldShowBlockCountdown && blocksRow}
         <Flex mb="8px" justifyContent={['flex-end', 'flex-end', 'flex-start']}>
           {/* <LinkExternal href={`/info/token/${earningToken.address}`} bold={false}> */}
-          <LinkExternal href={`${BASE_BSC_SCAN_URL}/address/${earningToken.address}`} bold={false}>
+          <LinkExternal href={getBscScanLink(earningToken.address, 'address', chainId)} bold={false} small>
             {t('See Token Info')}
           </LinkExternal>
         </Flex>
@@ -276,10 +276,11 @@ const ActionPanel: React.FC<ActionPanelProps> = ({ account, pool, userDataLoaded
         {poolContractAddress && (
           <Flex mb="8px" justifyContent={['flex-end', 'flex-end', 'flex-start']}>
             <LinkExternal
-              href={`${BASE_BSC_SCAN_URL}/address/${vaultKey ? vaultContractAddress : poolContractAddress}`}
+              // href={`${BASE_BSC_SCAN_URL}/address/${vaultKey ? vaultContractAddress : poolContractAddress}`}
+              href={getBscScanLink(poolContractAddress, 'address', chainId)}
               bold={false}
             >
-              {t('View Contract')}
+              {t('View Staking Contract')}
             </LinkExternal>
           </Flex>
         )}

@@ -1,6 +1,7 @@
 import { ethers } from 'ethers'
 import { getSimpleRpcProvider /* , simpleRpcProvider */ } from 'utils/providers'
 import { ChainIdStorageName, poolsConfig } from 'config/constants'
+import { newpools } from 'config/constants/pools'
 import { PoolCategory } from 'config/constants/types'
 import tokens from 'config/constants/tokens'
 
@@ -32,6 +33,14 @@ import {
   getPancakeSquadAddress,
   getTradingCompetitionAddressV2,
   getBunnySpecialXmasAddress,
+  getStakingAddress,
+  getStakingWithFixedLockTimeAddress,
+  getStakingWithReflectionAddress,
+  getStakingWithReflectionAndLockAddress,
+  getFarmingAddress,
+  getFarmingBUSDAddress,
+  getFarmingWithFixedLockTimeAddress,
+  getFarmingWithFixedLockTimeBUSDAddress,
 } from 'utils/addressHelpers'
 
 // ABI
@@ -70,6 +79,12 @@ import nftMarketAbi from 'config/abi/nftMarket.json'
 import nftSaleAbi from 'config/abi/nftSale.json'
 import pancakeSquadAbi from 'config/abi/pancakeSquad.json'
 import erc721CollectionAbi from 'config/abi/erc721collection.json'
+import stakingAbi from 'config/abi/staking.json'
+import stakingWithFixedLockTimeAbi from 'config/abi/stakingWithFixedLockTime.json'
+import stakingWithReflectionAbi from 'config/abi/stakingWithReflection.json'
+import stakingWithReflectionAndLockAbi from 'config/abi/stakingWithReflectionAndLock.json'
+import farmingAbi from 'config/abi/farming.json'
+import farmingWithFixedLockTimeAbi from 'config/abi/farmingWithFixedLockTime.json'
 
 // Types
 import {
@@ -223,4 +238,32 @@ export const getPancakeSquadContract = (signer?: ethers.Signer | ethers.provider
 }
 export const getErc721CollectionContract = (signer?: ethers.Signer | ethers.providers.Provider, address?: string) => {
   return getContract(erc721CollectionAbi, address, signer) as Erc721collection
+}
+export const getStakingContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
+  return getContract(stakingAbi, getStakingAddress(), signer)
+}
+export const getStakingWithFixedLockTimeContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
+  return getContract(stakingWithFixedLockTimeAbi, getStakingWithFixedLockTimeAddress(), signer)
+}
+export const getStakingWithReflectionContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
+  return getContract(stakingWithReflectionAbi, getStakingWithReflectionAddress(), signer)
+}
+export const getStakingWithReflectionAndLockContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
+  return getContract(stakingWithReflectionAndLockAbi, getStakingWithReflectionAndLockAddress(), signer)
+}
+export const getFarmingContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
+  return getContract(farmingAbi, getFarmingAddress(), signer)
+}
+export const getFarmingBUSDContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
+  return getContract(farmingAbi, getFarmingBUSDAddress(), signer)
+}
+export const getFarmingWithFixedLockTimeContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
+  return getContract(farmingWithFixedLockTimeAbi, getFarmingWithFixedLockTimeAddress(), signer)
+}
+export const getFarmingWithFixedLockTimeBUSDContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
+  return getContract(farmingWithFixedLockTimeAbi, getFarmingWithFixedLockTimeBUSDAddress(), signer)
+}
+export const getApproveAddress = (id: number, signer?: ethers.Signer | ethers.providers.Provider) => {
+  const config = newpools.find((pool) => pool.sousId === id)
+  return getAddress(config.approveAddresses)
 }

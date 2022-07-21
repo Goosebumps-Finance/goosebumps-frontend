@@ -20,7 +20,7 @@ import { useTranslation } from 'contexts/Localization'
 import { useWeb3React } from '@web3-react/core'
 import { useAppDispatch } from 'state'
 import { BIG_TEN } from 'utils/bigNumber'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceEmpireBusd } from 'state/farms/hooks'
 import { useIfoPoolCreditBlock, useVaultPoolByKey } from 'state/pools/hooks'
 import { useVaultPoolContract } from 'hooks/useContract'
 import useTheme from 'hooks/useTheme'
@@ -102,7 +102,7 @@ const VaultStakeModal: React.FC<VaultStakeModalProps> = ({
   const [percent, setPercent] = useState(0)
   const [showRoiCalculator, setShowRoiCalculator] = useState(false)
   const { hasUnstakingFee } = useWithdrawalFeeTimer(parseInt(lastDepositedTime, 10), userShares)
-  const cakePriceBusd = usePriceCakeBusd()
+  const cakePriceBusd = usePriceEmpireBusd()
   const usdValueStaked = new BigNumber(stakeAmount).times(cakePriceBusd)
   const formattedUsdValueStaked = cakePriceBusd.gt(0) && stakeAmount ? formatNumber(usdValueStaked.toNumber()) : ''
 
@@ -308,7 +308,7 @@ const VaultStakeModal: React.FC<VaultStakeModalProps> = ({
       {isRemovingStake && hasUnstakingFee && (
         <FeeSummary vaultKey={vaultKey} stakingTokenSymbol={stakingToken.symbol} stakeAmount={stakeAmount} />
       )}
-      {!isRemovingStake && (
+      {/* {!isRemovingStake && (
         <Flex mt="24px" alignItems="center" justifyContent="space-between">
           <Text mr="8px" color="textSubtle">
             {t('Annual ROI at current rates')}:
@@ -329,7 +329,7 @@ const VaultStakeModal: React.FC<VaultStakeModalProps> = ({
             <Skeleton width={60} />
           )}
         </Flex>
-      )}
+      )} */}
       <Button
         isLoading={pendingTx}
         endIcon={pendingTx ? <AutoRenewIcon spin color="currentColor" /> : null}

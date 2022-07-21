@@ -5,11 +5,14 @@ import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { getBalanceAmount } from 'utils/formatBalance'
-import { farmsConfig } from 'config/constants'
+// import { farmsConfig } from 'config/constants'
+import { newfarms } from 'config/constants/farms'
 import { useSlowFresh, useFastFresh } from 'hooks/useRefresh'
 import { deserializeToken } from 'state/user/hooks/helpers'
 import { fetchFarmsPublicDataAsync, fetchFarmUserDataAsync, nonArchivedFarms } from '.'
 import { State, SerializedFarm, DeserializedFarmUserData, DeserializedFarm, DeserializedFarmsState } from '../types'
+
+const farmsConfig = newfarms
 
 const deserializeFarmUserData = (farm: SerializedFarm): DeserializedFarmUserData => {
   return {
@@ -21,10 +24,13 @@ const deserializeFarmUserData = (farm: SerializedFarm): DeserializedFarmUserData
 }
 
 const deserializeFarm = (farm: SerializedFarm): DeserializedFarm => {
-  const { lpAddresses, lpSymbol, pid, dual, multiplier, isCommunity, quoteTokenPriceBusd, tokenPriceBusd } = farm
+  // if (farm === undefined) return null;
+  // console.log("farm: ", farm)
+  const { lpAddresses, targetAddresses, lpSymbol, pid, dual, multiplier, isCommunity, quoteTokenPriceBusd, tokenPriceBusd } = farm
 
   return {
     lpAddresses,
+    targetAddresses,
     lpSymbol,
     pid,
     dual,
@@ -43,7 +49,7 @@ const deserializeFarm = (farm: SerializedFarm): DeserializedFarm => {
   }
 }
 
-export const usePollFarmsPublicData = (includeArchive = false) => {
+export const usePollFarmsPublicData = (includeArchive = true) => {
   const dispatch = useAppDispatch()
   const slowRefresh = useSlowFresh()
 
@@ -55,14 +61,14 @@ export const usePollFarmsPublicData = (includeArchive = false) => {
   }, [includeArchive, dispatch, slowRefresh])
 }
 
-export const usePollFarmsWithUserData = (includeArchive = false) => {
+export const usePollFarmsWithUserData = (includeArchive = true) => {
   const dispatch = useAppDispatch()
   const slowRefresh = useSlowFresh()
   const { account } = useWeb3React()
 
   useEffect(() => {
     const farmsToFetch = includeArchive ? farmsConfig : nonArchivedFarms
-    const pids = farmsToFetch.map((farmToFetch) => farmToFetch.pid)
+    const pids = farmsToFetch.map((farmToFetch) => farmToFetch.pid).filter((pid) => pid !== 252)
 
     dispatch(fetchFarmsPublicDataAsync(pids))
 
@@ -74,7 +80,7 @@ export const usePollFarmsWithUserData = (includeArchive = false) => {
 
 /**
  * Fetches the "core" farm data used globally
- * 251 = CAKE-BNB LP
+ * 1000 = EMPIRE-BNB LP
  * 252 = BUSD-BNB LP
  */
 export const usePollCoreFarmData = () => {
@@ -82,7 +88,7 @@ export const usePollCoreFarmData = () => {
   const fastRefresh = useFastFresh()
 
   useEffect(() => {
-    dispatch(fetchFarmsPublicDataAsync([251, 252]))
+    dispatch(fetchFarmsPublicDataAsync([252, 1000, 1001, 1002, 1003]))
   }, [dispatch, fastRefresh])
 }
 
@@ -143,16 +149,16 @@ export const useLpTokenPrice = (symbol: string) => {
 }
 
 /**
- * @@deprecated use the BUSD hook in /hooks
+ * @deprecated use the BUSD hook in /hooks
  */
-export const usePriceCakeBusd = (): BigNumber => {
-  const cakeBnbFarm = useFarmFromPid(251)
+export const usePriceEmpireBusd = (): BigNumber => {
+  const empireBnbFarm = useFarmFromPid(1000)
 
-  const cakePriceBusdAsString = cakeBnbFarm.tokenPriceBusd
+  const empirePriceBusdAsString = empireBnbFarm.tokenPriceBusd
 
-  const cakePriceBusd = useMemo(() => {
-    return new BigNumber(cakePriceBusdAsString)
-  }, [cakePriceBusdAsString])
+  const empirePriceBusd = useMemo(() => {
+    return new BigNumber(empirePriceBusdAsString)
+  }, [empirePriceBusdAsString])
 
-  return cakePriceBusd
+  return empirePriceBusd
 }

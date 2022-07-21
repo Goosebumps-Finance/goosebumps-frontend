@@ -7,7 +7,7 @@ import useToast from 'hooks/useToast'
 import React, { useState } from 'react'
 import { useAppDispatch } from 'state'
 import { fetchFarmUserDataAsync } from 'state/farms'
-import { usePriceCakeBusd } from 'state/farms/hooks'
+import { usePriceEmpireBusd } from 'state/farms/hooks'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { getBalanceAmount } from 'utils/formatBalance'
 import { logError } from 'utils/sentry'
@@ -22,7 +22,7 @@ interface HarvestActionProps extends FarmWithStakedValue {
 const HarvestAction: React.FunctionComponent<HarvestActionProps> = ({ pid, userData, userDataReady }) => {
   const { toastSuccess, toastError } = useToast()
   const earningsBigNumber = new BigNumber(userData.earnings)
-  const cakePrice = usePriceCakeBusd()
+  const cakePrice = usePriceEmpireBusd()
   let earnings = BIG_ZERO
   let earningsBusd = 0
   let displayBalance = userDataReady ? earnings.toLocaleString() : <Skeleton width={60} />
@@ -44,7 +44,7 @@ const HarvestAction: React.FunctionComponent<HarvestActionProps> = ({ pid, userD
     <ActionContainer>
       <ActionTitles>
         <Text bold textTransform="uppercase" color="secondary" fontSize="12px" pr="4px">
-          CAKE
+          fReward
         </Text>
         <Text bold textTransform="uppercase" color="textSubtle" fontSize="12px">
           {t('Earned')}
@@ -53,9 +53,9 @@ const HarvestAction: React.FunctionComponent<HarvestActionProps> = ({ pid, userD
       <ActionContent>
         <div>
           <Heading>{displayBalance}</Heading>
-          {earningsBusd > 0 && (
+          {/* {earningsBusd > 0 && (
             <Balance fontSize="12px" color="textSubtle" decimals={2} value={earningsBusd} unit=" USD" prefix="~" />
-          )}
+          )} */}
         </div>
         <Button
           disabled={earnings.eq(0) || pendingTx || !userDataReady}
@@ -65,7 +65,7 @@ const HarvestAction: React.FunctionComponent<HarvestActionProps> = ({ pid, userD
               await onReward()
               toastSuccess(
                 `${t('Harvested')}!`,
-                t('Your %symbol% earnings have been sent to your wallet!', { symbol: 'CAKE' }),
+                t('Your %symbol% earnings have been sent to your wallet!', { symbol: 'fReward' }),
               )
             } catch (e) {
               toastError(

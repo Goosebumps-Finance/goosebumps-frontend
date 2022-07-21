@@ -14,13 +14,14 @@ import {
   useTooltip,
   VerifiedIcon,
 } from '@goosebumps/uikit'
-import { BASE_BSC_SCAN_URL } from 'config'
+import { BASE_BSC_SCAN_URL, BASE_URL } from 'config'
 import { getBscScanLink } from 'utils'
 import { useBlock } from 'state/block/hooks'
 import { useVaultPoolByKey, useVaultPools } from 'state/pools/hooks'
 import BigNumber from 'bignumber.js'
 import { DeserializedPool } from 'state/types'
 import { useTranslation } from 'contexts/Localization'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import Balance from 'components/Balance'
 import { CompoundingPoolTag, ManualPoolTag } from 'components/Tags'
 import { getAddress, getVaultPoolAddress } from 'utils/addressHelpers'
@@ -130,6 +131,7 @@ const ActionPanel: React.FC<ActionPanelProps> = ({ account, pool, userDataLoaded
     vaultKey,
   } = pool
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
   const poolContractAddress = getAddress(contractAddress)
   const vaultContractAddress = getVaultPoolAddress(vaultKey)
   const { currentBlock } = useBlock()
@@ -202,27 +204,28 @@ const ActionPanel: React.FC<ActionPanelProps> = ({ account, pool, userDataLoaded
     </Flex>
   ) : null
 
-  const blocksRow =
-    blocksRemaining || blocksUntilStart ? (
-      <Flex mb="8px" justifyContent="space-between">
-        <Text>{hasPoolStarted ? t('Ends in') : t('Starts in')}:</Text>
-        <Flex>
-          <Link external href={getBscScanLink(hasPoolStarted ? endBlock : startBlock, 'countdown')}>
-            <Balance fontSize="16px" value={blocksToDisplay} decimals={0} color="primary" />
-            <Text ml="4px" color="primary" textTransform="lowercase">
-              {t('Blocks')}
-            </Text>
-            <TimerIcon ml="4px" color="primary" />
-          </Link>
-        </Flex>
-      </Flex>
-    ) : (
-      <Skeleton width="56px" height="16px" />
-    )
+  // const blocksRow =
+  //   blocksRemaining || blocksUntilStart ? (
+  //     <Flex mb="8px" justifyContent="space-between">
+  //       <Text>{hasPoolStarted ? t('Ends in') : t('Starts in')}:</Text>
+  //       <Flex>
+  //         <Link external href={getBscScanLink(hasPoolStarted ? endBlock : startBlock, 'countdown', chainId)}>
+  //           <Balance fontSize="16px" value={blocksToDisplay} decimals={0} color="primary" />
+  //           <Text ml="4px" color="primary" textTransform="lowercase">
+  //             {t('Blocks')}
+  //           </Text>
+  //           <TimerIcon ml="4px" color="primary" />
+  //         </Link>
+  //       </Flex>
+  //     </Flex>
+  //   ) : (
+  //     <Skeleton width="56px" height="16px" />
+  //   )
 
   const aprRow = (
     <Flex justifyContent="space-between" alignItems="center" mb="8px">
-      <Text>{vaultKey ? t('APY') : t('APR')}:</Text>
+      {/* <Text>{vaultKey ? t('APY') : t('APR')}:</Text> */}
+      <Text>{t('APR')}:</Text>
       <Apr
         pool={pool}
         showIcon
@@ -257,31 +260,34 @@ const ActionPanel: React.FC<ActionPanelProps> = ({ account, pool, userDataLoaded
         {maxStakeRow}
         {(isXs || isSm) && aprRow}
         {(isXs || isSm || isMd) && totalStakedRow}
-        {shouldShowBlockCountdown && blocksRow}
+        {/* {shouldShowBlockCountdown && blocksRow} */}
         <Flex mb="8px" justifyContent={['flex-end', 'flex-end', 'flex-start']}>
-          <LinkExternal href={`/info/token/${earningToken.address}`} bold={false}>
+          {/* <LinkExternal href={`/info/token/${earningToken.address}`} bold={false}> */}
+          <LinkExternal href={getBscScanLink(stakingToken.address, 'address', chainId)} bold={false} small>
             {t('See Token Info')}
           </LinkExternal>
         </Flex>
         <Flex mb="8px" justifyContent={['flex-end', 'flex-end', 'flex-start']}>
-          <LinkExternal href={earningToken.projectLink} bold={false}>
+          {/* <LinkExternal href={earningToken.projectLink} bold={false}> */}
+          <LinkExternal href={BASE_URL} bold={false}>
             {t('View Project Site')}
           </LinkExternal>
         </Flex>
         {poolContractAddress && (
           <Flex mb="8px" justifyContent={['flex-end', 'flex-end', 'flex-start']}>
             <LinkExternal
-              href={`${BASE_BSC_SCAN_URL}/address/${vaultKey ? vaultContractAddress : poolContractAddress}`}
+              // href={`${BASE_BSC_SCAN_URL}/address/${vaultKey ? vaultContractAddress : poolContractAddress}`}
+              href={getBscScanLink(poolContractAddress, 'address', chainId)}
               bold={false}
             >
-              {t('View Contract')}
+              {t('View Staking Contract')}
             </LinkExternal>
           </Flex>
         )}
-        <Button scale="sm" variant="primary">
+        {/* <Button scale="sm" variant="primary">
           <VerifiedIcon color="#04c0d7" mr="4px" />
           Core
-        </Button>
+        </Button> */}
         {/* {account && isMetaMaskInScope && tokenAddress && (
           <Flex mb="8px" justifyContent={['flex-end', 'flex-end', 'flex-start']}>
             <Button
@@ -302,13 +308,13 @@ const ActionPanel: React.FC<ActionPanelProps> = ({ account, pool, userDataLoaded
         </span> */}
       </InfoSection>
       <ActionContainer>
-        {showSubtitle && (
+        {/* {showSubtitle && (
           <Text mt="4px" mb="16px" color="textSubtle">
             {vaultKey
               ? t(vaultPoolConfig[vaultKey].description)
               : `${t('Earn')} Goose ${t('Stake').toLocaleLowerCase()} Goose`}
           </Text>
-        )}
+        )} */}
         {pool.vaultKey ? (
           <AutoHarvest {...pool} userDataLoaded={userDataLoaded} />
         ) : (

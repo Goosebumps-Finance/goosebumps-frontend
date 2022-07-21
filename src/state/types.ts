@@ -79,6 +79,7 @@ interface CorePoolProps {
 export interface DeserializedPool extends DeserializedPoolConfig, CorePoolProps {
   totalStaked?: BigNumber
   stakingLimit?: BigNumber
+  description?: string
   userData?: {
     allowance: BigNumber
     stakingTokenBalance: BigNumber

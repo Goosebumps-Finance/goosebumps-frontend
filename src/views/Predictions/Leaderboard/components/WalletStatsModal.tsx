@@ -26,6 +26,7 @@ import {
   useGetSelectedAddress,
 } from 'state/predictions/hooks'
 import { useTranslation } from 'contexts/Localization'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { FetchStatus } from 'config/constants/types'
 import { NetWinnings } from './Results/styles'
 import MobileBetsTable from './MobileBetsTable'
@@ -46,6 +47,7 @@ const ExternalLink = styled(LinkExternal)`
 
 const WalletStatsModal: React.FC<WalletStatsModalProps> = ({ account, onDismiss, onBeforeDismiss }) => {
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
   const { theme } = useTheme()
   const selectedAddress = useGetSelectedAddress()
   const address = account || selectedAddress
@@ -76,7 +78,7 @@ const WalletStatsModal: React.FC<WalletStatsModalProps> = ({ account, onDismiss,
                 {profileAvatar.username}
               </Heading>
             )}
-            <ExternalLink href={getBscScanLink(address, 'address')}>{truncateHash(address)}</ExternalLink>
+            <ExternalLink href={getBscScanLink(address, 'address', chainId)}>{truncateHash(address)}</ExternalLink>
           </Box>
         </Flex>
         <IconButton variant="text" onClick={handleDismiss} aria-label="Close the dialog">

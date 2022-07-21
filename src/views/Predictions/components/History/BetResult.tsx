@@ -4,6 +4,7 @@ import { Box, Flex, Heading, Text, PrizeIcon, BlockIcon, LinkExternal, useToolti
 import styled from 'styled-components'
 import { useAppDispatch } from 'state'
 import { useTranslation } from 'contexts/Localization'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { REWARD_RATE } from 'state/predictions/config'
 import { Bet, BetPosition } from 'state/types'
 import { fetchLedgerData, markAsCollected } from 'state/predictions'
@@ -36,6 +37,7 @@ const Divider = styled.hr`
 
 const BetResult: React.FC<BetResultProps> = ({ bet, result }) => {
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
   const dispatch = useAppDispatch()
   const { account } = useWeb3React()
   const { isRefundable } = useIsRefundable(bet.round.epoch)
@@ -133,7 +135,7 @@ const BetResult: React.FC<BetResultProps> = ({ bet, result }) => {
         )}
         {bet.claimed && bet.claimedHash && (
           <Flex justifyContent="center">
-            <LinkExternal href={getBscScanLink(bet.claimedHash, 'transaction')} mb="16px">
+            <LinkExternal href={getBscScanLink(bet.claimedHash, 'transaction', chainId)} mb="16px">
               {t('View on BscScan')}
             </LinkExternal>
           </Flex>

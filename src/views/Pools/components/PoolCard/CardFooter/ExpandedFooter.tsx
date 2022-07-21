@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { getBalanceNumber, getFullDisplayBalance } from 'utils/formatBalance'
 import { useTranslation } from 'contexts/Localization'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import {
   Flex,
   MetamaskIcon,
@@ -16,7 +17,7 @@ import {
   Link,
   HelpIcon,
 } from '@goosebumps/uikit'
-import { BASE_BSC_SCAN_URL } from 'config'
+import { BASE_BSC_SCAN_URL, BASE_URL } from 'config'
 import { useBlock } from 'state/block/hooks'
 import { useVaultPoolByKey, useVaultPools } from 'state/pools/hooks'
 import { DeserializedPool } from 'state/types'
@@ -44,6 +45,7 @@ const ExpandedWrapper = styled(Flex)`
 
 const ExpandedFooter: React.FC<ExpandedFooterProps> = ({ pool, account }) => {
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
   const { currentBlock } = useBlock()
 
   const {
@@ -83,13 +85,13 @@ const ExpandedFooter: React.FC<ExpandedFooterProps> = ({ pool, account }) => {
   )
 
   const getTotalStakedBalance = () => {
-    if (vaultKey) {
-      return getBalanceNumber(totalCakeInVault, stakingToken.decimals)
-    }
-    if (isManualCakePool) {
-      const manualCakeTotalMinusAutoVault = new BigNumber(totalStaked).minus(cakeInVaults)
-      return getBalanceNumber(manualCakeTotalMinusAutoVault, stakingToken.decimals)
-    }
+    // if (vaultKey) {
+    //   return getBalanceNumber(totalCakeInVault, stakingToken.decimals)
+    // }
+    // if (isManualCakePool) {
+    //   const manualCakeTotalMinusAutoVault = new BigNumber(totalStaked).minus(cakeInVaults)
+    //   return getBalanceNumber(manualCakeTotalMinusAutoVault, stakingToken.decimals)
+    // }
     return getBalanceNumber(totalStaked, stakingToken.decimals)
   }
 
@@ -125,12 +127,12 @@ const ExpandedFooter: React.FC<ExpandedFooterProps> = ({ pool, account }) => {
           <Text small>{`${getFullDisplayBalance(stakingLimit, stakingToken.decimals, 0)} ${stakingToken.symbol}`}</Text>
         </Flex>
       )}
-      {shouldShowBlockCountdown && (
+      {/* {shouldShowBlockCountdown && (
         <Flex mb="2px" justifyContent="space-between" alignItems="center">
           <Text small>{hasPoolStarted ? t('Ends in') : t('Starts in')}:</Text>
           {blocksRemaining || blocksUntilStart ? (
             <Flex alignItems="center">
-              <Link external href={getBscScanLink(hasPoolStarted ? endBlock : startBlock, 'countdown')}>
+              <Link external href={getBscScanLink(hasPoolStarted ? endBlock : startBlock, 'countdown', chainId)}>
                 <Balance small value={blocksToDisplay} decimals={0} color="primary" />
                 <Text small ml="4px" color="primary" textTransform="lowercase">
                   {t('Blocks')}
@@ -142,8 +144,8 @@ const ExpandedFooter: React.FC<ExpandedFooterProps> = ({ pool, account }) => {
             <Skeleton width="54px" height="21px" />
           )}
         </Flex>
-      )}
-      {vaultKey && (
+      )} */}
+      {/* {vaultKey && (
         <Flex mb="2px" justifyContent="space-between" alignItems="center">
           {tooltipVisible && tooltip}
           <TooltipText ref={targetRef} small>
@@ -159,25 +161,28 @@ const ExpandedFooter: React.FC<ExpandedFooterProps> = ({ pool, account }) => {
             )}
           </Flex>
         </Flex>
-      )}
+      )} */}
       <Flex mb="2px" justifyContent="flex-end">
-        <LinkExternal href={`/info/token/${earningToken.address}`} bold={false} small>
+        {/* <LinkExternal href={`/info/token/${earningToken.address}`} bold={false} small> */}
+        <LinkExternal href={getBscScanLink(stakingToken.address, 'address', chainId)} bold={false} small>
           {t('See Token Info')}
         </LinkExternal>
       </Flex>
       <Flex mb="2px" justifyContent="flex-end">
-        <LinkExternal href={earningToken.projectLink} bold={false} small>
+        {/* <LinkExternal href={earningToken.projectLink} bold={false} small> */}
+        <LinkExternal href={BASE_URL} bold={false} small>
           {t('View Project Site')}
         </LinkExternal>
       </Flex>
       {poolContractAddress && (
         <Flex mb="2px" justifyContent="flex-end">
           <LinkExternal
-            href={`${BASE_BSC_SCAN_URL}/address/${vaultKey ? cakeVaultContractAddress : poolContractAddress}`}
+            // href={`${BASE_BSC_SCAN_URL}/address/${vaultKey ? cakeVaultContractAddress : poolContractAddress}`}
+            href={getBscScanLink(poolContractAddress, 'address', chainId)}
             bold={false}
             small
           >
-            {t('View Contract')}
+            {t('View Staking Contract')}
           </LinkExternal>
         </Flex>
       )}

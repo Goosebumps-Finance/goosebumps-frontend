@@ -34,7 +34,8 @@ const Liquidity: React.FunctionComponent<LiquidityProps> = ({ liquidity }) => {
     liquidity && liquidity.gt(0) ? (
       `$${Number(liquidity).toLocaleString(undefined, { maximumFractionDigits: 0 })}`
     ) : (
-      <Skeleton width={60} />
+      // <Skeleton width={60} />
+      '$0'
     )
   const { t } = useTranslation()
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
@@ -47,10 +48,10 @@ const Liquidity: React.FunctionComponent<LiquidityProps> = ({ liquidity }) => {
       <LiquidityWrapper>
         <Text>{displayLiquidity}</Text>
       </LiquidityWrapper>
-      <ReferenceElement ref={targetRef}>
+      {/* <ReferenceElement ref={targetRef}>
         <HelpIcon color="textSubtle" />
       </ReferenceElement>
-      {tooltipVisible && tooltip}
+      {tooltipVisible && tooltip} */}
     </Container>
   )
 }

@@ -9,9 +9,11 @@ export type TranslatableText =
         [key: string]: string | number
       }
     }
-export interface Address {
-  97?: string
-  56: string
+export interface Address { // TODO multichain
+  1?: string // ethereum
+  97?: string // bsc testnet
+  56: string // bsc mainnet
+  137?: string // polygon mainnet
 }
 
 export interface SerializedToken {
@@ -79,11 +81,15 @@ interface FarmConfigBaseProps {
 export interface SerializedFarmConfig extends FarmConfigBaseProps {
   token: SerializedToken
   quoteToken: SerializedToken
+  targetAddresses?: Address
+  treasuryAddresses?: Address
 }
 
 export interface DeserializedFarmConfig extends FarmConfigBaseProps {
   token: Token
   quoteToken: Token
+  targetAddresses?: Address
+  treasuryAddresses?: Address
 }
 
 interface PoolConfigBaseProps {
@@ -100,6 +106,10 @@ interface PoolConfigBaseProps {
 export interface SerializedPoolConfig extends PoolConfigBaseProps {
   earningToken: SerializedToken
   stakingToken: SerializedToken
+  targetAddresses?: Address
+  apr?: number
+  approveAddresses?: Address
+  description?: string
 }
 
 export interface DeserializedPoolConfig extends PoolConfigBaseProps {

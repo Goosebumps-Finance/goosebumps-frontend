@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Flex, Heading, Text, Link, useTooltip } from '@goosebumps/uikit'
 import { useTranslation } from 'contexts/Localization'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ContextApi } from 'contexts/Localization/types'
 import { getBscScanLink } from 'utils'
 
@@ -62,12 +63,12 @@ const DefaultBodyTextComponent = ({ children, ...props }) => (
   </Text>
 )
 
-const TooltipContent = ({ blockNumber, t }: { blockNumber: number; t: ContextApi['t'] }): JSX.Element => (
+const TooltipContent = ({ blockNumber, t, chainId }: { blockNumber: number; t: ContextApi['t']; chainId: number }): JSX.Element => (
   <>
     <Text color="body" mb="10px" fontWeight="600">
       {t('Block %num%', { num: blockNumber })}
     </Text>
-    <Link external href={getBscScanLink(blockNumber, 'block')}>
+    <Link external href={getBscScanLink(blockNumber, 'block', chainId)}>
       {t('View on BscScan')}
     </Link>
   </>
@@ -85,7 +86,8 @@ const Wrapper: React.FC<TimerProps> = ({
   BodyTextComponent = DefaultBodyTextComponent,
 }) => {
   const { t } = useTranslation()
-  const { targetRef, tooltip, tooltipVisible } = useTooltip(<TooltipContent blockNumber={blockNumber} t={t} />, {
+  const { chainId } = useActiveWeb3React()
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(<TooltipContent blockNumber={blockNumber} t={t} chainId={chainId} />, {
     placement: 'bottom',
   })
   const shouldDisplayTooltip = showTooltip && tooltipVisible

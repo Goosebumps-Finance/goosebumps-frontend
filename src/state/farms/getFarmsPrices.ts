@@ -62,7 +62,7 @@ const getFarmQuoteTokenPrice = (
   quoteTokenFarm: SerializedFarm,
   bnbPriceBusd: BigNumber,
 ): BigNumber => {
-  if (farm.quoteToken.symbol === 'BUSD') {
+  if (farm.quoteToken.symbol === 'BUSD' || farm.quoteToken.symbol === 'MockBUSD') {
     return BIG_ONE
   }
 
@@ -78,7 +78,7 @@ const getFarmQuoteTokenPrice = (
     return quoteTokenFarm.tokenPriceVsQuote ? bnbPriceBusd.times(quoteTokenFarm.tokenPriceVsQuote) : BIG_ZERO
   }
 
-  if (quoteTokenFarm.quoteToken.symbol === 'BUSD') {
+  if (quoteTokenFarm.quoteToken.symbol === 'BUSD' || quoteTokenFarm.quoteToken.symbol === 'MockBUSD') {
     return quoteTokenFarm.tokenPriceVsQuote ? new BigNumber(quoteTokenFarm.tokenPriceVsQuote) : BIG_ZERO
   }
 

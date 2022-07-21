@@ -6,13 +6,15 @@ import RoiCalculatorModal from 'components/RoiCalculatorModal'
 import { useTranslation } from 'contexts/Localization'
 import { useFarmUser, useLpTokenPrice } from 'state/farms/hooks'
 
-const ApyLabelContainer = styled(Flex)`
-  cursor: pointer;
+// const ApyLabelContainer = styled(Flex)`
+//   cursor: pointer;
 
-  &:hover {
-    opacity: 0.5;
-  }
-`
+//   &:hover {
+//     opacity: 0.5;
+//   }
+// `
+
+const ApyLabelContainer = styled(Flex)``
 
 export interface ApyButtonProps {
   variant: 'text' | 'text-and-button'
@@ -61,13 +63,14 @@ const ApyButton: React.FC<ApyButtonProps> = ({
   }
 
   return (
-    <ApyLabelContainer alignItems="center" onClick={handleClickButton}>
+    // <ApyLabelContainer alignItems="center" onClick={handleClickButton}>
+    <ApyLabelContainer alignItems="center">
       {displayApr}%
-      {variant === 'text-and-button' && (
+      {/* {variant === 'text-and-button' && (
         <IconButton variant="text" scale="sm" ml="4px">
           <CalculateIcon width="18px" />
         </IconButton>
-      )}
+      )} */}
     </ApyLabelContainer>
   )
 }

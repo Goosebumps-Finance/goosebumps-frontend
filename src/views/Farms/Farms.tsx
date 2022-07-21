@@ -7,11 +7,12 @@ import { ChainId } from '@goosebumps/sdk'
 import styled from 'styled-components'
 import FlexLayout from 'components/Layout/Flex'
 import Page from 'components/Layout/Page'
-import { useFarms, usePollFarmsWithUserData, usePriceCakeBusd } from 'state/farms/hooks'
+import { useFarms, usePollFarmsWithUserData, usePriceEmpireBusd } from 'state/farms/hooks'
 import useIntersectionObserver from 'hooks/useIntersectionObserver'
 import { DeserializedFarm } from 'state/types'
 import { useTranslation } from 'contexts/Localization'
 import { getBalanceNumber } from 'utils/formatBalance'
+import { getAddress } from 'utils/addressHelpers'
 import { getFarmApr } from 'utils/apr'
 import { orderBy } from 'lodash'
 import isArchivedPid from 'utils/farmHelpers'
@@ -104,9 +105,9 @@ const StyledImage = styled(Image)`
 const NUMBER_OF_FARMS_VISIBLE = 12
 
 const getDisplayApr = (cakeRewardsApr?: number, lpRewardsApr?: number) => {
-  if (cakeRewardsApr && lpRewardsApr) {
-    return (cakeRewardsApr + lpRewardsApr).toLocaleString('en-US', { maximumFractionDigits: 2 })
-  }
+  // if (cakeRewardsApr && lpRewardsApr) {
+  //   return (cakeRewardsApr + lpRewardsApr).toLocaleString('en-US', { maximumFractionDigits: 2 })
+  // }
   if (cakeRewardsApr) {
     return cakeRewardsApr.toLocaleString('en-US', { maximumFractionDigits: 2 })
   }
@@ -118,7 +119,7 @@ const Farms: React.FC = () => {
   const { pathname } = useLocation()
   const { t } = useTranslation()
   const { data: farmsLP, userDataLoaded } = useFarms()
-  const cakePrice = usePriceCakeBusd()
+  const cakePrice = usePriceEmpireBusd()
   const [query, setQuery] = useState('')
   const [viewMode, setViewMode] = useUserFarmsViewMode()
   const { account } = useWeb3React()
@@ -126,21 +127,26 @@ const Farms: React.FC = () => {
   const { observerRef, isIntersecting } = useIntersectionObserver()
   const chosenFarmsLength = useRef(0)
 
-  const isArchived = pathname.includes('archived')
-  const isInactive = pathname.includes('history')
-  const isActive = !isInactive && !isArchived
+  // const isArchived = pathname.includes('archived')
+  // const isInactive = pathname.includes('history')
+  // const isActive = !isInactive && !isArchived
 
-  usePollFarmsWithUserData(isArchived)
+  // usePollFarmsWithUserData(isArchived)
+  usePollFarmsWithUserData()
 
   // Users with no wallet connected should see 0 as Earned amount
   // Connected users should see loading indicator until first userData has loaded
   const userDataReady = !account || (!!account && userDataLoaded)
 
-  const [stakedOnly, setStakedOnly] = useUserFarmStakedOnly(isActive)
+  // const [stakedOnly, setStakedOnly] = useUserFarmStakedOnly(isActive)
+  const [stakedOnly, setStakedOnly] = useUserFarmStakedOnly(true)
 
-  const activeFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier !== '0X' && !isArchivedPid(farm.pid))
-  const inactiveFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier === '0X' && !isArchivedPid(farm.pid))
-  const archivedFarms = farmsLP.filter((farm) => isArchivedPid(farm.pid))
+  // const activeFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier !== '0X' && !isArchivedPid(farm.pid))
+  const activeFarms = farmsLP
+  // const inactiveFarms = farmsLP.filter((farm) => farm.pid !== 0 && farm.multiplier === '0X' && !isArchivedPid(farm.pid))
+  const inactiveFarms = farmsLP
+  // const archivedFarms = farmsLP.filter((farm) => isArchivedPid(farm.pid))
+  const archivedFarms = farmsLP
 
   const stakedOnlyFarms = activeFarms.filter(
     (farm) => farm.userData && new BigNumber(farm.userData.stakedBalance).isGreaterThan(0),
@@ -157,13 +163,15 @@ const Farms: React.FC = () => {
   const farmsList = useCallback(
     (farmsToDisplay: DeserializedFarm[]): FarmWithStakedValue[] => {
       let farmsToDisplayWithAPR: FarmWithStakedValue[] = farmsToDisplay.map((farm) => {
-        if (!farm.lpTotalInQuoteToken || !farm.quoteTokenPriceBusd) {
-          return farm
-        }
+        // if (!farm.lpTotalInQuoteToken || !farm.quoteTokenPriceBusd) {
+        //   return farm
+        // }
         const totalLiquidity = new BigNumber(farm.lpTotalInQuoteToken).times(farm.quoteTokenPriceBusd)
-        const { cakeRewardsApr, lpRewardsApr } = isActive
-          ? getFarmApr(new BigNumber(farm.poolWeight), cakePrice, totalLiquidity, farm.lpAddresses[ChainId.MAINNET])
-          : { cakeRewardsApr: 0, lpRewardsApr: 0 }
+        // const { cakeRewardsApr, lpRewardsApr } = isActive
+        //   ? getFarmApr(new BigNumber(farm.poolWeight), cakePrice, totalLiquidity, getAddress(farm.lpAddresses))
+        //   : { cakeRewardsApr: 0, lpRewardsApr: 0 }
+
+        const { cakeRewardsApr, lpRewardsApr } = getFarmApr(getAddress(farm.targetAddresses))
 
         return { ...farm, apr: cakeRewardsApr, lpRewardsApr, liquidity: totalLiquidity }
       })
@@ -176,7 +184,8 @@ const Farms: React.FC = () => {
       }
       return farmsToDisplayWithAPR
     },
-    [cakePrice, query, isActive],
+    // [cakePrice, query, isActive],
+    [query],
   )
 
   const handleChangeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -211,28 +220,30 @@ const Farms: React.FC = () => {
       }
     }
 
-    if (isActive) {
-      chosenFarms = stakedOnly ? farmsList(stakedOnlyFarms) : farmsList(activeFarms)
-    }
-    if (isInactive) {
-      chosenFarms = stakedOnly ? farmsList(stakedInactiveFarms) : farmsList(inactiveFarms)
-    }
-    if (isArchived) {
-      chosenFarms = stakedOnly ? farmsList(stakedArchivedFarms) : farmsList(archivedFarms)
-    }
+    // if (isActive) {
+    //   chosenFarms = stakedOnly ? farmsList(stakedOnlyFarms) : farmsList(activeFarms)
+    // }
+    // if (isInactive) {
+    //   chosenFarms = stakedOnly ? farmsList(stakedInactiveFarms) : farmsList(inactiveFarms)
+    // }
+    // if (isArchived) {
+    //   chosenFarms = stakedOnly ? farmsList(stakedArchivedFarms) : farmsList(archivedFarms)
+    // }
+    chosenFarms = stakedOnly ? farmsList(stakedOnlyFarms) : farmsList(activeFarms)
 
-    return sortFarms(chosenFarms).slice(0, numberOfFarmsVisible)
+
+    return sortFarms(chosenFarms).filter((farm) => farm.pid !== 252).slice(0, numberOfFarmsVisible)
   }, [
     sortOption,
     activeFarms,
     farmsList,
-    inactiveFarms,
-    archivedFarms,
-    isActive,
-    isInactive,
-    isArchived,
-    stakedArchivedFarms,
-    stakedInactiveFarms,
+    // inactiveFarms,
+    // archivedFarms,
+    // isActive,
+    // isInactive,
+    // isArchived,
+    // stakedArchivedFarms,
+    // stakedInactiveFarms,
     stakedOnly,
     stakedOnlyFarms,
     numberOfFarmsVisible,
@@ -318,7 +329,11 @@ const Farms: React.FC = () => {
         sortable: column.sortable,
       }))
 
-      return <Table data={rowData} columns={columns} userDataReady={userDataReady} />
+      return (
+        <Route exact path={`${path}`}>
+          <Table data={rowData} columns={columns} userDataReady={userDataReady} />
+        </Route>
+      )
     }
 
     return (
@@ -335,7 +350,7 @@ const Farms: React.FC = () => {
             />
           ))}
         </Route>
-        <Route exact path={`${path}/history`}>
+        {/* <Route exact path={`${path}/history`}>
           {chosenFarmsMemoized.map((farm) => (
             <FarmCard
               key={farm.pid}
@@ -358,7 +373,7 @@ const Farms: React.FC = () => {
               removed
             />
           ))}
-        </Route>
+        </Route> */}
       </FlexLayout>
     )
   }
@@ -385,7 +400,8 @@ const Farms: React.FC = () => {
           </Button>
         </NavLink>
       </PageHeader> */}
-      <Page>
+      {/* <Page> */}
+      <Page style={{ backgroundColor: '#121e30', borderRadius: '20px' }}>
         <ControlContainer>
           <ViewControls>
             <ToggleView viewMode={viewMode} onToggle={(mode: ViewMode) => setViewMode(mode)} />
@@ -398,25 +414,25 @@ const Farms: React.FC = () => {
               />
               <Text> {t('Staked only')}</Text>
             </ToggleWrapper>
-            <FarmTabButtons hasStakeInFinishedFarms={stakedInactiveFarms.length > 0} />
+            {/* <FarmTabButtons hasStakeInFinishedFarms={stakedInactiveFarms.length > 0} /> */}
           </ViewControls>
           <FilterContainer>
             <LabelWrapper>
               <Text textTransform="uppercase">{t('Sort by')}</Text>
               <Select
                 options={[
-                  {
-                    label: t('Hot'),
-                    value: 'hot',
-                  },
+                  // {
+                  //   label: t('Hot'),
+                  //   value: 'hot',
+                  // },
                   {
                     label: t('APR'),
                     value: 'apr',
                   },
-                  {
-                    label: t('Multiplier'),
-                    value: 'multiplier',
-                  },
+                  // {
+                  //   label: t('Multiplier'),
+                  //   value: 'multiplier',
+                  // },
                   {
                     label: t('Earned'),
                     value: 'earned',

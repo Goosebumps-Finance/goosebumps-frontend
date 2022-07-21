@@ -1,16 +1,30 @@
 import { useCallback } from 'react'
 import { stakeFarm } from 'utils/calls'
-import { useMasterchef } from 'hooks/useContract'
+import { useMasterchef, useStakingContract } from 'hooks/useContract'
+
+// const useStakeFarmsOld = (pid: number) => {
+//   const masterChefContract = useMasterchef()
+
+//   const handleStake = useCallback(
+//     async (amount: string) => {
+//       const txHash = await stakeFarm(masterChefContract, pid, amount)
+//       console.info(txHash)
+//     },
+//     [masterChefContract, pid],
+//   )
+
+//   return { onStake: handleStake }
+// }
 
 const useStakeFarms = (pid: number) => {
-  const masterChefContract = useMasterchef()
+  const stakingContract = useStakingContract(pid)
 
   const handleStake = useCallback(
     async (amount: string) => {
-      const txHash = await stakeFarm(masterChefContract, pid, amount)
+      const txHash = await stakeFarm(stakingContract, amount)
       console.info(txHash)
     },
-    [masterChefContract, pid],
+    [stakingContract],
   )
 
   return { onStake: handleStake }

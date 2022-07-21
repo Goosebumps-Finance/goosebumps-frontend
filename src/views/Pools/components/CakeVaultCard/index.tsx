@@ -13,6 +13,7 @@ import {
   TokenPairImage,
 } from '@goosebumps/uikit'
 import { useTranslation } from 'contexts/Localization'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useWeb3React } from '@web3-react/core'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { useIfoPoolCreditBlock, useVaultPoolByKey } from 'state/pools/hooks'
@@ -43,6 +44,7 @@ interface CakeVaultProps extends CardProps {
 export const CreditCalcBlock = () => {
   const { creditStartBlock, creditEndBlock, hasEndBlockOver } = useIfoPoolCreditBlock()
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
 
   const { tooltip, tooltipVisible, targetRef } = useTooltip(
     hasEndBlockOver ? (
@@ -77,7 +79,7 @@ export const CreditCalcBlock = () => {
       <Flex mr="6px" alignItems="center">
         <Link
           external
-          href={getBscScanLink(hasEndBlockOver ? creditEndBlock : creditStartBlock, 'block')}
+          href={getBscScanLink(hasEndBlockOver ? creditEndBlock : creditStartBlock, 'block', chainId)}
           mr="4px"
           color={hasEndBlockOver ? 'warning' : 'primary'}
           fontSize="14px"

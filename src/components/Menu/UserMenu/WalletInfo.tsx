@@ -5,6 +5,7 @@ import { FetchStatus } from 'config/constants/types'
 import { useTranslation } from 'contexts/Localization'
 import useAuth from 'hooks/useAuth'
 import useTokenBalance, { useGetBnbBalance } from 'hooks/useTokenBalance'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import linq from 'linq'
@@ -22,8 +23,9 @@ interface WalletInfoProps {
 const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowBnbBalance, onDismiss }) => {
   const { t } = useTranslation()
   const { account } = useWeb3React()
+  const { chainId } = useActiveWeb3React()
   const { balance, fetchStatus } = useGetBnbBalance()
-  const { balance: cakeBalance, fetchStatus: cakeFetchStatus } = useTokenBalance(tokens.cake.address)
+  const { balance: empireBalance, fetchStatus: cakeFetchStatus } = useTokenBalance(tokens.empire.address)
   const { logout } = useAuth()
   const { network } = useSelector((state:State) => state.home)
   const detailedNetwork = linq.from(networks).where((x) => x.Name === network.value).single()
@@ -61,11 +63,11 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowBnbBalance, onDismiss }) 
         {cakeFetchStatus !== FetchStatus.Fetched ? (
           <Skeleton height="22px" width="60px" />
         ) : (
-          <Text>{getFullDisplayBalance(cakeBalance, 18, 3)}</Text>
+          <Text>{getFullDisplayBalance(empireBalance, 9, 3)}</Text>
         )}
       </Flex>
       <Flex alignItems="center" justifyContent="end" mb="24px">
-        <LinkExternal href={getBscScanLink(account, 'address')}>{t('View on Scan')}</LinkExternal>
+        <LinkExternal href={getBscScanLink(account, 'address', chainId)}>{t('View on Scan')}</LinkExternal>
       </Flex>
       <Button variant="secondary" width="100%" onClick={handleLogout}>
         {t('Disconnect Wallet')}

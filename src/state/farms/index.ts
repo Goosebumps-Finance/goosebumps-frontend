@@ -6,7 +6,8 @@ import type {
 } from '@reduxjs/toolkit/dist/matchers'
 import { createAsyncThunk, createSlice, isPending, isFulfilled, isRejected } from '@reduxjs/toolkit'
 import stringify from 'fast-json-stable-stringify'
-import farmsConfig from 'config/constants/farms'
+// import farmsConfig from 'config/constants/farms'
+import { newfarms } from 'config/constants/farms'
 import isArchivedPid from 'utils/farmHelpers'
 import type { AppState } from 'state'
 import priceHelperLpsConfig from 'config/constants/priceHelperLps'
@@ -19,6 +20,8 @@ import {
   fetchFarmUserStakedBalances,
 } from './fetchFarmUser'
 import { SerializedFarmsState, SerializedFarm } from '../types'
+
+const farmsConfig = newfarms
 
 const noAccountFarmConfig = farmsConfig.map((farm) => ({
   ...farm,
@@ -52,10 +55,12 @@ export const fetchFarmsPublicDataAsync = createAsyncThunk<
     const farmsToFetch = farmsConfig.filter((farmConfig) => pids.includes(farmConfig.pid))
 
     // Add price helper farms
-    const farmsWithPriceHelpers = farmsToFetch.concat(priceHelperLpsConfig)
+    // const farmsWithPriceHelpers = farmsToFetch.concat(priceHelperLpsConfig)
 
-    const farms = await fetchFarms(farmsWithPriceHelpers)
+    // const farms = await fetchFarms(farmsWithPriceHelpers)
+    const farms = await fetchFarms(farmsToFetch)
     const farmsWithPrices = getFarmsPrices(farms)
+    // console.log("farmsWithPrices: ", farmsWithPrices)
 
     // Filter out price helper LP config farms
     const farmsWithoutHelperLps = farmsWithPrices.filter((farm: SerializedFarm) => {

@@ -33,6 +33,14 @@ import {
   getPancakeSquadContract,
   getErc721CollectionContract,
   getBunnySpecialXmasContract,
+  getFarmingContract,
+  getFarmingWithFixedLockTimeContract,
+  getFarmingBUSDContract,
+  getFarmingWithFixedLockTimeBUSDContract,
+  getStakingContract,
+  getStakingWithFixedLockTimeContract,
+  getStakingWithReflectionContract,
+  getStakingWithReflectionAndLockContract,
 } from 'utils/contractHelpers'
 import { getMulticallAddress } from 'utils/addressHelpers'
 import { VaultKey } from 'state/types'
@@ -316,4 +324,39 @@ export function usePairContract(pairAddress?: string, withSignerIfPossible?: boo
 
 export function useMulticallContract() {
   return useContract<Multicall>(getMulticallAddress(), multiCallAbi, false)
+}
+
+export function useStakingContract(pid: number): Contract | null {
+  const { library } = useActiveWeb3React()
+  let selectedGetContract = null;
+  switch (pid) {
+    case 1000: // 'EMPIRE-BNB'
+      selectedGetContract = getFarmingContract
+      break;
+    case 1001: // 'EMPIRE-BNB with LockTime'
+      selectedGetContract = getFarmingWithFixedLockTimeContract
+      break;
+    case 1002: // 'EMPIRE-BUSD'
+      selectedGetContract = getFarmingBUSDContract
+      break;
+    case 1003: // 'EMPIRE-BUSD with LockTime'
+      selectedGetContract = getFarmingWithFixedLockTimeBUSDContract
+      break;
+    case 2000: // staking
+      selectedGetContract = getStakingContract
+      break;
+    case 2001: // stakingWithFixedLockTime
+      selectedGetContract = getStakingWithFixedLockTimeContract
+      break;
+    case 2002: // stakingWithReflection
+      selectedGetContract = getStakingWithReflectionContract
+      break;
+    case 2003: // stakingWithReflectionAndLock
+      selectedGetContract = getStakingWithReflectionAndLockContract
+      break;
+    default:
+      selectedGetContract = getStakingContract
+      break;
+  }
+  return useMemo(() => selectedGetContract(library.getSigner()), [library, selectedGetContract])
 }

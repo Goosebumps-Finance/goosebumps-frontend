@@ -35,6 +35,30 @@ export const mainnetTokens = defineTokens({
   ),
   // bnb here points to the wbnb contract. Wherever the currency BNB is required, conditional checks for the symbol 'BNB' can be used
   bnb: new Token(MAINNET, '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c', 18, 'BNB', 'BNB', 'https://www.binance.com/'),
+  empire: new Token(
+    MAINNET,
+    '0x293C3Ee9ABaCb08BB8ceD107987F00EfD1539288',
+    9,
+    'EMPIRE',
+    'Empire Token',
+    'https://s2.coinmarketcap.com/static/img/coins/64x64/10613.png',
+  ),
+  sReward: new Token(
+    MAINNET,
+    '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82', // fake address, cake address to test
+    18,
+    'sReward',
+    'StakingReward',
+    'https://s2.coinmarketcap.com/static/img/coins/64x64/10613.png',
+  ),
+  fReward: new Token(
+    MAINNET,
+    '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82', // fake address, cake address to test
+    18,
+    'fReward',
+    'FarmingReward',
+    'https://s2.coinmarketcap.com/static/img/coins/64x64/10613.png',
+  ),
   cake: new Token(
     MAINNET,
     '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',
@@ -1967,6 +1991,30 @@ export const testnetTokens = defineTokens({
     'Wrapped BNB',
     'https://www.binance.com/',
   ),
+  empire: new Token(
+    TESTNET,
+    '0xE7C6D00B5314EE2651Df6E18e84d6d6dF0EA96a6',
+    9,
+    'MockEMPIRE',
+    'Mock Empire',
+    'https://s2.coinmarketcap.com/static/img/coins/64x64/10613.png',
+  ),
+  sReward: new Token(
+    TESTNET,
+    '0xf674Ddfd4e2Fb34D36496B77715409127fBDEfEd',
+    18,
+    'sReward',
+    'StakingReward',
+    'https://s2.coinmarketcap.com/static/img/coins/64x64/10613.png',
+  ),
+  fReward: new Token(
+    TESTNET,
+    '0xf7f8e9C24706efa43eC4b4672b3AAA29146e8e0f',
+    18,
+    'fReward',
+    'FarmingReward',
+    'https://s2.coinmarketcap.com/static/img/coins/64x64/10613.png',
+  ),
   cake: new Token(
     TESTNET,
     '0xa35062141Fa33BCA92Ce69FeD37D0E8908868AAe',
@@ -1977,10 +2025,10 @@ export const testnetTokens = defineTokens({
   ),
   busd: new Token(
     TESTNET,
-    '0xeD24FC36d5Ee211Ea25A80239Fb8C4Cfd80f12Ee',
+    '0xF3B0aEb14c0b71B86214f7Fc99d793138Afac08E',
     18,
-    'BUSD',
-    'Binance USD',
+    'MockBUSD',
+    'MockBUSD',
     'https://www.paxos.com/busd/',
   ),
   syrup: new Token(

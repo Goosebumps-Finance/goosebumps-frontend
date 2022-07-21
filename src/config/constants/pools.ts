@@ -4,6 +4,102 @@ import { SerializedPoolConfig, PoolCategory } from './types'
 
 const serializedTokens = serializeTokens()
 
+export const newpools: SerializedPoolConfig[] = [
+  {
+    sousId: 2000, // staking
+    description: 'in General',
+    stakingToken: serializedTokens.empire,
+    earningToken: serializedTokens.sReward,
+    contractAddress: {
+      97: '0x42339D883DA11C14a407CF67eB2F34BF81F53a22',
+      56: '0x42339D883DA11C14a407CF67eB2F34BF81F53a22',
+    },
+    targetAddresses: {
+      97: '0x58E7E243BF2F8F0176Cd9c606b17DBEc686f7975',
+      56: '0x58E7E243BF2F8F0176Cd9c606b17DBEc686f7975',
+    },
+    approveAddresses: {
+      97: '0x42339D883DA11C14a407CF67eB2F34BF81F53a22',
+      56: '0x42339D883DA11C14a407CF67eB2F34BF81F53a22',
+    },
+    poolCategory: PoolCategory.CORE,
+    harvest: true,
+    tokenPerBlock: '10',
+    sortOrder: 1,
+    isFinished: false,
+    apr: 100,
+  },
+  {
+    sousId: 2001, // stakingWithFixedLockTime
+    description: 'with FLT',
+    stakingToken: serializedTokens.empire,
+    earningToken: serializedTokens.sReward,
+    contractAddress: {
+      97: '0x03fD18a960Ab8e16527814457a0E44a183b93be9',
+      56: '0x03fD18a960Ab8e16527814457a0E44a183b93be9',
+    },
+    targetAddresses: {
+      97: '0x81D629cb9984166b203c82195FB9B2D6c7d181bE',
+      56: '0x81D629cb9984166b203c82195FB9B2D6c7d181bE',
+    },
+    approveAddresses: {
+      97: '0x03fD18a960Ab8e16527814457a0E44a183b93be9',
+      56: '0x03fD18a960Ab8e16527814457a0E44a183b93be9',
+    },
+    poolCategory: PoolCategory.CORE,
+    harvest: true,
+    sortOrder: 2,
+    tokenPerBlock: '0.1493',
+    apr: 100,
+  },
+  {
+    sousId: 2002, // stakingWithReflection
+    description: 'with Reflection',
+    stakingToken: serializedTokens.empire,
+    earningToken: serializedTokens.sReward,
+    contractAddress: {
+      97: '0x91dacAB1617b8873533FE4819bBCa4BDAD0078D8',
+      56: '0x91dacAB1617b8873533FE4819bBCa4BDAD0078D8',
+    },
+    targetAddresses: {
+      97: '0x20c1f5a88ed8e3e9d214052579d6d68ad7f7de3c',
+      56: '0x20c1f5a88ed8e3e9d214052579d6d68ad7f7de3c',
+    },
+    approveAddresses: {
+      97: '0x20c1f5a88ed8e3e9d214052579d6d68ad7f7de3c',
+      56: '0x20c1f5a88ed8e3e9d214052579d6d68ad7f7de3c',
+    },
+    poolCategory: PoolCategory.CORE,
+    harvest: true,
+    sortOrder: 1,
+    tokenPerBlock: '0.1493',
+    apr: 100,
+  },
+  {
+    sousId: 2003, // stakingWithReflectionAndLock
+    description: 'with Reflection and FLT',
+    stakingToken: serializedTokens.empire,
+    earningToken: serializedTokens.sReward,
+    contractAddress: {
+      97: '0x0a538ffefd71046A17c02FaBe5B7572a166B8F04',
+      56: '0x0a538ffefd71046A17c02FaBe5B7572a166B8F04',
+    },
+    targetAddresses: {
+      97: '0xc1cb7f497d5cae9877423af91a7ab5b8e083ae11',
+      56: '0xc1cb7f497d5cae9877423af91a7ab5b8e083ae11',
+    },
+    approveAddresses: {
+      97: '0xc1cb7f497d5cae9877423af91a7ab5b8e083ae11',
+      56: '0xc1cb7f497d5cae9877423af91a7ab5b8e083ae11',
+    },
+    poolCategory: PoolCategory.CORE,
+    harvest: true,
+    sortOrder: 2,
+    tokenPerBlock: '0.3281',
+    apr: 100,
+  },
+]
+
 export const vaultPoolConfig = {
   [VaultKey.CakeVault]: {
     name: 'Auto CAKE',

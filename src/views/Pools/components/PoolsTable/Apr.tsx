@@ -9,11 +9,13 @@ import BigNumber from 'bignumber.js'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { vaultPoolConfig } from 'config/constants/pools'
 
-const AprLabelContainer = styled(Flex)`
-  &:hover {
-    opacity: 0.5;
-  }
-`
+// const AprLabelContainer = styled(Flex)`
+//   &:hover {
+//     opacity: 0.5;
+//   }
+// `
+
+const AprLabelContainer = styled(Flex)``
 
 interface AprProps extends FlexProps {
   pool: DeserializedPool
@@ -45,7 +47,8 @@ const Apr: React.FC<AprProps> = ({ pool, showIcon, stakedBalance, performanceFee
       earningTokenPrice={earningTokenPrice}
       stakingTokenPrice={stakingTokenPrice}
       stakingTokenBalance={stakedBalance.plus(stakingTokenBalance)}
-      apr={vaultKey ? rawApr : apr}
+      // apr={vaultKey ? rawApr : apr}
+      apr={apr}
       stakingTokenSymbol={stakingToken.symbol}
       linkLabel={t('Get %symbol%', { symbol: stakingToken.symbol })}
       linkHref={apyModalLink}
@@ -68,15 +71,16 @@ const Apr: React.FC<AprProps> = ({ pool, showIcon, stakedBalance, performanceFee
             onClick={openRoiModal}
             fontSize="16px"
             isDisabled={isFinished}
-            value={isFinished ? 0 : apr}
+            // value={isFinished ? 0 : apr}
+            value={apr}
             decimals={2}
             unit="%"
           />
-          {!isFinished && showIcon && (
+          {/* {!isFinished && showIcon && (
             <Button onClick={openRoiModal} variant="text" width="20px" height="20px" padding="0px" marginLeft="4px">
               <CalculateIcon color="textSubtle" width="20px" />
             </Button>
-          )}
+          )} */}
         </>
       ) : (
         <Skeleton width="80px" height="16px" />

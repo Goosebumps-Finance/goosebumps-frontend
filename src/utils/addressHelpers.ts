@@ -4,12 +4,11 @@ import addresses from 'config/constants/contracts'
 import { Address } from 'config/constants/types'
 import { VaultKey } from 'state/types'
 
-export const getAddress = (address: Address): string => {
-  // const chainId = process.env.REACT_APP_CHAIN_ID
-  let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
-  if(Number.isNaN(chainId))
-    chainId = 97;
-  return address[chainId] ? address[chainId] : address[ChainId.MAINNET]
+export const getAddress = (address: Address, chainId?: string): string => {
+  let defaultChainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
+  if(Number.isNaN(defaultChainId))
+    defaultChainId = ChainId.TESTNET;
+  return address[chainId??defaultChainId] ? address[chainId??defaultChainId] : address[ChainId.MAINNET]
 }
 
 export const getMasterChefAddress = () => {
@@ -95,7 +94,7 @@ export const getNftSaleAddress = () => {
 export const getPancakeSquadAddress = () => {
   return getAddress(addresses.pancakeSquad)
 }
-export const getStakeAddress = () => {
+export const getStakingAddress = () => {
   return getAddress(addresses.staking)
 }
 export const getStakingWithFixedLockTimeAddress = () => {

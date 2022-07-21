@@ -5,6 +5,7 @@ import { Card, Flex, Text, Skeleton } from '@goosebumps/uikit'
 import { DeserializedFarm } from 'state/types'
 import { getBscScanLink } from 'utils'
 import { useTranslation } from 'contexts/Localization'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import ExpandableSectionButton from 'components/ExpandableSectionButton'
 import { BASE_ADD_LIQUIDITY_URL } from 'config'
 import { getAddress } from 'utils/addressHelpers'
@@ -59,16 +60,23 @@ interface FarmCardProps {
 
 const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePrice, account }) => {
   const { t } = useTranslation()
+  const { chainId } = useActiveWeb3React()
 
   const [showExpandableSection, setShowExpandableSection] = useState(false)
 
+  // const totalValueFormatted =
+  //   farm.liquidity && farm.liquidity.gt(0)
+  //     ? `$${farm.liquidity.toNumber().toLocaleString(undefined, { maximumFractionDigits: 0 })}`
+  //     : ''
+
   const totalValueFormatted =
     farm.liquidity && farm.liquidity.gt(0)
-      ? `$${farm.liquidity.toNumber().toLocaleString(undefined, { maximumFractionDigits: 0 })}`
+      ? `$${farm.liquidity.toNumber().toLocaleString('en-US', { maximumFractionDigits: 0 })}`
       : ''
 
   const lpLabel = farm.lpSymbol && farm.lpSymbol.toUpperCase().replace('PANCAKE', '')
-  const earnLabel = farm.dual ? farm.dual.earnLabel : t('CAKE + Fees')
+  // const earnLabel = farm.dual ? farm.dual.earnLabel : t('CAKE + Fees')
+  const earnLabel = farm.dual ? farm.dual.earnLabel : t('fReward')
 
   const liquidityUrlPathParts = getLiquidityUrlPathParts({
     quoteTokenAddress: farm.quoteToken.address,
@@ -76,6 +84,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
   })
   const addLiquidityUrl = `${BASE_ADD_LIQUIDITY_URL}/${liquidityUrlPathParts}`
   const lpAddress = getAddress(farm.lpAddresses)
+  const targetAddress = getAddress(farm.targetAddresses)
   const isPromotedFarm = farm.token.symbol === 'CAKE'
 
   return (
@@ -131,8 +140,9 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
         {showExpandableSection && (
           <DetailsSection
             removed={removed}
-            bscScanAddress={getBscScanLink(lpAddress, 'address')}
-            infoAddress={`/info/pool/${lpAddress}`}
+            bscScanAddress={getBscScanLink(lpAddress, 'address', chainId)}
+            // infoAddress={`/info/pool/${lpAddress}`}
+            infoAddress={getBscScanLink(targetAddress, 'address', chainId)}
             totalValueFormatted={totalValueFormatted}
             lpLabel={lpLabel}
             addLiquidityUrl={addLiquidityUrl}

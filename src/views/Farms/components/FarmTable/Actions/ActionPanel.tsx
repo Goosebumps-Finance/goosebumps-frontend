@@ -151,20 +151,22 @@ const ActionPanel: React.FunctionComponent<ActionPanelProps> = ({
     tokenAddress: token.address,
   })
   const lpAddress = getAddress(farm.lpAddresses)
+  const targetAddress = getAddress(farm.targetAddresses)
   const bsc = getBscScanLink(lpAddress, 'address', chainId)
-  const info = `/info/pool/${lpAddress}`
+  // const info = `/info/pool/${lpAddress}`
+  const info = getBscScanLink(targetAddress, 'address', chainId)
 
   return (
     <Container expanded={expanded}>
       <InfoContainer>
-        {isActive && (
-          <StakeContainer>
-            <StyledLinkExternal href={`/liquidityAdd/${liquidityUrlPathParts}`}>
-              {t('Get %symbol%', { symbol: lpLabel })}
-            </StyledLinkExternal>
-          </StakeContainer>
-        )}
-        <StyledLinkExternal href={bsc}>{t('View Contract')}</StyledLinkExternal>
+        {/* {isActive && ( */}
+        <StakeContainer>
+          <StyledLinkExternal href={`/liquidityAdd/${liquidityUrlPathParts}`}>
+            {t('Get %symbol%', { symbol: lpLabel })}
+          </StyledLinkExternal>
+        </StakeContainer>
+        {/* )} */}
+        <StyledLinkExternal href={info}>{t('View Farm Contract')}</StyledLinkExternal>
         <StyledLinkExternal href={bsc}>{t('See Pair Info')}</StyledLinkExternal>
         {/* <TagsContainer>
           {farm.isCommunity ? <CommunityTag /> : <CoreTag />}

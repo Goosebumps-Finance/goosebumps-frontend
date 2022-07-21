@@ -204,23 +204,23 @@ const ActionPanel: React.FC<ActionPanelProps> = ({ account, pool, userDataLoaded
     </Flex>
   ) : null
 
-  const blocksRow =
-    blocksRemaining || blocksUntilStart ? (
-      <Flex mb="8px" justifyContent="space-between">
-        <Text>{hasPoolStarted ? t('Ends in') : t('Starts in')}:</Text>
-        <Flex>
-          <Link external href={getBscScanLink(hasPoolStarted ? endBlock : startBlock, 'countdown', chainId)}>
-            <Balance fontSize="16px" value={blocksToDisplay} decimals={0} color="primary" />
-            <Text ml="4px" color="primary" textTransform="lowercase">
-              {t('Blocks')}
-            </Text>
-            <TimerIcon ml="4px" color="primary" />
-          </Link>
-        </Flex>
-      </Flex>
-    ) : (
-      <Skeleton width="56px" height="16px" />
-    )
+  // const blocksRow =
+  //   blocksRemaining || blocksUntilStart ? (
+  //     <Flex mb="8px" justifyContent="space-between">
+  //       <Text>{hasPoolStarted ? t('Ends in') : t('Starts in')}:</Text>
+  //       <Flex>
+  //         <Link external href={getBscScanLink(hasPoolStarted ? endBlock : startBlock, 'countdown', chainId)}>
+  //           <Balance fontSize="16px" value={blocksToDisplay} decimals={0} color="primary" />
+  //           <Text ml="4px" color="primary" textTransform="lowercase">
+  //             {t('Blocks')}
+  //           </Text>
+  //           <TimerIcon ml="4px" color="primary" />
+  //         </Link>
+  //       </Flex>
+  //     </Flex>
+  //   ) : (
+  //     <Skeleton width="56px" height="16px" />
+  //   )
 
   const aprRow = (
     <Flex justifyContent="space-between" alignItems="center" mb="8px">
@@ -260,7 +260,7 @@ const ActionPanel: React.FC<ActionPanelProps> = ({ account, pool, userDataLoaded
         {maxStakeRow}
         {(isXs || isSm) && aprRow}
         {(isXs || isSm || isMd) && totalStakedRow}
-        {shouldShowBlockCountdown && blocksRow}
+        {/* {shouldShowBlockCountdown && blocksRow} */}
         <Flex mb="8px" justifyContent={['flex-end', 'flex-end', 'flex-start']}>
           {/* <LinkExternal href={`/info/token/${earningToken.address}`} bold={false}> */}
           <LinkExternal href={getBscScanLink(stakingToken.address, 'address', chainId)} bold={false} small>

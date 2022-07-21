@@ -152,7 +152,7 @@ export const fetchPoolsPublicDataAsync = () => async (dispatch, getState) => {
       ...totalStaking,
       stakingTokenPrice,
       earningTokenPrice,
-      apr,
+      // apr,
       isFinished: isPoolFinished,
     }
   })

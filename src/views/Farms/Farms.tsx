@@ -333,7 +333,11 @@ const Farms: React.FC = () => {
         sortable: column.sortable,
       }))
 
-      return <Table data={rowData} columns={columns} userDataReady={userDataReady} />
+      return (
+        <Route exact path={`${path}`}>
+          <Table data={rowData} columns={columns} userDataReady={userDataReady} />
+        </Route>
+      )
     }
 
     // console.log("viewMode1: ", viewMode)
@@ -402,7 +406,8 @@ const Farms: React.FC = () => {
           </Button>
         </NavLink>
       </PageHeader> */}
-      <Page>
+      {/* <Page> */}
+      <Page style={{ backgroundColor: '#121e30', borderRadius: '20px' }}>
         <ControlContainer>
           <ViewControls>
             <ToggleView viewMode={viewMode} onToggle={(mode: ViewMode) => setViewMode(mode)} />

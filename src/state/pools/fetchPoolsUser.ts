@@ -4,8 +4,9 @@ import erc20ABI from 'config/abi/erc20.json'
 import multicall from 'utils/multicall'
 import { getMasterchefContract } from 'utils/contractHelpers'
 import { getAddress } from 'utils/addressHelpers'
-import { simpleRpcProvider } from 'utils/providers'
+import { getSimpleRpcProvider, simpleRpcProvider } from 'utils/providers'
 import BigNumber from 'bignumber.js'
+import { ChainIdStorageName } from 'config/constants'
 
 // Pool 0, Cake / Cake is a different kind of contract (master chef)
 // BNB pools use the native BNB token (wrapping ? unwrapping is done at the contract level)
@@ -42,7 +43,10 @@ export const fetchUserBalances = async (account) => {
   )
 
   // BNB pools
-  const bnbBalance = await simpleRpcProvider.getBalance(account)
+  let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
+  if(Number.isNaN(chainId)) chainId = 97
+  const rpcProvider = getSimpleRpcProvider(chainId)
+  const bnbBalance = await rpcProvider.getBalance(account)
   const bnbBalances = bnbPools.reduce(
     (acc, pool) => ({ ...acc, [pool.sousId]: new BigNumber(bnbBalance.toString()).toJSON() }),
     {},

@@ -1,11 +1,12 @@
 import { toDate, add, differenceInHours } from 'date-fns'
 import { BSC_BLOCK_TIME, DEFAULT_TOKEN_DECIMAL } from 'config'
 import { getBidderInfo } from 'config/constants/farmAuctions'
-import { simpleRpcProvider } from 'utils/providers'
+import { getSimpleRpcProvider, simpleRpcProvider } from 'utils/providers'
 import { AuctionsResponse, FarmAuctionContractStatus, BidsPerAuction } from 'utils/types'
 import { Auction, AuctionStatus, Bidder, BidderAuction } from 'config/constants/types'
 import { ethersToBigNumber } from 'utils/bigNumber'
 import { FarmAuction } from 'config/abi/types'
+import { ChainIdStorageName } from 'config/constants'
 
 export const FORM_ADDRESS =
   'https://docs.google.com/forms/d/e/1FAIpQLScUkwbsMWwg7L5jjGjEcmv6RsoCNhFDkV3xEpRu2KcJrr47Sw/viewform'
@@ -94,7 +95,10 @@ const getDateForBlock = async (currentBlock: number, block: number) => {
   // if block already happened we can get timestamp via .getBlock(block)
   if (currentBlock > block) {
     try {
-      const { timestamp } = await simpleRpcProvider.getBlock(block)
+      let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
+      if(Number.isNaN(chainId)) chainId = 97
+      const rpcProvider = getSimpleRpcProvider(chainId)
+      const { timestamp } = await rpcProvider.getBlock(block)
       return toDate(timestamp * 1000)
     } catch {
       add(new Date(), { seconds: secondsUntilStart })
@@ -115,7 +119,10 @@ export const processAuctionData = async (auctionId: number, auctionResponse: Auc
   }
 
   // Get all required data and blocks
-  const currentBlock = await simpleRpcProvider.getBlockNumber()
+  let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
+  if(Number.isNaN(chainId)) chainId = 97
+  const rpcProvider = getSimpleRpcProvider(chainId)
+  const currentBlock = await rpcProvider.getBlockNumber()
   const startDate = await getDateForBlock(currentBlock, processedAuctionData.startBlock)
   const endDate = await getDateForBlock(currentBlock, processedAuctionData.endBlock)
 

@@ -51,14 +51,17 @@ export function retry<T>(
         if (completed) {
           break
         }
-        if (n <= 0 || !(error instanceof RetryableError)) {
-          reject(error)
-          completed = true
-          break
-        }
-        n--
+        // if (n <= 0 || !(error instanceof RetryableError)) {
+        //   reject(error)
+        //   completed = true
+        //   break
+        // }
+        // n--
+        reject(error)
+        completed = true
+        break
       }
-      await waitRandom(minWait, maxWait)
+      // await waitRandom(minWait, maxWait)
     }
   })
   return {

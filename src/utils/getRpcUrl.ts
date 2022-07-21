@@ -31,7 +31,7 @@ const getNodeUrl = (chainId = 97) => {
   if(chainId === 137) { // ChainId.POLYGON_MAIN) 
     return getPolygonNodeUrl()
   }
-  return getBscTestnetNodeUrl()
+    return getBscTestnetNodeUrl()
 }
 
 export const getEthNodeUrl = () => {

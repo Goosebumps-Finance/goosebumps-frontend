@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { getActivePools } from 'utils/calls'
 import { getAddress } from 'utils/addressHelpers'
-import { simpleRpcProvider } from 'utils/providers'
+import { getSimpleRpcProvider /* , simpleRpcProvider */ } from 'utils/providers'
+import { ChainIdStorageName } from 'config/constants'
 import { getVotingPower } from '../helpers'
 
 interface State {
@@ -37,7 +38,10 @@ const useGetVotingPower = (block?: number, isActive = true): State & { isLoading
       setIsLoading(true)
 
       try {
-        const blockNumber = block || (await simpleRpcProvider.getBlockNumber())
+        let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
+        if(Number.isNaN(chainId)) chainId = 97
+        const rpcProvider = getSimpleRpcProvider(chainId)
+        const blockNumber = block || (await rpcProvider.getBlockNumber())
         const eligiblePools = await getActivePools(blockNumber)
         const poolAddresses = eligiblePools.map(({ contractAddress }) => getAddress(contractAddress))
         const {

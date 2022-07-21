@@ -2004,7 +2004,7 @@ export const testnetTokens = defineTokens({
 const tokens = () => {
   let chainId = parseInt(window.localStorage.getItem("SELECTED_CHAIN_ID"), 10)
   if(Number.isNaN(chainId)) chainId = 97
-
+  console.log("config/constants/token/tokens() chainId = ", chainId)
   // If testnet - return list comprised of testnetTokens wherever they exist, and mainnetTokens where they don't
   if (chainId === ChainId.TESTNET) {
     return Object.keys(mainnetTokens).reduce((accum, key) => {

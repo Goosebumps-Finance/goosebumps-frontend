@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Route, useRouteMatch, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { ethers } from 'ethers'
 import { formatUnits } from 'ethers/lib/utils'
@@ -87,6 +87,7 @@ const ControlStretch = styled(Flex)`
 const NUMBER_OF_POOLS_VISIBLE = 12
 
 const Pools: React.FC = () => {
+  const { path } = useRouteMatch()
   const location = useLocation()
   const { t } = useTranslation()
   const { account } = useWeb3React()
@@ -96,7 +97,7 @@ const Pools: React.FC = () => {
   const [numberOfPoolsVisible, setNumberOfPoolsVisible] = useState(NUMBER_OF_POOLS_VISIBLE)
   const { observerRef, isIntersecting } = useIntersectionObserver()
   const [searchQuery, setSearchQuery] = useState('')
-  const [sortOption, setSortOption] = useState('hot')
+  const [sortOption, setSortOption] = useState('apr')
   const chosenPoolsLength = useRef(0)
   const vaultPools = useVaultPools()
   const cakeInVaults = Object.values(vaultPools).reduce((total, vault) => {
@@ -169,12 +170,12 @@ const Pools: React.FC = () => {
             }
             return pool.vaultKey
               ? getCakeVaultEarnings(
-                  account,
-                  vaultPools[pool.vaultKey].userData.cakeAtLastUserAction,
-                  vaultPools[pool.vaultKey].userData.userShares,
-                  vaultPools[pool.vaultKey].pricePerFullShare,
-                  pool.earningTokenPrice,
-                ).autoUsdToDisplay
+                account,
+                vaultPools[pool.vaultKey].userData.cakeAtLastUserAction,
+                vaultPools[pool.vaultKey].userData.userShares,
+                vaultPools[pool.vaultKey].pricePerFullShare,
+                pool.earningTokenPrice,
+              ).autoUsdToDisplay
               : pool.userData.pendingReward.times(pool.earningTokenPrice).toNumber()
           },
           'desc',
@@ -232,19 +233,25 @@ const Pools: React.FC = () => {
   chosenPoolsLength.current = chosenPools.length
 
   const cardLayout = (
-    <CardLayout>
-      {chosenPools.map((pool) =>
-        pool.vaultKey ? (
-          // <CakeVaultCard key={pool.vaultKey} pool={pool} showStakedOnly={stakedOnly} />
-          <></>
-        ) : (
-          <PoolCard key={pool.sousId} pool={pool} account={account} />
-        ),
-      )}
-    </CardLayout>
+    <Route exact path={`${path}`}>
+      <CardLayout>
+        {chosenPools.map((pool) =>
+          pool.vaultKey ? (
+            // <CakeVaultCard key={pool.vaultKey} pool={pool} showStakedOnly={stakedOnly} />
+            <></>
+          ) : (
+            <PoolCard key={pool.sousId} pool={pool} account={account} />
+          ),
+        )}
+      </CardLayout>
+    </Route>
   )
 
-  const tableLayout = <PoolsTable pools={chosenPools} account={account} userDataLoaded={userDataLoaded} />
+  const tableLayout = (
+    <Route exact path={`${path}`}>
+      <PoolsTable pools={chosenPools} account={account} userDataLoaded={userDataLoaded} />
+    </Route>
+  )
 
   return (
     <>
@@ -274,10 +281,10 @@ const Pools: React.FC = () => {
               <ControlStretch>
                 <Select
                   options={[
-                    {
-                      label: t('Hot'),
-                      value: 'hot',
-                    },
+                    // {
+                    //   label: t('Hot'),
+                    //   value: 'hot',
+                    // },
                     {
                       label: t('APR'),
                       value: 'apr',
@@ -313,11 +320,11 @@ const Pools: React.FC = () => {
             </LabelWrapper>
           </FilterContainer>
         </PoolControls>
-        {showFinishedPools && (
+        {/* {showFinishedPools && (
           <Text fontSize="20px" color="failure" pb="32px">
             {t('These pools are no longer distributing rewards. Please unstake your tokens.')}
           </Text>
-        )}
+        )} */}
         {account && !userDataLoaded && stakedOnly && (
           <Flex justifyContent="center" mb="4px">
             <Loading />

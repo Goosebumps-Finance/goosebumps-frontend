@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex, TooltipText, IconButton, useModal, CalculateIcon, Skeleton, useTooltip } from '@goosebumps/uikit'
+import { Flex, Text, TooltipText, IconButton, useModal, CalculateIcon, Skeleton, useTooltip } from '@goosebumps/uikit'
 import { useTranslation } from 'contexts/Localization'
 import Balance from 'components/Balance'
 import RoiCalculatorModal from 'components/RoiCalculatorModal'
@@ -9,13 +9,15 @@ import BigNumber from 'bignumber.js'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { vaultPoolConfig } from 'config/constants/pools'
 
-const ApyLabelContainer = styled(Flex)`
-  cursor: pointer;
+// const ApyLabelContainer = styled(Flex)`
+//   cursor: pointer;
 
-  &:hover {
-    opacity: 0.5;
-  }
-`
+//   &:hover {
+//     opacity: 0.5;
+//   }
+// `
+
+const ApyLabelContainer = styled(Flex)``
 
 interface AprRowProps {
   pool: DeserializedPool
@@ -64,23 +66,27 @@ const AprRow: React.FC<AprRowProps> = ({ pool, stakedBalance, performanceFee = 0
 
   return (
     <Flex alignItems="center" justifyContent="space-between">
-      {tooltipVisible && tooltip}
-      <TooltipText ref={targetRef}>{vaultKey ? `${t('APY')}:` : `${t('APR')}:`}</TooltipText>
-      {apr || isFinished ? (
-        <ApyLabelContainer alignItems="center" onClick={onPresentApyModal}>
+      {/* {tooltipVisible && tooltip} */}
+      {/* <TooltipText ref={targetRef}>{vaultKey ? `${t('APY')}:` : `${t('APR')}:`}</TooltipText> */}
+      <Text>{t('APR')}</Text>
+      {apr || isFinished || true ? (
+        // <ApyLabelContainer alignItems="center" onClick={onPresentApyModal}>
+        <ApyLabelContainer alignItems="center">
           <Balance
             fontSize="16px"
-            isDisabled={isFinished}
-            value={isFinished ? 0 : apr}
+            // isDisabled={isFinished}
+            isDisabled={false}
+            value={100}
+            // value={isFinished ? 0 : apr}
             decimals={2}
             unit="%"
-            onClick={onPresentApyModal}
+            // onClick={onPresentApyModal}
           />
-          {!isFinished && (
+          {/* {!isFinished && (
             <IconButton variant="text" scale="sm">
               <CalculateIcon color="textSubtle" width="18px" />
             </IconButton>
-          )}
+          )} */}
         </ApyLabelContainer>
       ) : (
         <Skeleton width="82px" height="32px" />

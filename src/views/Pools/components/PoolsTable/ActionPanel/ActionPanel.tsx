@@ -224,7 +224,8 @@ const ActionPanel: React.FC<ActionPanelProps> = ({ account, pool, userDataLoaded
 
   const aprRow = (
     <Flex justifyContent="space-between" alignItems="center" mb="8px">
-      <Text>{vaultKey ? t('APY') : t('APR')}:</Text>
+      {/* <Text>{vaultKey ? t('APY') : t('APR')}:</Text> */}
+      <Text>{t('APR')}:</Text>
       <Apr
         pool={pool}
         showIcon

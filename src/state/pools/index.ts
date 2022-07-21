@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import BigNumber from 'bignumber.js'
-// import poolsConfig from 'config/constants/pools'
-import { newpools } from 'config/constants/pools'
+import poolsConfig from 'config/constants/pools'
+// import { newpools } from 'config/constants/pools'
 import {
   AppThunk,
   CakeVault,
@@ -54,7 +54,7 @@ export const initialPoolVaultState = Object.freeze({
   creditStartBlock: null,
 })
 
-const poolsConfig = newpools
+// const poolsConfig = newpools
 
 const initialState: PoolsState = {
   data: [...poolsConfig],

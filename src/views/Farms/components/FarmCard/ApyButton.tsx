@@ -14,8 +14,7 @@ import { useFarmUser, useLpTokenPrice } from 'state/farms/hooks'
 //   }
 // `
 
-const ApyLabelContainer = styled(Flex)`
-`
+const ApyLabelContainer = styled(Flex)``
 
 export interface ApyButtonProps {
   variant: 'text' | 'text-and-button'

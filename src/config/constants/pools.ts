@@ -31,7 +31,7 @@ export const newpools: SerializedPoolConfig[] = [
   },
   {
     sousId: 2001, // stakingWithFixedLockTime
-    description: 'with Fixed LockTime',
+    description: 'with FLT',
     stakingToken: serializedTokens.empire,
     earningToken: serializedTokens.sReward,
     contractAddress: {
@@ -77,7 +77,7 @@ export const newpools: SerializedPoolConfig[] = [
   },
   {
     sousId: 2003, // stakingWithReflectionAndLock
-    description: 'with Reflection and Fixed LockTime',
+    description: 'with Reflection and FLT',
     stakingToken: serializedTokens.empire,
     earningToken: serializedTokens.sReward,
     contractAddress: {

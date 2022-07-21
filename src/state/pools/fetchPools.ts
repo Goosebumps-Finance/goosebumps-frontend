@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js'
-import poolsConfig from 'config/constants/pools'
+// import poolsConfig from 'config/constants/pools'
+import { newpools } from 'config/constants/pools'
 import sousChefABI from 'config/abi/sousChef.json'
 import cakeABI from 'config/abi/cake.json'
 import wbnbABI from 'config/abi/weth.json'
@@ -10,6 +11,8 @@ import { getSouschefV2Contract } from 'utils/contractHelpers'
 import tokens from 'config/constants/tokens'
 import { chunk } from 'lodash'
 import sousChefV2 from '../../config/abi/sousChefV2.json'
+
+const poolsConfig = newpools
 
 export const fetchPoolsBlockLimits = async () => {
   const poolsWithEnd = poolsConfig.filter((p) => p.sousId !== 0)

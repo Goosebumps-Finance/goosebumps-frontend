@@ -39,6 +39,7 @@ export const newfarms: SerializedFarmConfig[] = [
     },
     token: serializedTokens.empire,
     quoteToken: serializedTokens.wbnb,
+    isCommunity: true,
   },
   {
     pid: 1001,
@@ -94,7 +95,6 @@ export const newfarms: SerializedFarmConfig[] = [
     },
     token: serializedTokens.empire,
     quoteToken: serializedTokens.busd,
-    isCommunity: true,
   },
 ]
 

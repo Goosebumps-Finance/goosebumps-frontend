@@ -7,6 +7,7 @@ const serializedTokens = serializeTokens()
 export const newpools: SerializedPoolConfig[] = [
   {
     sousId: 2000, // staking
+    description: 'in General',
     stakingToken: serializedTokens.empire,
     earningToken: serializedTokens.sReward,
     contractAddress: {
@@ -30,6 +31,7 @@ export const newpools: SerializedPoolConfig[] = [
   },
   {
     sousId: 2001, // stakingWithFixedLockTime
+    description: 'with Fixed LockTime',
     stakingToken: serializedTokens.empire,
     earningToken: serializedTokens.sReward,
     contractAddress: {
@@ -52,6 +54,7 @@ export const newpools: SerializedPoolConfig[] = [
   },
   {
     sousId: 2002, // stakingWithReflection
+    description: 'with Reflection',
     stakingToken: serializedTokens.empire,
     earningToken: serializedTokens.sReward,
     contractAddress: {
@@ -74,6 +77,7 @@ export const newpools: SerializedPoolConfig[] = [
   },
   {
     sousId: 2003, // stakingWithReflectionAndLock
+    description: 'with Reflection and Fixed LockTime',
     stakingToken: serializedTokens.empire,
     earningToken: serializedTokens.sReward,
     contractAddress: {

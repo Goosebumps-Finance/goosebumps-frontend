@@ -308,13 +308,13 @@ const ActionPanel: React.FC<ActionPanelProps> = ({ account, pool, userDataLoaded
         </span> */}
       </InfoSection>
       <ActionContainer>
-        {showSubtitle && (
+        {/* {showSubtitle && (
           <Text mt="4px" mb="16px" color="textSubtle">
             {vaultKey
               ? t(vaultPoolConfig[vaultKey].description)
               : `${t('Earn')} Goose ${t('Stake').toLocaleLowerCase()} Goose`}
           </Text>
-        )}
+        )} */}
         {pool.vaultKey ? (
           <AutoHarvest {...pool} userDataLoaded={userDataLoaded} />
         ) : (

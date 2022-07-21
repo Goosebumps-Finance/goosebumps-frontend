@@ -109,6 +109,7 @@ export interface SerializedPoolConfig extends PoolConfigBaseProps {
   targetAddresses?: Address
   apr?: number
   approveAddresses?: Address
+  description?: string
 }
 
 export interface DeserializedPoolConfig extends PoolConfigBaseProps {

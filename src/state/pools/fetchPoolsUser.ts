@@ -1,12 +1,12 @@
 // import poolsConfig from 'config/constants/pools'
 import { newpools } from 'config/constants/pools'
-import sousChefABI from 'config/abi/sousChef.json'
+// import sousChefABI from 'config/abi/sousChef.json'
 import stakingABI from 'config/abi/staking.json'
 import erc20ABI from 'config/abi/erc20.json'
 import multicall from 'utils/multicall'
-import { getMasterchefContract } from 'utils/contractHelpers'
+// import { getMasterchefContract } from 'utils/contractHelpers'
 import { getAddress } from 'utils/addressHelpers'
-import { simpleRpcProvider } from 'utils/providers'
+// import { simpleRpcProvider } from 'utils/providers'
 import BigNumber from 'bignumber.js'
 
 const poolsConfig = newpools
@@ -14,9 +14,9 @@ const poolsConfig = newpools
 // Pool 0, Cake / Cake is a different kind of contract (master chef)
 // BNB pools use the native BNB token (wrapping ? unwrapping is done at the contract level)
 const nonBnbPools = poolsConfig.filter((pool) => pool.stakingToken.symbol !== 'BNB')
-const bnbPools = poolsConfig.filter((pool) => pool.stakingToken.symbol === 'BNB')
+// const bnbPools = poolsConfig.filter((pool) => pool.stakingToken.symbol === 'BNB')
 const nonMasterPools = poolsConfig.filter((pool) => pool.sousId !== 0)
-const masterChefContract = getMasterchefContract()
+// const masterChefContract = getMasterchefContract()
 
 export const fetchPoolsAllowance = async (account) => {
   const calls = nonBnbPools.map((pool) => ({

@@ -62,7 +62,7 @@ export const fetchPoolsTotalStaking = async () => {
     return {
       address: poolConfig.stakingToken.address,
       name: 'balanceOf',
-      params: [getAddress(poolConfig.contractAddress)],
+      params: [getAddress(poolConfig.targetAddresses)],
     }
   })
 

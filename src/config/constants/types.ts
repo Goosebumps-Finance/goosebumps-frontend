@@ -108,6 +108,7 @@ export interface SerializedPoolConfig extends PoolConfigBaseProps {
   stakingToken: SerializedToken
   targetAddresses?: Address
   apr?: number
+  approveAddresses?: Address
 }
 
 export interface DeserializedPoolConfig extends PoolConfigBaseProps {

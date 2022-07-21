@@ -1,6 +1,7 @@
 import { ethers } from 'ethers'
 import { simpleRpcProvider } from 'utils/providers'
 import { poolsConfig } from 'config/constants'
+import { newpools } from 'config/constants/pools'
 import { PoolCategory } from 'config/constants/types'
 import tokens from 'config/constants/tokens'
 
@@ -258,4 +259,8 @@ export const getFarmingWithFixedLockTimeContract = (signer?: ethers.Signer | eth
 }
 export const getFarmingWithFixedLockTimeBUSDContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
   return getContract(farmingWithFixedLockTimeAbi, getFarmingWithFixedLockTimeBUSDAddress(), signer)
+}
+export const getApproveAddress = (id: number, signer?: ethers.Signer | ethers.providers.Provider) => {
+  const config = newpools.find((pool) => pool.sousId === id)
+  return getAddress(config.approveAddresses)
 }

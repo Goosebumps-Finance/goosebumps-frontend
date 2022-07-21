@@ -172,7 +172,7 @@ const Farms: React.FC = () => {
         //   : { cakeRewardsApr: 0, lpRewardsApr: 0 }
 
         const { cakeRewardsApr, lpRewardsApr } = getFarmApr(getAddress(farm.targetAddresses))
-        console.log("cakeRewardsApr, lpRewardsApr: ", cakeRewardsApr, lpRewardsApr)
+        // console.log("cakeRewardsApr, lpRewardsApr: ", cakeRewardsApr, lpRewardsApr)
 
         return { ...farm, apr: cakeRewardsApr, lpRewardsApr, liquidity: totalLiquidity }
       })
@@ -305,9 +305,9 @@ const Farms: React.FC = () => {
   })
 
   const renderContent = (): JSX.Element => {
-    console.log("renderContent")
+    // console.log("renderContent")
     if (viewMode === ViewMode.TABLE && rowData.length) {
-      console.log("viewMode: ", viewMode)
+      // console.log("viewMode: ", viewMode)
       const columnSchema = DesktopColumnSchema
 
       const columns = columnSchema.map((column) => ({
@@ -336,8 +336,8 @@ const Farms: React.FC = () => {
       return <Table data={rowData} columns={columns} userDataReady={userDataReady} />
     }
 
-    console.log("viewMode1: ", viewMode)
-    console.log("chosenFarmsMemoized: ", chosenFarmsMemoized)
+    // console.log("viewMode1: ", viewMode)
+    // console.log("chosenFarmsMemoized: ", chosenFarmsMemoized)
     return (
       <FlexLayout>
         <Route exact path={`${path}`}>
@@ -415,7 +415,7 @@ const Farms: React.FC = () => {
               />
               <Text> {t('Staked only')}</Text>
             </ToggleWrapper>
-            <FarmTabButtons hasStakeInFinishedFarms={stakedInactiveFarms.length > 0} />
+            {/* <FarmTabButtons hasStakeInFinishedFarms={stakedInactiveFarms.length > 0} /> */}
           </ViewControls>
           <FilterContainer>
             <LabelWrapper>

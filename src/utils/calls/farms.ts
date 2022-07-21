@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { DEFAULT_GAS_LIMIT, DEFAULT_TOKEN_DECIMAL } from 'config'
+import { BIG_TEN } from 'utils/bigNumber'
 import getGasPrice from 'utils/getGasPrice'
 
 const options = {
@@ -22,7 +23,7 @@ export const stakeFarmOld = async (masterChefContract, pid, amount) => {
 
 export const stakeFarm = async (stakingContract, amount, decimals?) => {
   const gasPrice = getGasPrice()
-  const value = new BigNumber(amount).times(decimals??DEFAULT_TOKEN_DECIMAL).toString()
+  const value = new BigNumber(amount).times(decimals? BIG_TEN.pow(decimals) : DEFAULT_TOKEN_DECIMAL).toString()
 
   const tx = await stakingContract.stake(value, { ...options, gasPrice })
   const receipt = await tx.wait()
@@ -45,7 +46,7 @@ export const unstakeFarmOld = async (masterChefContract, pid, amount) => {
 
 export const unstakeFarm = async (stakingContract, amount, decimals?) => {
   const gasPrice = getGasPrice()
-  const value = new BigNumber(amount).times(decimals??DEFAULT_TOKEN_DECIMAL).toString()
+  const value = new BigNumber(amount).times(decimals? BIG_TEN.pow(decimals) : DEFAULT_TOKEN_DECIMAL).toString()
   const tx = await stakingContract.unstake(value, { ...options, gasPrice })
   const receipt = await tx.wait()
   return receipt.status

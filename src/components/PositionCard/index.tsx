@@ -71,8 +71,8 @@ export function MinimalPositionCard({ pair, showUnwrapped = false }: PositionCar
   return (
     <>
       {userPoolBalance && JSBI.greaterThan(userPoolBalance.raw, JSBI.BigInt(0)) ? (
-        <Card>
-          <CardBody>
+        <Card style={{background: 'none', marginBottom: "10px"}}>
+          <CardBody style={{background: '#18283a'}}>
             <AutoColumn gap="16px">
               <FixedHeightRow>
                 <RowFixed>
@@ -174,8 +174,8 @@ export default function FullPositionCard({ pair, ...props }: PositionCardProps) 
       : [undefined, undefined]
 
   return (
-    <Card style={{ borderRadius: '12px' }} {...props}>
-      <Flex justifyContent="space-between" role="button" onClick={() => setShowMore(!showMore)} p="16px">
+    <Card style={{ borderRadius: '12px', background: 'none' }} {...props}>
+      <Flex justifyContent="space-between" role="button" onClick={() => setShowMore(!showMore)} p="16px" style={{backgroundColor: "#18283a"}}>
         <Flex flexDirection="column">
           <Flex alignItems="center" mb="4px">
             <DoubleCurrencyLogo currency0={currency0} currency1={currency1} size={20} />
@@ -191,7 +191,7 @@ export default function FullPositionCard({ pair, ...props }: PositionCardProps) 
       </Flex>
 
       {showMore && (
-        <AutoColumn gap="8px" style={{ padding: '16px' }}>
+        <AutoColumn gap="8px" style={{ padding: '16px', backgroundColor: '#18283a' }}>
           <FixedHeightRow>
             <RowFixed>
               <CurrencyLogo size="20px" currency={currency0} />

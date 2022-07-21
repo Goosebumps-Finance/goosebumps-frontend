@@ -12,12 +12,12 @@ const options = {
   gasLimit: DEFAULT_GAS_LIMIT,
 }
 
-const harvestPoolOld = async (sousChefContract) => {
-  const gasPrice = getGasPrice()
-  const tx = await sousChefContract.deposit('0', { ...options, gasPrice })
-  const receipt = await tx.wait()
-  return receipt.status
-}
+// const harvestPoolOld = async (sousChefContract) => {
+//   const gasPrice = getGasPrice()
+//   const tx = await sousChefContract.deposit('0', { ...options, gasPrice })
+//   const receipt = await tx.wait()
+//   return receipt.status
+// }
 
 const harvestPool = async (stakingContract) => {
   const gasPrice = getGasPrice()
@@ -26,12 +26,12 @@ const harvestPool = async (stakingContract) => {
   return receipt.status
 }
 
-const harvestPoolBnb = async (sousChefContract) => {
-  const gasPrice = getGasPrice()
-  const tx = await sousChefContract.deposit({ ...options, value: BIG_ZERO, gasPrice })
-  const receipt = await tx.wait()
-  return receipt.status
-}
+// const harvestPoolBnb = async (sousChefContract) => {
+//   const gasPrice = getGasPrice()
+//   const tx = await sousChefContract.deposit({ ...options, value: BIG_ZERO, gasPrice })
+//   const receipt = await tx.wait()
+//   return receipt.status
+// }
 
 // const useHarvestPoolOld = (sousId, isUsingBnb = false) => {
 //   const dispatch = useAppDispatch()

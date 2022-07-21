@@ -17,7 +17,8 @@ import { ActionContainer, ActionTitles, ActionContent } from './styles'
 import NotEnoughTokensModal from '../../PoolCard/Modals/NotEnoughTokensModal'
 import StakeModal from '../../PoolCard/Modals/StakeModal'
 import VaultStakeModal from '../../CakeVaultCard/VaultStakeModal'
-import { useCheckVaultApprovalStatus, useApprovePool, useVaultApprove } from '../../../hooks/useApprove'
+// import { useCheckVaultApprovalStatus, useApprovePool, useVaultApprove } from '../../../hooks/useApprove'
+import { useApprovePool } from '../../../hooks/useApprove'
 
 const IconButtonWrapper = styled.div`
   display: flex;
@@ -50,14 +51,16 @@ const Staked: React.FunctionComponent<StackedActionProps> = ({ pool, userDataLoa
     earningToken.symbol,
   )
 
-  const { isVaultApproved, setLastUpdated } = useCheckVaultApprovalStatus(pool.vaultKey)
-  const { handleApprove: handleVaultApprove, requestedApproval: requestedVaultApproval } = useVaultApprove(
-    pool.vaultKey,
-    setLastUpdated,
-  )
+  // const { isVaultApproved, setLastUpdated } = useCheckVaultApprovalStatus(pool.vaultKey)
+  // const { handleApprove: handleVaultApprove, requestedApproval: requestedVaultApproval } = useVaultApprove(
+  //   pool.vaultKey,
+  //   setLastUpdated,
+  // )
 
-  const handleApprove = vaultKey ? handleVaultApprove : handlePoolApprove
-  const requestedApproval = vaultKey ? requestedVaultApproval : requestedPoolApproval
+  // const handleApprove = vaultKey ? handleVaultApprove : handlePoolApprove
+  // const requestedApproval = vaultKey ? requestedVaultApproval : requestedPoolApproval
+  const handleApprove = handlePoolApprove
+  const requestedApproval = requestedPoolApproval
 
   const isBnbPool = poolCategory === PoolCategory.BINANCE
   const allowance = userData?.allowance ? new BigNumber(userData.allowance) : BIG_ZERO
@@ -82,7 +85,8 @@ const Staked: React.FunctionComponent<StackedActionProps> = ({ pool, userDataLoa
   const isVaultWithShares = vaultKey && hasSharesStaked
   const stakedAutoDollarValue = getBalanceNumber(cakeAsBigNumber.multipliedBy(stakingTokenPrice), stakingToken.decimals)
 
-  const needsApproval = vaultKey ? !isVaultApproved : !allowance.gt(0) && !isBnbPool
+  // const needsApproval = vaultKey ? !isVaultApproved : !allowance.gt(0) && !isBnbPool
+  const needsApproval = !allowance.gt(0) && !isBnbPool
 
   const [onPresentTokenRequired] = useModal(<NotEnoughTokensModal tokenSymbol={stakingToken.symbol} />)
 

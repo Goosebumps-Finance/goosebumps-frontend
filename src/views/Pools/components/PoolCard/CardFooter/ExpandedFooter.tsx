@@ -85,13 +85,13 @@ const ExpandedFooter: React.FC<ExpandedFooterProps> = ({ pool, account }) => {
   )
 
   const getTotalStakedBalance = () => {
-    if (vaultKey) {
-      return getBalanceNumber(totalCakeInVault, stakingToken.decimals)
-    }
-    if (isManualCakePool) {
-      const manualCakeTotalMinusAutoVault = new BigNumber(totalStaked).minus(cakeInVaults)
-      return getBalanceNumber(manualCakeTotalMinusAutoVault, stakingToken.decimals)
-    }
+    // if (vaultKey) {
+    //   return getBalanceNumber(totalCakeInVault, stakingToken.decimals)
+    // }
+    // if (isManualCakePool) {
+    //   const manualCakeTotalMinusAutoVault = new BigNumber(totalStaked).minus(cakeInVaults)
+    //   return getBalanceNumber(manualCakeTotalMinusAutoVault, stakingToken.decimals)
+    // }
     return getBalanceNumber(totalStaked, stakingToken.decimals)
   }
 
@@ -145,7 +145,7 @@ const ExpandedFooter: React.FC<ExpandedFooterProps> = ({ pool, account }) => {
           )}
         </Flex>
       )}
-      {vaultKey && (
+      {/* {vaultKey && (
         <Flex mb="2px" justifyContent="space-between" alignItems="center">
           {tooltipVisible && tooltip}
           <TooltipText ref={targetRef} small>
@@ -161,10 +161,10 @@ const ExpandedFooter: React.FC<ExpandedFooterProps> = ({ pool, account }) => {
             )}
           </Flex>
         </Flex>
-      )}
+      )} */}
       <Flex mb="2px" justifyContent="flex-end">
         {/* <LinkExternal href={`/info/token/${earningToken.address}`} bold={false} small> */}
-        <LinkExternal href={getBscScanLink(earningToken.address, 'address', chainId)} bold={false} small>
+        <LinkExternal href={getBscScanLink(stakingToken.address, 'address', chainId)} bold={false} small>
           {t('See Token Info')}
         </LinkExternal>
       </Flex>

@@ -20,7 +20,8 @@ import { getBalanceNumber } from 'utils/formatBalance'
 import { simpleRpcProvider } from 'utils/providers'
 import { fetchIfoPoolFeesData, fetchPublicIfoPoolData } from './fetchIfoPoolPublic'
 import fetchIfoPoolUserData from './fetchIfoPoolUser'
-import { fetchPoolsBlockLimits, fetchPoolsStakingLimits, fetchPoolsTotalStaking } from './fetchPools'
+// import { fetchPoolsBlockLimits, fetchPoolsStakingLimits, fetchPoolsTotalStaking } from './fetchPools'
+import { fetchPoolsTotalStaking } from './fetchPools'
 import {
   fetchPoolsAllowance,
   fetchUserBalances,
@@ -115,7 +116,7 @@ const initialState: PoolsState = {
 // }
 
 export const fetchPoolsPublicDataAsync = () => async (dispatch, getState) => {
-  const blockLimits = await fetchPoolsBlockLimits()
+  // const blockLimits = await fetchPoolsBlockLimits()
   const totalStakings = await fetchPoolsTotalStaking()
   let currentBlock = getState().block?.currentBlock
 
@@ -126,9 +127,10 @@ export const fetchPoolsPublicDataAsync = () => async (dispatch, getState) => {
   const prices = getTokenPricesFromFarm(getState().farms.data)
 
   const liveData = poolsConfig.map((pool) => {
-    const blockLimit = blockLimits.find((entry) => entry.sousId === pool.sousId)
+    // const blockLimit = blockLimits.find((entry) => entry.sousId === pool.sousId)
     const totalStaking = totalStakings.find((entry) => entry.sousId === pool.sousId)
-    const isPoolEndBlockExceeded = currentBlock > 0 && blockLimit ? currentBlock > Number(blockLimit.endBlock) : false
+    // const isPoolEndBlockExceeded = currentBlock > 0 && blockLimit ? currentBlock > Number(blockLimit.endBlock) : false
+    const isPoolEndBlockExceeded = false
     const isPoolFinished = pool.isFinished || isPoolEndBlockExceeded
 
     const stakingTokenAddress = pool.stakingToken.address ? pool.stakingToken.address.toLowerCase() : null
@@ -146,7 +148,7 @@ export const fetchPoolsPublicDataAsync = () => async (dispatch, getState) => {
       : 0
 
     return {
-      ...blockLimit,
+      // ...blockLimit,
       ...totalStaking,
       stakingTokenPrice,
       earningTokenPrice,
@@ -163,13 +165,14 @@ export const fetchPoolsStakingLimitsAsync = () => async (dispatch, getState) => 
     .pools.data.filter(({ stakingLimit }) => stakingLimit !== null && stakingLimit !== undefined)
     .map((pool) => pool.sousId)
 
-  const stakingLimits = await fetchPoolsStakingLimits(poolsWithStakingLimit)
+  // const stakingLimits = await fetchPoolsStakingLimits(poolsWithStakingLimit)
 
   const stakingLimitData = poolsConfig.map((pool) => {
     if (poolsWithStakingLimit.includes(pool.sousId)) {
       return { sousId: pool.sousId }
     }
-    const stakingLimit = stakingLimits[pool.sousId] || BIG_ZERO
+    // const stakingLimit = stakingLimits[pool.sousId] || BIG_ZERO
+    const stakingLimit = BIG_ZERO
     return {
       sousId: pool.sousId,
       stakingLimit: stakingLimit.toJSON(),

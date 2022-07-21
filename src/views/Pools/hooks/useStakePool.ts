@@ -13,25 +13,25 @@ const options = {
   gasLimit: DEFAULT_GAS_LIMIT,
 }
 
-const sousStake = async (sousChefContract, amount, decimals = 18) => {
-  const gasPrice = getGasPrice()
-  const tx = await sousChefContract.deposit(new BigNumber(amount).times(BIG_TEN.pow(decimals)).toString(), {
-    ...options,
-    gasPrice,
-  })
-  const receipt = await tx.wait()
-  return receipt.status
-}
+// const sousStake = async (sousChefContract, amount, decimals = 18) => {
+//   const gasPrice = getGasPrice()
+//   const tx = await sousChefContract.deposit(new BigNumber(amount).times(BIG_TEN.pow(decimals)).toString(), {
+//     ...options,
+//     gasPrice,
+//   })
+//   const receipt = await tx.wait()
+//   return receipt.status
+// }
 
-const sousStakeBnb = async (sousChefContract, amount) => {
-  const gasPrice = getGasPrice()
-  const tx = await sousChefContract.deposit(new BigNumber(amount).times(DEFAULT_TOKEN_DECIMAL).toString(), {
-    ...options,
-    gasPrice,
-  })
-  const receipt = await tx.wait()
-  return receipt.status
-}
+// const sousStakeBnb = async (sousChefContract, amount) => {
+//   const gasPrice = getGasPrice()
+//   const tx = await sousChefContract.deposit(new BigNumber(amount).times(DEFAULT_TOKEN_DECIMAL).toString(), {
+//     ...options,
+//     gasPrice,
+//   })
+//   const receipt = await tx.wait()
+//   return receipt.status
+// }
 
 // const useStakePoolOld = (sousId: number, isUsingBnb = false) => {
 //   const dispatch = useAppDispatch()
@@ -64,7 +64,7 @@ const useStakePool = (sousId: number, isUsingBnb = false) => {
 
   const handleStake = useCallback(
     async (amount: string, decimals: number) => {
-      await stakeFarm(stakingContract, amount)
+      await stakeFarm(stakingContract, amount, decimals)
       dispatch(updateUserStakedBalance(sousId, account))
       dispatch(updateUserBalance(sousId, account))
     },

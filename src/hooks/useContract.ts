@@ -38,6 +38,9 @@ import {
   getFarmingBUSDContract,
   getFarmingWithFixedLockTimeBUSDContract,
   getStakingContract,
+  getStakingWithFixedLockTimeContract,
+  getStakingWithReflectionContract,
+  getStakingWithReflectionAndLockContract,
 } from 'utils/contractHelpers'
 import { getMulticallAddress } from 'utils/addressHelpers'
 import { VaultKey } from 'state/types'
@@ -339,17 +342,17 @@ export function useStakingContract(pid: number): Contract | null {
     case 1003: // 'EMPIRE-BUSD with LockTime'
       selectedGetContract = getFarmingWithFixedLockTimeBUSDContract
       break;
-    case 1004:
+    case 2000: // staking
       selectedGetContract = getStakingContract
       break;
-    case 1005:
-      selectedGetContract = getStakingContract
+    case 2001: // stakingWithFixedLockTime
+      selectedGetContract = getStakingWithFixedLockTimeContract
       break;
-    case 1006:
-      selectedGetContract = getStakingContract
+    case 2002: // stakingWithReflection
+      selectedGetContract = getStakingWithReflectionContract
       break;
-    case 1007:
-      selectedGetContract = getStakingContract
+    case 2003: // stakingWithReflectionAndLock
+      selectedGetContract = getStakingWithReflectionAndLockContract
       break;
     default:
       selectedGetContract = getStakingContract

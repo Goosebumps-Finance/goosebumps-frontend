@@ -4,7 +4,7 @@ import { ethers, Contract } from 'ethers'
 import { useAppDispatch } from 'state'
 import { updateUserAllowance } from 'state/actions'
 import { useTranslation } from 'contexts/Localization'
-import { useCake, useSousChef, useVaultPoolContract } from 'hooks/useContract'
+import { useCake, useSousChef, useVaultPoolContract, useStakingContract } from 'hooks/useContract'
 import useToast from 'hooks/useToast'
 import useLastUpdated from 'hooks/useLastUpdated'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
@@ -19,12 +19,13 @@ export const useApprovePool = (lpContract: Contract, sousId, earningTokenSymbol)
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { account } = useWeb3React()
-  const sousChefContract = useSousChef(sousId)
+  // const sousChefContract = useSousChef(sousId)
+  const stakingContract = useStakingContract(sousId)
 
   const handleApprove = useCallback(async () => {
     try {
       setRequestedApproval(true)
-      const tx = await callWithGasPrice(lpContract, 'approve', [sousChefContract.address, ethers.constants.MaxUint256])
+      const tx = await callWithGasPrice(lpContract, 'approve', [stakingContract.address, ethers.constants.MaxUint256])
       const receipt = await tx.wait()
 
       dispatch(updateUserAllowance(sousId, account))
@@ -49,7 +50,7 @@ export const useApprovePool = (lpContract: Contract, sousId, earningTokenSymbol)
     account,
     dispatch,
     lpContract,
-    sousChefContract,
+    stakingContract,
     sousId,
     earningTokenSymbol,
     t,

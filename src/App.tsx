@@ -1,4 +1,4 @@
-import React, { lazy } from 'react'
+import React, { lazy, useEffect } from 'react'
 import { Router, Redirect, Route, Switch } from 'react-router-dom'
 import { ResetCSS } from '@goosebumps/uikit'
 import { useWeb3React } from '@web3-react/core'
@@ -11,6 +11,8 @@ import { usePollCoreFarmData } from 'state/farms/hooks'
 import { useFetchProfile } from 'state/profile/hooks'
 import { nftsBaseUrl } from 'views/Nft/market/constants'
 import SubgraphHealthIndicator from 'components/SubgraphHealthIndicator'
+import { ChainIdStorageName } from 'config/constants'
+
 import GlobalStyle from './style/Global'
 import Menu from './components/Menu'
 import SuspenseWithChunkError from './components/SuspenseWithChunkError'
@@ -78,6 +80,10 @@ const App: React.FC = () => {
   useUserAgent()
   useInactiveListener()
   useSentryUser()
+
+  useEffect(() => {
+    window.localStorage.removeItem(ChainIdStorageName)
+  }, [])
 
   return (
     <Router history={history}>

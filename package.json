@@ -5,8 +5,6 @@
     "scripts": {
         "analyze": "source-map-explorer 'build/static/js/*.js'",
         "start": "react-scripts start",
-        "copy2": ". ./copy.sh",
-        "copy": "cp -r ../pancake-toolkit-master/packages/pancake-uikit/dist ./node_modules/@pancakeswap/uikit/",
         "build": "CI=false && GENERATE_SOURCEMAP=false react-scripts build",
         "test": "react-scripts test --testPathIgnorePatterns=/src/__tests__/config/",
         "test:config": "react-scripts test --testPathPattern=/src/__tests__/config/",

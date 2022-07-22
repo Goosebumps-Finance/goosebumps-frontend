@@ -79,7 +79,7 @@ const IFOCreditCell: React.FC<IFOCreditCellProps> = ({ account }) => {
                   decimals={hasCredit ? 5 : 1}
                   value={hasCredit ? cakeAsNumberBalance : 0}
                 />
-                {hasCredit ? (
+                {/* {hasCredit ? (
                   <Balance
                     display="inline"
                     fontSize="12px"
@@ -93,7 +93,7 @@ const IFOCreditCell: React.FC<IFOCreditCellProps> = ({ account }) => {
                   <Text mt="4px" fontSize="12px" color="textSubtle">
                     0 USD
                   </Text>
-                )}
+                )} */}
               </Box>
               {hasCredit && !isMobile && (
                 <HelpIconWrapper ref={targetRef}>

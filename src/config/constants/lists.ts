@@ -1,5 +1,5 @@
-const GOOSEBUMPS_EXTENDED = 'https://goosebumps.finance/goosebumps-extended.json'
-const GOOSEBUMPS_TOP100 = 'https://goosebumps.finance/goosebumps-top-100.json'
+const GOOSEBUMPS_EXTENDED = 'https://goosebumps.finance/token-lists/goosebumps-extended.json'
+const GOOSEBUMPS_TOP100 = 'https://goosebumps.finance/token-lists/goosebumps-top-100.json'
 
 export const UNSUPPORTED_LIST_URLS: string[] = []
 

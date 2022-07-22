@@ -1,0 +1,20 @@
+{
+  "https://tokens.goosebumps.finance/goosebumps-default.json": {
+    "name": "PancakeSwap Default",
+    "homepage": "https://goosebumps.finance"
+  },
+  "https://tokens.goosebumps.finance/goosebumps-extended.json": {
+    "name": "PancakeSwap Extended",
+    "homepage": "https://goosebumps.finance"
+    
+  },
+  "https://tokens.goosebumps.finance/goosebumps-top-100.json": {
+    "name": "PancakeSwap Top 100",
+    "homepage": "https://goosebumps.finance"
+    
+  },
+  "https://tokens.coingecko.com/binance-smart-chain/all.json": {
+    "name": "CoinGecko",
+    "homepage": "https://www.coingecko.com"
+  }
+}

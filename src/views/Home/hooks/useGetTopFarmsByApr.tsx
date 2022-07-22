@@ -46,7 +46,7 @@ const useGetTopFarmsByApr = (isIntersecting: boolean) => {
       )
       const farmsWithApr: FarmWithStakedValue[] = farmsWithPrices.map((farm) => {
         const totalLiquidity = farm.lpTotalInQuoteToken.times(farm.quoteTokenPriceBusd)
-        const { cakeRewardsApr, lpRewardsApr } = { cakeRewardsApr: 100, lpRewardsApr: 100 }
+        const { cakeRewardsApr, lpRewardsApr } = { cakeRewardsApr: 100, lpRewardsApr: 100 } // CUSTOME Check Point
         // const { cakeRewardsApr, lpRewardsApr } = getFarmApr(
         //   farm.poolWeight,
         //   cakePriceBusd,

@@ -76,7 +76,7 @@ const AprRow: React.FC<AprRowProps> = ({ pool, stakedBalance, performanceFee = 0
             fontSize="16px"
             // isDisabled={isFinished}
             isDisabled={false}
-            value={100}
+            value={apr}
             // value={isFinished ? 0 : apr}
             decimals={2}
             unit="%"

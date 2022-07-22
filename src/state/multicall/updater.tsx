@@ -51,7 +51,7 @@ async function fetchChunk(
     ) {
       // throw error
       console.error(`header not found for block number ${minBlockNumber}`)
-      // throw new RetryableError(`header not found for block number ${minBlockNumber}`)
+      throw new RetryableError(`header not found for block number ${minBlockNumber}`)
     } else if (error.code === -32603 || error.message?.indexOf('execution ran out of gas') !== -1) {
       if (chunk.length > 1) {
         if (process.env.NODE_ENV === 'development') {
@@ -69,7 +69,7 @@ async function fetchChunk(
       }
     }
     console.debug('Failed to fetch chunk inside retry', error)
-    // throw error
+    throw error
   }
   console.log("dragon= resultsBlockNumber = ", resultsBlockNumber,"returnData = ", returnData)
   if (resultsBlockNumber !== undefined && resultsBlockNumber.toNumber() < minBlockNumber) {
@@ -192,23 +192,21 @@ export default function Updater(): null {
     cancellations.current = {
       blockNumber: currentBlock,
       cancellations: chunkedCalls.map((chunk:any, index) => {
-        if(chunk.chainId !== chainId) {
-          console.log("useEffect here, chunk = ", chunk)
-          console.log("useEffect here, chunkedCalls=", chunkedCalls)
-          // return null
-        }
         console.log("useEffect cancellations: currentBlock = ", currentBlock)
         const { cancel, promise } = retry(() => fetchChunk(multicallContract, chunk, currentBlock), {
           n: Infinity,
           minWait: 2500,
           maxWait: 3500,
         })
+        if(chunk.chainId !== chainId) {
+          console.log("useEffect cancellations: chunk = ", chunk)
+          console.log("useEffect cancellations: chunkedCalls=", chunkedCalls)
+          return cancel
+          // return null
+        }
         promise
           .then(({ results: returnData, blockNumber: fetchBlockNumber }) => {
             cancellations.current = { cancellations: [], blockNumber: currentBlock }
-            
-            if(returnData === undefined || fetchBlockNumber === undefined)
-              return
           
             // accumulates the length of all previous indices
             const firstCallKeyIndex = chunkedCalls.slice(0, index).reduce<number>((memo, curr) => memo + curr.length, 0)

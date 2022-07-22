@@ -157,7 +157,7 @@ const Select: React.FunctionComponent<SelectProps> = ({
   }, [selIndex])
 
   useEffect(() => {
-    if(selectedOptionIndex !== selIndex)
+    if(selIndex && selectedOptionIndex !== selIndex)
       setSelectedOptionIndex(selIndex)
   }, [selectedOptionIndex])
 

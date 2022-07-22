@@ -23,7 +23,7 @@ import FlexLayout from 'components/Layout/Flex'
 import Page from 'components/Layout/Page'
 import PageHeader from 'components/PageHeader'
 import SearchInput from 'components/SearchInput'
-import CustomSelect, { OptionProps } from 'components/CustomSelect/CustomSelect'
+import Select, { OptionProps } from 'components/Select/Select'
 import { DeserializedPool } from 'state/types'
 import { useUserPoolStakedOnly, useUserPoolsViewMode } from 'state/user/hooks'
 import { usePoolsWithVault } from 'views/Home/hooks/useGetTopPoolsByApr'
@@ -287,7 +287,7 @@ const Pools: React.FC = () => {
                 {t('Sort by')}
               </Text>
               <ControlStretch>
-                <CustomSelect
+                <Select
                   options={[
                     // {
                     //   label: t('Hot'),

@@ -21,7 +21,7 @@ import { useUserFarmStakedOnly, useUserFarmsViewMode } from 'state/user/hooks'
 import { ViewMode } from 'state/user/actions'
 import PageHeader from 'components/PageHeader'
 import SearchInput from 'components/SearchInput'
-import CustomSelect, { OptionProps } from 'components/CustomSelect/CustomSelect'
+import Select, { OptionProps } from 'components/Select/Select'
 import Loading from 'components/Loading'
 import FarmCard, { FarmWithStakedValue } from './components/FarmCard/FarmCard'
 import Table from './components/FarmTable/FarmTable'
@@ -419,7 +419,7 @@ const Farms: React.FC = () => {
           <FilterContainer>
             <LabelWrapper>
               <Text textTransform="uppercase">{t('Sort by')}</Text>
-              <CustomSelect
+              <Select
                 options={[
                   // {
                   //   label: t('Hot'),

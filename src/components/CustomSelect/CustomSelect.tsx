@@ -107,6 +107,7 @@ export interface SelectProps extends BoxProps {
   defaultOptionIndex?: number
   header?: any
   listContainer?: any
+  selIndex?: number
 }
 
 export interface OptionProps {
@@ -118,6 +119,7 @@ const CustomSelect: React.FunctionComponent<SelectProps> = ({
   options,
   onOptionChange,
   defaultOptionIndex = 0,
+  selIndex,
   ...props
 }) => {
   const dropdownRef = useRef(null)
@@ -148,6 +150,16 @@ const CustomSelect: React.FunctionComponent<SelectProps> = ({
       document.removeEventListener('click', handleClickOutside)
     }
   }, [])
+
+  useEffect(() => {
+    if(selIndex)
+      setSelectedOptionIndex(selIndex)
+  }, [selIndex])
+
+  useEffect(() => {
+    if(selectedOptionIndex !== selIndex)
+      setSelectedOptionIndex(selIndex)
+  }, [selectedOptionIndex])
 
   return (
     <DropDownContainer isOpen={isOpen} {...props}>

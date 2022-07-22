@@ -1,10 +1,13 @@
 import { ChainId } from '@goosebumps/sdk'
+import { ChainIdStorageName } from 'config/constants'
 import addresses from 'config/constants/contracts'
 import { Address } from 'config/constants/types'
 import { VaultKey } from 'state/types'
 
 export const getAddress = (address: Address, chainId?: string): string => {
-  const defaultChainId = process.env.REACT_APP_CHAIN_ID
+  let defaultChainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
+  if(Number.isNaN(defaultChainId))
+    defaultChainId = ChainId.TESTNET;
   return address[chainId??defaultChainId] ? address[chainId??defaultChainId] : address[ChainId.MAINNET]
 }
 

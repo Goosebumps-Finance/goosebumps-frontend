@@ -86,19 +86,13 @@ const getFarmQuoteTokenPrice = (
 }
 
 const getFarmsPrices = (farms: SerializedFarm[]) => {
-  // console.log("bnbBusdFarm.tokenPriceVsQuote: ", farms)
   const bnbBusdFarm = farms.find((farm) => farm.pid === 252)
   const bnbPriceBusd = bnbBusdFarm.tokenPriceVsQuote ? BIG_ONE.div(bnbBusdFarm.tokenPriceVsQuote) : BIG_ZERO
-  // console.log("bnbBusdFarm.tokenPriceVsQuote: ", bnbBusdFarm.tokenPriceVsQuote)
 
   const farmsWithPrices = farms.map((farm) => {
-    // console.log("bnbBusdFarm.tokenPriceVsQuote: quoteTokenFarm ", "map start")
     const quoteTokenFarm = getFarmFromTokenSymbol(farms, farm.quoteToken.symbol)
-    // console.log("bnbBusdFarm.tokenPriceVsQuote: quoteTokenFarm ", farmsWithPrices)
     const tokenPriceBusd = getFarmBaseTokenPrice(farm, quoteTokenFarm, bnbPriceBusd)
-    // console.log("bnbBusdFarm.tokenPriceVsQuote: tokenPriceBusd ", farmsWithPrices)
     const quoteTokenPriceBusd = getFarmQuoteTokenPrice(farm, quoteTokenFarm, bnbPriceBusd)
-    // console.log("bnbBusdFarm.tokenPriceVsQuote: quoteTokenPriceBusd ", farmsWithPrices)
 
     return {
       ...farm,
@@ -106,8 +100,6 @@ const getFarmsPrices = (farms: SerializedFarm[]) => {
       quoteTokenPriceBusd: quoteTokenPriceBusd.toJSON(),
     }
   })
-
-  // console.log("bnbBusdFarm.tokenPriceVsQuote: farmsWithPrices ", farmsWithPrices)
 
   return farmsWithPrices
 }

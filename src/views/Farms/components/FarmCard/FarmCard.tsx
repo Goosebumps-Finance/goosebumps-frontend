@@ -21,19 +21,32 @@ export interface FarmWithStakedValue extends DeserializedFarm {
   liquidity?: BigNumber
 }
 
-const StyledCard = styled(Card)`
+const StyledCard = styled(Card)<{ isActive?: boolean}>`
+  background: none;
+  max-width: 352px;
+  margin: 0 8px 24px;
+  width: 100%;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
   align-self: baseline;
+  position: relative;
+
+  color: ${({ isActive, theme }) => theme.colors[isActive ? 'secondary': 'textDisabled']};
+  
 `
 
 const FarmCardInnerContainer = styled(Flex)`
   flex-direction: column;
   justify-content: space-around;
   padding: 24px;
+  background: #18283a;
 `
 
 const ExpandingWrapper = styled.div`
-  padding: 24px;
-  border-top: 2px solid ${({ theme }) => theme.colors.cardBorder};
+  background: #18283a;
+  padding: 0px;
+  // border-top: 2px solid ${({ theme }) => theme.colors.cardBorder};
   overflow: hidden;
 `
 
@@ -60,9 +73,6 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
     farm.liquidity && farm.liquidity.gt(0)
       ? `$${farm.liquidity.toNumber().toLocaleString('en-US', { maximumFractionDigits: 0 })}`
       : ''
-
-  console.log("totalValueFormatted: farm:", farm)
-  console.log("totalValueFormatted: totalValueFormatted:", totalValueFormatted)
 
   const lpLabel = farm.lpSymbol && farm.lpSymbol.toUpperCase().replace('PANCAKE', '')
   // const earnLabel = farm.dual ? farm.dual.earnLabel : t('CAKE + Fees')

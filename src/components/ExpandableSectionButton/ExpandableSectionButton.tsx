@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-
+  padding-bottom: 24px;
   svg {
     fill: ${({ theme }) => theme.colors.primary};
   }

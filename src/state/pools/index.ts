@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import BigNumber from 'bignumber.js'
 // import poolsConfig from 'config/constants/pools'
+import { ChainIdStorageName } from 'config/constants'
 import { newpools } from 'config/constants/pools'
 import {
   AppThunk,
@@ -17,7 +18,7 @@ import { getPoolApr } from 'utils/apr'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { getCakeContract, getMasterchefContract } from 'utils/contractHelpers'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { simpleRpcProvider } from 'utils/providers'
+import { getSimpleRpcProvider, simpleRpcProvider } from 'utils/providers'
 import { fetchIfoPoolFeesData, fetchPublicIfoPoolData } from './fetchIfoPoolPublic'
 import fetchIfoPoolUserData from './fetchIfoPoolUser'
 // import { fetchPoolsBlockLimits, fetchPoolsStakingLimits, fetchPoolsTotalStaking } from './fetchPools'
@@ -121,7 +122,10 @@ export const fetchPoolsPublicDataAsync = () => async (dispatch, getState) => {
   let currentBlock = getState().block?.currentBlock
 
   if (!currentBlock) {
-    currentBlock = await simpleRpcProvider.getBlockNumber()
+    let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
+    if(Number.isNaN(chainId)) chainId = 97
+    const rpcProvider = getSimpleRpcProvider(chainId)
+    currentBlock = await rpcProvider.getBlockNumber()
   }
 
   const prices = getTokenPricesFromFarm(getState().farms.data)

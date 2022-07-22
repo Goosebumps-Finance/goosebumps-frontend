@@ -32,6 +32,9 @@ export function useBNBBalances(uncheckedAddresses?: (string | undefined)[]): {
     addresses.map((address) => [address]),
   )
 
+  // console.log("useBNBBalances results = ", results)
+
+
   return useMemo(
     () =>
       addresses.reduce<{ [address: string]: CurrencyAmount }>((memo, address, i) => {
@@ -102,11 +105,16 @@ export function useCurrencyBalances(
     () => currencies?.filter((currency): currency is Token => currency instanceof Token) ?? [],
     [currencies],
   )
-
+    
   const tokenBalances = useTokenBalances(account, tokens)
   const containsBNB: boolean = useMemo(() => currencies?.some((currency) => currency === ETHER) ?? false, [currencies])
   const ethBalance = useBNBBalances(containsBNB ? [account] : [])
-
+  // console.log("useCurrencyBalances tokens=", tokens)
+  // console.log("useCurrencyBalances tokenBalances=", tokenBalances)
+  // console.log("useCurrencyBalances account=", account)
+  // console.log("useCurrencyBalances currencies=", currencies)
+  // console.log("useCurrencyBalances ethBalance=", ethBalance)
+  // console.log("useCurrencyBalances containsBNB=", containsBNB)
   return useMemo(
     () =>
       currencies?.map((currency) => {

@@ -9,6 +9,10 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useCombinedInactiveList } from 'state/lists/hooks'
 import { ListLogo } from 'components/Logo'
 import { useTranslation } from 'contexts/Localization'
+import { useSelector } from 'react-redux'
+import { State } from 'state/types'
+import linq from 'linq'
+import networks from 'config/constants/networks.json'
 
 interface ImportProps {
   tokens: Token[]
@@ -27,12 +31,20 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
   // use for showing import source on inactive tokens
   const inactiveTokenList = useCombinedInactiveList()
 
+  const { network } = useSelector((state:State) => state.home)
+  const detailedNetwork = linq.from(networks).where((x) => x.Name === network.value).single()
+  const tokenNames = {
+    "ETH" : "ERC20",
+    "BNB" : "BEP20",
+    "MATIC": "ERC20"
+  }
+
   return (
     <AutoColumn gap="lg">
       <Message variant="warning">
         <Text>
           {t(
-            'Anyone can create a BEP20 token on BSC with any name, including creating fake versions of existing tokens and tokens that claim to represent projects that do not have a token.',
+            `Anyone can create a ${tokenNames[detailedNetwork.Currency.Name]} token on ${detailedNetwork.Display} with any name, including creating fake versions of existing tokens and tokens that claim to represent projects that do not have a token.`,
           )}
           <br />
           <br />
@@ -67,7 +79,7 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
               <Flex justifyContent="space-between" width="100%">
                 <Text mr="4px">{address}</Text>
                 <Link href={getBscScanLink(token.address, 'address', chainId)} external>
-                  ({t('View on BscScan')})
+                  ({t('View on Scan')})
                 </Link>
               </Flex>
             )}

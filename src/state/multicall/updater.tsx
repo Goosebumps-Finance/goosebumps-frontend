@@ -31,6 +31,7 @@ async function fetchChunk(
   minBlockNumber: number,
 ): Promise<{ results: string[]; blockNumber: number }> {
   console.debug('Fetching chunk', multicallContract, chunk, minBlockNumber)
+  console.log('Fetching chunk', multicallContract, chunk, minBlockNumber)
   let resultsBlockNumber
   let returnData
   try {
@@ -48,7 +49,9 @@ async function fetchChunk(
       (error?.data?.message && error?.data?.message?.indexOf('header not found') !== -1) ||
       error.message?.indexOf('header not found') !== -1
     ) {
-      throw new RetryableError(`header not found for block number ${minBlockNumber}`)
+      // throw error
+      console.error(`header not found for block number ${minBlockNumber}`)
+      // throw new RetryableError(`header not found for block number ${minBlockNumber}`)
     } else if (error.code === -32603 || error.message?.indexOf('execution ran out of gas') !== -1) {
       if (chunk.length > 1) {
         if (process.env.NODE_ENV === 'development') {
@@ -66,12 +69,15 @@ async function fetchChunk(
       }
     }
     console.debug('Failed to fetch chunk inside retry', error)
-    throw error
+    // throw error
   }
-  if (resultsBlockNumber.toNumber() < minBlockNumber) {
+  console.log("dragon= resultsBlockNumber = ", resultsBlockNumber,"returnData = ", returnData)
+  if (resultsBlockNumber !== undefined && resultsBlockNumber.toNumber() < minBlockNumber) {
     console.debug(`Fetched results for old block number: ${resultsBlockNumber.toString()} vs. ${minBlockNumber}`)
   }
-  return { results: returnData, blockNumber: resultsBlockNumber.toNumber() }
+  if(resultsBlockNumber)
+    return { results: returnData, blockNumber: resultsBlockNumber.toNumber() }
+  return { results: returnData, blockNumber: resultsBlockNumber }
 }
 
 /**
@@ -164,15 +170,15 @@ export default function Updater(): null {
 
   useEffect(() => {
     if (!currentBlock || !chainId || !multicallContract) return
-
     const outdatedCallKeys: string[] = JSON.parse(serializedOutdatedCallKeys)
     if (outdatedCallKeys.length === 0) return
     const calls = outdatedCallKeys.map((key) => parseCallKey(key))
 
     const chunkedCalls = chunkArray(calls, CALL_CHUNK_SIZE)
-
+    console.log("useEffect cancellations=", cancellations)
+    console.log("useEffect currentBlock = ", currentBlock)
     if (cancellations.current?.blockNumber !== currentBlock) {
-      cancellations.current?.cancellations?.forEach((c) => c())
+      cancellations.current?.cancellations?.forEach((c) => {if(c) c()})
     }
 
     dispatch(
@@ -182,10 +188,16 @@ export default function Updater(): null {
         fetchingBlockNumber: currentBlock,
       }),
     )
-
+      console.log("useEffect chunkedCalls=", chunkedCalls)
     cancellations.current = {
       blockNumber: currentBlock,
-      cancellations: chunkedCalls.map((chunk, index) => {
+      cancellations: chunkedCalls.map((chunk:any, index) => {
+        if(chunk.chainId !== chainId) {
+          console.log("useEffect here, chunk = ", chunk)
+          console.log("useEffect here, chunkedCalls=", chunkedCalls)
+          // return null
+        }
+        console.log("useEffect cancellations: currentBlock = ", currentBlock)
         const { cancel, promise } = retry(() => fetchChunk(multicallContract, chunk, currentBlock), {
           n: Infinity,
           minWait: 2500,
@@ -194,7 +206,10 @@ export default function Updater(): null {
         promise
           .then(({ results: returnData, blockNumber: fetchBlockNumber }) => {
             cancellations.current = { cancellations: [], blockNumber: currentBlock }
-
+            
+            if(returnData === undefined || fetchBlockNumber === undefined)
+              return
+          
             // accumulates the length of all previous indices
             const firstCallKeyIndex = chunkedCalls.slice(0, index).reduce<number>((memo, curr) => memo + curr.length, 0)
             const lastCallKeyIndex = firstCallKeyIndex + returnData.length

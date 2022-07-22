@@ -170,7 +170,11 @@ export interface PoolsState {
 }
 
 export interface HomeState {
-  network: any
+  network: {
+    label: string
+    value: string
+    chainId: number
+  }
   searchKey: string
 }
 

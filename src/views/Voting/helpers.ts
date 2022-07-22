@@ -1,7 +1,8 @@
+import { ChainIdStorageName } from 'config/constants'
 import { SNAPSHOT_HUB_API, SNAPSHOT_VOTING_API } from 'config/constants/endpoints'
 import tokens from 'config/constants/tokens'
 import { Proposal, ProposalState, ProposalType, Vote } from 'state/types'
-import { simpleRpcProvider } from 'utils/providers'
+import { getSimpleRpcProvider /* , simpleRpcProvider */ } from 'utils/providers'
 import { ADMINS, PANCAKE_SPACE, SNAPSHOT_VERSION } from './config'
 
 export const isCoreProposal = (proposal: Proposal) => {
@@ -75,7 +76,10 @@ export const sendSnapshotData = async (message: Message) => {
 }
 
 export const getVotingPower = async (account: string, poolAddresses: string[], block?: number) => {
-  const blockNumber = block || (await simpleRpcProvider.getBlockNumber())
+  let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
+  if(Number.isNaN(chainId)) chainId = 97
+  const rpcProvider = getSimpleRpcProvider(chainId)
+  const blockNumber = block || (await rpcProvider.getBlockNumber())
   const response = await fetch(`${SNAPSHOT_VOTING_API}/power`, {
     method: 'post',
     headers: {

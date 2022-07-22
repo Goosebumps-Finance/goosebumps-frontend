@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { request, gql } from 'graphql-request'
 import { GRAPH_HEALTH } from 'config/constants/endpoints'
-import { simpleRpcProvider } from 'utils/providers'
+import { ChainIdStorageName } from 'config/constants'
+import { getSimpleRpcProvider /* , simpleRpcProvider */ } from 'utils/providers'
 import { useSlowFresh } from './useRefresh'
 
 export enum SubgraphStatus {
@@ -55,7 +56,10 @@ const useSubgraphHealth = () => {
           `,
         )
 
-        const currentBlock = await simpleRpcProvider.getBlockNumber()
+        let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
+        if(Number.isNaN(chainId)) chainId = 97
+        const rpcProvider = getSimpleRpcProvider(chainId)
+        const currentBlock = await rpcProvider.getBlockNumber()
 
         const isHealthy = indexingStatusForCurrentVersion.health === 'healthy'
         const chainHeadBlock = parseInt(indexingStatusForCurrentVersion.chains[0].chainHeadBlock.number)

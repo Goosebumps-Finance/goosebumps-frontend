@@ -1,6 +1,6 @@
 import { ethers } from 'ethers'
-import { simpleRpcProvider } from 'utils/providers'
-import { poolsConfig } from 'config/constants'
+import { getSimpleRpcProvider /* , simpleRpcProvider */ } from 'utils/providers'
+import { ChainIdStorageName, poolsConfig } from 'config/constants'
 import { newpools } from 'config/constants/pools'
 import { PoolCategory } from 'config/constants/types'
 import tokens from 'config/constants/tokens'
@@ -124,7 +124,10 @@ import {
 } from 'config/abi/types'
 
 const getContract = (abi: any, address: string, signer?: ethers.Signer | ethers.providers.Provider) => {
-  const signerOrProvider = signer ?? simpleRpcProvider
+  let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
+  if(Number.isNaN(chainId)) chainId = 97
+  const rpcProvider = getSimpleRpcProvider(chainId)
+  const signerOrProvider = signer ?? rpcProvider
   return new ethers.Contract(address, abi, signerOrProvider)
 }
 

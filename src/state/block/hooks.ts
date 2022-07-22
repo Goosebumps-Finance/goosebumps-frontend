@@ -1,8 +1,9 @@
+import { ChainIdStorageName } from 'config/constants'
 import useInterval from 'hooks/useInterval'
 import useIsWindowVisible from 'hooks/useIsWindowVisible'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from 'state'
-import { simpleRpcProvider } from 'utils/providers'
+import { getSimpleRpcProvider /* , simpleRpcProvider */ } from 'utils/providers'
 import { setBlock } from '.'
 import { State } from '../types'
 
@@ -13,7 +14,10 @@ export const usePollBlockNumber = (refreshTime = 6000) => {
   useInterval(
     () => {
       const fetchBlock = async () => {
-        const blockNumber = await simpleRpcProvider.getBlockNumber()
+        let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
+        if(Number.isNaN(chainId)) chainId = 97
+        const rpcProvider = getSimpleRpcProvider(chainId)
+        const blockNumber = await rpcProvider.getBlockNumber()
         dispatch(setBlock(blockNumber))
       }
 

@@ -35,23 +35,24 @@ const AppHeader: React.FC<Props> = ({ title, subtitle, helper, backTo, noConfig 
             <ArrowBackIcon width="32px" />
           </IconButton>
         )}
-        {/* <Flex alignItems="center"> */}
-        <Heading as="h2" mb="8px" style={{ margin: 'auto' }}>
-          {title}
-        </Heading>
-        {/* </Flex> */}
+        <Flex flexDirection="column" alignItems="left">
+          <Heading as="h2" mb="8px">
+            {title}
+          </Heading>
+          <Text color="textSubtle" fontSize="14px">
+            {subtitle}
+          </Text>
+        </Flex>
       </Flex>
-      <Text color="textSubtle" fontSize="14px">
-        {subtitle}
-      </Text>
-      {/* {!noConfig && (
+      
+      {!noConfig && (
         <Flex alignItems="center">
           <NotificationDot show={expertMode}>
             <GlobalSettings />
           </NotificationDot>
           <Transactions />
         </Flex>
-      )} */}
+      )}
     </AppHeaderContainer>
   )
 }

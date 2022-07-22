@@ -2,7 +2,7 @@ import { ChainId, Pair, Token } from '@goosebumps/sdk'
 import flatMap from 'lodash/flatMap'
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from 'config/constants'
+import { BASES_TO_TRACK_LIQUIDITY_FOR, ChainIdStorageName, PINNED_PAIRS } from 'config/constants'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useAllTokens } from 'hooks/Tokens'
 import { AppDispatch, AppState } from '../../index'
@@ -352,9 +352,14 @@ export function useRemoveUserAddedToken(): (chainId: number, address: string) =>
 }
 
 export function useGasPrice(): string {
-  const chainId = process.env.REACT_APP_CHAIN_ID
-  const userGas = useSelector<AppState, AppState['user']['gasPrice']>((state) => state.user.gasPrice)
-  return chainId === ChainId.MAINNET.toString() ? userGas : GAS_PRICE_GWEI.testnet
+  // const chainId = process.env.REACT_APP_CHAIN_ID
+  let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
+  if(Number.isNaN(chainId)) {
+    chainId = 97
+  }
+  const userGas = useSelector<AppState, AppState['user']['gasPrice']>((state) => state.user.gasPrice)  
+  // return chainId === ChainId.MAINNET ? userGas : GAS_PRICE_GWEI.testnet
+  return userGas
 }
 
 export function useGasPriceManager(): [string, (userGasPrice: string) => void] {

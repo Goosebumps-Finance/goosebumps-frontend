@@ -4,28 +4,31 @@ import { AbstractConnector } from '@web3-react/abstract-connector'
 import { BscConnector } from '@binance-chain/bsc-connector'
 import { ConnectorNames } from '@goosebumps/uikit'
 import { ethers } from 'ethers'
-import getNodeUrl, { getEthNodeUrl, getPolygonNodeUrl } from './getRpcUrl'
+import linq from 'linq'
+import networks from 'config/constants/networks.json'
+import store from 'state'
+import { setNetworkInfo } from 'state/home'
+
+import { BSC_CHAIN_ID, BSC_TESTNET_CHAIN_ID, ETH_CHAIN_ID, POLYGON_CHAIN_ID } from 'config/constants'
+import getNodeUrl, { getBscNodeUrl, getEthNodeUrl, getPolygonNodeUrl } from './getRpcUrl'
 
 const POLLING_INTERVAL = 12000
 const rpcUrl = getNodeUrl()
-const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 10)
-const ETH_CHAIN_ID = parseInt(process.env.ETH_CHAIN_ID, 10)
-const BSC_CHAIN_ID = parseInt(process.env.BSC_CHAIN_ID, 10)
-const POLYGON_CHAIN_ID = parseInt(process.env.POLYGON_CHAIN_ID, 10)
-const BSC_TESTNET_CHAIN_ID = parseInt(process.env.BSC_TESTNET_CHAIN_ID, 10)
+// const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 10)
 
+console.log("BSC_CHAIN_ID = ", BSC_CHAIN_ID, " BSC_TESTNET_CHAIN_ID = ", BSC_TESTNET_CHAIN_ID)
 // const injected = new InjectedConnector({ supportedChainIds: [ETH_CHAIN_ID, BSC_CHAIN_ID, POLYGON_CHAIN_ID, BSC_TESTNET_CHAIN_ID] })
-const injected = new InjectedConnector({ supportedChainIds: [chainId] })
+const injected = new InjectedConnector({ supportedChainIds: [BSC_CHAIN_ID, BSC_TESTNET_CHAIN_ID, ETH_CHAIN_ID, POLYGON_CHAIN_ID] })
 
 const walletconnect = new WalletConnectConnector({
   // rpc: { [chainId]: rpcUrl, [ETH_CHAIN_ID]: getEthNodeUrl(), [POLYGON_CHAIN_ID]: getPolygonNodeUrl() },
-  rpc: { [chainId]: rpcUrl}, 
+  rpc: { [BSC_TESTNET_CHAIN_ID]: rpcUrl, [BSC_CHAIN_ID]: getBscNodeUrl()}, 
   qrcode: true,
   pollingInterval: POLLING_INTERVAL,
 })
 
 // const bscConnector = new BscConnector({ supportedChainIds: [ETH_CHAIN_ID, BSC_CHAIN_ID, POLYGON_CHAIN_ID, BSC_TESTNET_CHAIN_ID] })
-const bscConnector = new BscConnector({ supportedChainIds: [chainId] })
+const bscConnector = new BscConnector({ supportedChainIds: [BSC_CHAIN_ID, BSC_TESTNET_CHAIN_ID, ETH_CHAIN_ID, POLYGON_CHAIN_ID] })
 
 export const connectorsByName: { [connectorName in ConnectorNames]: any } = {
   [ConnectorNames.Injected]: injected,
@@ -66,3 +69,12 @@ export const signMessage = async (
 
   return provider.getSigner(account).signMessage(message)
 }
+
+// @ts-ignore
+window.ethereum.on('chainChanged', _chainId => {
+  const newChainId = parseInt(_chainId)
+  if(newChainId === 1 || newChainId === 56 || newChainId === 97 || newChainId === 137) {
+    const newNetwork = linq.from(networks).where((x) => x.chainId === newChainId).single()
+    store.dispatch(setNetworkInfo({network: {label: newNetwork.Display, value: newNetwork.Name, chainId: newNetwork.chainId}}))
+  }
+})

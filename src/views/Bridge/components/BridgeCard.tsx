@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Flex } from '@goosebumps/uikit'
 import styled from 'styled-components'
 import Select from 'components/Select/Select'
@@ -23,21 +23,21 @@ const CardImage = styled.div`
   margin: auto;
 `
 
-const BridgeCard = ({ variant = variants.CONNECT_FROM, ...props }) => {
+const BridgeCard = ({ variant = variants.CONNECT_FROM, onChangeNetwork, selIndex,  ...props }) => {
   const { t } = useTranslation()
-  const [type, setType] = useState(BRIDGE.ETHEREUM)
+  // const [type, setType] = useState(BRIDGE.ETHEREUM)
 
-  const renderImage = (_type) => {
-    if (_type === BRIDGE.ETHEREUM) return <img src="images/bridge/ETH.png" alt="eth" />
-    if (_type === BRIDGE.BSC) return <img src="images/bridge/BSC.png" alt="bsc" />
-    if (_type === BRIDGE.POLYGON) return <img src="images/bridge/BSC.png" alt="matic" />
+  const renderImage = (index) => {
+    if (index === 0) return <img src="images/bridge/ETH.png" alt="eth" />
+    if (index === 1 || index === 3) return <img src="images/bridge/BSC.png" alt="bsc" />
+    if (index === 2) return <img src="images/bridge/ETH.png" alt="matic" />
     return <></>
   }
 
   return (
     <CardWrapper {...props}>
       <CardTitle>{titles[variant]}</CardTitle>
-      <CardImage>{renderImage(type)}</CardImage>
+      <CardImage>{renderImage(selIndex)}</CardImage>
       <Select
         options={[
           {
@@ -65,7 +65,9 @@ const BridgeCard = ({ variant = variants.CONNECT_FROM, ...props }) => {
           border: 'none',
           backgroundColor: '#18283A',
         }}
-        defaultOptionIndex={0}
+        defaultOptionIndex={3}
+        onOptionChange={onChangeNetwork}
+        selIndex={selIndex}
       />
     </CardWrapper>
   )

@@ -172,7 +172,6 @@ const Farms: React.FC = () => {
         //   : { cakeRewardsApr: 0, lpRewardsApr: 0 }
 
         const { cakeRewardsApr, lpRewardsApr } = getFarmApr(getAddress(farm.targetAddresses))
-        // console.log("cakeRewardsApr, lpRewardsApr: ", cakeRewardsApr, lpRewardsApr)
 
         return { ...farm, apr: cakeRewardsApr, lpRewardsApr, liquidity: totalLiquidity }
       })
@@ -232,7 +231,6 @@ const Farms: React.FC = () => {
     // }
     chosenFarms = stakedOnly ? farmsList(stakedOnlyFarms) : farmsList(activeFarms)
 
-    console.log("chosenFarms: ", chosenFarms)
 
     return sortFarms(chosenFarms).filter((farm) => farm.pid !== 252).slice(0, numberOfFarmsVisible)
   }, [
@@ -305,9 +303,7 @@ const Farms: React.FC = () => {
   })
 
   const renderContent = (): JSX.Element => {
-    // console.log("renderContent")
     if (viewMode === ViewMode.TABLE && rowData.length) {
-      // console.log("viewMode: ", viewMode)
       const columnSchema = DesktopColumnSchema
 
       const columns = columnSchema.map((column) => ({
@@ -340,8 +336,6 @@ const Farms: React.FC = () => {
       )
     }
 
-    // console.log("viewMode1: ", viewMode)
-    // console.log("chosenFarmsMemoized: ", chosenFarmsMemoized)
     return (
       <FlexLayout>
         <Route exact path={`${path}`}>

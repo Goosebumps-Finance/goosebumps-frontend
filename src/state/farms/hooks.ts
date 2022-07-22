@@ -62,7 +62,6 @@ export const usePollFarmsPublicData = (includeArchive = true) => {
 }
 
 export const usePollFarmsWithUserData = (includeArchive = true) => {
-  console.log("usePollFarmsWithUserData: ", includeArchive)
   const dispatch = useAppDispatch()
   const slowRefresh = useSlowFresh()
   const { account } = useWeb3React()
@@ -74,7 +73,6 @@ export const usePollFarmsWithUserData = (includeArchive = true) => {
     dispatch(fetchFarmsPublicDataAsync(pids))
 
     if (account) {
-      console.log("usePollFarmsWithUserData: ", pids)
       dispatch(fetchFarmUserDataAsync({ account, pids }))
     }
   }, [includeArchive, dispatch, slowRefresh, account])

@@ -8,7 +8,7 @@ import { ethers } from 'ethers'
 import { languageList } from 'config/localization/languages'
 import { useTranslation } from 'contexts/Localization'
 import PhishingWarningBanner from 'components/PhishingWarningBanner'
-import Select, { OptionProps } from 'components/Select/Select'
+import CustomSelect, { OptionProps } from 'components/CustomSelect/CustomSelect'
 import useTheme from 'hooks/useTheme'
 import { usePriceEmpireBusd } from 'state/farms/hooks'
 import { setNetworkInfo } from 'state/home'
@@ -29,7 +29,7 @@ import { footerLinks } from './config/footerConfig'
 const SearchItem = ({onChangeNetwork, selIndex}) => {
   const { t } = useTranslation();
   return <>
-    <Select
+    <CustomSelect
       options={[
         {
           label: t("Ethereum"),

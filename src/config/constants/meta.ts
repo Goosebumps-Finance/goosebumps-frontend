@@ -12,8 +12,8 @@ export const getCustomMeta = (path: string, t: ContextApi['t']): PageMeta => {
   let basePath
   if (path.startsWith('/swap')) {
     basePath = '/swap'
-  } else if (path.startsWith('/add')) {
-    basePath = '/add'
+  } else if (path.startsWith('/liquidityAdd')) {
+    basePath = '/liquidityAdd'
   } else if (path.startsWith('/liquidityRemove')) {
     basePath = '/liquidityRemove'
   } else if (path.startsWith('/teams')) {

@@ -77,7 +77,7 @@ export const newpools: SerializedPoolConfig[] = [
   },
   {
     sousId: 2003, // stakingWithReflectionAndLock
-    description: 'with Reflection and FLT',
+    description: 'with ReflectionFLT',
     stakingToken: serializedTokens.empire,
     earningToken: serializedTokens.sReward,
     contractAddress: {

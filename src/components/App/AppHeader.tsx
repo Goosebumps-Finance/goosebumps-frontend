@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Text, Flex, Heading, IconButton, ArrowBackIcon, NotificationDot } from '@goosebumps/uikit'
+import { Text, Flex, Heading, IconButton, ArrowBackIcon, NotificationDot, HistoryIcon, useModal } from '@goosebumps/uikit'
 import { Link } from 'react-router-dom'
 import { useExpertModeManager } from 'state/user/hooks'
+import TransactionsModal from 'components/App/Transactions/TransactionsModal'
 import GlobalSettings from 'components/Menu/GlobalSettings'
-import Transactions from './Transactions'
-import QuestionHelper from '../QuestionHelper'
+// import Transactions from './Transactions'
+// import QuestionHelper from '../QuestionHelper'
 
 interface Props {
   title: string
@@ -26,6 +27,7 @@ const AppHeaderContainer = styled(Flex)`
 
 const AppHeader: React.FC<Props> = ({ title, subtitle, helper, backTo, noConfig = false }) => {
   const [expertMode] = useExpertModeManager()
+  const [onPresentTransactionsModal] = useModal(<TransactionsModal />)
 
   return (
     <AppHeaderContainer>
@@ -44,13 +46,21 @@ const AppHeader: React.FC<Props> = ({ title, subtitle, helper, backTo, noConfig 
           </Text>
         </Flex>
       </Flex>
-      
+
       {!noConfig && (
-        <Flex alignItems="center">
+        // <Flex alignItems="center">
+        //   <NotificationDot show={expertMode}>
+        //     <GlobalSettings />
+        //   </NotificationDot>
+        //   <Transactions />
+        // </Flex>
+        <Flex>
           <NotificationDot show={expertMode}>
-            <GlobalSettings />
+            <GlobalSettings color="textSubtle" mr="0" />
           </NotificationDot>
-          <Transactions />
+          <IconButton onClick={onPresentTransactionsModal} variant="text" scale="sm">
+            <HistoryIcon color="textSubtle" width="24px" />
+          </IconButton>
         </Flex>
       )}
     </AppHeaderContainer>

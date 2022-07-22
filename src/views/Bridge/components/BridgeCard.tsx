@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Flex } from '@goosebumps/uikit'
 import styled from 'styled-components'
-import Select from 'components/Select/Select'
+import CustomSelect from 'components/CustomSelect/CustomSelect'
 import { useTranslation } from 'contexts/Localization'
 import { BRIDGE, titles, variants } from '../types'
 
@@ -38,7 +38,7 @@ const BridgeCard = ({ variant = variants.CONNECT_FROM, onChangeNetwork, selIndex
     <CardWrapper {...props}>
       <CardTitle>{titles[variant]}</CardTitle>
       <CardImage>{renderImage(selIndex)}</CardImage>
-      <Select
+      <CustomSelect
         options={[
           {
             label: t('Ethereum'),

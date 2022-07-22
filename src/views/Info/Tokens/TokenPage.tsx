@@ -117,7 +117,7 @@ const TokenPage: React.FC<RouteComponentProps<{ address: string }>> = ({
             <Box p="16px">
               <Text>
                 {t('No pool has been created with this token yet. Create one')}
-                <Link style={{ display: 'inline', marginLeft: '6px' }} to={`/add/${address}`}>
+                <Link style={{ display: 'inline', marginLeft: '6px' }} to={`/liquidityAdd/${address}`}>
                   {t('here.')}
                 </Link>
               </Text>
@@ -176,7 +176,7 @@ const TokenPage: React.FC<RouteComponentProps<{ address: string }>> = ({
                 </Flex>
               </Flex>
               <Flex>
-                <Link to={`/add/${address}`}>
+                <Link to={`/liquidityAdd/${address}`}>
                   <Button mr="8px" variant="secondary">
                     {t('Add Liquidity')}
                   </Button>

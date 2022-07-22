@@ -121,6 +121,12 @@ import {
   PancakeSquad,
   Erc721collection,
   PointCenterIfo,
+  Staking,
+  StakingWithFixedLockTime,
+  StakingWithReflection,
+  StakingWithReflectionAndLock,
+  Farming,
+  FarmingWithFixedLockTime,
 } from 'config/abi/types'
 
 const getContract = (abi: any, address: string, signer?: ethers.Signer | ethers.providers.Provider) => {
@@ -240,28 +246,28 @@ export const getErc721CollectionContract = (signer?: ethers.Signer | ethers.prov
   return getContract(erc721CollectionAbi, address, signer) as Erc721collection
 }
 export const getStakingContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
-  return getContract(stakingAbi, getStakingAddress(), signer)
+  return getContract(stakingAbi, getStakingAddress(), signer) as Staking
 }
 export const getStakingWithFixedLockTimeContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
-  return getContract(stakingWithFixedLockTimeAbi, getStakingWithFixedLockTimeAddress(), signer)
+  return getContract(stakingWithFixedLockTimeAbi, getStakingWithFixedLockTimeAddress(), signer) as StakingWithFixedLockTime
 }
 export const getStakingWithReflectionContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
-  return getContract(stakingWithReflectionAbi, getStakingWithReflectionAddress(), signer)
+  return getContract(stakingWithReflectionAbi, getStakingWithReflectionAddress(), signer) as StakingWithReflection
 }
 export const getStakingWithReflectionAndLockContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
-  return getContract(stakingWithReflectionAndLockAbi, getStakingWithReflectionAndLockAddress(), signer)
+  return getContract(stakingWithReflectionAndLockAbi, getStakingWithReflectionAndLockAddress(), signer) as StakingWithReflectionAndLock
 }
 export const getFarmingContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
-  return getContract(farmingAbi, getFarmingAddress(), signer)
+  return getContract(farmingAbi, getFarmingAddress(), signer) as Farming
 }
 export const getFarmingBUSDContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
-  return getContract(farmingAbi, getFarmingBUSDAddress(), signer)
+  return getContract(farmingAbi, getFarmingBUSDAddress(), signer) as Farming
 }
 export const getFarmingWithFixedLockTimeContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
-  return getContract(farmingWithFixedLockTimeAbi, getFarmingWithFixedLockTimeAddress(), signer)
+  return getContract(farmingWithFixedLockTimeAbi, getFarmingWithFixedLockTimeAddress(), signer) as FarmingWithFixedLockTime
 }
 export const getFarmingWithFixedLockTimeBUSDContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
-  return getContract(farmingWithFixedLockTimeAbi, getFarmingWithFixedLockTimeBUSDAddress(), signer)
+  return getContract(farmingWithFixedLockTimeAbi, getFarmingWithFixedLockTimeBUSDAddress(), signer) as FarmingWithFixedLockTime
 }
 export const getApproveAddress = (id: number, signer?: ethers.Signer | ethers.providers.Provider) => {
   const config = newpools.find((pool) => pool.sousId === id)

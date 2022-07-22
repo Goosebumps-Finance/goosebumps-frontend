@@ -223,12 +223,12 @@ const ContributeModal: React.FC<Props> = ({
           </Flex>
           <Text color="textSubtle" fontSize="12px" mb="24px">
             {t(
-              'If you don’t commit enough CAKE, you may not receive any IFO tokens at all and will only receive a full refund of your CAKE.',
+              'If you don’t commit enough EMPIRE, you may not receive any IFO tokens at all and will only receive a full refund of your CAKE.',
             )}
             <Link
               fontSize="12px"
               display="inline"
-              href="https://docs.pancakeswap.finance/products/ifo-initial-farm-offering"
+              href="https://docs.goosebumps.finance/products/ifo-initial-farm-offering"
               external
             >
               {t('Read more')}

@@ -68,7 +68,7 @@ const Apr: React.FC<AprProps> = ({ pool, showIcon, stakedBalance, performanceFee
       {apr || isFinished ? (
         <>
           <Balance
-            onClick={openRoiModal}
+            // onClick={openRoiModal}
             fontSize="16px"
             isDisabled={isFinished}
             // value={isFinished ? 0 : apr}

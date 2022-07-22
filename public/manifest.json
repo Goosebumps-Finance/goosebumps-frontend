@@ -1,7 +1,7 @@
 {
-  "short_name": "PancakeSwap",
-  "name": "PancakeSwap",
-  "description": "Farm CAKE with Pancake LP Tokens",
+  "short_name": "GooseBumps",
+  "name": "GooseBumps",
+  "description": "Farm EMPIRE with GooseBumps LP Tokens",
   "homepage_url": "https://goosebumps.finance",
   "start_url": ".",
   "display": "standalone",

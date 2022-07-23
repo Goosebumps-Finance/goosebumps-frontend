@@ -1,5 +1,8 @@
-const GOOSEBUMPS_EXTENDED = 'https://goosebumps.finance/token-lists/goosebumps-extended.json'
-const GOOSEBUMPS_TOP100 = 'https://goosebumps.finance/token-lists/goosebumps-top-100.json'
+// const GOOSEBUMPS_EXTENDED = 'https://goosebumps.finance/token-lists/goosebumps-extended.json'
+// const GOOSEBUMPS_TOP100 = 'https://goosebumps.finance/token-lists/goosebumps-top-100.json'
+const GOOSEBUMPS_EXTENDED = 'https://65.108.70.67/token-lists/goosebumps-extended.json'
+const GOOSEBUMPS_TOP100 = 'https://65.108.70.67/token-lists/goosebumps-top-100.json'
+
 
 export const UNSUPPORTED_LIST_URLS: string[] = []
 

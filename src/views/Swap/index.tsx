@@ -521,6 +521,7 @@ export default function Swap({ history }: RouteComponentProps) {
                             approval !== ApprovalState.APPROVED ||
                             (priceImpactSeverity > 3 && !isExpertMode)
                           }
+                          style={{background: (!isValid || approval !== ApprovalState.APPROVED || (priceImpactSeverity > 3 && !isExpertMode))? "#26292e":"#121e30"}}
                         >
                           {priceImpactSeverity > 3 && !isExpertMode
                             ? t('Price Impact High')
@@ -548,6 +549,7 @@ export default function Swap({ history }: RouteComponentProps) {
                         id="swap-button"
                         width="100%"
                         disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
+                        style={{background: (!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError) ? "#26292e" : "#04c0d7"}} // #3c3742
                       >
                         {swapInputError ||
                           (priceImpactSeverity > 3 && !isExpertMode

@@ -272,7 +272,7 @@ const Pools: React.FC = () => {
           </Flex>
         </Flex>
       </PageHeader> */}
-      <Page style={{ backgroundColor: '#121e30', borderRadius: '20px' }}>
+      <Page style={{ backgroundColor: '#121e30', borderRadius: '20px', marginBottom: "20px" }}>
         <PoolControls>
           <PoolTabButtons
             stakedOnly={stakedOnly}

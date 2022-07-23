@@ -401,7 +401,7 @@ const Farms: React.FC = () => {
         </NavLink>
       </PageHeader> */}
       {/* <Page> */}
-      <Page style={{ backgroundColor: '#121e30', borderRadius: '20px' }}>
+      <Page style={{ backgroundColor: '#121e30', borderRadius: '20px', marginBottom: "20px" }}>
         <ControlContainer>
           <ViewControls>
             <ToggleView viewMode={viewMode} onToggle={(mode: ViewMode) => setViewMode(mode)} />

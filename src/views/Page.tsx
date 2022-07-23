@@ -14,6 +14,7 @@ const StyledPage = styled.div<{ $removePadding: boolean }>`
   // min-height: calc(100vh - 64px);
   min-height: 50vh;
   // background: ${({ theme }) => theme.colors.gradients.bubblegum};
+  // background: linear-gradient(rgb(14 18 26) 20%, #02141a 100%);
 
   ${({ theme }) => theme.mediaQueries.xs} {
     background-size: auto;

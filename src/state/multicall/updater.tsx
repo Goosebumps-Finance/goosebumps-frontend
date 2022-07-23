@@ -30,8 +30,8 @@ async function fetchChunk(
   chunk: Call[],
   minBlockNumber: number,
 ): Promise<{ results: string[]; blockNumber: number }> {
-  console.debug('Fetching chunk', multicallContract, chunk, minBlockNumber)
-  console.log('Fetching chunk', multicallContract, chunk, minBlockNumber)
+  // console.debug('Fetching chunk', multicallContract, chunk, minBlockNumber)
+  // console.log('Fetching chunk', multicallContract, chunk, minBlockNumber)
   let resultsBlockNumber
   let returnData
   try {

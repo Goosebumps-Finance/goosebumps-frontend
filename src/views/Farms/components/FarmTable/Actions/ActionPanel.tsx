@@ -152,6 +152,7 @@ const ActionPanel: React.FunctionComponent<ActionPanelProps> = ({
   })
   const lpAddress = getAddress(farm.lpAddresses)
   const targetAddress = getAddress(farm.targetAddresses)
+  const rewardSymbol = getAddress(farm.rewardSymbols)
   const bsc = getBscScanLink(lpAddress, 'address', chainId)
   // const info = `/info/pool/${lpAddress}`
   const info = getBscScanLink(targetAddress, 'address', chainId)
@@ -188,7 +189,7 @@ const ActionPanel: React.FunctionComponent<ActionPanelProps> = ({
         </ValueWrapper>
       </ValueContainer>
       <ActionContainer>
-        <HarvestAction {...farm} userDataReady={userDataReady} />
+        <HarvestAction {...farm} userDataReady={userDataReady} rewardSymbol={rewardSymbol} />
         <StakedAction {...farm} userDataReady={userDataReady} lpLabel={lpLabel} displayApr={apr.value} />
       </ActionContainer>
     </Container>

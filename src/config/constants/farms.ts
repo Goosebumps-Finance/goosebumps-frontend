@@ -27,15 +27,19 @@ export const newfarms: SerializedFarmConfig[] = [
     lpSymbol: 'EMPIRE-BNB',
     lpAddresses: {
       97: '0x499bd6f6f6faca9a2af3d4135e50670153d1192c',
-      56: '0x499bd6f6f6faca9a2af3d4135e50670153d1192c',
+      56: '0x60c9bd6EEE0a911b987A749F0DB0F24D79bCDcf5',
     },
     targetAddresses: {
       97: '0xAFc34AC89AD84cf46a6d9e8D3228B5c25E4a4804',
-      56: '0xAFc34AC89AD84cf46a6d9e8D3228B5c25E4a4804',
+      56: '0xAf554A6e6eC13DE0f36542D4488522b4fdCaF23A',
     },
     treasuryAddresses: {
       97: '0xCD021A8Ecd028dF947d60c0bF0e30Bfdd93859c5',
-      56: '0xCD021A8Ecd028dF947d60c0bF0e30Bfdd93859c5',
+      56: '0x13AD39486790C9aB294081F87C75D80c712F523B',
+    },
+    rewardSymbols: {
+      97: 'fReward',
+      56: 'EMPIRE'
     },
     token: serializedTokens.empire,
     quoteToken: serializedTokens.wbnb,
@@ -46,15 +50,19 @@ export const newfarms: SerializedFarmConfig[] = [
     lpSymbol: 'EMPIRE-BNB with LockTime',
     lpAddresses: {
       97: '0x499bd6f6f6faca9a2af3d4135e50670153d1192c',
-      56: '0x499bd6f6f6faca9a2af3d4135e50670153d1192c', // fake to avoid erro, TODO
+      56: '0x60c9bd6EEE0a911b987A749F0DB0F24D79bCDcf5',
     },
     targetAddresses: {
       97: '0xec604726325dd99dfD801933283219f9784e7A09',
-      56: '0xec604726325dd99dfD801933283219f9784e7A09',
+      56: '0x4f5b8E7E070BaaAc9fdAe0cDAc3266860D04851f',
     },
     treasuryAddresses: {
       97: '0x13891C162e6C077A9c8374fDa109aCfD10fB489F',
-      56: '0x13891C162e6C077A9c8374fDa109aCfD10fB489F',
+      56: '0x13AD39486790C9aB294081F87C75D80c712F523B',
+    },
+    rewardSymbols: {
+      97: 'fReward',
+      56: 'EMPIRE'
     },
     token: serializedTokens.empire,
     quoteToken: serializedTokens.wbnb,
@@ -64,15 +72,19 @@ export const newfarms: SerializedFarmConfig[] = [
     lpSymbol: 'EMPIRE-BUSD',
     lpAddresses: {
       97: '0xab3305057195eee6dd8a736674c530ecfd24f63b',
-      56: '0xab3305057195eee6dd8a736674c530ecfd24f63b',
+      56: '0x591dEFEccE63464759b3B606F4ec2974F0738462',
     },
     targetAddresses: {
       97: '0x15Fa177595b01E3e100d1f1367a2f6f6c74E2a29',
-      56: '0x15Fa177595b01E3e100d1f1367a2f6f6c74E2a29',
+      56: '0xbE112881Ae4b1A81431d64548aF6BdE87Eb33c12',
     },
     treasuryAddresses: {
       97: '0x149eC604aa44a40089469d3e465F52e271C777Fb',
-      56: '0x149eC604aa44a40089469d3e465F52e271C777Fb',
+      56: '0x13AD39486790C9aB294081F87C75D80c712F523B',
+    },
+    rewardSymbols: {
+      97: 'fReward',
+      56: 'EMPIRE'
     },
     token: serializedTokens.empire,
     quoteToken: serializedTokens.busd,
@@ -83,15 +95,19 @@ export const newfarms: SerializedFarmConfig[] = [
     lpSymbol: 'EMPIRE-BUSD with LockTime',
     lpAddresses: {
       97: '0xab3305057195eee6dd8a736674c530ecfd24f63b',
-      56: '0xab3305057195eee6dd8a736674c530ecfd24f63b',
+      56: '0x591dEFEccE63464759b3B606F4ec2974F0738462',
     },
     targetAddresses: {
       97: '0x21146F323e24F6f64B807F66D2Ca2532cB80865e',
-      56: '0x21146F323e24F6f64B807F66D2Ca2532cB80865e',
+      56: '0xD8c15518491e3B03BaeAfa986d41C90b4016a613',
     },
     treasuryAddresses: {
       97: '0x5e9B1E67b71d0525058e95fE5C4FC34fEf51Ef1b',
-      56: '0x5e9B1E67b71d0525058e95fE5C4FC34fEf51Ef1b',
+      56: '0x13AD39486790C9aB294081F87C75D80c712F523B',
+    },
+    rewardSymbols: {
+      97: 'fReward',
+      56: 'EMPIRE'
     },
     token: serializedTokens.empire,
     quoteToken: serializedTokens.busd,

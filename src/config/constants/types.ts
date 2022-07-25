@@ -83,6 +83,7 @@ export interface SerializedFarmConfig extends FarmConfigBaseProps {
   quoteToken: SerializedToken
   targetAddresses?: Address
   treasuryAddresses?: Address
+  rewardSymbols?: Address
 }
 
 export interface DeserializedFarmConfig extends FarmConfigBaseProps {
@@ -90,6 +91,7 @@ export interface DeserializedFarmConfig extends FarmConfigBaseProps {
   quoteToken: Token
   targetAddresses?: Address
   treasuryAddresses?: Address
+  rewardSymbols?: Address
 }
 
 interface PoolConfigBaseProps {

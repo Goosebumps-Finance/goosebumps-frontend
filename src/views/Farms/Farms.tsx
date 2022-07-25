@@ -285,6 +285,7 @@ const Farms: React.FC = () => {
         pid: farm.pid,
         token: farm.token,
         quoteToken: farm.quoteToken,
+        rewardSymbol: getAddress(farm.rewardSymbols),
       },
       earned: {
         earnings: getBalanceNumber(new BigNumber(farm.userData.earnings)),

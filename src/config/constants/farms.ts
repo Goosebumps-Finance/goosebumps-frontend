@@ -19,6 +19,10 @@ export const newfarms: SerializedFarmConfig[] = [
       97: '0xCD021A8Ecd028dF947d60c0bF0e30Bfdd93859c5',
       56: '0xCD021A8Ecd028dF947d60c0bF0e30Bfdd93859c5',
     },
+    rewardSymbols: {
+      97: 'fReward',
+      56: 'EMPIRE'
+    },
     token: serializedTokens.busd,
     quoteToken: serializedTokens.wbnb,
   },

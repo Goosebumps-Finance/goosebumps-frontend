@@ -22,6 +22,7 @@ export interface ActionPanelProps {
   details: FarmWithStakedValue
   userDataReady: boolean
   expanded: boolean
+  rewardSymbol?: string
 }
 
 const expandAnimation = keyframes`
@@ -138,6 +139,7 @@ const ActionPanel: React.FunctionComponent<ActionPanelProps> = ({
   liquidity,
   userDataReady,
   expanded,
+  rewardSymbol,
 }) => {
   const farm = details
 
@@ -152,7 +154,6 @@ const ActionPanel: React.FunctionComponent<ActionPanelProps> = ({
   })
   const lpAddress = getAddress(farm.lpAddresses)
   const targetAddress = getAddress(farm.targetAddresses)
-  const rewardSymbol = getAddress(farm.rewardSymbols)
   const bsc = getBscScanLink(lpAddress, 'address', chainId)
   // const info = `/info/pool/${lpAddress}`
   const info = getBscScanLink(targetAddress, 'address', chainId)

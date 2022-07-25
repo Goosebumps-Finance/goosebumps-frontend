@@ -17,9 +17,10 @@ import { ActionContainer, ActionContent, ActionTitles } from './styles'
 
 interface HarvestActionProps extends FarmWithStakedValue {
   userDataReady: boolean
+  rewardSymbol?: string
 }
 
-const HarvestAction: React.FunctionComponent<HarvestActionProps> = ({ pid, userData, userDataReady }) => {
+const HarvestAction: React.FunctionComponent<HarvestActionProps> = ({ pid, userData, userDataReady, rewardSymbol }) => {
   const { toastSuccess, toastError } = useToast()
   const earningsBigNumber = new BigNumber(userData.earnings)
   const cakePrice = usePriceEmpireBusd()
@@ -44,7 +45,7 @@ const HarvestAction: React.FunctionComponent<HarvestActionProps> = ({ pid, userD
     <ActionContainer>
       <ActionTitles>
         <Text bold textTransform="uppercase" color="secondary" fontSize="12px" pr="4px">
-          fReward
+          {rewardSymbol}
         </Text>
         <Text bold textTransform="uppercase" color="textSubtle" fontSize="12px">
           {t('Earned')}
@@ -65,7 +66,7 @@ const HarvestAction: React.FunctionComponent<HarvestActionProps> = ({ pid, userD
               await onReward()
               toastSuccess(
                 `${t('Harvested')}!`,
-                t('Your %symbol% earnings have been sent to your wallet!', { symbol: 'fReward' }),
+                t('Your %symbol% earnings have been sent to your wallet!', { symbol: rewardSymbol }),
               )
             } catch (e) {
               toastError(

@@ -16,9 +16,10 @@ import useHarvestFarm from '../../hooks/useHarvestFarm'
 interface FarmCardActionsProps {
   earnings?: BigNumber
   pid?: number
+  rewardSymbol?: string
 }
 
-const HarvestAction: React.FC<FarmCardActionsProps> = ({ earnings, pid }) => {
+const HarvestAction: React.FC<FarmCardActionsProps> = ({ earnings, pid, rewardSymbol }) => {
   const { account } = useWeb3React()
   const { toastSuccess, toastError } = useToast()
   const { t } = useTranslation()
@@ -46,7 +47,7 @@ const HarvestAction: React.FC<FarmCardActionsProps> = ({ earnings, pid }) => {
             await onReward()
             toastSuccess(
               `${t('Harvested')}!`,
-              t('Your %symbol% earnings have been sent to your wallet!', { symbol: 'fReward' }),
+              t('Your %symbol% earnings have been sent to your wallet!', { symbol: rewardSymbol }),
             )
           } catch (e) {
             toastError(

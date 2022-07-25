@@ -12,6 +12,7 @@ export interface FarmProps {
   pid: number
   token: Token
   quoteToken: Token
+  rewardSymbol?: string,
 }
 
 const Container = styled.div`

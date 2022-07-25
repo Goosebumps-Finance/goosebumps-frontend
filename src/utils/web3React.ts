@@ -70,11 +70,13 @@ export const signMessage = async (
   return provider.getSigner(account).signMessage(message)
 }
 
-// @ts-ignore
-window.ethereum.on('chainChanged', _chainId => {
-  const newChainId = parseInt(_chainId)
-  if(newChainId === 1 || newChainId === 56 || newChainId === 97 || newChainId === 137) {
-    const newNetwork = linq.from(networks).where((x) => x.chainId === newChainId).single()
-    store.dispatch(setNetworkInfo({network: {label: newNetwork.Display, value: newNetwork.Name, chainId: newNetwork.chainId}}))
-  }
-})
+if(window.ethereum) {
+  // @ts-ignore
+  window.ethereum?.on('chainChanged', _chainId => {
+    const newChainId = parseInt(_chainId)
+    if(newChainId === 1 || newChainId === 56 || newChainId === 97 || newChainId === 137) {
+      const newNetwork = linq.from(networks).where((x) => x.chainId === newChainId).single()
+      store.dispatch(setNetworkInfo({network: {label: newNetwork.Display, value: newNetwork.Name, chainId: newNetwork.chainId}}))
+    }
+  })
+}

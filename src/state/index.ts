@@ -6,13 +6,9 @@ import farmsReducer from './farms'
 import poolsReducer from './pools'
 import homeReducer from './home'
 import portfolioReducer from './portfolio'
-import predictionsReducer from './predictions'
 import profileReducer, { initialState as profileInitialState } from './profile'
-import teamsReducer from './teams'
 import achievementsReducer from './achievements'
 import blockReducer from './block'
-import votingReducer from './voting'
-import lotteryReducer from './lottery'
 import infoReducer from './info'
 import { updateVersion } from './global/actions'
 import user, { initialState as userInitialState } from './user/reducer'
@@ -22,7 +18,6 @@ import mint from './mint/reducer'
 import lists, { initialState as listsInitialState } from './lists/reducer'
 import burn from './burn/reducer'
 import multicall from './multicall/reducer'
-import nftMarketReducer from './nftMarket/reducer'
 
 const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', 'profile']
 
@@ -44,13 +39,9 @@ const store = configureStore({
     pools: poolsReducer,
     home: homeReducer,
     portfolio: portfolioReducer,
-    predictions: predictionsReducer,
     profile: profileReducer,
-    teams: teamsReducer,
-    voting: votingReducer,
-    lottery: lotteryReducer,
     info: infoReducer,
-    nftMarket: nftMarketReducer,
+    
 
     // Exchange
     user,

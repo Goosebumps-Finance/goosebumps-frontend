@@ -9,7 +9,6 @@ import useScrollOnRouteChange from 'hooks/useScrollOnRouteChange'
 import { usePollBlockNumber } from 'state/block/hooks'
 import { usePollCoreFarmData } from 'state/farms/hooks'
 import { useFetchProfile } from 'state/profile/hooks'
-import { nftsBaseUrl } from 'views/Nft/market/constants'
 import SubgraphHealthIndicator from 'components/SubgraphHealthIndicator'
 import { ChainIdStorageName } from 'config/constants'
 
@@ -47,21 +46,6 @@ const Liquidity = lazy(() => import('./views/Pool'))
 const PoolFinder = lazy(() => import('./views/PoolFinder'))
 
 const Farms = lazy(() => import('./views/Farms'))
-const FarmAuction = lazy(() => import('./views/FarmAuction'))
-const Lottery = lazy(() => import('./views/Lottery'))
-const Ifos = lazy(() => import('./views/Ifos'))
-const Teams = lazy(() => import('./views/Teams'))
-const Team = lazy(() => import('./views/Teams/Team'))
-const TradingCompetition = lazy(() => import('./views/TradingCompetition'))
-const Predictions = lazy(() => import('./views/Predictions'))
-const PredictionsLeaderboard = lazy(() => import('./views/Predictions/Leaderboard'))
-const Voting = lazy(() => import('./views/Voting'))
-const Proposal = lazy(() => import('./views/Voting/Proposal'))
-const CreateProposal = lazy(() => import('./views/Voting/CreateProposal'))
-const Info = lazy(() => import('./views/Info'))
-const NftMarket = lazy(() => import('./views/Nft/market'))
-const ProfileCreation = lazy(() => import('./views/ProfileCreation'))
-const PancakeSquad = lazy(() => import('./views/PancakeSquad'))
 
 // This config is required for number formatting
 BigNumber.config({
@@ -95,9 +79,6 @@ const App: React.FC = () => {
           <Switch>
             <Route path="/" exact>
               <Home />
-            </Route>
-            <Route exact path="/farms/auction">
-              <FarmAuction />
             </Route>
             <Route path="/farms">
               <Farms />

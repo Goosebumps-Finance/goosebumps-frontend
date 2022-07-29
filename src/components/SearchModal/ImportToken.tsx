@@ -87,7 +87,7 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
         )
       })}
 
-      <Flex justifyContent="space-between" alignItems="center">
+      <Flex justifyContent="space-between" alignItems="center" mb="20px">
         <Flex alignItems="center" onClick={() => setConfirmed(!confirmed)}>
           <Checkbox
             scale="sm"

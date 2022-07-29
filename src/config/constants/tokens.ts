@@ -41,7 +41,7 @@ export const mainnetTokens = defineTokens({
     9,
     'EMPIRE',
     'Empire Token',
-    'https://s2.coinmarketcap.com/static/img/coins/64x64/10613.png',
+    'https://empiretoken.world/',
   ),
   sReward: new Token(
     MAINNET,
@@ -49,7 +49,7 @@ export const mainnetTokens = defineTokens({
     18,
     'sReward',
     'StakingReward',
-    'https://s2.coinmarketcap.com/static/img/coins/64x64/10613.png',
+    'https://empiretoken.world/',
   ),
   fReward: new Token(
     MAINNET,
@@ -57,7 +57,7 @@ export const mainnetTokens = defineTokens({
     18,
     'fReward',
     'FarmingReward',
-    'https://s2.coinmarketcap.com/static/img/coins/64x64/10613.png',
+    'https://empiretoken.world/',
   ),
   cake: new Token(
     MAINNET,
@@ -1997,7 +1997,7 @@ export const testnetTokens = defineTokens({
     9,
     'MockEMPIRE',
     'Mock Empire',
-    'https://s2.coinmarketcap.com/static/img/coins/64x64/10613.png',
+    'https://empiretoken.world/',
   ),
   sReward: new Token(
     TESTNET,
@@ -2005,7 +2005,7 @@ export const testnetTokens = defineTokens({
     18,
     'sReward',
     'StakingReward',
-    'https://s2.coinmarketcap.com/static/img/coins/64x64/10613.png',
+    'https://empiretoken.world/',
   ),
   fReward: new Token(
     TESTNET,
@@ -2013,7 +2013,7 @@ export const testnetTokens = defineTokens({
     18,
     'fReward',
     'FarmingReward',
-    'https://s2.coinmarketcap.com/static/img/coins/64x64/10613.png',
+    'https://empiretoken.world/',
   ),
   cake: new Token(
     TESTNET,

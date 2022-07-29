@@ -18,7 +18,7 @@ export const usePollBlockNumber = (refreshTime = 6000) => {
         if(Number.isNaN(chainId)) chainId = 97
         const rpcProvider = getSimpleRpcProvider(chainId)
         const blockNumber = await rpcProvider.getBlockNumber()
-        dispatch(setBlock(blockNumber))
+        dispatch(setBlock({blockNumber, chainId}))
       }
 
       fetchBlock()

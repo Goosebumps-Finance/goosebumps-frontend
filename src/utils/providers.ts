@@ -6,8 +6,7 @@ const RPC_URL = getRpcUrl(97)
 export const simpleRpcProvider = new ethers.providers.StaticJsonRpcProvider(RPC_URL)
 
 export const getSimpleRpcProvider = (chainId) => {
-    const rpcUrl = getRpcUrl(chainId ?? 97)
-    return new ethers.providers.StaticJsonRpcProvider(rpcUrl, "any")
+    return new ethers.providers.StaticJsonRpcProvider(getRpcUrl(chainId), "any")
 }
 
 export default null

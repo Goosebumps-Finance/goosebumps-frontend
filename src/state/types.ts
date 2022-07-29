@@ -236,6 +236,7 @@ export interface AchievementState {
 export interface BlockState {
   currentBlock: number
   initialBlock: number
+  chainId: number
 }
 
 // Predictions

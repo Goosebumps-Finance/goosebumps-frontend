@@ -50,8 +50,8 @@ async function fetchChunk(
       error.message?.indexOf('header not found') !== -1
     ) {
       // throw error
-      console.error(`header not found for block number ${minBlockNumber}`)
-      // throw new RetryableError(`header not found for block number ${minBlockNumber}`)
+      // console.error(`header not found for block number ${minBlockNumber}`)
+      throw new RetryableError(`header not found for block number ${minBlockNumber}`)
     } else if (error.code === -32603 || error.message?.indexOf('execution ran out of gas') !== -1) {
       if (chunk.length > 1) {
         if (process.env.NODE_ENV === 'development') {
@@ -150,7 +150,7 @@ export default function Updater(): null {
   const state = useSelector<AppState, AppState['multicall']>((s) => s.multicall)
   // wait for listeners to settle before triggering updates
   const debouncedListeners = useDebounce(state.callListeners, 100)
-  const { currentBlock } = useBlock()
+  const { currentBlock, chainId: blockChainId } = useBlock()
   const { chainId } = useActiveWeb3React()
   const multicallContract = useMulticallContract()
   const cancellations = useRef<{ blockNumber: number; cancellations: (() => void)[] }>()
@@ -169,6 +169,7 @@ export default function Updater(): null {
   )
 
   useEffect(() => {
+    if (blockChainId !== chainId) return;
     if (!currentBlock || !chainId || !multicallContract) return
     const outdatedCallKeys: string[] = JSON.parse(serializedOutdatedCallKeys)
     if (outdatedCallKeys.length === 0) return
@@ -197,7 +198,7 @@ export default function Updater(): null {
           // console.log("useEffect here, chunkedCalls=", chunkedCalls)
           // return null
         }
-        // console.log("useEffect cancellations: currentBlock = ", currentBlock)
+        // console.log("useEffect cancellations: currentBlock = ", currentBlock, "chainId=", chainId)
         const { cancel, promise } = retry(() => fetchChunk(multicallContract, chunk, currentBlock), {
           n: Infinity,
           minWait: 2500,

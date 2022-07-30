@@ -1,5 +1,5 @@
 import { parseUnits } from '@ethersproject/units'
-import { Currency, CurrencyAmount, ETHER, JSBI, Token, TokenAmount, Trade } from '@goosebumps/sdk'
+import { ChainId, Currency, CurrencyAmount, ETHER, JSBI, Token, TokenAmount, Trade } from '@goosebumps/sdk'
 import { ParsedQs } from 'qs'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -279,9 +279,9 @@ function validatedRecipient(recipient: any): string | null {
   return null
 }
 
-export function queryParametersToSwapState(parsedQs: ParsedQs): SwapState {
-  let inputCurrency = parseCurrencyFromURLParameter(parsedQs.inputCurrency) || DEFAULT_INPUT_CURRENCY
-  let outputCurrency = parseCurrencyFromURLParameter(parsedQs.outputCurrency) || DEFAULT_OUTPUT_CURRENCY
+export function queryParametersToSwapState(parsedQs: ParsedQs, chainId: ChainId): SwapState {
+  let inputCurrency = parseCurrencyFromURLParameter(parsedQs.inputCurrency) || DEFAULT_INPUT_CURRENCY[chainId]
+  let outputCurrency = parseCurrencyFromURLParameter(parsedQs.outputCurrency) || DEFAULT_OUTPUT_CURRENCY[chainId]
   if (inputCurrency === outputCurrency) {
     if (typeof parsedQs.outputCurrency === 'string') {
       inputCurrency = ''
@@ -320,7 +320,7 @@ export function useDefaultsFromURLSearch():
 
   useEffect(() => {
     if (!chainId) return
-    const parsed = queryParametersToSwapState(parsedQs)
+    const parsed = queryParametersToSwapState(parsedQs, chainId)
 
     dispatch(
       replaceSwapState({

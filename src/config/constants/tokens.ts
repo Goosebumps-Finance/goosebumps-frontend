@@ -2065,6 +2065,7 @@ const tokens = () => {
   // if (parseInt(chainId, 10) === ChainId.POLYGON_MAIN) {
   //   return polygonTokens
   // }
+  console.log("tokens() mainnetTokens=", mainnetTokens)
   return mainnetTokens
 }
 

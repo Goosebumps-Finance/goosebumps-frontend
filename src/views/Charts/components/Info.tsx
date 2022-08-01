@@ -155,7 +155,7 @@ const Info = ({ info, network }) => {
               href={`${network.Explorer}token/${info.pair.buyCurrency.address}`}
               target="_blank"
               rel="noopener noreferrer"
-              title="BSC Scan"
+              title="Scan"
             >
               <i className="fa fa-external-link" />
             </a>
@@ -443,7 +443,7 @@ const Info = ({ info, network }) => {
                 href={`${network.Explorer}token/${info.pair.buyCurrency.address}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                title="BSC Scan"
+                title="Scan"
               >
                 <i className="fa fa-external-link" />
               </a>

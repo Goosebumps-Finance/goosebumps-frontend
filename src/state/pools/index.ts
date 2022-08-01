@@ -189,7 +189,9 @@ export const fetchPoolsStakingLimitsAsync = () => async (dispatch, getState) => 
 export const fetchPoolsUserDataAsync =
   (account: string): AppThunk =>
     async (dispatch) => {
+      console.log("test= fetchPoolsUserDataAsync")
       const allowances = await fetchPoolsAllowance(account)
+      console.log("test= fetchPoolsUserDataAsync fetchPoolsAllowance: allowance=", allowances)
       const stakingTokenBalances = await fetchUserBalances(account)
       const stakedBalances = await fetchUserStakeBalances(account)
       const pendingRewards = await fetchUserPendingRewards(account)

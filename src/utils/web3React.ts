@@ -16,7 +16,7 @@ const POLLING_INTERVAL = 12000
 const rpcUrl = getNodeUrl()
 // const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 10)
 
-console.log("BSC_CHAIN_ID = ", BSC_CHAIN_ID, " BSC_TESTNET_CHAIN_ID = ", BSC_TESTNET_CHAIN_ID)
+// console.log("BSC_CHAIN_ID = ", BSC_CHAIN_ID, " BSC_TESTNET_CHAIN_ID = ", BSC_TESTNET_CHAIN_ID)
 // const injected = new InjectedConnector({ supportedChainIds: [ETH_CHAIN_ID, BSC_CHAIN_ID, POLYGON_CHAIN_ID, BSC_TESTNET_CHAIN_ID] })
 const injected = new InjectedConnector({ supportedChainIds: [BSC_CHAIN_ID, BSC_TESTNET_CHAIN_ID, ETH_CHAIN_ID, POLYGON_CHAIN_ID] })
 

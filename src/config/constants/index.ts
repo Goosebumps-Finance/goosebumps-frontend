@@ -7,6 +7,8 @@ export const POLYGON_CHAIN_ID = 137
 export const BSC_CHAIN_ID = 56
 export const BSC_TESTNET_CHAIN_ID = 97
 
+
+// change router address according to the chainid
 // export const ROUTER_ADDRESS = '0x10ED43C718714eb63d5aA57B78B54704E256024E'
 export const ROUTER_ADDRESS = '0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3'
 

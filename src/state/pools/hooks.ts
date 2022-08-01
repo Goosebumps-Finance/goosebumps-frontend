@@ -4,6 +4,7 @@ import { useWeb3React } from '@web3-react/core'
 import { batch, useSelector } from 'react-redux'
 import { useAppDispatch } from 'state'
 import { useFastFresh, useSlowFresh } from 'hooks/useRefresh'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { getAprData } from 'views/Pools/helpers'
 import {
@@ -25,6 +26,7 @@ import { transformPool } from './helpers'
 import { fetchFarmsPublicDataAsync, nonArchivedFarms } from '../farms'
 
 export const useFetchPublicPoolsData = () => {
+  const { chainId } = useActiveWeb3React()
   const dispatch = useAppDispatch()
   const slowRefresh = useSlowFresh()
 
@@ -39,7 +41,7 @@ export const useFetchPublicPoolsData = () => {
     }
 
     fetchPoolsDataWithFarms()
-  }, [dispatch, slowRefresh])
+  }, [dispatch, slowRefresh, chainId])
 }
 
 export const useFetchUserPools = (account) => {
@@ -69,7 +71,7 @@ export const usePool = (sousId: number): { pool: DeserializedPool; userDataLoade
 }
 
 export const useFetchCakeVault = () => {
-  const { account } = useWeb3React()
+  const { account, chainId } = useWeb3React()
   const fastRefresh = useFastFresh()
   const dispatch = useAppDispatch()
 
@@ -79,7 +81,7 @@ export const useFetchCakeVault = () => {
 
   useEffect(() => {
     dispatch(fetchCakeVaultUserData({ account }))
-  }, [dispatch, fastRefresh, account])
+  }, [dispatch, fastRefresh, account, chainId])
 
   useEffect(() => {
     dispatch(fetchCakeVaultFees())
@@ -87,7 +89,7 @@ export const useFetchCakeVault = () => {
 }
 
 export const useFetchIfoPool = (fetchCakePool = true) => {
-  const { account } = useWeb3React()
+  const { account, chainId } = useWeb3React()
   const fastRefresh = useFastFresh()
   const dispatch = useAppDispatch()
 
@@ -109,7 +111,7 @@ export const useFetchIfoPool = (fetchCakePool = true) => {
         // }
       })
     }
-  }, [dispatch, fastRefresh, account, fetchCakePool])
+  }, [dispatch, fastRefresh, account, fetchCakePool, chainId])
 
   useEffect(() => {
     dispatch(fetchIfoPoolFees())

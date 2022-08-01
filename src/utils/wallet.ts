@@ -74,7 +74,7 @@ export const setupNetwork = async (network) => {
       return false
     }
   } else {
-    console.error("Can't setup the BSC network on metamask because window.ethereum is undefined")
+    console.error("Can't setup the network on metamask because window.ethereum is undefined")
     return false
   }
 }

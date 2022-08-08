@@ -50,11 +50,11 @@ const BridgeCard = ({ variant = variants.CONNECT_FROM, onChangeNetwork, selIndex
           },
           {
             label: t('Polygon'),
-            value: 'polygon',
+            value: 'matic',
           },
           {
             label: t('BSC Testnet'),
-            value: 'bsctestnet',
+            value: 'bsc_testnet',
           },
         ]}
         header={{

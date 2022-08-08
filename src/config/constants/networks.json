@@ -109,7 +109,7 @@
     },
     {
       "Display": "BSC Testnet",
-      "Name": "bsctestnet",
+      "Name": "bsc_testnet",
       "chainId": 97,
       "chainHexId": "0x61",
       "RPC": "https://data-seed-prebsc-2-s2.binance.org:8545",
@@ -139,7 +139,7 @@
     },
     {
       "Display": "Polygon",
-      "Name": "polygon",
+      "Name": "matic",
       "chainId": 137,
       "chainHexId": "0x89",
       "RPC": "https://speedy-nodes-nyc.moralis.io/03eb35954a0b7ed092444a8e/polygon/mainnet",

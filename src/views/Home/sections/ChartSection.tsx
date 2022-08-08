@@ -9,9 +9,9 @@ const ChartSection = () => {
       <div className="manage-area pt-100">
         <div className="container">
           <div className="section-title">
-            <h2>A single dashbaord for your portfolio</h2>
+            <h2>A single dashboard for your portfolio</h2>
             <p>
-              If you&apsop;re tired of using five different platforms to track your crypto invetments, then it&apsop;s
+              If you&apos;re tired of using five different platforms to track your crypto invetments, then it&apos;s
               time to meet Goosebumps.
             </p>
           </div>
@@ -37,7 +37,7 @@ const ChartSection = () => {
                     </h3>
                     <p>
                       We keep your data safe and never let you worry about data breaches or hacks. The best part? You
-                      can use the app with peace of mind - it&apsop;s completely free!
+                      can use the app with peace of mind - it&apos;s completely free!
                     </p>
                   </li>
                 </ul>
@@ -53,11 +53,11 @@ const ChartSection = () => {
                 <ul>
                   <li>
                     <h3>
-                      <img src="/images/goosebumps/portfolio-icon.png" alt="goosebumps" />A platform that&apsop;s built
+                      <img src="/images/goosebumps/portfolio-icon.png" alt="goosebumps" />A platform that&apos;s built
                       just for you
                     </h3>
                     <p>
-                      Whether you&apsop;re a beginner trader or a pro, Goosebumps has tools that are tailored for your
+                      Whether you&apos;re a beginner trader or a pro, Goosebumps has tools that are tailored for your
                       needs. Stay on top of all your trades with features like portfolio management, news feed, alerts &
                       more!
                     </p>
@@ -118,7 +118,7 @@ const ChartSection = () => {
                 <p>
                   A staking pool allows you to pool your computational resources in order to increase chances of
                   winning. Staking Pools offers its staking power in the process of verifying and validating new blocks,
-                  increasing the community&apsop;s chances of earning block rewards.
+                  increasing the community&apos;s chances of earning block rewards.
                 </p>
               </div>
             </div>
@@ -149,7 +149,7 @@ const ChartSection = () => {
 
             <div className="col-lg-6">
               <div className="chart-content">
-                <h2>Get a bird&apsop;s eye view of your investments</h2>
+                <h2>Get a bird&apos;s eye view of your investments</h2>
                 <h4>
                   Using Goosebumps is an easy way to track your assets across different wallets. Watch the prices change
                   in real-time, and get alerts when they change color!

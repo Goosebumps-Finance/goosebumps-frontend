@@ -41,11 +41,11 @@ const SearchItem = ({onChangeNetwork, selIndex}) => {
         },
         {
           label: t("Polygon"),
-          value: "polygon"
+          value: "matic"
         },
         {
           label: t("BSC Testnet"),
-          value: "bsctestnet"
+          value: "bsc_testnet"
         }
       ]}
       header={{
@@ -80,7 +80,7 @@ const Menu = (props) => {
   const activeSubMenuItem = getActiveSubMenuItem({ menuItem: activeMenuItem, pathname })
 
   const onSearchKeyChange = (e) => {
-    dispatch(setNetworkInfo({ searchKey: e.target.value }))
+    dispatch(setNetworkInfo({ searchKey: e.target.value, network }))
     if (ethers.utils.isAddress(e.target.value) || !e.target.value) {
       handleSearch(e.target.value)
     }
@@ -105,10 +105,12 @@ const Menu = (props) => {
     const info = {...newNetwork, chainId: detailedNetwork.chainId};
     console.log("onChangeNetwork info = ", info)
     await changeNetwork(detailedNetwork)
-    if(loadingStatus === 1) {
-      dispatch(setNetworkInfo({network: {...newNetwork, chainId: detailedNetwork.chainId}}))
-    }
-    setLoadingStatus(-1)
+    // // if(loadingStatus === 1) {
+    //   console.log("onChangeNetwork searchKey=", searchKey)
+    //   dispatch(setNetworkInfo({network: {...newNetwork, chainId: detailedNetwork.chainId}}))
+    //   handleSearch(searchKey)
+    // // }
+    // setLoadingStatus(-1)
   }
 
   useEffect(() => {
@@ -118,6 +120,10 @@ const Menu = (props) => {
     if(network.chainId === 137) _index = 2
     if(network.chainId === 97) _index = 3
     setNetworkIndex(_index)
+    if(searchKey) {
+      console.log("searchKey=", searchKey)
+      handleSearch(searchKey)
+    }
   }, [network])
 
   return (

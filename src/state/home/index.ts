@@ -3,7 +3,7 @@ import { ChainIdStorageName } from 'config/constants'
 import { HomeState } from 'state/types'
 
 const initialState: HomeState = {
-    network: { label: 'BSC Testnet', value: 'bsctestnet', chainId: 97},
+    network: { label: 'BSC', value: 'bsc', chainId: 56},
     searchKey: ''
 }
 
@@ -12,10 +12,13 @@ export const HomeSlice = createSlice({
   initialState,
   reducers: {
     setNetworkInfo: (state, action) => {
-      // console.log("setNetworkInfo action=", action.payload)
+      console.log("setNetworkInfo action=", action.payload)
       window.localStorage.setItem(ChainIdStorageName, `${action.payload.network.chainId}`)
-      return action.payload
-    },
+      if(action.payload.searchKey)
+        state.searchKey = action.payload.searchKey
+      if(action.payload.network)
+        state.network = action.payload.network
+    }
   },
 })
 

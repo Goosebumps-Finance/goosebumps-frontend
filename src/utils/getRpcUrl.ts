@@ -54,7 +54,7 @@ export const getBscNodeUrl = () => {
 }
 
 export const getBscTestnetNodeUrl = () => {
-  const testNetwork = linq.from(networks).where((x) => x.Name === "bsctestnet").single()
+  const testNetwork = linq.from(networks).where((x) => x.Name === "bsc_testnet").single()
   const testNodes = [testNetwork.RPC]
   return sample(testNodes)
 }

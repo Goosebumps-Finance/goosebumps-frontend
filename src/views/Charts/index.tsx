@@ -66,6 +66,7 @@ const Charts = (props) => {
         setParams(params)
         const _info = await getChartsInfo(params.address, network, params.pairAddress)
         setInfo(_info)
+        console.log("fetchData info=", _info)
       }
     }
     fetchData()

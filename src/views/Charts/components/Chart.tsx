@@ -37,7 +37,6 @@ const Chart = ({ title, pair, network }) => {
   }
 
   useEffect(() => {
-    console.log('bug= Chart Useffect here')
     const option = {
       debug: false,
       fullscreen: false,
@@ -58,7 +57,6 @@ const Chart = ({ title, pair, network }) => {
     const tvWidget = new window.TradingView.widget(option)
     return () => tvWidget?.remove()
   }, [title, pair, network])
-  console.log('bug= Chart Rendering')
   return (
     <div ref={containerRef} className="position-relative" style={{ height: '100%', minHeight: 400 }}>
       <div ref={chartViewerRef} className="chart" />

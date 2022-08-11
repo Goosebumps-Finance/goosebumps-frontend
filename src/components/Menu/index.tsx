@@ -88,7 +88,7 @@ const Menu = (props) => {
 
   const handleSearch = async (address: string) => {
     console.log('handleSearch network = ', network)
-    if (network === null || address === '') return
+    if (network === null || address === '' || !ethers.utils.isAddress(address)) return
     const isToken = await getAsyncData(`${API_SERVER}api/Search/IsToken`, { address, network: network.value })
     console.log('After getAsyncData isToken = ', isToken)
     if (isToken) {

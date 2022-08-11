@@ -1,6 +1,6 @@
 import { Box, Button, Flex, InjectedModalProps, LinkExternal, Message, Skeleton, Text } from '@goosebumps/uikit'
 import { useWeb3React } from '@web3-react/core'
-import tokens from 'config/constants/tokens'
+import { tokens } from 'config/constants/tokens'
 import { FetchStatus } from 'config/constants/types'
 import { useTranslation } from 'contexts/Localization'
 import useAuth from 'hooks/useAuth'
@@ -25,7 +25,7 @@ const WalletInfo: React.FC<WalletInfoProps> = ({ hasLowBnbBalance, onDismiss }) 
   const { account } = useWeb3React()
   const { chainId } = useActiveWeb3React()
   const { balance, fetchStatus } = useGetBnbBalance()
-  const { balance: empireBalance, fetchStatus: cakeFetchStatus } = useTokenBalance(tokens.empire.address)
+  const { balance: empireBalance, fetchStatus: cakeFetchStatus } = useTokenBalance(tokens().empire.address)
   const { logout } = useAuth()
   const { network } = useSelector((state:State) => state.home)
   const detailedNetwork = linq.from(networks).where((x) => x.Name === network.value).single()

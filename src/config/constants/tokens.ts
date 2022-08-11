@@ -2049,7 +2049,7 @@ export const testnetTokens = defineTokens({
   ),
 } as const)
 
-const tokens = () => {
+export const tokens = () => {
   let chainId = parseInt(window.localStorage.getItem("SELECTED_CHAIN_ID"), 10)
   if(Number.isNaN(chainId)) chainId = 56
   console.log("config/constants/token/tokens() chainId = ", chainId)

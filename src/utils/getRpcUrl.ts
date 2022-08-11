@@ -42,7 +42,7 @@ export const getEthNodeUrl = () => {
 }
 
 export const getPolygonNodeUrl = () => {
-  const polyNetwork = linq.from(networks).where((x) => x.Name === "polygon").single()
+  const polyNetwork = linq.from(networks).where((x) => x.Name === "matic").single()
   const polyNodes = [polyNetwork.RPC]
   return sample(polyNodes)
 }

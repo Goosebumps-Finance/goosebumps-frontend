@@ -179,7 +179,8 @@ export interface HomeState {
 }
 
 export interface PortfolioState {
-  tokens: any
+  tokens: any,
+  status: any
 }
 
 export interface ProfileState {

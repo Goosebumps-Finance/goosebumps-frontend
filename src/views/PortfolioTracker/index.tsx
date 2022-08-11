@@ -46,14 +46,16 @@ const PortfolioTracker = () => {
   const slowRefresh = useSlowFresh()
   const { pathname } = useLocation()
   // const { network, searchKey } = useSelector((state: State) => state.home)
-  const { tokens } = useSelector((state: State) => state.portfolio)
+  const { tokens, status } = useSelector((state: State) => state.portfolio)
   // const [ searchAddress, setSearchAddress ] = useState(searchKey)
   const [isHintText, setIsHintText] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false);
   const [tokenInfos, setTokenInfos] = useState([])
   const [curEthPrice, setCurEthPrice] = useState(0)
   const [selectedToken, setSelectedToken] = useState()
   const { networkName, address } = useParams<PortfolioParamProps>()
+  console.log("status = ", status)
   const detailedNetwork = networkName
     ? linq
         .from(networks)
@@ -61,59 +63,34 @@ const PortfolioTracker = () => {
         .single()
     : null
 
-  // const detailedNetwork = network ? linq.from(networks).where((x) => x.Name === network.value).single() : null;
-  // const [currentParams, setParams] = useState();
-  // const network = params.networkName;
-
   useEffect(() => {
-    // console.log("useEffect networkName: ", networkName, !networkName)
-    // console.log("useEffect address: ", address, !address)
-    if (!networkName || !address) {
-      setIsHintText(true)
-      setIsLoading(false)
+    console.log("params networkName=", networkName, "address=", address)
+    if(!networkName || !address) {
+      setIsHintText(true);
+      setIsLoading(false);
     } else {
-      setIsHintText(false)
-      setTokenInfos([])
-      setCurEthPrice(0)
+      setIsHintText(false);
+      setTokenInfos([]);
+      setCurEthPrice(0);
+      dispatch(setNetworkInfo({searchKey: address, network: { label: detailedNetwork.Display, value: detailedNetwork.Name, chainId: detailedNetwork.chainId}}));
     }
   }, [networkName, address])
 
   useEffect(() => {
-    // console.log("useEffect tokenInfos = ", tokenInfos, " curEthPrice = ", curEthPrice);
-    // console.log("tokenInfos: ", !tokenInfos)
-    // console.log("curEthPrice: ", !curEthPrice)
-    if (!isHintText && (!tokenInfos || !curEthPrice)) {
-      setIsLoading(true)
-    } else {
-      setIsLoading(false)
+    if(address) {
+      setIsLoading(true);
+      dispatch(fetchTokenData({network: networkName, address}));
     }
-  }, [curEthPrice, tokenInfos, isHintText])
-
+  }, [dispatch, address, networkName, address, slowRefresh])
+  
   useEffect(() => {
-    // console.log("useEffect fetchTokenData address =", address)
-    if (address !== undefined) {
-      dispatch(fetchTokenData({ network: networkName, address }))
+    console.log("tokens = ", tokens, "address=", address);
+    if (tokens.length === 0 && status.status === 201) {
+      setIsLoading(false);
+      setIsError(true);
     }
-  }, [dispatch, networkName, address, slowRefresh])
-
-  // useEffect(() => {
-  //     const args = pathname.split("/");
-  //     if(args[1] === "portfolio-tracker" && isSupportedChain(args[2]) && ethers.utils.isAddress(args[3])) {
-  //         const networkInfo = linq.from(networks).where((x) => x.Name === args[2]).single();
-  //         const selNetwork = {
-  //             label: networkInfo.Display,
-  //             value: networkInfo.Name
-  //         }
-  //         if(network.value !== selNetwork.value) {
-  //             dispatch(setNetworkInfo({ network: selNetwork, searchKey: args[3] }))
-  //         }
-  //         setSearchAddress(args[3]);
-  //     }
-  // }, [network, pathname, dispatch])
-
-  useEffect(() => {
-    // console.log("tokens = ", tokens)
     if (tokens.length !== 0 && address !== undefined) {
+      setIsLoading(false);
       const getLiveInfo = async () => {
         const infos = await getTokenInfos(
           linq
@@ -123,7 +100,7 @@ const PortfolioTracker = () => {
           detailedNetwork,
           [address],
         )
-        // console.log("getLiveInfo, infos = ", infos)
+        console.log("getLiveInfo, infos = ", infos)
 
         const query = linq.from(infos.infos)
         const newTokenInfos: any = tokens.map((item: TokenItemProps) => {
@@ -133,6 +110,8 @@ const PortfolioTracker = () => {
           if (newItem.info.rewards < 0.00000001) {
             newItem.info.rewards = 0
           }
+          // not determined
+          newItem.info.rewardsSold = 0;
 
           newItem.trades = newItem.trades.map((trade) => {
             const newTrade: any = { ...trade }
@@ -174,7 +153,6 @@ const PortfolioTracker = () => {
                 ? ((100 - slippageTradeTx) / 100 || 0) * (newTrade.priceUSD * newTrade.tokenAmount) -
                   newTrade.avarageBuyPriceOfHoldings * newTrade.tokenAmount
                 : 0
-
             return newTrade
           })
           // console.log(newItem);
@@ -196,6 +174,8 @@ const PortfolioTracker = () => {
                     .toArray()
                     .reduce((a, b) => a + b)
                 : 0
+            if(Number.isNaN(newItem.avarageBuyPriceOfHoldings))
+              newItem.avarageBuyPriceOfHoldings = 0;
           } catch (error) {
             console.log(error)
             newItem.avarageBuyPriceOfHoldings = 0
@@ -238,7 +218,7 @@ const PortfolioTracker = () => {
 
         setCurEthPrice(infos.ethPrice)
         setTokenInfos(newTokenInfos)
-        // console.log("newTokenInfos = ", newTokenInfos)
+        console.log("newTokenInfos = ", newTokenInfos)
         // return {
         //     ethPrice: infos.ethPrice,
         //     tokens
@@ -328,7 +308,7 @@ const PortfolioTracker = () => {
                         <span className="text-secondary">({token.pair.buyCurrency.symbol})</span>
                       </td>
                       <td>
-                        {token.info.isETH ? (
+                        {token.info.isETH ? ( // Token PriceUSD
                           <>
                             <NumberFormat
                               value={token.info.price * curEthPrice}
@@ -360,7 +340,7 @@ const PortfolioTracker = () => {
                           />
                         )}
                       </td>
-                      <td>
+                      <td> {/* Volume */}
                         <NumberFormat
                           value={token.volume}
                           decimalScale={0}
@@ -370,7 +350,7 @@ const PortfolioTracker = () => {
                           prefix="$"
                         />
                       </td>
-                      <td>
+                      <td> {/* Rewards */}
                         <LabelSpan>
                           <i className="fa fa-circle blue" aria-hidden="true" />{' '}
                           <NumberFormat
@@ -393,7 +373,7 @@ const PortfolioTracker = () => {
                         <LabelSpan>
                           <i className="fa fa-circle red" aria-hidden="true" />{' '}
                           <NumberFormat
-                            value={token.rewardsSold}
+                            value={token.info.rewardsSold}
                             decimalScale={token.info.tokenscale}
                             displayType="text"
                             thousandSeparator=","
@@ -409,7 +389,7 @@ const PortfolioTracker = () => {
                                     />
                                 </label> */}
                       </td>
-                      <td>
+                      <td> {/* Holdings */}
                         {token.info.isETH ? (
                           <>
                             <NumberFormat
@@ -444,7 +424,7 @@ const PortfolioTracker = () => {
                           </>
                         )}
                       </td>
-                      <td>
+                      <td> {/* MarketCap */}
                         {token.info.isETH ? (
                           <>
                             <NumberFormat
@@ -480,7 +460,7 @@ const PortfolioTracker = () => {
                           />
                         )}
                       </td>
-                      <td>
+                      <td> {/* average buy price of holdings */}
                         <NumberFormat
                           value={token.avarageBuyPriceOfHoldings}
                           decimalScale={token.info.pricescale}
@@ -489,17 +469,7 @@ const PortfolioTracker = () => {
                           prefix="$"
                         />
                       </td>
-                      <td>
-                        {/* <label>
-                                    <i className="fa fa-circle blue" aria-hidden="true"/>
-                                    <NumberFormat
-                                    value={token.info.profit.holdings}
-                                    decimalScale={2}
-                                    displayType="text"
-                                    thousandSeparator=","
-                                    prefix="$"
-                                    />
-                                </label> */}
+                      <td> {/* Profit */}
                         <LabelSpan>
                           <i className="fa fa-circle blue" aria-hidden="true" />{' '}
                           <NumberFormat
@@ -511,16 +481,6 @@ const PortfolioTracker = () => {
                           />
                         </LabelSpan>
                         <br />
-                        {/* <label>
-                                    <i className="fa fa-circle red" aria-hidden="true"/>
-                                    <NumberFormat
-                                    value={token.info.profit.sold}
-                                    decimalScale={2}
-                                    displayType="text"
-                                    thousandSeparator=","
-                                    prefix="$"
-                                    />
-                                </label> */}
                         <LabelSpan>
                           <i className="fa fa-circle red" aria-hidden="true" />{' '}
                           <NumberFormat
@@ -532,21 +492,6 @@ const PortfolioTracker = () => {
                           />
                         </LabelSpan>
                         <br />
-                        {/* <label>
-                                    <i
-                                    className="fa fa-circle yellow"
-                                    aria-hidden="true"
-                                    />
-                                    <NumberFormat
-                                    value={
-                                        token.info.profit.sold + token.info.profit.holdings
-                                    }
-                                    decimalScale={2}
-                                    displayType="text"
-                                    thousandSeparator=","
-                                    prefix="$"
-                                    />
-                                </label> */}
                         <LabelSpan>
                           <i className="fa fa-circle yellow" aria-hidden="true" />{' '}
                           <NumberFormat
@@ -558,15 +503,7 @@ const PortfolioTracker = () => {
                           />
                         </LabelSpan>
                       </td>
-                      <td>
-                        {/* <a
-                                    className="default-btn btn-sq me-2"
-                                    href={`${detailedNetwork.Explorer}token/${token.pair.buyCurrency.address}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    Explorer
-                                </a> */}
+                      <td> {/* Actions */}
                         <Button
                           variant="secondary"
                           style={{
@@ -586,17 +523,6 @@ const PortfolioTracker = () => {
                         >
                           Explorer
                         </Button>
-                        {/*                                 
-                                <Button
-                                    variant="secondary"
-                                    style={{borderRadius: "10px", padding: "10px 14px", borderColor: "grey", height: "auto"}}
-                                >
-                                    <Link
-                                        to={`/charts/${detailedNetwork.Name}/${token.pair.buyCurrency.address}`}
-                                    >
-                                        Charts
-                                    </Link>
-                                </Button> */}
                         <Button
                           variant="secondary"
                           style={{
@@ -613,7 +539,6 @@ const PortfolioTracker = () => {
                           Charts
                         </Button>
                         <Button
-                          // className="default-btn btn-sq"
                           onClick={() => setSelectedToken(token)}
                           variant="secondary"
                           style={{
@@ -647,9 +572,14 @@ const PortfolioTracker = () => {
 
   return (
     <Page>
-      {isHintText && <HintText>Use search bar to track an address</HintText>}
-      {isLoading && renderLoading()}
-      {renderContent()}
+      {isError ? 
+        <HintText>Loading data failed. {status.error}</HintText>
+        :
+        <>
+          {isHintText && <HintText>Use search bar to track an address</HintText>}
+          {isLoading && renderLoading()}
+          {renderContent()}
+      </>}
     </Page>
   )
 }

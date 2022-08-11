@@ -60,6 +60,7 @@ export interface TokenItemProps {
 
 const initialState = {
   tokens: [],
+  status: 0
 }
 
 export const fetchTokenData = createAsyncThunk(
@@ -74,11 +75,11 @@ export const fetchTokenData = createAsyncThunk(
     // const response = await fetch(`https://reqres.in/api/users/${userId}`)
     // const response = mockData;
     console.log('fetchTokenData args = ', args)
-    const tokens = await postAsyncData(`${API_SERVER}api/Portfolio/GetTrades`, { network: args.network }, [
+    const res = await postAsyncData(`${API_SERVER}api/Portfolio/GetTrades`, { network: args.network }, [
       args.address,
     ])
-    console.log('fetchTokenData tokens = ', tokens)
-    return tokens
+    console.log('fetchTokenData tokens = ', res)
+    return res
   },
 )
 
@@ -88,7 +89,8 @@ export const portfolioSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchTokenData.fulfilled, (state, action) => {
-      state.tokens = action.payload
+      state.tokens = action.payload.tokens
+      state.status = action.payload.status
     })
   },
 })

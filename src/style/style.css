@@ -104,7 +104,7 @@ img {
     background-color: #0e121a;
     border-color: gray;
     border-radius: 0;
-    color: #ffffff !important;
+    /* color: #ffffff !important; */
     -webkit-transition: all ease 0.5s;
     transition: all ease 0.5s;
 }

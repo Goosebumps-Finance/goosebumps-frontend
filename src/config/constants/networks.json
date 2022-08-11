@@ -112,7 +112,7 @@
       "Name": "bsctestnet",
       "chainId": 97,
       "chainHexId": "0x61",
-      "RPC": "https://cryptosnowprince.com:2083/trpc",
+      "RPC": "https://data-seed-prebsc-2-s2.binance.org:8545",
       "Explorer": "https://testnet.bscscan.com/",
       "MulticallAddress": "0x8F3273Fb89B075b1645095ABaC6ed17B2d4Bc576",
       "SwapApi": "",

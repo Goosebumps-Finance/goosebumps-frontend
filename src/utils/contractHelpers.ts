@@ -3,7 +3,7 @@ import { getSimpleRpcProvider /* , simpleRpcProvider */ } from 'utils/providers'
 import { ChainIdStorageName, poolsConfig } from 'config/constants'
 import { newpools } from 'config/constants/pools'
 import { PoolCategory } from 'config/constants/types'
-import tokens from 'config/constants/tokens'
+import { tokens } from 'config/constants/tokens'
 
 // Addresses
 import {
@@ -131,7 +131,7 @@ import {
 
 const getContract = (abi: any, address: string, signer?: ethers.Signer | ethers.providers.Provider) => {
   let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
-  if(Number.isNaN(chainId)) chainId = 97
+  if(Number.isNaN(chainId)) chainId = 56
   const rpcProvider = getSimpleRpcProvider(chainId)
   const signerOrProvider = signer ?? rpcProvider
   return new ethers.Contract(address, abi, signerOrProvider)
@@ -165,7 +165,7 @@ export const getPointCenterIfoContract = (signer?: ethers.Signer | ethers.provid
   return getContract(pointCenterIfo, getPointCenterIfoAddress(), signer) as PointCenterIfo
 }
 export const getCakeContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
-  return getContract(cakeAbi, tokens.cake.address, signer) as Cake
+  return getContract(cakeAbi, tokens().cake.address, signer) as Cake
 }
 export const getProfileContract = (signer?: ethers.Signer | ethers.providers.Provider) => {
   return getContract(profileABI, getPancakeProfileAddress(), signer) as PancakeProfile

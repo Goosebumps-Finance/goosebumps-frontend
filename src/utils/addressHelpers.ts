@@ -7,7 +7,7 @@ import { VaultKey } from 'state/types'
 export const getAddress = (address: Address, chainId?: string): string => {
   let defaultChainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
   if(Number.isNaN(defaultChainId))
-    defaultChainId = ChainId.TESTNET;
+    defaultChainId = ChainId.MAINNET;
   return address[chainId??defaultChainId] ? address[chainId??defaultChainId] : address[ChainId.MAINNET]
 }
 

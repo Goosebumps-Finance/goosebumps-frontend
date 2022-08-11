@@ -25,7 +25,6 @@ export function useBNBBalances(uncheckedAddresses?: (string | undefined)[]): {
         : [],
     [uncheckedAddresses],
   )
-
   const results = useSingleContractMultipleData(
     multicallContract,
     'getEthBalance',
@@ -105,7 +104,6 @@ export function useCurrencyBalances(
     () => currencies?.filter((currency): currency is Token => currency instanceof Token) ?? [],
     [currencies],
   )
-    
   const tokenBalances = useTokenBalances(account, tokens)
   const containsBNB: boolean = useMemo(() => currencies?.some((currency) => currency === ETHER) ?? false, [currencies])
   const ethBalance = useBNBBalances(containsBNB ? [account] : [])

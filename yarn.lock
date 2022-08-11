@@ -2191,10 +2191,10 @@
     tiny-warning "^1.0.3"
     toformat "^2.0.0"
 
-"@goosebumps/uikit@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@goosebumps/uikit/-/uikit-0.0.5.tgz#6d1989b886ebfe64796f7e0c0183f61f2d19f3d1"
-  integrity sha512-oJ8K6B51V44YXlky/nf2mCty6PK0+PUBV546tMAW/hMcrbDxwnTLoHkGRtqBm2+zxzQ9gvDAk/r0gOu7QNCuzA==
+"@goosebumps/uikit@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@goosebumps/uikit/-/uikit-0.0.6.tgz#e1950c8bf2e6ae46d993dac643b46b7f8d380f1d"
+  integrity sha512-o6X1Ncm8AXGamRJVQKyNmjlVyptnXRpi4pfIuOwCibzWgc7ViuIDsPW4H88nPgbgNmeAGgVVuGkxwT3+s1ffcg==
   dependencies:
     "@popperjs/core" "^2.9.2"
     "@types/lodash" "^4.14.168"

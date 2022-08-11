@@ -9,7 +9,7 @@ import { GAS_PRICE_GWEI } from 'state/user/hooks/helpers'
 const getGasPrice = (): string => {
   // const chainId = process.env.REACT_APP_CHAIN_ID
   let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
-  if(Number.isNaN(chainId)) chainId = 97
+  if(Number.isNaN(chainId)) chainId = 56
   const state = store.getState()
   const userGas = state.user.gasPrice || GAS_PRICE_GWEI.default
   return chainId === ChainId.MAINNET ? userGas : GAS_PRICE_GWEI.testnet

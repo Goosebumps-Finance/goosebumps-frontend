@@ -25,7 +25,7 @@ export function parseCallKey(callKey: string): Call {
     throw new Error(`Invalid call key: ${callKey}`)
   }
   let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
-  if(Number.isNaN(chainId)) chainId =97
+  if(Number.isNaN(chainId)) chainId = 56
   return {
     address: pcs[0],
     callData: pcs[1],

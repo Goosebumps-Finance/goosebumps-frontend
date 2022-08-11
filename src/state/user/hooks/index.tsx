@@ -355,7 +355,7 @@ export function useGasPrice(): string {
   // const chainId = process.env.REACT_APP_CHAIN_ID
   let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
   if(Number.isNaN(chainId)) {
-    chainId = 97
+    chainId = 56
   }
   const userGas = useSelector<AppState, AppState['user']['gasPrice']>((state) => state.user.gasPrice)  
   // return chainId === ChainId.MAINNET ? userGas : GAS_PRICE_GWEI.testnet

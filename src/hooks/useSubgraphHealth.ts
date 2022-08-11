@@ -57,7 +57,7 @@ const useSubgraphHealth = () => {
         )
 
         let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
-        if(Number.isNaN(chainId)) chainId = 97
+        if(Number.isNaN(chainId)) chainId = 56
         const rpcProvider = getSimpleRpcProvider(chainId)
         const currentBlock = await rpcProvider.getBlockNumber()
 

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { BlockState } from '../types'
 
-const initialState: BlockState = { currentBlock: 0, initialBlock: 0, chainId: 97 }
+const initialState: BlockState = { currentBlock: 0, initialBlock: 0, chainId: 56 }
 
 export const blockSlice = createSlice({
   name: 'Block',

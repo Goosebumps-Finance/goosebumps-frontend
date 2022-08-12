@@ -23,6 +23,23 @@ const StyledPage = styled(Container)`
   }
 `
 
+const BlurCircle = styled.div`
+  width: 100px;
+  height: 150px;
+  border-radius: 50px;
+  // background-color: #142b44;
+  position: absolute;
+  // left: 10%;
+  // top: 20%;
+  filter: blur(36px);
+  z-index: -1;
+  ${({theme}) => theme.mediaQueries.sm} {
+    width: 200px;
+    height: 300px;
+    border-radius: 100px;    
+  }
+`
+
 export const PageMeta: React.FC<{ symbol?: string }> = ({ symbol }) => {
   const { t } = useTranslation()
   const { pathname } = useLocation()
@@ -54,7 +71,19 @@ const Page: React.FC<PageProps> = ({ children, symbol, ...props }) => {
   return (
     <>
       <PageMeta symbol={symbol} />
-      <StyledPage {...props}>{children}</StyledPage>
+      <StyledPage {...props}>
+        <BlurCircle style={{
+          backgroundColor: "#142b44",
+          left: "10%",
+          top: "20%"
+        }} />
+        <BlurCircle style={{
+          backgroundColor: "#143744",
+          right: "10%",
+          top: "10%",
+        }} />
+        {children}
+      </StyledPage>
     </>
   )
 }

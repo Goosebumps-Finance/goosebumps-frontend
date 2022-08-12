@@ -124,7 +124,7 @@ const Menu = (props) => {
       console.log("searchKey=", searchKey)
       handleSearch(searchKey)
     }
-  }, [network])
+  }, [network, searchKey])
 
   return (
     <UikitMenu

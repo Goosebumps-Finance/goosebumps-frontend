@@ -14,7 +14,7 @@ export const HomeSlice = createSlice({
     setNetworkInfo: (state, action) => {
       console.log("setNetworkInfo action=", action.payload)
       window.localStorage.setItem(ChainIdStorageName, `${action.payload.network.chainId}`)
-      if(action.payload.searchKey)
+      if(action.payload.searchKey !== undefined)
         state.searchKey = action.payload.searchKey
       if(action.payload.network)
         state.network = action.payload.network

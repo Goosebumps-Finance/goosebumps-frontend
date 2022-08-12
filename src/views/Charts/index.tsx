@@ -129,7 +129,11 @@ const Charts = (props) => {
     )
   }
 
-  return <Page>{isLoading ? renderLoading() : renderContent()}</Page>
+  return <Page>
+    <div style={{minHeight: "80vh"}}>
+      {isLoading ? renderLoading() : renderContent()}
+    </div>
+    </Page>
 }
 
 export default Charts

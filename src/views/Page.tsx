@@ -33,6 +33,23 @@ const StyledPage = styled.div<{ $removePadding: boolean }>`
   }
 `
 
+const BlurCircle = styled.div`
+  width: 100px;
+  height: 150px;
+  border-radius: 50px;
+  // background-color: #142b44;
+  position: absolute;
+  // left: 10%;
+  // top: 20%;
+  filter: blur(36px);
+  z-index: -1;
+  ${({theme}) => theme.mediaQueries.sm} {
+    width: 200px;
+    height: 300px;
+    border-radius: 100px;    
+  }
+`
+
 const Page: React.FC<
   React.HTMLAttributes<HTMLDivElement> & { removePadding?: boolean; hideFooterOnDesktop?: boolean }
 > = ({ children, removePadding = false, hideFooterOnDesktop = false, ...props }) => {
@@ -40,6 +57,16 @@ const Page: React.FC<
     <>
       <PageMeta />
       <StyledPage $removePadding={removePadding} {...props}>
+        <BlurCircle style={{
+          backgroundColor: "#142b44",
+          left: "10%",
+          top: "20%"
+        }} />
+        <BlurCircle style={{
+          backgroundColor: "#143744",
+          right: "10%",
+          top: "10%",
+        }} />
         {children}
         <Flex flexGrow={1} />
         <Box display={['block', null, null, hideFooterOnDesktop ? 'none' : 'block']} width="100%">

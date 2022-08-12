@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useLocation, useParams } from 'react-router-dom'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
 import NumberFormat from 'react-number-format'
 import linq from 'linq'
 import { ethers } from 'ethers'
@@ -12,6 +12,7 @@ import { State } from 'state/types'
 import { fetchTokenData, TokenItemProps } from 'state/portfolio'
 import { setNetworkInfo } from 'state/home'
 import { useFastFresh, useSlowFresh } from 'hooks/useRefresh'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { isSupportedChain } from 'utils'
 import { getTokenInfos } from 'utils/getTokenInfos'
 import { calculatePricescale, calculateTokenscale } from 'utils/numberHelpers'
@@ -41,11 +42,13 @@ export interface PortfolioParamProps {
 }
 
 const PortfolioTracker = () => {
+  const history = useHistory();
   const dispatch = useAppDispatch()
   const fastRefresh = useFastFresh()
   const slowRefresh = useSlowFresh()
   const { pathname } = useLocation()
-  // const { network, searchKey } = useSelector((state: State) => state.home)
+  const { account: connectedAddress} = useActiveWeb3React();
+  const { network, searchKey } = useSelector((state: State) => state.home)
   const { tokens, status } = useSelector((state: State) => state.portfolio)
   // const [ searchAddress, setSearchAddress ] = useState(searchKey)
   const [isHintText, setIsHintText] = useState(true)
@@ -66,6 +69,18 @@ const PortfolioTracker = () => {
   useEffect(() => {
     console.log("params networkName=", networkName, "address=", address)
     if(!networkName || !address) {
+      if(!networkName && !address && connectedAddress) {
+        setIsHintText(false);
+        setIsLoading(true);
+        dispatch(setNetworkInfo({searchKey: connectedAddress, network}))
+        return;
+      } 
+      if(searchKey && ethers.utils.isAddress(searchKey)) {
+        setIsHintText(false);
+        setIsLoading(true);
+        history.push(`/portfolio-tracker/${network?.value}/${searchKey}`)
+        return;
+      }
       setIsHintText(true);
       setIsLoading(false);
     } else {
@@ -231,7 +246,8 @@ const PortfolioTracker = () => {
   const renderLoading = () => {
     return (
       <LoadingPanel>
-        <span className="spinner-border" role="status" />{' '}
+        {/* <span className="spinner-border" role="status" />{' '} */}
+        <span><div className="lds-roller"><div/><div/><div/><div/><div/><div/><div/><div/></div></span>
         <span style={{ margin: 'auto 20px' }}> This will take few seconds </span>
       </LoadingPanel>
     )
@@ -572,14 +588,16 @@ const PortfolioTracker = () => {
 
   return (
     <Page>
-      {isError ? 
-        <HintText>Loading data failed. {status.error}</HintText>
-        :
-        <>
-          {isHintText && <HintText>Use search bar to track an address</HintText>}
-          {isLoading && renderLoading()}
-          {renderContent()}
-      </>}
+      <div style={{minHeight: "80vh"}}>
+        {isError ? 
+          <HintText>Loading data failed. {status.error}</HintText>
+          :
+          <>
+            {isHintText && <HintText>Please connect wallet or input wallet address.</HintText>}
+            {isLoading && renderLoading()}
+            {renderContent()}
+        </>}
+      </div>
     </Page>
   )
 }

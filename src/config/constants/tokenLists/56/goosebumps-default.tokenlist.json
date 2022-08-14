@@ -19,6 +19,14 @@
       "logoURI": "https://goosebumps.finance/images/tokens/56/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c.png"
     },
     {
+      "name": "Empire Token",
+      "symbol": "EMPIRE",
+      "address": "0x293C3Ee9ABaCb08BB8ceD107987F00EfD1539288",
+      "chainId": 56,
+      "decimals": 9,
+      "logoURI": "https://goosebumps.finance/images/tokens/56/0x293C3Ee9ABaCb08BB8ceD107987F00EfD1539288.png"
+    },
+    {
       "name": "BUSD Token",
       "symbol": "BUSD",
       "address": "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",

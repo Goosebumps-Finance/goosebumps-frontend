@@ -247,7 +247,7 @@ const PortfolioTracker = () => {
     return (
       <LoadingPanel>
         {/* <span className="spinner-border" role="status" />{' '} */}
-        <span><div className="lds-roller"><div/><div/><div/><div/><div/><div/><div/><div/></div></span>
+        <span style={{transform: "scale(0.7)"}}><div className="lds-roller"><div/><div/><div/><div/><div/><div/><div/><div/></div></span>
         <span style={{ margin: 'auto 20px' }}> This will take few seconds </span>
       </LoadingPanel>
     )

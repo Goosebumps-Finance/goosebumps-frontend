@@ -11,6 +11,7 @@ import { usePollCoreFarmData } from 'state/farms/hooks'
 import { useFetchProfile } from 'state/profile/hooks'
 import SubgraphHealthIndicator from 'components/SubgraphHealthIndicator'
 import { ChainIdStorageName } from 'config/constants'
+import ComingSoon from 'components/Modal/ComingSoon'
 
 import GlobalStyle from './style/Global'
 import Menu from './components/Menu'
@@ -87,7 +88,8 @@ const App: React.FC = () => {
               <Pools />
             </Route>
             <Route path="/bridge">
-              <Bridge />
+              {/* <Bridge /> */}
+              <ComingSoon/>
             </Route>
             <Route exact path="/portfolio-tracker" render={() => <PortfolioTracker />} />
             {/* <Route path="/portfolio-tracker/:networkName/:addresses"> */}

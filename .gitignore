@@ -42,3 +42,4 @@ src/config/abi/types
 .firebaserc
 firebase.json
 netlify.toml
+build.zip

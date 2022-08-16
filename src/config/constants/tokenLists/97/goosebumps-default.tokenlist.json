@@ -16,7 +16,7 @@
       "address": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
       "chainId": 97,
       "decimals": 18,
-      "logoURI": "https://goosebumps.finance/images/tokens/97/0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd.png"
+      "logoURI": "https://cryptosnowprince.com/images/tokens/97/0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd.png"
     },
     {
       "name": "Mock Empire",
@@ -24,7 +24,7 @@
       "address": "0xE7C6D00B5314EE2651Df6E18e84d6d6dF0EA96a6",
       "chainId": 97,
       "decimals": 9,
-      "logoURI": "https://goosebumps.finance/images/tokens/97/0xE7C6D00B5314EE2651Df6E18e84d6d6dF0EA96a6.png"
+      "logoURI": "https://cryptosnowprince.com/images/tokens/97/0xE7C6D00B5314EE2651Df6E18e84d6d6dF0EA96a6.png"
     },
     {
       "name": "StakingReward",
@@ -32,7 +32,7 @@
       "address": "0xf674Ddfd4e2Fb34D36496B77715409127fBDEfEd",
       "chainId": 97,
       "decimals": 18,
-      "logoURI": "https://goosebumps.finance/images/tokens/97/0xf674Ddfd4e2Fb34D36496B77715409127fBDEfEd.png"
+      "logoURI": "https://cryptosnowprince.com/images/tokens/97/0xf674Ddfd4e2Fb34D36496B77715409127fBDEfEd.png"
     },
     {
       "name": "FarmingReward",
@@ -40,7 +40,7 @@
       "address": "0xf7f8e9C24706efa43eC4b4672b3AAA29146e8e0f",
       "chainId": 97,
       "decimals": 18,
-      "logoURI": "https://goosebumps.finance/images/tokens/97/0xf7f8e9C24706efa43eC4b4672b3AAA29146e8e0f.png"
+      "logoURI": "https://cryptosnowprince.com/images/tokens/97/0xf7f8e9C24706efa43eC4b4672b3AAA29146e8e0f.png"
     },
     {
       "name": "MockBUSD",
@@ -48,7 +48,7 @@
       "address": "0xF3B0aEb14c0b71B86214f7Fc99d793138Afac08E",
       "chainId": 97,
       "decimals": 18,
-      "logoURI": "https://goosebumps.finance/images/tokens/97/0xF3B0aEb14c0b71B86214f7Fc99d793138Afac08E.png"
+      "logoURI": "https://cryptosnowprince.com/images/tokens/97/0xF3B0aEb14c0b71B86214f7Fc99d793138Afac08E.png"
     }
   ]
 }

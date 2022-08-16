@@ -8,7 +8,7 @@
   },
   "tags": {},
   "logoURI": "https://goosebumps.finance/logo.png",
-  "keywords": ["goosebumps", "default", "bscmainnet"],
+  "keywords": ["goosebumps", "default"],
   "tokens": [
     {
       "name": "Wrapped BNB",

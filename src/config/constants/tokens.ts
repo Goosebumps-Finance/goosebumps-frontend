@@ -135,14 +135,6 @@ export const mainnetTokens = defineTokens({
     'Binance BTC',
     'https://bitcoin.org/',
   ),
-  ust: new Token(
-    MAINNET,
-    '0x23396cF899Ca06c4472205fC903bDB4de249D6fC',
-    18,
-    'UST',
-    'Wrapped UST Token',
-    'https://mirror.finance/',
-  ),
   eth: new Token(
     MAINNET,
     '0x2170Ed0880ac9A755fd29B2688956BD959F933F8',

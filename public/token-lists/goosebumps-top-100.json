@@ -226,7 +226,7 @@
       "address": "0xA6c897CaaCA3Db7fD6e2D2cE1a00744f40aB87Bb",
       "chainId": 56,
       "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/smartchain/assets/0xA6c897CaaCA3Db7fD6e2D2cE1a00744f40aB87Bb/logo.png"
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/11682.png"
     },
     {
       "name": "DragonSlayer",
@@ -269,14 +269,6 @@
       "logoURI": "https://assets-cdn.trustwallet.com/blockchains/smartchain/assets/0xF4Ed363144981D3A65f42e7D0DC54FF9EEf559A1/logo.png"
     },
     {
-      "name": "FLOKI",
-      "symbol": "FLOKI",
-      "address": "0x2B3F34e9D4b127797CE6244Ea341a83733ddd6E4",
-      "chainId": 56,
-      "decimals": 9,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/smartchain/assets/0x2B3F34e9D4b127797CE6244Ea341a83733ddd6E4/logo.png"
-    },
-    {
       "name": "Formation Finance",
       "symbol": "FORM",
       "address": "0x25A528af62e56512A19ce8c3cAB427807c28CC19",
@@ -298,7 +290,7 @@
       "address": "0xb3a6381070B1a15169DEA646166EC0699fDAeA79",
       "chainId": 56,
       "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/smartchain/assets/0xb3a6381070B1a15169DEA646166EC0699fDAeA79/logo.png"
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/12082.png"
     },
     {
       "name": "StepHero",
@@ -482,7 +474,7 @@
       "address": "0x09607078980CbB0665ABa9c6D1B84b8eAD246aA0",
       "chainId": 56,
       "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/smartchain/assets/0x09607078980CbB0665ABa9c6D1B84b8eAD246aA0/logo.png"
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/11505.png"
     },
     {
       "name": "Pink Token",
@@ -506,7 +498,7 @@
       "address": "0x394bBA8F309f3462b31238B3fd04b83F71A98848",
       "chainId": 56,
       "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/smartchain/assets/0x394bBA8F309f3462b31238B3fd04b83F71A98848/logo.png"
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/11672.png"
     },
     {
       "name": "Moonpot",
@@ -754,7 +746,7 @@
       "address": "0xFAfD4CB703B25CB22f43D017e7e0d75FEBc26743",
       "chainId": 56,
       "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/smartchain/assets/0xFAfD4CB703B25CB22f43D017e7e0d75FEBc26743/logo.png"
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/11553.png"
     },
     {
       "name": "WINk",
@@ -794,7 +786,7 @@
       "address": "0xFbe0b4aE6E5a200c36A341299604D5f71A5F0a48",
       "chainId": 56,
       "decimals": 18,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/smartchain/assets/0xFbe0b4aE6E5a200c36A341299604D5f71A5F0a48/logo.png"
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/11488.png"
     }
   ]
 }

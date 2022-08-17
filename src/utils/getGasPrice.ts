@@ -11,8 +11,8 @@ const getGasPrice = (): string => {
   let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
   if(Number.isNaN(chainId)) chainId = 56
   const state = store.getState()
-  const userGas = state.user.gasPrice || GAS_PRICE_GWEI.default
-  return chainId === ChainId.MAINNET ? userGas : GAS_PRICE_GWEI.testnet
+  const userGas = state.user.gasPrice || GAS_PRICE_GWEI[ChainId.MAINNET].default
+  return chainId === ChainId.MAINNET ? userGas : GAS_PRICE_GWEI[ChainId.MAINNET].testnet
 }
 
 export default getGasPrice

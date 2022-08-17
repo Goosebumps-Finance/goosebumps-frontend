@@ -11,7 +11,7 @@ import PhishingWarningBanner from 'components/PhishingWarningBanner'
 import CustomSelect, { OptionProps } from 'components/CustomSelect/CustomSelect'
 import useTheme from 'hooks/useTheme'
 import { usePriceEmpireBusd } from 'state/farms/hooks'
-import { setNetworkInfo } from 'state/home'
+import { setAddressType, setNetworkInfo } from 'state/home'
 import { State } from 'state/types'
 import { usePhishingBannerManager } from 'state/user/hooks'
 import { API_SERVER } from 'config'
@@ -89,9 +89,14 @@ const Menu = (props) => {
   const handleSearch = async (address: string) => {
     console.log('handleSearch network = ', network)
     if (network === null || address === '' || !ethers.utils.isAddress(address)) return
-    const isToken = await getAsyncData(`${API_SERVER}api/Search/IsToken`, { address, network: network.value })
-    console.log('After getAsyncData isToken = ', isToken)
-    if (isToken) {
+    const res = await getAsyncData(`${API_SERVER}api/Search/IsToken`, { address, network: network.value })
+    console.log('After getAsyncData isToken = ', res)
+    /*
+     smartcontract: "Token"  - Token address
+     smartcontract: "DEX"  - Pair address
+    */
+    dispatch(setAddressType({addressType: res ? res.contractType : null}));
+    if (res) {
       history.push(`/charts/${network?.value}/${address}`)
     } else if (address) {
       history.push(`/portfolio-tracker/${network?.value}/${address}`)

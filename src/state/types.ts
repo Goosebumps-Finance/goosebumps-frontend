@@ -176,6 +176,7 @@ export interface HomeState {
     chainId: number
   }
   searchKey: string
+  addressType: string | null
 }
 
 export interface PortfolioState {

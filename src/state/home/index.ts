@@ -1,11 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { API_SERVER } from 'config'
 import { ChainIdStorageName } from 'config/constants'
 import { HomeState } from 'state/types'
+import { getAsyncData } from 'utils/requester'
 
 const initialState: HomeState = {
     network: { label: 'BSC', value: 'bsc', chainId: 56},
-    searchKey: ''
+    searchKey: '',
+    addressType: null
 }
+
+export const fetchAddressType = createAsyncThunk(
+  'home/fetchAddressType',
+  async (args: {address: string, network:string}, thunkAPI) => {
+    const res = await getAsyncData(`${API_SERVER}api/Search/IsToken`, {address: args.address, network: args.network});
+    if(res) {
+      return res.contractType;
+    }
+    return null;
+  }
+)
 
 export const HomeSlice = createSlice({
   name: 'home',
@@ -18,10 +32,19 @@ export const HomeSlice = createSlice({
         state.searchKey = action.payload.searchKey
       if(action.payload.network)
         state.network = action.payload.network
+    },
+    setAddressType: (state, action) => {
+      console.log("setAddressType, action=", action)
+      state.addressType = action.payload.addressType
     }
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchAddressType.fulfilled, (state, action) => {
+      state.addressType = action.payload
+    })
+  }
 })
 
-export const { setNetworkInfo } = HomeSlice.actions
+export const { setNetworkInfo, setAddressType } = HomeSlice.actions
 
 export default HomeSlice.reducer

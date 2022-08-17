@@ -103,11 +103,11 @@ const App: React.FC = () => {
             <Route exact path="/charts/:networkName/:address/:pairAddress" render={() => <Charts />} />
 
             {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
-            <Route exact strict path="/swap">
+            {/* <Route exact strict path="/swap">
               <ComingSoon />
-            </Route>
-            {/* <Route exact strict path="/swap" component={Swap} /> */}
-            {/* <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
+            </Route> */}
+            <Route exact strict path="/swap" component={Swap} />
+            <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
             <Route exact strict path="/liquidityFindToken" component={PoolFinder} />
             <Route exact strict path="/liquidity" component={Liquidity} />
             <Route exact path="/liquidityAdd" component={AddLiquidity} />
@@ -120,15 +120,15 @@ const App: React.FC = () => {
             <Route exact path="/create/:currencyIdA" component={RedirectOldAddLiquidityPathStructure} />
             <Route exact path="/create/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
             <Route exact strict path="/liquidityRemove/:tokens" component={RedirectOldRemoveLiquidityPathStructure} />
-            <Route exact strict path="/liquidityRemove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} /> */}
+            <Route exact strict path="/liquidityRemove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
 
             {/* Redirect */}
-            {/* <Route path="/pool">
+            <Route path="/pool">
               <Redirect to="/liquidity" />
             </Route>
             <Route path="/pools">
               <Redirect to="/stake" />
-            </Route> */}
+            </Route>
             {/* 404 */}
             <Route component={NotFound} />
           </Switch>

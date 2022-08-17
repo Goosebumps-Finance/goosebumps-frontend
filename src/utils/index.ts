@@ -97,7 +97,15 @@ export function getContract(address: string, ABI: any, signer?: ethers.Signer | 
 
 // account is optional
 export function getRouterContract(_: number, library: Web3Provider, account?: string): Contract {
-  return getContract(ROUTER_ADDRESS, IUniswapV2Router02ABI, getProviderOrSigner(library, account))
+  return getContract(ROUTER_ADDRESS[getChainId()], IUniswapV2Router02ABI, getProviderOrSigner(library, account))
+}
+
+export function getChainId(): number {
+  const chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
+  if(Number.isNaN(chainId)) {
+    return 56 // ChainId.MAINNET
+  }
+  return chainId
 }
 
 export function escapeRegExp(string: string): string {

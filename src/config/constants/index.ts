@@ -1,6 +1,7 @@
 import { ChainId, JSBI, Percent, Token } from '@goosebumps/sdk'
 // import { ethTokens, mainnetTokens, polygonTokens, testnetTokens } from './tokens'
 import { mainnetTokens, testnetTokens } from './tokens'
+import { Address } from './types'
 
 export const ETH_CHAIN_ID = 1
 export const POLYGON_CHAIN_ID = 137
@@ -10,7 +11,11 @@ export const BSC_TESTNET_CHAIN_ID = 97
 
 // change router address according to the chainid
 // export const ROUTER_ADDRESS = '0x10ED43C718714eb63d5aA57B78B54704E256024E'
-export const ROUTER_ADDRESS = '0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3'
+// export const ROUTER_ADDRESS = '0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3'
+export const ROUTER_ADDRESS : Address = {
+  56: "0x10ED43C718714eb63d5aA57B78B54704E256024E",
+  97: "0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3"
+}
 
 // a list of tokens by chain
 type ChainTokenList = {

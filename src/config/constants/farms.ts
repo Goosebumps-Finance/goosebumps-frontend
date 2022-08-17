@@ -1609,16 +1609,16 @@ const farms: SerializedFarmConfig[] = [
     token: serializedTokens.math,
     quoteToken: serializedTokens.busd,
   },
-  {
-    pid: 370,
-    lpSymbol: 'mCOIN-UST LP',
-    lpAddresses: {
-      97: '',
-      56: '0xbcf01a42f6bc42f3cfe81b05519565044d65d22a',
-    },
-    token: serializedTokens.mcoin,
-    quoteToken: serializedTokens.ust,
-  },
+  // {
+  //   pid: 370,
+  //   lpSymbol: 'mCOIN-UST LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0xbcf01a42f6bc42f3cfe81b05519565044d65d22a',
+  //   },
+  //   token: serializedTokens.mcoin,
+  //   quoteToken: serializedTokens.ust,
+  // },
   {
     pid: 366,
     lpSymbol: 'PNT-pBTC LP',
@@ -1939,16 +1939,16 @@ const farms: SerializedFarmConfig[] = [
     token: serializedTokens.lto,
     quoteToken: serializedTokens.wbnb,
   },
-  {
-    pid: 329,
-    lpSymbol: 'MIR-UST LP',
-    lpAddresses: {
-      97: '',
-      56: '0x89666d026696660e93Bf6edf57B71A68615768B7',
-    },
-    token: serializedTokens.mir,
-    quoteToken: serializedTokens.ust,
-  },
+  // {
+  //   pid: 329,
+  //   lpSymbol: 'MIR-UST LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0x89666d026696660e93Bf6edf57B71A68615768B7',
+  //   },
+  //   token: serializedTokens.mir,
+  //   quoteToken: serializedTokens.ust,
+  // },
   {
     pid: 328,
     lpSymbol: 'TRADE-BNB LP',
@@ -2239,56 +2239,56 @@ const farms: SerializedFarmConfig[] = [
     token: serializedTokens.egld,
     quoteToken: serializedTokens.wbnb,
   },
-  {
-    pid: 293,
-    lpSymbol: 'UST-BUSD LP',
-    lpAddresses: {
-      97: '',
-      56: '0x05faf555522Fa3F93959F86B41A3808666093210',
-    },
-    token: serializedTokens.ust,
-    quoteToken: serializedTokens.busd,
-  },
-  {
-    pid: 292,
-    lpSymbol: 'mAMZN-UST LP',
-    lpAddresses: {
-      97: '',
-      56: '0xC05654C66756eBB82c518598c5f1ea1a0199a563',
-    },
-    token: serializedTokens.mamzn,
-    quoteToken: serializedTokens.ust,
-  },
-  {
-    pid: 291,
-    lpSymbol: 'mGOOGL-UST LP',
-    lpAddresses: {
-      97: '',
-      56: '0xA3BfBbAd526C6B856B1Fdf73F99BCD894761fbf3',
-    },
-    token: serializedTokens.mgoogl,
-    quoteToken: serializedTokens.ust,
-  },
-  {
-    pid: 290,
-    lpSymbol: 'mNFLX-UST LP',
-    lpAddresses: {
-      97: '',
-      56: '0x91417426C3FEaA3Ca795921eB9FdD9715ad92537',
-    },
-    token: serializedTokens.mnflx,
-    quoteToken: serializedTokens.ust,
-  },
-  {
-    pid: 289,
-    lpSymbol: 'mTSLA-UST LP',
-    lpAddresses: {
-      97: '',
-      56: '0xEc6b56a736859AE8ea4bEdA16279Ecd8c60dA7EA',
-    },
-    token: serializedTokens.mtsla,
-    quoteToken: serializedTokens.ust,
-  },
+  // {
+  //   pid: 293,
+  //   lpSymbol: 'UST-BUSD LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0x05faf555522Fa3F93959F86B41A3808666093210',
+  //   },
+  //   token: serializedTokens.ust,
+  //   quoteToken: serializedTokens.busd,
+  // },
+  // {
+  //   pid: 292,
+  //   lpSymbol: 'mAMZN-UST LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0xC05654C66756eBB82c518598c5f1ea1a0199a563',
+  //   },
+  //   token: serializedTokens.mamzn,
+  //   quoteToken: serializedTokens.ust,
+  // },
+  // {
+  //   pid: 291,
+  //   lpSymbol: 'mGOOGL-UST LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0xA3BfBbAd526C6B856B1Fdf73F99BCD894761fbf3',
+  //   },
+  //   token: serializedTokens.mgoogl,
+  //   quoteToken: serializedTokens.ust,
+  // },
+  // {
+  //   pid: 290,
+  //   lpSymbol: 'mNFLX-UST LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0x91417426C3FEaA3Ca795921eB9FdD9715ad92537',
+  //   },
+  //   token: serializedTokens.mnflx,
+  //   quoteToken: serializedTokens.ust,
+  // },
+  // {
+  //   pid: 289,
+  //   lpSymbol: 'mTSLA-UST LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0xEc6b56a736859AE8ea4bEdA16279Ecd8c60dA7EA',
+  //   },
+  //   token: serializedTokens.mtsla,
+  //   quoteToken: serializedTokens.ust,
+  // },
   {
     pid: 288,
     lpSymbol: 'wSOTE-BNB LP',
@@ -2992,16 +2992,16 @@ const farms: SerializedFarmConfig[] = [
     token: serializedTokens.lto,
     quoteToken: serializedTokens.wbnb,
   },
-  {
-    pid: 218,
-    lpSymbol: 'MIR-UST LP',
-    lpAddresses: {
-      97: '',
-      56: '0x905186a70ba3Eb50090d1d0f6914F5460B4DdB40',
-    },
-    token: serializedTokens.mir,
-    quoteToken: serializedTokens.ust,
-  },
+  // {
+  //   pid: 218,
+  //   lpSymbol: 'MIR-UST LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0x905186a70ba3Eb50090d1d0f6914F5460B4DdB40',
+  //   },
+  //   token: serializedTokens.mir,
+  //   quoteToken: serializedTokens.ust,
+  // },
   {
     pid: 217,
     lpSymbol: 'TRADE-BNB LP',
@@ -3342,56 +3342,56 @@ const farms: SerializedFarmConfig[] = [
     token: serializedTokens.egld,
     quoteToken: serializedTokens.wbnb,
   },
-  {
-    pid: 182,
-    lpSymbol: 'UST-BUSD LP',
-    lpAddresses: {
-      97: '',
-      56: '0x1719606031F1E0B3CCaCa11A2CF550Ef8feBEB0F',
-    },
-    token: serializedTokens.ust,
-    quoteToken: serializedTokens.busd,
-  },
-  {
-    pid: 181,
-    lpSymbol: 'mAMZN-UST LP',
-    lpAddresses: {
-      97: '',
-      56: '0x2c065E42B464ef38480778B0624A207A09042481',
-    },
-    token: serializedTokens.mamzn,
-    quoteToken: serializedTokens.ust,
-  },
-  {
-    pid: 180,
-    lpSymbol: 'mGOOGL-UST LP',
-    lpAddresses: {
-      97: '',
-      56: '0x74d8Dbac5053d31E904a821A3B4C411Bd4dd2307',
-    },
-    token: serializedTokens.mgoogl,
-    quoteToken: serializedTokens.ust,
-  },
-  {
-    pid: 179,
-    lpSymbol: 'mNFLX-UST LP',
-    lpAddresses: {
-      97: '',
-      56: '0xe1d76359FE4Eb7f0dAd1D719256c22890864718E',
-    },
-    token: serializedTokens.mnflx,
-    quoteToken: serializedTokens.ust,
-  },
-  {
-    pid: 178,
-    lpSymbol: 'mTSLA-UST LP',
-    lpAddresses: {
-      97: '',
-      56: '0x36285DDD149949f366b5aFb3f41Cea71d35B8c9e',
-    },
-    token: serializedTokens.mtsla,
-    quoteToken: serializedTokens.ust,
-  },
+  // {
+  //   pid: 182,
+  //   lpSymbol: 'UST-BUSD LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0x1719606031F1E0B3CCaCa11A2CF550Ef8feBEB0F',
+  //   },
+  //   token: serializedTokens.ust,
+  //   quoteToken: serializedTokens.busd,
+  // },
+  // {
+  //   pid: 181,
+  //   lpSymbol: 'mAMZN-UST LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0x2c065E42B464ef38480778B0624A207A09042481',
+  //   },
+  //   token: serializedTokens.mamzn,
+  //   quoteToken: serializedTokens.ust,
+  // },
+  // {
+  //   pid: 180,
+  //   lpSymbol: 'mGOOGL-UST LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0x74d8Dbac5053d31E904a821A3B4C411Bd4dd2307',
+  //   },
+  //   token: serializedTokens.mgoogl,
+  //   quoteToken: serializedTokens.ust,
+  // },
+  // {
+  //   pid: 179,
+  //   lpSymbol: 'mNFLX-UST LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0xe1d76359FE4Eb7f0dAd1D719256c22890864718E',
+  //   },
+  //   token: serializedTokens.mnflx,
+  //   quoteToken: serializedTokens.ust,
+  // },
+  // {
+  //   pid: 178,
+  //   lpSymbol: 'mTSLA-UST LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0x36285DDD149949f366b5aFb3f41Cea71d35B8c9e',
+  //   },
+  //   token: serializedTokens.mtsla,
+  //   quoteToken: serializedTokens.ust,
+  // },
   {
     pid: 177,
     lpSymbol: 'wSOTE-BNB LP',
@@ -4115,16 +4115,16 @@ const farms: SerializedFarmConfig[] = [
     token: serializedTokens.lto,
     quoteToken: serializedTokens.wbnb,
   },
-  {
-    pid: 102,
-    lpSymbol: 'MIR-UST LP',
-    lpAddresses: {
-      97: '',
-      56: '0xf64a269F0A06dA07D23F43c1Deb217101ee6Bee7',
-    },
-    token: serializedTokens.mir,
-    quoteToken: serializedTokens.ust,
-  },
+  // {
+  //   pid: 102,
+  //   lpSymbol: 'MIR-UST LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0xf64a269F0A06dA07D23F43c1Deb217101ee6Bee7',
+  //   },
+  //   token: serializedTokens.mir,
+  //   quoteToken: serializedTokens.ust,
+  // },
   {
     pid: 101,
     lpSymbol: 'TRADE-BNB LP',
@@ -4485,56 +4485,56 @@ const farms: SerializedFarmConfig[] = [
     token: serializedTokens.egld,
     quoteToken: serializedTokens.wbnb,
   },
-  {
-    pid: 63,
-    lpSymbol: 'UST-BUSD LP',
-    lpAddresses: {
-      97: '',
-      56: '0xD1F12370b2ba1C79838337648F820a87eDF5e1e6',
-    },
-    token: serializedTokens.ust,
-    quoteToken: serializedTokens.busd,
-  },
-  {
-    pid: 62,
-    lpSymbol: 'mAMZN-UST LP',
-    lpAddresses: {
-      97: '',
-      56: '0xc92Dc34665c8a21f98E1E38474580b61b4f3e1b9',
-    },
-    token: serializedTokens.mamzn,
-    quoteToken: serializedTokens.ust,
-  },
-  {
-    pid: 61,
-    lpSymbol: 'mGOOGL-UST LP',
-    lpAddresses: {
-      97: '',
-      56: '0x852A68181f789AE6d1Da3dF101740a59A071004f',
-    },
-    token: serializedTokens.mgoogl,
-    quoteToken: serializedTokens.ust,
-  },
-  {
-    pid: 60,
-    lpSymbol: 'mNFLX-UST LP',
-    lpAddresses: {
-      97: '',
-      56: '0xF609ade3846981825776068a8eD7746470029D1f',
-    },
-    token: serializedTokens.mnflx,
-    quoteToken: serializedTokens.ust,
-  },
-  {
-    pid: 59,
-    lpSymbol: 'mTSLA-UST LP',
-    lpAddresses: {
-      97: '',
-      56: '0xD5664D2d15cdffD597515f1c0D945c6c1D3Bf85B',
-    },
-    token: serializedTokens.mtsla,
-    quoteToken: serializedTokens.ust,
-  },
+  // {
+  //   pid: 63,
+  //   lpSymbol: 'UST-BUSD LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0xD1F12370b2ba1C79838337648F820a87eDF5e1e6',
+  //   },
+  //   token: serializedTokens.ust,
+  //   quoteToken: serializedTokens.busd,
+  // },
+  // {
+  //   pid: 62,
+  //   lpSymbol: 'mAMZN-UST LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0xc92Dc34665c8a21f98E1E38474580b61b4f3e1b9',
+  //   },
+  //   token: serializedTokens.mamzn,
+  //   quoteToken: serializedTokens.ust,
+  // },
+  // {
+  //   pid: 61,
+  //   lpSymbol: 'mGOOGL-UST LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0x852A68181f789AE6d1Da3dF101740a59A071004f',
+  //   },
+  //   token: serializedTokens.mgoogl,
+  //   quoteToken: serializedTokens.ust,
+  // },
+  // {
+  //   pid: 60,
+  //   lpSymbol: 'mNFLX-UST LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0xF609ade3846981825776068a8eD7746470029D1f',
+  //   },
+  //   token: serializedTokens.mnflx,
+  //   quoteToken: serializedTokens.ust,
+  // },
+  // {
+  //   pid: 59,
+  //   lpSymbol: 'mTSLA-UST LP',
+  //   lpAddresses: {
+  //     97: '',
+  //     56: '0xD5664D2d15cdffD597515f1c0D945c6c1D3Bf85B',
+  //   },
+  //   token: serializedTokens.mtsla,
+  //   quoteToken: serializedTokens.ust,
+  // },
   {
     pid: 58,
     lpSymbol: 'wSOTE-BNB LP',

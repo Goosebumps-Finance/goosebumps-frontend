@@ -79,10 +79,10 @@ const Menu = (props) => {
   const activeMenuItem = getActiveMenuItem({ menuConfig: config(t), pathname })
   const activeSubMenuItem = getActiveSubMenuItem({ menuItem: activeMenuItem, pathname })
 
-  const onSearchKeyChange = (e) => {
-    dispatch(setNetworkInfo({ searchKey: e.target.value, network }))
-    if (ethers.utils.isAddress(e.target.value) || !e.target.value) {
-      handleSearch(e.target.value)
+  const onSearchKeyChange = (newKey) => {
+    dispatch(setNetworkInfo({ searchKey: newKey, network }))
+    if (ethers.utils.isAddress(newKey) || !newKey) {
+      handleSearch(newKey)
     }
   }
 

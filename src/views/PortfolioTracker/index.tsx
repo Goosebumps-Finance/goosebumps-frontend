@@ -133,7 +133,6 @@ const PortfolioTracker = () => {
     // console.log("reqAddress = ", reqAddress)
     if(status === 200 && reqAddress === currentParams.address) {
       setIsStartLoading(false);
-      setLoadingStep(2);
       const getLiveInfo = async () => {
         const infos = await getTokenInfos(
           linq
@@ -263,6 +262,7 @@ const PortfolioTracker = () => {
         // console.log("newTokenInfos = ", newTokenInfos)
       }
       getLiveInfo()
+      setLoadingStep(2);
     } else if(status !== 0) {
       setIsStartLoading(false);
       setLoadingStep(-1);

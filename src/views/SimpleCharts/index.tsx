@@ -57,9 +57,12 @@ const SimpleCharts = (props) => {
                     }
                 }))
                 if(addressType === "Token") {
-                    const _info = await getChartsInfo(params.address, network, params.pairAddress);
+                    const _info:any = await getChartsInfo(params.address, network, params.pairAddress);
                     setInfo(_info);
                     console.log("getChartInfo(", params.address, ")", _info)
+                    if(_info.pairs?.length !== 0) {
+                        setChartAddress(_info.pairs[0].smartContract.address.address);
+                    }
                 }                
             }
         }
@@ -74,6 +77,7 @@ const SimpleCharts = (props) => {
                 setChartAddress(params.address)
             }
             if(addressType === "DEX") {
+                setChartAddress(params.address)
                 const fetchTokenAddress = async () => {
                     const res = await getTokenAddress(params.address);
                     console.log("fetchTokenAddress res = ", res);

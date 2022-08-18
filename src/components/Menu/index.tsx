@@ -87,15 +87,20 @@ const Menu = (props) => {
   }
 
   const handleSearch = async (address: string) => {
-    console.log('handleSearch network = ', network)
+    // console.log('handleSearch network = ', network)
     if (network === null || address === '' || !ethers.utils.isAddress(address)) return
     const res = await getAsyncData(`${API_SERVER}api/Search/IsToken`, { address, network: network.value })
-    console.log('After getAsyncData isToken = ', res)
+    // console.log('After getAsyncData isToken = ', res)
     /*
-     smartcontract: "Token"  - Token address
-     smartcontract: "DEX"  - Pair address
+      smartcontract: "Token"  - Token address
+      smartcontract: "DEX"  - Pair address
     */
-    dispatch(setAddressType({addressType: res ? res.contractType : null}));
+      console.log("isTOken res = ", res);
+      if(res.status !== 200) {
+      console.log("res = ", res)
+      return;
+    }
+    dispatch(setAddressType({addressType: res.result ? res.result.contractType : null}));
     if (res) {
       history.push(`/charts/${network?.value}/${address}`)
     } else if (address) {
@@ -126,7 +131,7 @@ const Menu = (props) => {
     if(network.chainId === 97) _index = 3
     setNetworkIndex(_index)
     if(searchKey) {
-      console.log("searchKey=", searchKey)
+      // console.log("searchKey=", searchKey)
       handleSearch(searchKey)
     }
   }, [network, searchKey])

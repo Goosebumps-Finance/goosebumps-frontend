@@ -103,7 +103,7 @@ const App: React.FC = () => {
 
             <Route exact path="/charts" render={() => <SimpleCharts />} />
             <Route exact path="/charts/:networkName/:address" render={() => <SimpleCharts />} />
-            <Route exact path="/charts/:networkName/:address/:pairAddress" render={() => <SimpleCharts />} />
+            {/* <Route exact path="/charts/:networkName/:address/:pairAddress" render={() => <SimpleCharts />} /> */}
 
             {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
             <Route exact strict path="/swap" component={Swap} />

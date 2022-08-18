@@ -22,10 +22,12 @@ import TradesModal from './components/TradesModal'
 const HintText = styled.p`
   font-weight: bold;
   font-size: 1.75rem;
+  text-align: center;
 `
 const LoadingPanel = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   color: white;
 `
 
@@ -49,63 +51,89 @@ const PortfolioTracker = () => {
   const { pathname } = useLocation()
   const { account: connectedAddress} = useActiveWeb3React();
   const { network, searchKey } = useSelector((state: State) => state.home)
-  const { tokens, status } = useSelector((state: State) => state.portfolio)
+  const { tokens, status, reqAddress } = useSelector((state: State) => state.portfolio)
   // const [ searchAddress, setSearchAddress ] = useState(searchKey)
-  const [isHintText, setIsHintText] = useState(true)
-  const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(false);
+  const [loadingStep, setLoadingStep] = useState(0) // 0:hint, 1: loading, -1: error, 2: success
+  const [isStartLoading, setIsStartLoading] = useState(false);
   const [tokenInfos, setTokenInfos] = useState([])
   const [curEthPrice, setCurEthPrice] = useState(0)
   const [selectedToken, setSelectedToken] = useState()
-  const { networkName, address } = useParams<PortfolioParamProps>()
-  console.log("status = ", status)
-  const detailedNetwork = networkName
+  const params: PortfolioParamProps = useParams()
+  params.networkName = params.networkName || "bsc";
+  params.address = params.address || connectedAddress;
+  const [currentParams, setParams] = useState<PortfolioParamProps>(params);
+
+  const detailedNetwork = params.networkName
     ? linq
         .from(networks)
-        .where((x) => x.Name === networkName)
+        .where((x) => x.Name === params.networkName)
         .single()
     : null
+  /* 
+    networkName, address : values from url
+    connectedAddress : wallet address from metamask
+    network, searchKey : state.home
+    tokens, status, reqAddress : state.portfolio
+    tokenInfos : component.state
+  */
 
+  // At the beginning
   useEffect(() => {
-    console.log("params networkName=", networkName, "address=", address)
-    if(!networkName || !address) {
-      if(!networkName && !address && connectedAddress) {
-        setIsHintText(false);
-        setIsLoading(true);
-        dispatch(setNetworkInfo({searchKey: connectedAddress, network}))
-        return;
-      } 
-      if(searchKey && ethers.utils.isAddress(searchKey)) {
-        setIsHintText(false);
-        setIsLoading(true);
-        history.push(`/portfolio-tracker/${network?.value}/${searchKey}`)
-        return;
-      }
-      setIsHintText(true);
-      setIsLoading(false);
+    setParams(params);
+  }, [])
+
+  // Get params from url and set it to state variable
+  useEffect(() => {
+    // console.log("Params = ", params)
+    // console.log("CurrentParams = ", currentParams)
+    // console.log("searchKey=", searchKey, "!=", !searchKey);
+    if(currentParams.address === undefined) {
+      setLoadingStep(0);
     } else {
-      setIsHintText(false);
+      if(searchKey || searchKey !== currentParams.address) {
+        dispatch(setNetworkInfo({
+          searchKey: currentParams.address,
+          network: {
+            label: detailedNetwork.Display,
+            value: detailedNetwork.Name,
+            chainId: detailedNetwork.chainId
+          }
+        }))
+      }
+      if(loadingStep !== 2) { // if hint, then change step to loading
+        setLoadingStep(1);
+      }
+      // console.log("before FetchTokenData currentParams=", currentParams)
+      if(!isStartLoading) {
+        setIsStartLoading(true);
+        dispatch(fetchTokenData({network: currentParams.networkName, address: currentParams.address}));
+      }
+    }
+  }, [currentParams, fastRefresh, loadingStep])
+  // When wallet connected, set params variable
+  useEffect(() => {
+    if(!currentParams.address && connectedAddress) {
       setTokenInfos([]);
-      setCurEthPrice(0);
-      dispatch(setNetworkInfo({searchKey: address, network: { label: detailedNetwork.Display, value: detailedNetwork.Name, chainId: detailedNetwork.chainId}}));
+      setParams({address: connectedAddress, networkName: currentParams.networkName});
     }
-  }, [networkName, address])
+  }, [connectedAddress])
 
+  // When searchKey changed, set params variable
   useEffect(() => {
-    if(address) {
-      setIsLoading(true);
-      dispatch(fetchTokenData({network: networkName, address}));
+    if(currentParams.address !== searchKey && searchKey) {
+      setLoadingStep(0);
+      setTokenInfos([]);
+      setParams({address: searchKey, networkName: currentParams.networkName});
+      // setParams({address: params.address, networkName: currentParams.networkName});
     }
-  }, [dispatch, address, networkName, address, slowRefresh])
-  
+  }, [searchKey])
+
+  // Check loading data from backend
   useEffect(() => {
-    console.log("tokens = ", tokens, "address=", address);
-    if (tokens.length === 0 && status.status === 201) {
-      setIsLoading(false);
-      setIsError(true);
-    }
-    if (tokens.length !== 0 && address !== undefined) {
-      setIsLoading(false);
+    // console.log("reqAddress = ", reqAddress)
+    if(status === 200 && reqAddress === currentParams.address) {
+      setIsStartLoading(false);
+      setLoadingStep(2);
       const getLiveInfo = async () => {
         const infos = await getTokenInfos(
           linq
@@ -113,9 +141,8 @@ const PortfolioTracker = () => {
             .select((x: any) => x.pair)
             .toArray(),
           detailedNetwork,
-          [address],
+          [currentParams.address],
         )
-        console.log("getLiveInfo, infos = ", infos)
 
         const query = linq.from(infos.infos)
         const newTokenInfos: any = tokens.map((item: TokenItemProps) => {
@@ -233,16 +260,16 @@ const PortfolioTracker = () => {
 
         setCurEthPrice(infos.ethPrice)
         setTokenInfos(newTokenInfos)
-        console.log("newTokenInfos = ", newTokenInfos)
-        // return {
-        //     ethPrice: infos.ethPrice,
-        //     tokens
-        // }
+        // console.log("newTokenInfos = ", newTokenInfos)
       }
       getLiveInfo()
+    } else if(status !== 0) {
+      setIsStartLoading(false);
+      setLoadingStep(-1);
     }
-  }, [tokens, detailedNetwork, address, tokenInfos])
+  }, [tokens, status])
 
+  
   const renderLoading = () => {
     return (
       <LoadingPanel>
@@ -254,10 +281,9 @@ const PortfolioTracker = () => {
   }
 
   const renderContent = () => {
-    if (isLoading || isHintText) return <></>
+    // if (loadingStep < 2) return <></>
     // Get data from the server
     // const tokenData = mockData;
-
     return (
       <>
         <div className="portfolio-page container-fluid">
@@ -267,7 +293,7 @@ const PortfolioTracker = () => {
                 <h2>Portfolio For</h2>
                 <div>
                   <div className="mt-2" style={{ color: 'white' }}>
-                    {address}{' '}
+                    {params.address}{' '}
                   </div>
                 </div>
               </div>
@@ -588,14 +614,14 @@ const PortfolioTracker = () => {
 
   return (
     <Page>
-      <div style={{minHeight: "80vh"}}>
-        {isError ? 
-          <HintText>Loading data failed. {status.error}</HintText>
+      <div style={{width: "100%", minHeight: "80vh"}}>
+        {loadingStep === -1 ? 
+          <HintText style={{margin: 'auto'}}>Loading data failed. {status.error}</HintText>
           :
           <>
-            {isHintText && <HintText>Please connect wallet or input wallet address.</HintText>}
-            {isLoading && renderLoading()}
-            {renderContent()}
+            {loadingStep === 0 && <HintText style={{margin: 'auto'}}>Please connect wallet or input wallet address.</HintText>}
+            {loadingStep === 1 && renderLoading()}
+            {loadingStep === 2 && renderContent()}
         </>}
       </div>
     </Page>

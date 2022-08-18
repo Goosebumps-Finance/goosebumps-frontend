@@ -2,7 +2,7 @@ export const getAsyncData = (url, params) => {
   if (params !== undefined && params !== null) {
     url = `${url}?${new URLSearchParams(params)}`
   }
-  console.log('getAsyncData url = ', url, ' params=', params)
+  // console.log('getAsyncData url = ', url, ' params=', params)
   return fetch(url, {
     method: 'GET',
     headers: {

@@ -26,7 +26,7 @@ export const HomeSlice = createSlice({
   initialState,
   reducers: {
     setNetworkInfo: (state, action) => {
-      console.log("setNetworkInfo action=", action.payload)
+      // console.log("setNetworkInfo action=", action.payload)
       window.localStorage.setItem(ChainIdStorageName, `${action.payload.network.chainId}`)
       if(action.payload.searchKey !== undefined)
         state.searchKey = action.payload.searchKey
@@ -34,7 +34,7 @@ export const HomeSlice = createSlice({
         state.network = action.payload.network
     },
     setAddressType: (state, action) => {
-      console.log("setAddressType, action=", action)
+      // console.log("setAddressType, action=", action)
       state.addressType = action.payload.addressType
     }
   },

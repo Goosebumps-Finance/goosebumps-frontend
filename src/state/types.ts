@@ -181,7 +181,8 @@ export interface HomeState {
 
 export interface PortfolioState {
   tokens: any,
-  status: any
+  status: any,
+  reqAddress: string
 }
 
 export interface ProfileState {

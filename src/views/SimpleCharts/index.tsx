@@ -34,6 +34,7 @@ const SimpleCharts = (props) => {
     params.address = params.address || "0x293c3ee9abacb08bb8ced107987f00efd1539288"
 
     const [ chartAddress, setChartAddress ] = useState(params.address);
+    const [ loadingStep, setLoadingStep] = useState(-1);
 
     const [currentParams, setParams] = useState<ParamProps>({})
     const network = linq
@@ -45,8 +46,10 @@ const SimpleCharts = (props) => {
     // Get params from url and set it to state variable
     useEffect(() => {
         console.log("Charts Params = ", params);
+        console.log("Charts CurrentParams = ", currentParams);
         const fetchData = async() => {
             if (!compareParams(params, currentParams)) {
+                console.log("here")
                 setParams(params);
                 dispatch(setNetworkInfo({
                     searchKey: params.address,
@@ -56,15 +59,18 @@ const SimpleCharts = (props) => {
                         chainId: network.chainId
                     }
                 }))
-                if(addressType === "Token") {
-                    const _info:any = await getChartsInfo(params.address, network, params.pairAddress);
-                    setInfo(_info);
-                    console.log("getChartInfo(", params.address, ")", _info)
-                    if(_info.pairs?.length !== 0) {
-                        setChartAddress(_info.pairs[0].smartContract.address.address);
-                    }
-                }                
             }
+            if(addressType === "Token") {
+                if(loadingStep === -1)
+                    setLoadingStep(0);
+                const _info:any = await getChartsInfo(params.address, network, params.pairAddress);
+                setInfo(_info);
+                setLoadingStep(1);
+                console.log("getChartInfo(", params.address, ")", _info)
+                if(_info.pairs?.length !== 0) {
+                    setChartAddress(_info.pairs[0].smartContract.address.address);
+                }
+            }    
         }
         fetchData();
     }, [params])
@@ -87,6 +93,25 @@ const SimpleCharts = (props) => {
         }
     }, [addressType])
 
+    // Change Chart Colors
+    useEffect(() => {
+        console.log("data title=", `dexscreener.charts.${params.networkName}.${chartAddress}`)
+        const chartProperties = JSON.parse(localStorage.getItem(`dexscreener.charts.${params.networkName}.${chartAddress}`));
+        console.log("data=", chartProperties)
+        // if(chartProperties) {
+        //     chartProperties.charts[0].sessions.properties.graphics.backgrounds.outOfSession.color = "#29FF62";
+        //     localStorage.setItem(`dexscreener.charts.${params.networkName}.${chartAddress}`, JSON.stringify(chartProperties));
+        // }
+        const data = JSON.parse(window.localStorage.getItem("tradingview.chartproperties.mainSeriesProperties"));
+        // console.log("data =", data);
+        // if(data) {
+        //     data.style = 2;
+        //     data.lineStyle.color = "#29FF62";
+        //     window.localStorage.setItem("tradingview.chartproperties.mainSeriesProperties", JSON.stringify(data));
+        // }
+
+    }, [chartAddress, params]);
+
     console.log("addressType=", addressType)
     return <Page>
         <div className="container-fluid">
@@ -96,7 +121,7 @@ const SimpleCharts = (props) => {
                         <Info info={info} network={network} setPair={setChartAddress} />
                     </div>
                 </div>
-                <div className="col-lg-9 mt-4 mt-lg-0" style={{margin: "auto"}}>
+                <div className="col-lg-9 mt-4 mt-lg-0" style={{margin: "auto", display: loadingStep !== 1 ? "none" : "" }}>
                     <div style={{ width: "100%", minHeight: "80vh" }}>
                         <iframe 
                             title="Charts from Dexscreener"

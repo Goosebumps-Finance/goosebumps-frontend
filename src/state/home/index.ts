@@ -15,7 +15,7 @@ export const fetchAddressType = createAsyncThunk(
   async (args: {address: string, network:string}, thunkAPI) => {
     const res = await getAsyncData(`${API_SERVER}api/Search/IsToken`, {address: args.address, network: args.network});
     if(res) {
-      return res.contractType;
+      return res.result.contractType;
     }
     return null;
   }

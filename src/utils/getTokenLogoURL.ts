@@ -3,8 +3,8 @@ const getTokenLogoURL = (address: string) => {
   // if(defaultTokenAddrs.includes(address)) 
   //   return  `https://assets.trustwalletapp.com/blockchains/smartchain/assets/${defaultTokenAddrs[0]}/logo.png`
   // return  `https://assets.trustwalletapp.com/blockchains/smartchain/assets/${address}/logo.png`
-  // return `https://goosebumps.finance/images/tokens/56/${address}.png`
-  return `https://cryptosnowprince.com/images/tokens/56/${address}.png`
+  return `https://goosebumps.finance/images/tokens/56/${address}.png`
+  // return `https://cryptosnowprince.com/images/tokens/56/${address}.png`
 }
 
 export default getTokenLogoURL

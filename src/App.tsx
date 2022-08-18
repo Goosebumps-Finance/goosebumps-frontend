@@ -83,14 +83,16 @@ const App: React.FC = () => {
               <Home />
             </Route>
             <Route path="/farms">
-              <Farms />
+              <ComingSoon />
+              {/* <Farms /> */}
             </Route>
             <Route path="/stake">
-              <Pools />
+              {/* <Pools /> */}
+              <ComingSoon />
             </Route>
             <Route path="/bridge">
               {/* <Bridge /> */}
-              <ComingSoon/>
+              <ComingSoon />
             </Route>
             <Route exact path="/portfolio-tracker" render={() => <PortfolioTracker />} />
             {/* <Route path="/portfolio-tracker/:networkName/:addresses"> */}
@@ -106,6 +108,9 @@ const App: React.FC = () => {
             {/* <Route exact path="/charts/:networkName/:address/:pairAddress" render={() => <SimpleCharts />} /> */}
 
             {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
+            {/* <Route exact strict path="/swap">
+              <ComingSoon />
+            </Route> */}
             <Route exact strict path="/swap" component={Swap} />
             <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
             <Route exact strict path="/liquidityFindToken" component={PoolFinder} />

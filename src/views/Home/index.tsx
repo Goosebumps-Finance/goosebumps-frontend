@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Flex } from '@goosebumps/uikit'
 import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
+import { State } from 'state/types'
+import { setNetworkInfo } from 'state/home'
 import PageSection from 'components/PageSection'
 // import { useWeb3React } from '@web3-react/core'
 // import useTheme from 'hooks/useTheme'
@@ -14,6 +17,13 @@ import ChartSection from './sections/ChartSection'
 
 
 const Home: React.FC = () => {
+
+  const dispatch = useDispatch();
+  const { network } = useSelector((state: State) => state.home);
+
+  useEffect(() => {
+    dispatch(setNetworkInfo({searchKey: "", network}))
+  }, [])
 
   return (
     <>

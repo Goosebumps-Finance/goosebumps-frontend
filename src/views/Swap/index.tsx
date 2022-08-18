@@ -17,6 +17,10 @@ import { useIsTransactionUnsupported } from 'hooks/Trades'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
 import Footer from 'components/Menu/Footer'
 import { RouteComponentProps } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { State } from 'state/types'
+import { setNetworkInfo } from 'state/home'
+
 import { useTranslation } from 'contexts/Localization'
 import SwapWarningTokens from 'config/constants/swapWarningTokens'
 import AddressInputPanel from './components/AddressInputPanel'
@@ -95,6 +99,13 @@ export default function Swap({ history }: RouteComponentProps) {
   const [isChartExpanded, setIsChartExpanded] = useState(false)
   const [userChartPreference, setUserChartPreference] = useExchangeChartManager(isMobile)
   const [isChartDisplayed, setIsChartDisplayed] = useState(userChartPreference)
+
+  const dispatch = useDispatch();
+  const { network } = useSelector((state: State) => state.home)
+
+  useEffect(() => {
+    dispatch(setNetworkInfo({searchKey: "", network}));
+  }, [])
 
   useEffect(() => {
     setUserChartPreference(isChartDisplayed)

@@ -35,6 +35,10 @@ const Bridge = () => {
   const [ loadingStatus, setLoadingStatus ] = useState(-1)
 
   useEffect(() => {
+    dispatch(setNetworkInfo({searchKey: "", network}))
+  }, [])
+
+  useEffect(() => {
     let _index = 0;
     if(network.chainId === 1) _index = 0
     if(network.chainId === 56) _index = 1

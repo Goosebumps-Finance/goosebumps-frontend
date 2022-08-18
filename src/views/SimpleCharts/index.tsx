@@ -66,7 +66,7 @@ const SimpleCharts = (props) => {
                 }                
             }
         }
-        fetchData();        
+        fetchData();
     }, [params])
     // Determine the address type 
     useEffect(() => {

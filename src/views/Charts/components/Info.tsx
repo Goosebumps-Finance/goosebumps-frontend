@@ -12,13 +12,14 @@ const LoadingPanel = styled.div`
   color: white;
 `
 
-const Info = ({ info, network }) => {
+const Info = ({ info, network, setPair }) => {
   // const fastRefresh = useFastFresh()
   const [loading, setLoading] = useState(true)
   const [liveInfo, setLiveInfo] = useState<any>({})
   const [show, setShow] = useState(false)
 
   useEffect(() => {
+    if(!info) return;
     // console.log("bug= getData loading = ", loading)
     // console.log("bug= getData liveInfo = ", liveInfo)
     const getData = async () => {
@@ -74,6 +75,11 @@ const Info = ({ info, network }) => {
 
   const onPairChange = (e) => {
     // window.location = `/charts/${network.Name}/${info.address}/${e.target.value}`;
+    console.log("setPair=", setPair, e.target.value)
+    if(setPair) {
+      setPair(e.target.value)
+    }
+    // alert(e.target.value)
   }
 
   const renderLoading = () => {

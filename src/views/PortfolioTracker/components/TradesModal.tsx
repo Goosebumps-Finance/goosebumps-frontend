@@ -133,33 +133,40 @@ const TradesModal = ({ hide, token, network }) => {
                   </td>
                   <td>
                     {!isBuyOrIn(trade) ? (
-                      <div className="input-group" style={{ width: 130 }}>
-                        <NumberFormat
-                          className="form-control py-1 px-2"
-                          value={localStorage.getItem(`slippage_${trade.tx}`) || 0}
-                          decimalScale={2}
-                          onChange={(e) => {
-                            // localStorage.setItem(`slippage_${trade.tx}`, parseFloat(e.target.value.replace(/[^0-9.]/g, "")))
-                            localStorage.setItem(
-                              `slippage_${trade.tx}`,
-                              `${parseFloat(e.target.value.replace(/[^0-9.]/g, ''))}`,
-                            )
-                          }}
-                          thousandSeparator=","
-                          suffix="%"
-                        />
-                        <Button
-                          onClick={(e) => {
-                            // localStorage.setItem(`slippage_${trade.tx}`, 0)
-                            localStorage.setItem(`slippage_${trade.tx}`, `0`)
-                          }}
-                          variant="secondary"
-                          style={styles.btnStyle}
-                          // className="default-btn btn-sq px-3 py-1 align-middle"
-                        >
-                          <i className="fa fa-times" />{' '}
-                        </Button>
-                      </div>
+                      <NumberFormat
+                        value={localStorage.getItem(`slippage_${trade.tx}`) || 0}
+                        decimalScale={2}
+                        displayType="text"
+                        thousandSeparator=","
+                        suffix="%"
+                      />
+                      // <div className="input-group" style={{ width: 130 }}>
+                      //   <NumberFormat
+                      //     className="form-control py-1 px-2"
+                      //     value={localStorage.getItem(`slippage_${trade.tx}`) || 0}
+                      //     decimalScale={2}
+                      //     onChange={(e) => {
+                      //       // localStorage.setItem(`slippage_${trade.tx}`, parseFloat(e.target.value.replace(/[^0-9.]/g, "")))
+                      //       localStorage.setItem(
+                      //         `slippage_${trade.tx}`,
+                      //         `${parseFloat(e.target.value.replace(/[^0-9.]/g, ''))}`,
+                      //       )
+                      //     }}
+                      //     thousandSeparator=","
+                      //     suffix="%"
+                      //   />
+                      //   <Button
+                      //     onClick={(e) => {
+                      //       // localStorage.setItem(`slippage_${trade.tx}`, 0)
+                      //       localStorage.setItem(`slippage_${trade.tx}`, `0`)
+                      //     }}
+                      //     variant="secondary"
+                      //     style={styles.btnStyle}
+                      //     // className="default-btn btn-sq px-3 py-1 align-middle"
+                      //   >
+                      //     <i className="fa fa-times" />{' '}
+                      //   </Button>
+                      // </div>
                     ) : (
                       <>-</>
                     )}

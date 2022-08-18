@@ -60,7 +60,8 @@ export interface TokenItemProps {
 
 const initialState = {
   tokens: [],
-  status: 0
+  status: 0,
+  reqAddress: ''
 }
 
 export const fetchTokenData = createAsyncThunk(
@@ -91,6 +92,7 @@ export const portfolioSlice = createSlice({
     builder.addCase(fetchTokenData.fulfilled, (state, action) => {
       state.tokens = action.payload.tokens
       state.status = action.payload.status
+      state.reqAddress = action.payload.address
     })
   },
 })

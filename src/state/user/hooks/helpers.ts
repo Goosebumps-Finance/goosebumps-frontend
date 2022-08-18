@@ -1,4 +1,4 @@
-import { Token } from '@goosebumps/sdk'
+import { ChainId, Token } from '@goosebumps/sdk'
 import { SerializedToken } from 'config/constants/types'
 import { parseUnits } from 'ethers/lib/utils'
 
@@ -24,16 +24,27 @@ export function deserializeToken(serializedToken: SerializedToken): Token {
   )
 }
 
-export enum GAS_PRICE {
-  default = '5',
-  fast = '6',
-  instant = '7',
-  testnet = '10',
+export const GAS_PRICE = {
+  137: {
+    default : '5',
+    fast : '6',
+    instant : '7',
+    testnet : '10'
+  },
+  56: {
+    default: "3",
+    fast: "5",
+    instant: "8",
+    testnet: "13",
+
+  }
 }
 
 export const GAS_PRICE_GWEI = {
-  default: parseUnits(GAS_PRICE.default, 'gwei').toString(),
-  fast: parseUnits(GAS_PRICE.fast, 'gwei').toString(),
-  instant: parseUnits(GAS_PRICE.instant, 'gwei').toString(),
-  testnet: parseUnits(GAS_PRICE.testnet, 'gwei').toString(),
+  56: {
+    default: parseUnits(GAS_PRICE[ChainId.MAINNET].default, 'gwei').toString(),
+    fast: parseUnits(GAS_PRICE[ChainId.MAINNET].fast, 'gwei').toString(),
+    instant: parseUnits(GAS_PRICE[ChainId.MAINNET].instant, 'gwei').toString(),
+    testnet: parseUnits(GAS_PRICE[ChainId.MAINNET].testnet, 'gwei').toString(),
+  }
 }

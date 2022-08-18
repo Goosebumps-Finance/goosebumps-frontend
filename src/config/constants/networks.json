@@ -2,6 +2,7 @@
     {
       "Display": "Ethereum",
       "Name": "ethereum",
+      "NickName": "ethereum",
       "chainId": 1,
       "chainHexId": "0x1",
       "RPC": "https://mainnet.infura.io/v3/687f55defdfe416faa0b388c1332727c",
@@ -40,6 +41,7 @@
     {
       "Display": "Ropsten",
       "Name": "ropsten",
+      "NickName": "ropsten",
       "chainId": 3,
       "chainHexId": "0x3",
       "RPC": "https://ropsten.infura.io/v3/687f55defdfe416faa0b388c1332727c",
@@ -70,6 +72,7 @@
     {
       "Display": "BSC",
       "Name": "bsc",
+      "NickName": "bsc",
       "chainId": 56,
       "chainHexId": "0x38",
       "RPC": "https://cryptosnowprince.com:2083/rpc",
@@ -110,6 +113,7 @@
     {
       "Display": "BSC Testnet",
       "Name": "bsc_testnet",
+      "NickName": "bsc_testnet",
       "chainId": 97,
       "chainHexId": "0x61",
       "RPC": "https://cryptosnowprince.com:2083/trpc",
@@ -140,6 +144,7 @@
     {
       "Display": "Polygon",
       "Name": "matic",
+      "NickName": "polygon",
       "chainId": 137,
       "chainHexId": "0x89",
       "RPC": "https://speedy-nodes-nyc.moralis.io/03eb35954a0b7ed092444a8e/polygon/mainnet",

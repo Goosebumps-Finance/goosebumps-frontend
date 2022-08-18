@@ -11,7 +11,7 @@ import PhishingWarningBanner from 'components/PhishingWarningBanner'
 import CustomSelect, { OptionProps } from 'components/CustomSelect/CustomSelect'
 import useTheme from 'hooks/useTheme'
 import { usePriceEmpireBusd } from 'state/farms/hooks'
-import { setNetworkInfo } from 'state/home'
+import { setAddressType, setNetworkInfo } from 'state/home'
 import { State } from 'state/types'
 import { usePhishingBannerManager } from 'state/user/hooks'
 import { API_SERVER } from 'config'
@@ -79,19 +79,30 @@ const Menu = (props) => {
   const activeMenuItem = getActiveMenuItem({ menuConfig: config(t), pathname })
   const activeSubMenuItem = getActiveSubMenuItem({ menuItem: activeMenuItem, pathname })
 
-  const onSearchKeyChange = (e) => {
-    dispatch(setNetworkInfo({ searchKey: e.target.value, network }))
-    if (ethers.utils.isAddress(e.target.value) || !e.target.value) {
-      handleSearch(e.target.value)
+  const onSearchKeyChange = (newKey) => {
+    dispatch(setNetworkInfo({ searchKey: newKey, network }))
+    if (ethers.utils.isAddress(newKey) || !newKey) {
+      handleSearch(newKey)
     }
   }
 
   const handleSearch = async (address: string) => {
-    console.log('handleSearch network = ', network)
+    // console.log('handleSearch network = ', network)
     if (network === null || address === '' || !ethers.utils.isAddress(address)) return
-    const isToken = await getAsyncData(`${API_SERVER}api/Search/IsToken`, { address, network: network.value })
-    console.log('After getAsyncData isToken = ', isToken)
-    if (isToken) {
+    const res = await getAsyncData(`${API_SERVER}api/Search/IsToken`, { address, network: network.value })
+    // console.log('After getAsyncData isToken = ', res)
+    /*
+      smartcontract: "Token"  - Token address
+      smartcontract: "DEX"  - Pair address
+    */
+      console.log("isTOken res = ", res);
+      if(res.status !== 200) {
+      console.log("res = ", res)
+      alert(res.error);
+      return;
+    }
+    dispatch(setAddressType({addressType: res.result ? res.result.contractType : null}));
+    if (res.result) {
       history.push(`/charts/${network?.value}/${address}`)
     } else if (address) {
       history.push(`/portfolio-tracker/${network?.value}/${address}`)
@@ -121,7 +132,7 @@ const Menu = (props) => {
     if(network.chainId === 97) _index = 3
     setNetworkIndex(_index)
     if(searchKey) {
-      console.log("searchKey=", searchKey)
+      // console.log("searchKey=", searchKey)
       handleSearch(searchKey)
     }
   }, [network, searchKey])

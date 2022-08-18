@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import linq from 'linq'
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
+import { AppState } from 'state'
 
 import Page from 'views/Page'
 import networks from 'config/constants/networks.json'
@@ -44,6 +46,8 @@ const Charts = (props) => {
   const params: ParamProps = useParams()
   params.networkName = params.networkName || 'bsc'
   params.address = params.address || '0x293c3ee9abacb08bb8ced107987f00efd1539288'
+  const { addressType } = useSelector((state:AppState) => state.home)
+  console.log("charts addressType=",addressType);
 
   const [currentParams, setParams] = useState<ParamProps>({})
   const network = linq
@@ -88,7 +92,7 @@ const Charts = (props) => {
           <div className="row">
             <div className="col-lg-3">
               <div className="overflow-hidden">
-                <Info info={info} network={network} />
+                <Info info={info} network={network} setPair={null} />
               </div>
             </div>
             <div className="col-lg-9 mt-4 mt-lg-0">

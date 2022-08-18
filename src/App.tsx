@@ -40,9 +40,10 @@ const Home = lazy(() => import('./views/Home'))
 const NotFound = lazy(() => import('./views/NotFound'))
 const AddLiquidity = lazy(() => import('./views/AddLiquidity'))
 const RemoveLiquidity = lazy(() => import('./views/RemoveLiquidity'))
-const Bridge = lazy(() => import('./views/Bridge'))
+// const Bridge = lazy(() => import('./views/Bridge'))
 const PortfolioTracker = lazy(() => import('./views/PortfolioTracker'))
-const Charts = lazy(() => import('./views/Charts'))
+// const Charts = lazy(() => import('./views/Charts'))
+const SimpleCharts = lazy(() => import('./views/SimpleCharts'))
 const Liquidity = lazy(() => import('./views/Pool'))
 const PoolFinder = lazy(() => import('./views/PoolFinder'))
 
@@ -98,15 +99,19 @@ const App: React.FC = () => {
             <Route exact path="/portfolio-tracker/:networkName/:address" render={() => <PortfolioTracker />} />
             {/* <PortfolioTracker />
             </Route> */}
-            <Route exact path="/charts" render={() => <Charts />} />
+            {/* <Route exact path="/charts" render={() => <Charts />} />
             <Route exact path="/charts/:networkName/:address" render={() => <Charts />} />
-            <Route exact path="/charts/:networkName/:address/:pairAddress" render={() => <Charts />} />
+            <Route exact path="/charts/:networkName/:address/:pairAddress" render={() => <Charts />} /> */}
+
+            <Route exact path="/charts" render={() => <SimpleCharts />} />
+            <Route exact path="/charts/:networkName/:address" render={() => <SimpleCharts />} />
+            {/* <Route exact path="/charts/:networkName/:address/:pairAddress" render={() => <SimpleCharts />} /> */}
 
             {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
-            <Route exact strict path="/swap">
+            {/* <Route exact strict path="/swap">
               <ComingSoon />
-            </Route>
-            {/* <Route exact strict path="/swap" component={Swap} />
+            </Route> */}
+            <Route exact strict path="/swap" component={Swap} />
             <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
             <Route exact strict path="/liquidityFindToken" component={PoolFinder} />
             <Route exact strict path="/liquidity" component={Liquidity} />
@@ -120,15 +125,15 @@ const App: React.FC = () => {
             <Route exact path="/create/:currencyIdA" component={RedirectOldAddLiquidityPathStructure} />
             <Route exact path="/create/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
             <Route exact strict path="/liquidityRemove/:tokens" component={RedirectOldRemoveLiquidityPathStructure} />
-            <Route exact strict path="/liquidityRemove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} /> */}
+            <Route exact strict path="/liquidityRemove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
 
             {/* Redirect */}
-            {/* <Route path="/pool">
+            <Route path="/pool">
               <Redirect to="/liquidity" />
             </Route>
             <Route path="/pools">
               <Redirect to="/stake" />
-            </Route> */}
+            </Route>
             {/* 404 */}
             <Route component={NotFound} />
           </Switch>

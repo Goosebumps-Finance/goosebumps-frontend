@@ -2191,10 +2191,10 @@
     tiny-warning "^1.0.3"
     toformat "^2.0.0"
 
-"@goosebumps/uikit@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@goosebumps/uikit/-/uikit-0.0.6.tgz#e1950c8bf2e6ae46d993dac643b46b7f8d380f1d"
-  integrity sha512-o6X1Ncm8AXGamRJVQKyNmjlVyptnXRpi4pfIuOwCibzWgc7ViuIDsPW4H88nPgbgNmeAGgVVuGkxwT3+s1ffcg==
+"@goosebumps/uikit@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@goosebumps/uikit/-/uikit-0.0.7.tgz#8a7fe751f7f9957c34f77d2f3b6af41841c60495"
+  integrity sha512-1rj7dUVcXnfua8sN8+2LIR5ZVMLGlJtTPayCholE6yBf11WWjYPO1cAet4uNdi6+/hRUoXAogcvJljxaol4rhQ==
   dependencies:
     "@popperjs/core" "^2.9.2"
     "@types/lodash" "^4.14.168"
@@ -5154,9 +5154,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001125, caniuse-lite@^1.0.30001219:
-  version "1.0.30001243"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001243.tgz#d9250155c91e872186671c523f3ae50cfc94a3aa"
-  integrity sha512-vNxw9mkTBtkmLFnJRv/2rhs1yufpDfCkBZexG3Y0xdOH2Z/eE/85E4Dl5j1YUN34nZVsSp6vVRFQRrez9wJMRA==
+  version "1.0.30001378"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001378.tgz"
+  integrity sha512-JVQnfoO7FK7WvU4ZkBRbPjaot4+YqxogSDosHv0Hv5mWpUESmN+UubMU6L/hGz8QlQ2aY5U0vR6MOs6j/CXpNA==
 
 canvas-confetti@^1.3.3:
   version "1.4.0"

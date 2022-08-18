@@ -157,3 +157,7 @@ export const getTokenInfo = async (pair, network) => {
 const formatUnits = (value, decimals) => {
   return parseFloat(ethers.utils.formatUnits(value, decimals))
 }
+
+export const getTokenAddress = async (pair) => {
+  return "0x0"
+}

@@ -98,10 +98,11 @@ const Menu = (props) => {
       console.log("isTOken res = ", res);
       if(res.status !== 200) {
       console.log("res = ", res)
+      alert(res.error);
       return;
     }
     dispatch(setAddressType({addressType: res.result ? res.result.contractType : null}));
-    if (res) {
+    if (res.result) {
       history.push(`/charts/${network?.value}/${address}`)
     } else if (address) {
       history.push(`/portfolio-tracker/${network?.value}/${address}`)

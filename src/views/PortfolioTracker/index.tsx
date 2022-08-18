@@ -121,7 +121,7 @@ const PortfolioTracker = () => {
   // When searchKey changed, set params variable
   useEffect(() => {
     if(currentParams.address !== searchKey && searchKey) {
-      setLoadingStep(0);
+      setLoadingStep(1);
       setTokenInfos([]);
       setParams({address: searchKey, networkName: currentParams.networkName});
       // setParams({address: params.address, networkName: currentParams.networkName});

@@ -91,10 +91,10 @@ const Menu = (props) => {
   }
 
   const handleSearch = async (address: string) => {
-    console.log('handleSearch address = ', address)
+    // console.log('handleSearch address = ', address)
 
     if (timer) {
-      console.log("handleSearch clear time:", timer);
+      // console.log("handleSearch clear time:", timer);
       clearTimeout(timer);
     }
 

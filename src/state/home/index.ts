@@ -7,8 +7,11 @@ import { getAsyncData } from 'utils/requester'
 const initialState: HomeState = {
     network: { label: 'BSC', value: 'bsc', chainId: 56},
     searchKey: '',
-    addressType: null
+    addressType: null,
+    timer: null
 }
+
+// let timer = null;
 
 export const fetchAddressType = createAsyncThunk(
   'home/fetchAddressType',
@@ -21,15 +24,47 @@ export const fetchAddressType = createAsyncThunk(
   }
 )
 
+// export const setNetworkInfo = createAsyncThunk(
+//   'home/setNetworkInfo',
+//   async (args: {searchKey: string, network:any} , thunkAPI) => {
+//     clearTimeout(timer);
+//     timer = setTimeout(() => {
+//       return {
+//         searchKey,
+//         network
+//       }
+//     }, 1000);
+//   }
+// )
+
 export const HomeSlice = createSlice({
   name: 'home',
   initialState,
   reducers: {
+    setTimer: (state, action) => {
+      console.log("setNetworkInfo state.timer =", state.timer)
+      if(state.timer) {
+        console.log("setNetworkInfo clearTimeout=", state.timer)
+        clearTimeout(state.timer);
+      }
+      state.timer = action.payload.timer
+    },
     setNetworkInfo: (state, action) => {
       // console.log("setNetworkInfo action=", action.payload)
       window.localStorage.setItem(ChainIdStorageName, `${action.payload.network.chainId}`)
-      if(action.payload.searchKey !== undefined)
+      console.log("setNetworkInfo payload =", action.payload);
+      if(action.payload.searchKey !== undefined) {
         state.searchKey = action.payload.searchKey
+        // const setSearchKey = (state1, action1) => {
+        //   console.log("setNetworkInfo state1=", state1, "action1=", action1)
+        //   // state1.searchKey = action1.payload.searchKey;
+        //   return {
+        //     searchKey: action1.payload.searchKey
+        //   }
+        // }
+        // clearTimeout(timer);
+        // timer = setTimeout(() => setSearchKey(state, action), 1000)
+      }
       if(action.payload.network)
         state.network = action.payload.network
     },
@@ -45,6 +80,6 @@ export const HomeSlice = createSlice({
   }
 })
 
-export const { setNetworkInfo, setAddressType } = HomeSlice.actions
+export const { setNetworkInfo, setAddressType, setTimer } = HomeSlice.actions
 
 export default HomeSlice.reducer

@@ -3,7 +3,7 @@ import { Flex } from '@goosebumps/uikit'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { State } from 'state/types'
-import { setNetworkInfo } from 'state/home'
+import { setNetworkInfo, setTimer } from 'state/home'
 import PageSection from 'components/PageSection'
 // import { useWeb3React } from '@web3-react/core'
 // import useTheme from 'hooks/useTheme'
@@ -22,7 +22,12 @@ const Home: React.FC = () => {
   const { network } = useSelector((state: State) => state.home);
 
   useEffect(() => {
-    dispatch(setNetworkInfo({searchKey: "", network}))
+    dispatch(setNetworkInfo({ searchKey: "", network }))
+    // dispatch(setTimer(
+    //   setTimeout(() => {
+    //       dispatch(setNetworkInfo({ searchKey: "", network }))
+    //   }, 1000) 
+    // ))
   }, [])
 
   return (

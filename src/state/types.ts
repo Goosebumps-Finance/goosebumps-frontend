@@ -177,6 +177,7 @@ export interface HomeState {
   }
   searchKey: string
   addressType: string | null
+  timer: any
 }
 
 export interface PortfolioState {

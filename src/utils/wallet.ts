@@ -2,6 +2,7 @@
 
 import { BASE_BSC_SCAN_URL, BASE_URL } from 'config'
 import { nodes } from './getRpcUrl'
+import { getChainId } from 'utils'
 
 /**
  * Prompt the user to add BSC as a network on Metamask, or switch to BSC if the wallet is on a different network
@@ -50,8 +51,8 @@ export const setupNetwork = async (network) => {
         }]
       })
       return true
-    } catch (error:any) {
-      if(error.code === 4902) {  
+    } catch (error: any) {
+      if (error.code === 4902) {
         await provider.request({
           method: 'wallet_addEthereumChain',
           params: [
@@ -63,7 +64,7 @@ export const setupNetwork = async (network) => {
                 symbol: network.Currency.Name,
                 decimals: network.Currency.Decimals,
               },
-              rpcUrls: [ network.RPC ],
+              rpcUrls: [network.RPC],
               blockExplorerUrls: [`${network.Explorer}/`],
             },
           ],
@@ -87,6 +88,7 @@ export const setupNetwork = async (network) => {
  * @returns {boolean} true if the token has been added, false otherwise
  */
 export const registerToken = async (tokenAddress: string, tokenSymbol: string, tokenDecimals: number) => {
+  const logoURI = tokenSymbol === "Goosebumps-LP" ? `${BASE_URL}/images/tokens/goosebumpsLP.png` : `${BASE_URL}/images/tokens/${getChainId()}/${tokenAddress}.png`
   const tokenAdded = await window.ethereum.request({
     method: 'wallet_watchAsset',
     params: {
@@ -95,7 +97,7 @@ export const registerToken = async (tokenAddress: string, tokenSymbol: string, t
         address: tokenAddress,
         symbol: tokenSymbol,
         decimals: tokenDecimals,
-        image: `${BASE_URL}/images/tokens/56/${tokenAddress}.png`,
+        image: logoURI,
       },
     },
   })

@@ -4,12 +4,14 @@ import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import { Image, Heading, RowType, Toggle, Text, Button, ArrowForwardIcon, Flex } from '@goosebumps/uikit'
 import { ChainId } from '@goosebumps/sdk'
+import { useDispatch, useSelector } from 'react-redux'
+import { setNetworkInfo } from 'state/home'
 import styled from 'styled-components'
 import FlexLayout from 'components/Layout/Flex'
 import Page from 'components/Layout/Page'
 import { useFarms, usePollFarmsWithUserData, usePriceEmpireBusd } from 'state/farms/hooks'
 import useIntersectionObserver from 'hooks/useIntersectionObserver'
-import { DeserializedFarm } from 'state/types'
+import { DeserializedFarm, State } from 'state/types'
 import { useTranslation } from 'contexts/Localization'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getAddress } from 'utils/addressHelpers'
@@ -126,6 +128,15 @@ const Farms: React.FC = () => {
   const [sortOption, setSortOption] = useState('hot')
   const { observerRef, isIntersecting } = useIntersectionObserver()
   const chosenFarmsLength = useRef(0)
+
+  const dispatch = useDispatch();
+  const { network } = useSelector((state: State) => state.home)
+
+  useEffect(() => {
+    dispatch(setNetworkInfo({
+      searchKey: "", network
+    }))
+  }, [])
 
   // const isArchived = pathname.includes('archived')
   // const isInactive = pathname.includes('history')

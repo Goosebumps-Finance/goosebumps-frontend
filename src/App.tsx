@@ -68,7 +68,8 @@ const App: React.FC = () => {
   useSentryUser()
 
   useEffect(() => {
-    window.localStorage.removeItem(ChainIdStorageName)
+    // window.localStorage.removeItem(ChainIdStorageName)
+    window.localStorage.setItem(ChainIdStorageName, "56")
   }, [])
 
   return (

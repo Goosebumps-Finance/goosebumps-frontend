@@ -9,7 +9,7 @@ export const getChartsInfo = async (address, network, pairAddress) => {
   //     { address: address, network: network.Name }
   // );
   // const pairs = mockPairsData;
-  console.log('getChartsInfo address=', address, ' network =', network, ' pairAddress=', pairAddress)
+  // console.log('getChartsInfo address=', address, ' network =', network, ' pairAddress=', pairAddress)
   if (address === '' || network === null) return []
   const pairs = await getAsyncData(`${API_SERVER}api/Charts/GetPairs`, { address, network: network.Name })
   // console.log("getChartsInfo pairs=", pairs)
@@ -41,7 +41,7 @@ export const getChartsInfo = async (address, network, pairAddress) => {
     network: network.Name,
   })
   // console.log("getChartsInfo info=", info)
-  console.log('getChartsInfo cmc=', cmc)
+  // console.log('getChartsInfo cmc=', cmc)
 
   if (cmc != null && cmc.id) {
     info.cmc = cmc

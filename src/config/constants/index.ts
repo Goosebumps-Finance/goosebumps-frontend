@@ -14,7 +14,7 @@ export const BSC_TESTNET_CHAIN_ID = 97
 // export const ROUTER_ADDRESS = '0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3'
 export const ROUTER_ADDRESS : Address = {
   56: "0x10ED43C718714eb63d5aA57B78B54704E256024E",
-  97: "0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3"
+  97: "0x1d2B777F33dd73800e4e7aEB494F7410EeB84856"
 }
 
 // a list of tokens by chain
@@ -57,8 +57,8 @@ export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: To
 
 // used for display in the default list when adding liquidity
 export const SUGGESTED_BASES: ChainTokenList = {
-  [ChainId.MAINNET]: [mainnetTokens.busd, mainnetTokens.cake, mainnetTokens.btcb],
-  [ChainId.TESTNET]: [testnetTokens.wbnb, testnetTokens.cake, testnetTokens.busd],
+  [ChainId.MAINNET]: [mainnetTokens.busd, mainnetTokens.empire, mainnetTokens.btcb],
+  [ChainId.TESTNET]: [testnetTokens.wbnb, testnetTokens.empire, testnetTokens.busd],
   // [ChainId.ETH_MAIN]: [ethTokens.weth],
   // [ChainId.POLYGON_MAIN]: [polygonTokens.wmatic]
 }

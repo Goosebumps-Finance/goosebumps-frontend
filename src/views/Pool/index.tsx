@@ -1,10 +1,13 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import styled from 'styled-components'
 import { Pair } from '@goosebumps/sdk'
 import { Text, Flex, CardBody, CardFooter, Button, AddIcon } from '@goosebumps/uikit'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'contexts/Localization'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { useDispatch, useSelector } from 'react-redux'
+import { State } from 'state/types'
+import { setNetworkInfo } from 'state/home'
 
 import FullPositionCard from '../../components/PositionCard'
 import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
@@ -23,6 +26,13 @@ const Body = styled(CardBody)`
 export default function Pool() {
   const { account } = useActiveWeb3React()
   const { t } = useTranslation()
+
+  const dispatch = useDispatch();
+  const { network } = useSelector((state:State) => state.home);
+
+  useEffect(() => {
+    dispatch(setNetworkInfo({searchKey: "", network}))
+  }, [])
 
   // fetch the user's balances of all tracked V2 LP tokens
   const trackedTokenPairs = useTrackedTokenPairs()

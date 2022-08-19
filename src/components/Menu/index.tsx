@@ -31,18 +31,18 @@ const SearchItem = ({onChangeNetwork, selIndex}) => {
   return <>
     <CustomSelect
       options={[
-        {
-          label: t("Ethereum"),
-          value: "ethereum"
-        },
+        // {
+        //   label: t("Ethereum"),
+        //   value: "ethereum"
+        // },
         {
           label: t("BSC"),
           value: "bsc"
         },
-        {
-          label: t("Polygon"),
-          value: "matic"
-        },
+        // {
+        //   label: t("Polygon"),
+        //   value: "matic"
+        // },
         {
           label: t("BSC Testnet"),
           value: "bsc_testnet"
@@ -56,7 +56,7 @@ const SearchItem = ({onChangeNetwork, selIndex}) => {
         border: "1px solid #52555c",
         borderTop: "none"
       }}
-      defaultOptionIndex={3}
+      defaultOptionIndex={0}
       onOptionChange={onChangeNetwork}
       selIndex={selIndex}
     />
@@ -79,36 +79,54 @@ const Menu = (props) => {
   const activeMenuItem = getActiveMenuItem({ menuConfig: config(t), pathname })
   const activeSubMenuItem = getActiveSubMenuItem({ menuItem: activeMenuItem, pathname })
 
+  const [timer, setTimer] = useState<any>();
+
+
   const onSearchKeyChange = (newKey) => {
-    dispatch(setNetworkInfo({ searchKey: newKey, network }))
+    
+    dispatch(setNetworkInfo({ searchKey: newKey, network }));
     if (ethers.utils.isAddress(newKey) || !newKey) {
       handleSearch(newKey)
     }
   }
 
   const handleSearch = async (address: string) => {
-    // console.log('handleSearch network = ', network)
-    if (network === null || address === '' || !ethers.utils.isAddress(address)) return
-    const res = await getAsyncData(`${API_SERVER}api/Search/IsToken`, { address, network: network.value })
-    // console.log('After getAsyncData isToken = ', res)
-    /*
-      smartcontract: "Token"  - Token address
-      smartcontract: "DEX"  - Pair address
-    */
-      console.log("isTOken res = ", res);
-      if(res.status !== 200) {
-      console.log("res = ", res)
-      alert(res.error);
-      return;
+    // console.log('handleSearch address = ', address)
+
+    if (timer) {
+      // console.log("handleSearch clear time:", timer);
+      clearTimeout(timer);
     }
-    dispatch(setAddressType({addressType: res.result ? res.result.contractType : null}));
-    if (res.result) {
-      history.push(`/charts/${network?.value}/${address}`)
-    } else if (address) {
-      history.push(`/portfolio-tracker/${network?.value}/${address}`)
-    } else {
-      history.push(`/portfolio-tracker`)
-    }
+
+    setTimer(
+      setTimeout(async () => {
+        if (network === null || address === '' || !ethers.utils.isAddress(address)) {
+          dispatch(setAddressType({addressType: null}));
+          return;
+        }
+        const res = await getAsyncData(`${API_SERVER}api/Search/IsToken`, { address, network: network.value })
+        // console.log('After getAsyncData isToken = ', res)
+        /*
+          smartcontract: "Token"  - Token address
+          smartcontract: "DEX"  - Pair address
+        */
+          // console.log("isToken res = ", res);
+          if(res.status !== 200) {
+          console.log("res = ", res)
+          // alert(res.error);
+          return;
+        }
+        
+        dispatch(setAddressType({addressType: res.result ? res.result.contractType : null}));
+        if (res.result) {
+          history.push(`/charts/${network?.value}/${address}`)
+        } else if (address) {
+          history.push(`/portfolio-tracker/${network?.value}/${address}`)
+        } else {
+          history.push(`/portfolio-tracker`)
+        }
+      }, 1000)
+    );
   }
 
   const onChangeNetwork = async (newNetwork) => {
@@ -126,15 +144,15 @@ const Menu = (props) => {
 
   useEffect(() => {
     let _index = 0;
-    if(network.chainId === 1) _index = 0
-    if(network.chainId === 56) _index = 1
-    if(network.chainId === 137) _index = 2
-    if(network.chainId === 97) _index = 3
+    // if(network.chainId === 1) _index = 0
+    if(network.chainId === 56) _index = 0
+    // if(network.chainId === 137) _index = 2
+    if(network.chainId === 97) _index = 1
     setNetworkIndex(_index)
-    if(searchKey) {
+    // if(searchKey) {
       // console.log("searchKey=", searchKey)
       handleSearch(searchKey)
-    }
+    // }
   }, [network, searchKey])
 
   return (

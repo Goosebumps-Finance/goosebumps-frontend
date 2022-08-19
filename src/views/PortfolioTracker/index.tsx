@@ -9,11 +9,13 @@ import { Button } from '@goosebumps/uikit'
 import Page from 'views/Page'
 import { useAppDispatch } from 'state'
 import { State } from 'state/types'
-import { fetchTokenData, TokenItemProps } from 'state/portfolio'
-import { setNetworkInfo } from 'state/home'
+import { /* fetchTokenData, */ TokenItemProps } from 'state/portfolio'
+import { setNetworkInfo, setTimer } from 'state/home'
 import { useFastFresh, useSlowFresh } from 'hooks/useRefresh'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { isSupportedChain } from 'utils'
+import { postAsyncData } from 'utils/requester'
+import { API_SERVER } from 'config'
 import { getTokenInfos } from 'utils/getTokenInfos'
 import { calculatePricescale, calculateTokenscale } from 'utils/numberHelpers'
 import networks from 'config/constants/networks.json'
@@ -51,7 +53,12 @@ const PortfolioTracker = () => {
   const { pathname } = useLocation()
   const { account: connectedAddress} = useActiveWeb3React();
   const { network, searchKey } = useSelector((state: State) => state.home)
-  const { tokens, status, reqAddress } = useSelector((state: State) => state.portfolio)
+  // const { tokens, status, reqAddress } = useSelector((state: State) => state.portfolio)
+
+  // const [tokens, setTokens] = useState<any>([]);
+  const [status, setStatus] = useState<any>(0);
+  const [reqAddress, setReqAddress] = useState<string>('');
+
   // const [ searchAddress, setSearchAddress ] = useState(searchKey)
   const [loadingStep, setLoadingStep] = useState(0) // 0:hint, 1: loading, -1: error, 2: success
   const [isStartLoading, setIsStartLoading] = useState(false);
@@ -61,7 +68,7 @@ const PortfolioTracker = () => {
   const params: PortfolioParamProps = useParams()
   params.networkName = params.networkName || "bsc";
   params.address = params.address || connectedAddress;
-  const [currentParams, setParams] = useState<PortfolioParamProps>(params);
+  // const [currentParams, setParams] = useState<PortfolioParamProps>(params);
 
   const detailedNetwork = params.networkName
     ? linq
@@ -77,197 +84,395 @@ const PortfolioTracker = () => {
     tokenInfos : component.state
   */
 
+  const fetchTokenData = async (_network, _address) => {
+    const res = await postAsyncData(`${API_SERVER}api/Portfolio/GetTrades`, { network: _network }, [
+      _address,
+    ])
+    console.log("fetchTokenData res=", res);
+    if(res) {
+      setStatus(res.status);
+      if(res.status === 200 && res.address === params.address) {
+        await getLiveInfo(res.tokens);
+        setLoadingStep(2);
+        setReqAddress(res.address);
+      }  else if(res.status !== 0) {
+        setLoadingStep(-1);
+      }
+    }
+    setIsStartLoading(false);
+      //   if(status === 200 && reqAddress === params.address) {
+  //     setIsStartLoading(false);
+  //     getLiveInfo()
+  //     setLoadingStep(2);
+  //   } else if(status !== 0) {
+  //     setIsStartLoading(false);
+  //     setLoadingStep(-1);
+  //   }
+  }
+
+  const getLiveInfo = async (tokens) => {
+    const infos = await getTokenInfos(
+      linq
+        .from(tokens)
+        .select((x: any) => x.pair)
+        .toArray(),
+      detailedNetwork,
+      [params.address],
+    )
+
+    const query = linq.from(infos.infos)
+    const newTokenInfos: any = tokens.map((item: TokenItemProps) => {
+      const newItem: any = { ...item }
+      newItem.info = query.where((x) => x.token === newItem.pair.buyCurrency.address).singleOrDefault() || {}
+      newItem.info.rewards = newItem.outs + newItem.info.balance - newItem.ins
+      if (newItem.info.rewards < 0.00000001) {
+        newItem.info.rewards = 0
+      }
+      // not determined
+      newItem.info.rewardsSold = 0;
+
+      newItem.trades = newItem.trades.map((trade) => {
+        const newTrade: any = { ...trade }
+        const customTradePrice = parseFloat(localStorage.getItem(`price_${newTrade.tx}`))
+        if (customTradePrice) {
+          newTrade.priceUSD = customTradePrice
+        }
+
+        newTrade.buyPrices.map((buyPrice) => {
+          const customBuyPrice = localStorage.getItem(`price_${buyPrice.tx}`)
+          if (customBuyPrice) {
+            buyPrice.priceUSD = customBuyPrice
+          }
+          return buyPrice
+        })
+
+        // console.log("trade.buyPrices: ", newTrade.buyPrices)
+        try {
+          newTrade.avarageBuyPriceOfHoldings = newTrade.buyPrices.length
+            ? linq
+                .from(newTrade.buyPrices)
+                .select((x: any) => x.priceUSD * x.amount)
+                .toArray()
+                .reduce((a, b) => a + b) /
+              linq
+                .from(newTrade.buyPrices)
+                .select((x: any) => x.amount)
+                .toArray()
+                .reduce((a, b) => a + b)
+            : 0
+        } catch (error) {
+          console.log(error)
+          newTrade.avarageBuyPriceOfHoldings = 0
+        }
+
+        const slippageTradeTx: any = localStorage.getItem(`slippage_${newTrade.tx}`)
+        newTrade.profit =
+          newTrade.transactionType === 2 || newTrade.transactionType === 4
+            ? ((100 - slippageTradeTx) / 100 || 0) * (newTrade.priceUSD * newTrade.tokenAmount) -
+              newTrade.avarageBuyPriceOfHoldings * newTrade.tokenAmount
+            : 0
+        return newTrade
+      })
+      // console.log(newItem);
+
+      const buysAndIns = linq
+        .from(newItem.trades)
+        .where((x: any) => x.transactionType === 1 || x.transactionType === 3)
+
+      // console.log("buysAndIns: ", buysAndIns)
+      try {
+        newItem.avarageBuyPriceOfHoldings =
+          newItem.info.balance > 0
+            ? buysAndIns
+                .select((x: any) => x.priceUSD * x.holdingAmount)
+                .toArray()
+                .reduce((a, b) => a + b) /
+              buysAndIns
+                .select((x: any) => x.holdingAmount)
+                .toArray()
+                .reduce((a, b) => a + b)
+            : 0
+        if(Number.isNaN(newItem.avarageBuyPriceOfHoldings))
+          newItem.avarageBuyPriceOfHoldings = 0;
+      } catch (error) {
+        console.log(error)
+        newItem.avarageBuyPriceOfHoldings = 0
+      }
+      // console.log("item.trades: ", newItem.trades)
+      try {
+        newItem.info.profit = {
+          holdings:
+            newItem.info.isETH && newItem.info.balance > 0
+              ? newItem.info.balance * newItem.info.price * infos.ethPrice -
+                newItem.avarageBuyPriceOfHoldings * newItem.info.balance
+              : 0,
+          sold: linq
+            .from(newItem.trades)
+            .select((x: any) => x.profit)
+            .toArray()
+            .reduce((x, y) => x + y),
+        }
+      } catch (error) {
+        console.log(error)
+        newItem.info.profit = {
+          holdings:
+            newItem.info.isETH && newItem.info.balance > 0
+              ? newItem.info.balance * newItem.info.price * infos.ethPrice -
+                newItem.avarageBuyPriceOfHoldings * newItem.info.balance
+              : 0,
+          sold: 0,
+        }
+      }
+
+      newItem.info.pricescale = calculatePricescale(
+        newItem.info.isETH ? newItem.info.price * infos.ethPrice : newItem.info.price,
+      )
+      newItem.info.ethscale = calculatePricescale(newItem.info.price)
+      newItem.info.tokenscale = calculateTokenscale(
+        newItem.info.isETH ? newItem.info.price * infos.ethPrice : newItem.info.price,
+      )
+      return newItem
+    })
+
+    setCurEthPrice(infos.ethPrice)
+    setTokenInfos(newTokenInfos)
+    // console.log("newTokenInfos = ", newTokenInfos)
+  }  
+
   // At the beginning
   useEffect(() => {
-    setParams(params);
-  }, [])
-
-  // Get params from url and set it to state variable
-  useEffect(() => {
-    // console.log("Params = ", params)
-    // console.log("CurrentParams = ", currentParams)
-    // console.log("searchKey=", searchKey, "!=", !searchKey);
-    if(currentParams.address === undefined) {
-      setLoadingStep(0);
-    } else {
-      if(searchKey || searchKey !== currentParams.address) {
-        dispatch(setNetworkInfo({
-          searchKey: currentParams.address,
-          network: {
+    console.log("useEffect 1 searchKey = ", searchKey)
+    // setParams(params);
+    if(searchKey !== params.address) {
+      dispatch(setNetworkInfo({
+        searchKey: params.address,
+        network: {
             label: detailedNetwork.Display,
             value: detailedNetwork.Name,
             chainId: detailedNetwork.chainId
-          }
-        }))
+        }
+      })) 
+    }
+  }, [])
+
+  useEffect(() => {
+    console.log("params changed params=", params)
+    if(params.address === undefined) {
+      setLoadingStep(0);
+    } else {
+      setIsStartLoading(false);
+      if(params.address !== reqAddress) {
+        setLoadingStep(1)
+        setTokenInfos([]);
       }
+    }
+  }, [params])
+  // Get params from url and set it to state variable
+  useEffect(() => {
+    console.log("useEffect 2")
+    // console.log("Params = ", params)
+    // console.log("CurrentParams = ", currentParams)
+    // console.log("searchKey=", searchKey, "!=", !searchKey);
+    if(params.address === undefined) {
+      setLoadingStep(0);
+    } else {
+      // if(searchKey !== params.address) {
+      //   // dispatch(setTimer(
+      //   //   setTimeout(() => {
+      //   //       dispatch(setNetworkInfo({
+      //   //           searchKey: params.address,
+      //   //           network: {
+      //   //               label: detailedNetwork.Display,
+      //   //               value: detailedNetwork.Name,
+      //   //               chainId: detailedNetwork.chainId
+      //   //           }
+      //   //       }))
+      //   //   }, 1000)    
+      //   // ))
+      //   dispatch(setNetworkInfo({
+      //       searchKey: params.address,
+      //       network: {
+      //           label: detailedNetwork.Display,
+      //           value: detailedNetwork.Name,
+      //           chainId: detailedNetwork.chainId
+      //       }
+      //   }))
+      // }
       if(loadingStep !== 2) { // if hint, then change step to loading
         setLoadingStep(1);
       }
       // console.log("before FetchTokenData currentParams=", currentParams)
       if(!isStartLoading) {
         setIsStartLoading(true);
-        dispatch(fetchTokenData({network: currentParams.networkName, address: currentParams.address}));
+        // dispatch(fetchTokenData({network: params.networkName, address: params.address}));
+        fetchTokenData(params.networkName, params.address);
+        
       }
     }
-  }, [currentParams, fastRefresh, loadingStep])
+  }, [fastRefresh])
   // When wallet connected, set params variable
   useEffect(() => {
-    if(!currentParams.address && connectedAddress) {
+    console.log("useEffect 3")
+    if( connectedAddress ) {
       setTokenInfos([]);
-      setParams({address: connectedAddress, networkName: currentParams.networkName});
+      setIsStartLoading(false);
+      params.address = connectedAddress;
+      // setParams({address: connectedAddress, networkName: currentParams.networkName});
     }
   }, [connectedAddress])
 
   // When searchKey changed, set params variable
-  useEffect(() => {
-    if(currentParams.address !== searchKey && searchKey) {
-      setLoadingStep(1);
-      setTokenInfos([]);
-      setParams({address: searchKey, networkName: currentParams.networkName});
-      // setParams({address: params.address, networkName: currentParams.networkName});
-    }
-  }, [searchKey])
+  // useEffect(() => {
+  //   console.log("useEffect 4")
+  //   if(currentParams.address !== searchKey && ethers.utils.isAddress(searchKey)) {
+  //     setLoadingStep(1);
+  //     setTokenInfos([]);
+  //     setParams({address: searchKey, networkName: currentParams.networkName});
+  //     // setParams({address: params.address, networkName: currentParams.networkName});
+  //   }
+  // }, [searchKey])
 
   // Check loading data from backend
-  useEffect(() => {
-    // console.log("reqAddress = ", reqAddress)
-    if(status === 200 && reqAddress === currentParams.address) {
-      setIsStartLoading(false);
-      const getLiveInfo = async () => {
-        const infos = await getTokenInfos(
-          linq
-            .from(tokens)
-            .select((x: any) => x.pair)
-            .toArray(),
-          detailedNetwork,
-          [currentParams.address],
-        )
+  // useEffect(() => {
+  //   console.log("useEffect 5")
+  //   // console.log("reqAddress = ", reqAddress)
+  //   if(status === 200 && reqAddress === params.address) {
+  //     setIsStartLoading(false);
+  //     const getLiveInfo = async () => {
+  //       const infos = await getTokenInfos(
+  //         linq
+  //           .from(tokens)
+  //           .select((x: any) => x.pair)
+  //           .toArray(),
+  //         detailedNetwork,
+  //         [params.address],
+  //       )
 
-        const query = linq.from(infos.infos)
-        const newTokenInfos: any = tokens.map((item: TokenItemProps) => {
-          const newItem: any = { ...item }
-          newItem.info = query.where((x) => x.token === newItem.pair.buyCurrency.address).singleOrDefault() || {}
-          newItem.info.rewards = newItem.outs + newItem.info.balance - newItem.ins
-          if (newItem.info.rewards < 0.00000001) {
-            newItem.info.rewards = 0
-          }
-          // not determined
-          newItem.info.rewardsSold = 0;
+  //       const query = linq.from(infos.infos)
+  //       const newTokenInfos: any = tokens.map((item: TokenItemProps) => {
+  //         const newItem: any = { ...item }
+  //         newItem.info = query.where((x) => x.token === newItem.pair.buyCurrency.address).singleOrDefault() || {}
+  //         newItem.info.rewards = newItem.outs + newItem.info.balance - newItem.ins
+  //         if (newItem.info.rewards < 0.00000001) {
+  //           newItem.info.rewards = 0
+  //         }
+  //         // not determined
+  //         newItem.info.rewardsSold = 0;
 
-          newItem.trades = newItem.trades.map((trade) => {
-            const newTrade: any = { ...trade }
-            const customTradePrice = parseFloat(localStorage.getItem(`price_${newTrade.tx}`))
-            if (customTradePrice) {
-              newTrade.priceUSD = customTradePrice
-            }
+  //         newItem.trades = newItem.trades.map((trade) => {
+  //           const newTrade: any = { ...trade }
+  //           const customTradePrice = parseFloat(localStorage.getItem(`price_${newTrade.tx}`))
+  //           if (customTradePrice) {
+  //             newTrade.priceUSD = customTradePrice
+  //           }
 
-            newTrade.buyPrices.map((buyPrice) => {
-              const customBuyPrice = localStorage.getItem(`price_${buyPrice.tx}`)
-              if (customBuyPrice) {
-                buyPrice.priceUSD = customBuyPrice
-              }
-              return buyPrice
-            })
+  //           newTrade.buyPrices.map((buyPrice) => {
+  //             const customBuyPrice = localStorage.getItem(`price_${buyPrice.tx}`)
+  //             if (customBuyPrice) {
+  //               buyPrice.priceUSD = customBuyPrice
+  //             }
+  //             return buyPrice
+  //           })
 
-            // console.log("trade.buyPrices: ", newTrade.buyPrices)
-            try {
-              newTrade.avarageBuyPriceOfHoldings = newTrade.buyPrices.length
-                ? linq
-                    .from(newTrade.buyPrices)
-                    .select((x: any) => x.priceUSD * x.amount)
-                    .toArray()
-                    .reduce((a, b) => a + b) /
-                  linq
-                    .from(newTrade.buyPrices)
-                    .select((x: any) => x.amount)
-                    .toArray()
-                    .reduce((a, b) => a + b)
-                : 0
-            } catch (error) {
-              console.log(error)
-              newTrade.avarageBuyPriceOfHoldings = 0
-            }
+  //           // console.log("trade.buyPrices: ", newTrade.buyPrices)
+  //           try {
+  //             newTrade.avarageBuyPriceOfHoldings = newTrade.buyPrices.length
+  //               ? linq
+  //                   .from(newTrade.buyPrices)
+  //                   .select((x: any) => x.priceUSD * x.amount)
+  //                   .toArray()
+  //                   .reduce((a, b) => a + b) /
+  //                 linq
+  //                   .from(newTrade.buyPrices)
+  //                   .select((x: any) => x.amount)
+  //                   .toArray()
+  //                   .reduce((a, b) => a + b)
+  //               : 0
+  //           } catch (error) {
+  //             console.log(error)
+  //             newTrade.avarageBuyPriceOfHoldings = 0
+  //           }
 
-            const slippageTradeTx: any = localStorage.getItem(`slippage_${newTrade.tx}`)
-            newTrade.profit =
-              newTrade.transactionType === 2 || newTrade.transactionType === 4
-                ? ((100 - slippageTradeTx) / 100 || 0) * (newTrade.priceUSD * newTrade.tokenAmount) -
-                  newTrade.avarageBuyPriceOfHoldings * newTrade.tokenAmount
-                : 0
-            return newTrade
-          })
-          // console.log(newItem);
+  //           const slippageTradeTx: any = localStorage.getItem(`slippage_${newTrade.tx}`)
+  //           newTrade.profit =
+  //             newTrade.transactionType === 2 || newTrade.transactionType === 4
+  //               ? ((100 - slippageTradeTx) / 100 || 0) * (newTrade.priceUSD * newTrade.tokenAmount) -
+  //                 newTrade.avarageBuyPriceOfHoldings * newTrade.tokenAmount
+  //               : 0
+  //           return newTrade
+  //         })
+  //         // console.log(newItem);
 
-          const buysAndIns = linq
-            .from(newItem.trades)
-            .where((x: any) => x.transactionType === 1 || x.transactionType === 3)
+  //         const buysAndIns = linq
+  //           .from(newItem.trades)
+  //           .where((x: any) => x.transactionType === 1 || x.transactionType === 3)
 
-          // console.log("buysAndIns: ", buysAndIns)
-          try {
-            newItem.avarageBuyPriceOfHoldings =
-              newItem.info.balance > 0
-                ? buysAndIns
-                    .select((x: any) => x.priceUSD * x.holdingAmount)
-                    .toArray()
-                    .reduce((a, b) => a + b) /
-                  buysAndIns
-                    .select((x: any) => x.holdingAmount)
-                    .toArray()
-                    .reduce((a, b) => a + b)
-                : 0
-            if(Number.isNaN(newItem.avarageBuyPriceOfHoldings))
-              newItem.avarageBuyPriceOfHoldings = 0;
-          } catch (error) {
-            console.log(error)
-            newItem.avarageBuyPriceOfHoldings = 0
-          }
-          // console.log("item.trades: ", newItem.trades)
-          try {
-            newItem.info.profit = {
-              holdings:
-                newItem.info.isETH && newItem.info.balance > 0
-                  ? newItem.info.balance * newItem.info.price * infos.ethPrice -
-                    newItem.avarageBuyPriceOfHoldings * newItem.info.balance
-                  : 0,
-              sold: linq
-                .from(newItem.trades)
-                .select((x: any) => x.profit)
-                .toArray()
-                .reduce((x, y) => x + y),
-            }
-          } catch (error) {
-            console.log(error)
-            newItem.info.profit = {
-              holdings:
-                newItem.info.isETH && newItem.info.balance > 0
-                  ? newItem.info.balance * newItem.info.price * infos.ethPrice -
-                    newItem.avarageBuyPriceOfHoldings * newItem.info.balance
-                  : 0,
-              sold: 0,
-            }
-          }
+  //         // console.log("buysAndIns: ", buysAndIns)
+  //         try {
+  //           newItem.avarageBuyPriceOfHoldings =
+  //             newItem.info.balance > 0
+  //               ? buysAndIns
+  //                   .select((x: any) => x.priceUSD * x.holdingAmount)
+  //                   .toArray()
+  //                   .reduce((a, b) => a + b) /
+  //                 buysAndIns
+  //                   .select((x: any) => x.holdingAmount)
+  //                   .toArray()
+  //                   .reduce((a, b) => a + b)
+  //               : 0
+  //           if(Number.isNaN(newItem.avarageBuyPriceOfHoldings))
+  //             newItem.avarageBuyPriceOfHoldings = 0;
+  //         } catch (error) {
+  //           console.log(error)
+  //           newItem.avarageBuyPriceOfHoldings = 0
+  //         }
+  //         // console.log("item.trades: ", newItem.trades)
+  //         try {
+  //           newItem.info.profit = {
+  //             holdings:
+  //               newItem.info.isETH && newItem.info.balance > 0
+  //                 ? newItem.info.balance * newItem.info.price * infos.ethPrice -
+  //                   newItem.avarageBuyPriceOfHoldings * newItem.info.balance
+  //                 : 0,
+  //             sold: linq
+  //               .from(newItem.trades)
+  //               .select((x: any) => x.profit)
+  //               .toArray()
+  //               .reduce((x, y) => x + y),
+  //           }
+  //         } catch (error) {
+  //           console.log(error)
+  //           newItem.info.profit = {
+  //             holdings:
+  //               newItem.info.isETH && newItem.info.balance > 0
+  //                 ? newItem.info.balance * newItem.info.price * infos.ethPrice -
+  //                   newItem.avarageBuyPriceOfHoldings * newItem.info.balance
+  //                 : 0,
+  //             sold: 0,
+  //           }
+  //         }
 
-          newItem.info.pricescale = calculatePricescale(
-            newItem.info.isETH ? newItem.info.price * infos.ethPrice : newItem.info.price,
-          )
-          newItem.info.ethscale = calculatePricescale(newItem.info.price)
-          newItem.info.tokenscale = calculateTokenscale(
-            newItem.info.isETH ? newItem.info.price * infos.ethPrice : newItem.info.price,
-          )
-          return newItem
-        })
+  //         newItem.info.pricescale = calculatePricescale(
+  //           newItem.info.isETH ? newItem.info.price * infos.ethPrice : newItem.info.price,
+  //         )
+  //         newItem.info.ethscale = calculatePricescale(newItem.info.price)
+  //         newItem.info.tokenscale = calculateTokenscale(
+  //           newItem.info.isETH ? newItem.info.price * infos.ethPrice : newItem.info.price,
+  //         )
+  //         return newItem
+  //       })
 
-        setCurEthPrice(infos.ethPrice)
-        setTokenInfos(newTokenInfos)
-        // console.log("newTokenInfos = ", newTokenInfos)
-      }
-      getLiveInfo()
-      setLoadingStep(2);
-    } else if(status !== 0) {
-      setIsStartLoading(false);
-      setLoadingStep(-1);
-    }
-  }, [tokens, status])
+  //       setCurEthPrice(infos.ethPrice)
+  //       setTokenInfos(newTokenInfos)
+  //       // console.log("newTokenInfos = ", newTokenInfos)
+  //     }         
+  //     getLiveInfo()
+  //     setLoadingStep(2);
+  //   } else if(status !== 0) {
+  //     setIsStartLoading(false);
+  //     setLoadingStep(-1);
+  //   }
+  // }, [tokens, status])
 
   
   const renderLoading = () => {

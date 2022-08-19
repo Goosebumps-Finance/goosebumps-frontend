@@ -8,7 +8,8 @@ import { calculatePricescale } from 'utils/numberHelpers'
 const LoadingPanel = styled.div`
   display: flex;
   align-items: center;
-  margin: auto;
+  justify-content: center;
+  margin: auto 0px;
   color: white;
 `
 

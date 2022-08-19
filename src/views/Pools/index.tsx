@@ -6,6 +6,8 @@ import { formatUnits } from 'ethers/lib/utils'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import { Heading, Flex, Image, Text } from '@goosebumps/uikit'
+import { useDispatch, useSelector } from 'react-redux'
+import { setNetworkInfo } from 'state/home'
 import orderBy from 'lodash/orderBy'
 import partition from 'lodash/partition'
 import { useTranslation } from 'contexts/Localization'
@@ -24,7 +26,7 @@ import Page from 'components/Layout/Page'
 import PageHeader from 'components/PageHeader'
 import SearchInput from 'components/SearchInput'
 import Select, { OptionProps } from 'components/Select/Select'
-import { DeserializedPool } from 'state/types'
+import { DeserializedPool, State } from 'state/types'
 import { useUserPoolStakedOnly, useUserPoolsViewMode } from 'state/user/hooks'
 import { usePoolsWithVault } from 'views/Home/hooks/useGetTopPoolsByApr'
 import { ViewMode } from 'state/user/actions'
@@ -103,6 +105,13 @@ const Pools: React.FC = () => {
   // const cakeInVaults = Object.values(vaultPools).reduce((total, vault) => {
   //   return total.plus(vault.totalCakeInVault)
   // }, BIG_ZERO)
+
+  const dispatch = useDispatch();
+  const { network } = useSelector((state: State) => state.home)
+
+  useEffect(() => {
+    dispatch(setNetworkInfo({searchKey: "", network}));
+  }, [])
 
   const pools = usePoolsWithVault()
 

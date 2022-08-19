@@ -3,6 +3,9 @@ import { Heading, Modal, ModalBody, useModal } from '@goosebumps/uikit';
 import Page from 'components/Layout/Page';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { setNetworkInfo } from 'state/home';
+import { State } from 'state/types';
 
 const HintText = styled.p`
   font-weight: bold;
@@ -33,6 +36,11 @@ const ComingSoon = () => {
     // useEffect(() => {
     //     // onPresentModal();
     // }, [])
+    const dispatch = useDispatch();
+    const { network } = useSelector((state:State) => state.home)
+    useEffect(() => {
+        dispatch(setNetworkInfo({searchKey: "", network}));
+    }, [])
 
     return <Page>
         <HintText>Coming soon</HintText>

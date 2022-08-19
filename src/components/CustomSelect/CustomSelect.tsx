@@ -15,6 +15,7 @@ const DropDownHeader = styled.div`
   border-radius: 9px;
   // background: ${({ theme }) => theme.colors.input};
   // background: transparent;
+  background: #0a3040aa;
   transition: border-radius 0.15s;
 `
 
@@ -25,6 +26,7 @@ const DropDownListContainer = styled.div`
   overflow: hidden;
   // background: ${({ theme }) => theme.colors.input};
   // background: transparent;
+  background: #0a3040aa;
   z-index: ${({ theme }) => theme.zIndices.dropdown};
   transition: transform 0.15s, opacity 0.15s;
   transform: scaleY(0);
@@ -43,6 +45,7 @@ const DropDownContainer = styled(Box)<{ isOpen: boolean }>`
   position: relative;
   // background: ${({ theme }) => theme.colors.input};
   // background: transparent;
+  background: #0a3040aa;
   border-radius: 9px;
   height: 40px;
   min-width: 136px;

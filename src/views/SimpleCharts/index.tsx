@@ -49,7 +49,7 @@ const SimpleCharts = (props) => {
         console.log("Charts CurrentParams = ", currentParams);
         const fetchData = async() => {
             if (!compareParams(params, currentParams)) {
-                console.log("here")
+                setLoadingStep(-1);
                 setParams(params);
                 dispatch(setNetworkInfo({
                     searchKey: params.address,
@@ -60,9 +60,8 @@ const SimpleCharts = (props) => {
                     }
                 }))
             }
-            if(addressType === "Token") {
-                if(loadingStep === -1)
-                    setLoadingStep(0);
+            if(addressType === "Token" && loadingStep === -1) {
+                setLoadingStep(0);
                 const _info:any = await getChartsInfo(params.address, network, params.pairAddress);
                 setInfo(_info);
                 setLoadingStep(1);
@@ -70,7 +69,11 @@ const SimpleCharts = (props) => {
                 if(_info.pairs?.length !== 0) {
                     setChartAddress(_info.pairs[0].smartContract.address.address);
                 }
-            }    
+            } 
+            if(addressType === "DEX" && loadingStep === -1) {
+                setLoadingStep(1);
+                setChartAddress(params.address);
+            }
         }
         fetchData();
     }, [params])
@@ -78,19 +81,20 @@ const SimpleCharts = (props) => {
     useEffect(() => {
         if(!addressType) { // current address is token or not decided yet
             dispatch(fetchAddressType({address: params.address, network: params.networkName}));
-        } else {
-            if(addressType === "Token") {
-                setChartAddress(params.address)
-            }
-            if(addressType === "DEX") {
-                setChartAddress(params.address)
-                const fetchTokenAddress = async () => {
-                    const res = await getTokenAddress(params.address);
-                    console.log("fetchTokenAddress res = ", res);
-                }
-                fetchTokenAddress();
-            }
         }
+        // else {
+        //     if(addressType === "Token") {
+        //         setChartAddress(params.address)
+        //     }
+        //     if(addressType === "DEX") {
+        //         setChartAddress(params.address)
+        //         const fetchTokenAddress = async () => {
+        //             const res = await getTokenAddress(params.address);
+        //             console.log("fetchTokenAddress res = ", res);
+        //         }
+        //         fetchTokenAddress();
+        //     }
+        // }
     }, [addressType])
 
     // Change Chart Colors

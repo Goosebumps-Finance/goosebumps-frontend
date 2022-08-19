@@ -95,7 +95,7 @@ const Menu = (props) => {
       smartcontract: "Token"  - Token address
       smartcontract: "DEX"  - Pair address
     */
-      console.log("isTOken res = ", res);
+      // console.log("isToken res = ", res);
       if(res.status !== 200) {
       console.log("res = ", res)
       alert(res.error);

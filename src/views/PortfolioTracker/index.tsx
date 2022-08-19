@@ -79,18 +79,20 @@ const PortfolioTracker = () => {
 
   // At the beginning
   useEffect(() => {
+    console.log("useEffect 1")
     setParams(params);
   }, [])
 
   // Get params from url and set it to state variable
   useEffect(() => {
+    console.log("useEffect 2")
     // console.log("Params = ", params)
     // console.log("CurrentParams = ", currentParams)
     // console.log("searchKey=", searchKey, "!=", !searchKey);
     if(currentParams.address === undefined) {
       setLoadingStep(0);
     } else {
-      if(searchKey || searchKey !== currentParams.address) {
+      if(searchKey !== currentParams.address) {
         dispatch(setNetworkInfo({
           searchKey: currentParams.address,
           network: {
@@ -112,6 +114,7 @@ const PortfolioTracker = () => {
   }, [currentParams, fastRefresh, loadingStep])
   // When wallet connected, set params variable
   useEffect(() => {
+    console.log("useEffect 3")
     if(!currentParams.address && connectedAddress) {
       setTokenInfos([]);
       setParams({address: connectedAddress, networkName: currentParams.networkName});
@@ -120,7 +123,8 @@ const PortfolioTracker = () => {
 
   // When searchKey changed, set params variable
   useEffect(() => {
-    if(currentParams.address !== searchKey && searchKey) {
+    console.log("useEffect 4")
+    if(currentParams.address !== searchKey && ethers.utils.isAddress(searchKey)) {
       setLoadingStep(1);
       setTokenInfos([]);
       setParams({address: searchKey, networkName: currentParams.networkName});
@@ -130,6 +134,7 @@ const PortfolioTracker = () => {
 
   // Check loading data from backend
   useEffect(() => {
+    console.log("useEffect 5")
     // console.log("reqAddress = ", reqAddress)
     if(status === 200 && reqAddress === currentParams.address) {
       setIsStartLoading(false);
@@ -260,7 +265,7 @@ const PortfolioTracker = () => {
         setCurEthPrice(infos.ethPrice)
         setTokenInfos(newTokenInfos)
         // console.log("newTokenInfos = ", newTokenInfos)
-      }
+      }         
       getLiveInfo()
       setLoadingStep(2);
     } else if(status !== 0) {

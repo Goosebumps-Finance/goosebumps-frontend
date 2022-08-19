@@ -31,18 +31,18 @@ const SearchItem = ({onChangeNetwork, selIndex}) => {
   return <>
     <CustomSelect
       options={[
-        {
-          label: t("Ethereum"),
-          value: "ethereum"
-        },
+        // {
+        //   label: t("Ethereum"),
+        //   value: "ethereum"
+        // },
         {
           label: t("BSC"),
           value: "bsc"
         },
-        {
-          label: t("Polygon"),
-          value: "matic"
-        },
+        // {
+        //   label: t("Polygon"),
+        //   value: "matic"
+        // },
         {
           label: t("BSC Testnet"),
           value: "bsc_testnet"
@@ -56,7 +56,7 @@ const SearchItem = ({onChangeNetwork, selIndex}) => {
         border: "1px solid #52555c",
         borderTop: "none"
       }}
-      defaultOptionIndex={3}
+      defaultOptionIndex={0}
       onOptionChange={onChangeNetwork}
       selIndex={selIndex}
     />
@@ -144,10 +144,10 @@ const Menu = (props) => {
 
   useEffect(() => {
     let _index = 0;
-    if(network.chainId === 1) _index = 0
-    if(network.chainId === 56) _index = 1
-    if(network.chainId === 137) _index = 2
-    if(network.chainId === 97) _index = 3
+    // if(network.chainId === 1) _index = 0
+    if(network.chainId === 56) _index = 0
+    // if(network.chainId === 137) _index = 2
+    if(network.chainId === 97) _index = 1
     setNetworkIndex(_index)
     // if(searchKey) {
       // console.log("searchKey=", searchKey)

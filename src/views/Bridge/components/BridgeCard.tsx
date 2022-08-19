@@ -40,18 +40,18 @@ const BridgeCard = ({ variant = variants.CONNECT_FROM, onChangeNetwork, selIndex
       <CardImage>{renderImage(selIndex)}</CardImage>
       <CustomSelect
         options={[
-          {
-            label: t('Ethereum'),
-            value: 'ethereum',
-          },
+          // {
+          //   label: t('Ethereum'),
+          //   value: 'ethereum',
+          // },
           {
             label: t('BSC'),
             value: 'bsc',
           },
-          {
-            label: t('Polygon'),
-            value: 'matic',
-          },
+          // {
+          //   label: t('Polygon'),
+          //   value: 'matic',
+          // },
           {
             label: t('BSC Testnet'),
             value: 'bsc_testnet',
@@ -65,7 +65,7 @@ const BridgeCard = ({ variant = variants.CONNECT_FROM, onChangeNetwork, selIndex
           border: 'none',
           backgroundColor: '#18283A',
         }}
-        defaultOptionIndex={3}
+        defaultOptionIndex={0}
         onOptionChange={onChangeNetwork}
         selIndex={selIndex}
       />

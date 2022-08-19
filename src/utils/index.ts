@@ -131,3 +131,5 @@ export function getErrorMessage(error) {
   }
   return error.message
 }
+
+export const METAMASK_MAX_TOKEN_SYMBOL_LENGTH = 11

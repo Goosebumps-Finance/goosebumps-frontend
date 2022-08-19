@@ -84,7 +84,7 @@ const SimpleCharts = (props) => {
                 const _info:any = await getChartsInfo(params.address, network, params.pairAddress);
                 setInfo(_info);
                 // console.log("getChartInfo(", params.address, ")", _info)
-                if(_info.pairs?.length !== 0 && info.address === params.address) {
+                if(_info.pairs?.length !== 0 && info.address === params.address && !isReady) {
                     setChartAddress(_info.pairs[0].smartContract.address.address);
                     setReqAddress(info.address);
                     setReady(true)

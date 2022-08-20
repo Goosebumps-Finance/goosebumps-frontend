@@ -150,7 +150,6 @@ const CustomSelect: React.FunctionComponent<SelectProps> = ({
 
   const location = useLocation()
   const isHome = location.pathname === "/";
-  console.log("isHome = ", isHome);
 
   const toggling = (event: React.MouseEvent<HTMLDivElement>) => {
     setIsOpen(!isOpen)

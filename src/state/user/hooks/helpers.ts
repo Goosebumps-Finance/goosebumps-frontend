@@ -25,6 +25,12 @@ export function deserializeToken(serializedToken: SerializedToken): Token {
 }
 
 export const GAS_PRICE = {
+  1: {
+    default : '5',
+    fast : '6',
+    instant : '7',
+    testnet : '10'
+  },
   137: {
     default : '5',
     fast : '6',
@@ -36,12 +42,23 @@ export const GAS_PRICE = {
     fast: "5",
     instant: "8",
     testnet: "13",
-
+  },
+  97: {
+    default: "3",
+    fast: "5",
+    instant: "8",
+    testnet: "13",
   }
 }
 
 export const GAS_PRICE_GWEI = {
   56: {
+    default: parseUnits(GAS_PRICE[ChainId.MAINNET].default, 'gwei').toString(),
+    fast: parseUnits(GAS_PRICE[ChainId.MAINNET].fast, 'gwei').toString(),
+    instant: parseUnits(GAS_PRICE[ChainId.MAINNET].instant, 'gwei').toString(),
+    testnet: parseUnits(GAS_PRICE[ChainId.MAINNET].testnet, 'gwei').toString(),
+  },
+  97: {
     default: parseUnits(GAS_PRICE[ChainId.MAINNET].default, 'gwei').toString(),
     fast: parseUnits(GAS_PRICE[ChainId.MAINNET].fast, 'gwei').toString(),
     instant: parseUnits(GAS_PRICE[ChainId.MAINNET].instant, 'gwei').toString(),

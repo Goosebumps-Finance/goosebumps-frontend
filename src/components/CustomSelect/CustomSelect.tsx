@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { ArrowDropDownIcon, Box, BoxProps, Text } from '@goosebumps/uikit'
+import { useLocation } from 'react-router-dom'
 
-const DropDownHeader = styled.div`
+const DropDownHeader = styled.div<{isHome: boolean}>`
   width: 100%;
   height: 40px;
   display: flex;
@@ -15,18 +16,30 @@ const DropDownHeader = styled.div`
   border-radius: 9px;
   // background: ${({ theme }) => theme.colors.input};
   // background: transparent;
-  background: #0a3040aa;
+  background: #182132aa;
+  ${({isHome}) => 
+    isHome && 
+    `
+      background: #0a3040aa;
+    `
+  }
   transition: border-radius 0.15s;
 `
 
-const DropDownListContainer = styled.div`
+const DropDownListContainer = styled.div<{isHome: boolean}>`
   min-width: 136px;
   height: 0;
   position: absolute;
   overflow: hidden;
   // background: ${({ theme }) => theme.colors.input};
   // background: transparent;
-  background: #0a3040aa;
+  background: #182132aa;
+  ${({isHome}) => 
+    isHome && 
+    `
+      background: #0a3040aa;
+    `
+  }
   z-index: ${({ theme }) => theme.zIndices.dropdown};
   transition: transform 0.15s, opacity 0.15s;
   transform: scaleY(0);
@@ -39,13 +52,19 @@ const DropDownListContainer = styled.div`
   }
 `
 
-const DropDownContainer = styled(Box)<{ isOpen: boolean }>`
+const DropDownContainer = styled(Box)<{ isOpen: boolean, isHome: boolean }>`
   cursor: pointer;
   width: 100%;
   position: relative;
   // background: ${({ theme }) => theme.colors.input};
   // background: transparent;
-  background: #0a3040aa;
+  background: #182132aa;
+  ${({isHome}) => 
+    isHome && 
+    `
+      background: #0a3040aa;
+    `
+  }
   border-radius: 9px;
   height: 40px;
   min-width: 136px;
@@ -129,6 +148,10 @@ const CustomSelect: React.FunctionComponent<SelectProps> = ({
   const [isOpen, setIsOpen] = useState(false)
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(defaultOptionIndex)
 
+  const location = useLocation()
+  const isHome = location.pathname === "/";
+  console.log("isHome = ", isHome);
+
   const toggling = (event: React.MouseEvent<HTMLDivElement>) => {
     setIsOpen(!isOpen)
     event.stopPropagation()
@@ -165,12 +188,12 @@ const CustomSelect: React.FunctionComponent<SelectProps> = ({
   }, [selectedOptionIndex])
 
   return (
-    <DropDownContainer isOpen={isOpen} {...props}>
-      <DropDownHeader onClick={toggling} style={props.header}>
+    <DropDownContainer isOpen={isOpen} isHome={isHome} {...props} >
+      <DropDownHeader onClick={toggling} style={props.header} isHome={isHome}>
         <Text>{options[selectedOptionIndex].label}</Text>
       </DropDownHeader>
       <ArrowDropDownIcon color="text" onClick={toggling} />
-      <DropDownListContainer style={props.listContainer}>
+      <DropDownListContainer style={props.listContainer} isHome={isHome}>
         <DropDownList ref={dropdownRef}>
           {options.map((option, index) =>
             index !== selectedOptionIndex ? (

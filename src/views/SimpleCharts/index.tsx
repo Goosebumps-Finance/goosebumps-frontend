@@ -148,7 +148,7 @@ const SimpleCharts = (props) => {
                         <iframe 
                             title="Charts from Dexscreener"
                             scrolling="no"
-                            src={`https://dexscreener.com/${params.networkName}/${chartAddress}?embed=1&amp;theme=dark`}
+                            src={`https://dexscreener.com/${params.networkName}/${chartAddress}?embed=1&theme=dark`}
                             className="fit"
                             style={{width: "100%", height: "800px", display: 'block'}}
                             ref={frameRef}

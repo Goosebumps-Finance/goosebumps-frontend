@@ -88,8 +88,7 @@ export const setupNetwork = async (network) => {
  * @returns {boolean} true if the token has been added, false otherwise
  */
 export const registerToken = async (tokenAddress: string, tokenSymbol: string, tokenDecimals: number) => {
-  const logoURI = tokenSymbol === "Goosebumps-LP" ? `${BASE_URL}/images/tokens/goosebumpsLP.png` : `${BASE_URL}/images/tokens/${getChainId()}/${tokenAddress}.png`
-  tokenSymbol = tokenSymbol === "Goosebumps-LP" ? "Goose-LP" : tokenSymbol
+  const logoURI = tokenSymbol === "Goose-lp" ? `${BASE_URL}/images/tokens/goosebumpsLP.png` : `${BASE_URL}/images/tokens/${getChainId()}/${tokenAddress}.png`
   tokenSymbol = tokenSymbol.length > METAMASK_MAX_TOKEN_SYMBOL_LENGTH ? tokenSymbol.substring(0, METAMASK_MAX_TOKEN_SYMBOL_LENGTH) : tokenSymbol
   const tokenAdded = await window.ethereum.request({
     method: 'wallet_watchAsset',

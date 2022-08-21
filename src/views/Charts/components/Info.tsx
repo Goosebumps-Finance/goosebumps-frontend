@@ -18,11 +18,14 @@ const Info = ({ info, network, setPair }) => {
   const [loading, setLoading] = useState(true)
   const [liveInfo, setLiveInfo] = useState<any>({})
   const [show, setShow] = useState(false)
+  const [hasCMC, setHasCMC] = useState(false);
 
   useEffect(() => {
     if(!info) return;
     // console.log("bug= getData loading = ", loading)
     // console.log("bug= getData liveInfo = ", liveInfo)
+    setHasCMC(info.cmc && Object.hasOwn(info.cmc, "id"));
+    console.log("hasCMC=",info.cmc && Object.hasOwn(info.cmc, "id"))
     const getData = async () => {
       const res = await getTokenInfo(info.pair, network)
       // console.log("setLiveInfo res = ", res)
@@ -30,6 +33,7 @@ const Info = ({ info, network, setPair }) => {
         setLiveInfo(res)
         if (loading) setLoading(false)
       }
+      
     }
     getData()
   }, [loading, info, network])
@@ -92,15 +96,19 @@ const Info = ({ info, network, setPair }) => {
   }
 
   const renderCMC = () => {
-    info.cmc.urls.chat.map((item) => {
-      return item
-    })
+    if(hasCMC)
+    {
+      info.cmc.urls.chat.map((item) => {
+        return item
+      })
+    }
+    
     return (
       <>
         <div className="row">
           <div className="row col">
             <img
-              src={info.cmc.logo || '/images/logo-icon.png'}
+              src={ hasCMC && info.cmc.logo || '/images/logo-icon.png'}
               width="64"
               className="col-auto"
               alt="{info.pair.buyCurrency.symbol}"
@@ -335,12 +343,11 @@ const Info = ({ info, network, setPair }) => {
           <div
             className="mt-4"
             dangerouslySetInnerHTML={{
-              __html: linkify(info.cmc.description),
+              __html: hasCMC ? linkify(info.cmc.description) : "No description",
             }}
             style={{ color: 'white' }}
           />
-
-          <div className="mt-4">
+          {hasCMC?<div className="mt-4">
             <div className="social-icons">
               {info.cmc.urls.website.map((item, index) => (
                 <a key={item} href={item} rel="noopener noreferrer">
@@ -388,7 +395,8 @@ const Info = ({ info, network, setPair }) => {
                 </a>
               ))}
             </div>
-          </div>
+          </div>:<></>}
+          
         </div>
       </>
     )
@@ -399,8 +407,14 @@ const Info = ({ info, network, setPair }) => {
       <>
         <div className="row">
           <div className="row col">
-            <img src="/images/logo-icon.png" width="64" className="col-auto" alt="{info.pair.buyCurrency.symbol}" />
-            <div className="col align-self-center">
+            <img
+              src="/images/unknown_token.png"
+              width="64"
+              className="col-auto"
+              alt="{info.pair.buyCurrency.symbol}"
+              style={{width: "64px", height: "auto", padding: "0.5rem", marginLeft: "1rem"}}
+            />
+            <div className="col align-self-center" style={{color: 'white'}}>
               <div className="fs-5">{info.pair.buyCurrency.name}</div>
               <div className="fs-6">{info.pair.buyCurrency.symbol}</div>
             </div>
@@ -444,7 +458,7 @@ const Info = ({ info, network, setPair }) => {
 
         <div className="row mt-2">
           <div className="text-truncate">
-            <span className="float-end ps-1">
+            <span className="float-end ps-1" >
               {/* <i className="fa fa-clone"></i>{" "} */}
               <a
                 href={`${network.Explorer}token/${info.pair.buyCurrency.address}`}
@@ -455,7 +469,7 @@ const Info = ({ info, network, setPair }) => {
                 <i className="fa fa-external-link" />
               </a>
             </span>
-            <span>{info.address}</span>
+            <span style={{color: 'white'}}>{info.address}</span>
           </div>
         </div>
 
@@ -480,7 +494,7 @@ const Info = ({ info, network, setPair }) => {
         <div className={show ? 'd-lg-block' : 'd-none d-lg-block'}>
           <div className="mt-4">
             <div>
-              <b>Price:</b>
+              <b style={{color: 'white'}}>Price:</b>
               <div className="color-green">
                 {liveInfo.isETH ? (
                   <>
@@ -518,7 +532,7 @@ const Info = ({ info, network, setPair }) => {
               </div>
             </div>
             <div className="mt-2">
-              <b>Market Cap (Includes locked, excludes burned):</b>
+              <b style={{color: 'white'}}>Market Cap (Includes locked, excludes burned):</b>
               <div className="color-green">
                 {liveInfo.isETH ? (
                   <>
@@ -556,7 +570,7 @@ const Info = ({ info, network, setPair }) => {
               </div>
             </div>
             <div className="mt-2">
-              <b>
+              <b style={{color: 'white'}}>
                 LP Holdings for {info.pair.buyCurrency.symbol}/{info.pair.sellCurrency.symbol}:
               </b>
               <div className="color-green">
@@ -596,7 +610,7 @@ const Info = ({ info, network, setPair }) => {
               </div>
             </div>
             <div className="mt-2">
-              <b>Total Supply:</b>
+              <b style={{color: 'white'}}>Total Supply:</b>
               <div className="color-green">
                 <NumberFormat
                   value={liveInfo.supply.total}
@@ -608,7 +622,7 @@ const Info = ({ info, network, setPair }) => {
               </div>
             </div>
             <div className="mt-2">
-              <b>Circulation Supply:</b>
+              <b style={{color: 'white'}}>Circulation Supply:</b>
               <br />
               <div className="color-green">
                 <NumberFormat
@@ -626,7 +640,7 @@ const Info = ({ info, network, setPair }) => {
     )
   }
 
-  return <>{loading ? renderLoading() : info.cmc ? renderCMC() : renderContent()}</>
+  return <>{loading ? renderLoading() : hasCMC ? renderCMC() : renderContent()}</>
 }
 
 export default Info

@@ -2179,10 +2179,10 @@
     eslint-plugin-react "^7.21.5"
     eslint-plugin-react-hooks "^4.0.0"
 
-"@goosebumps/sdk@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@goosebumps/sdk/-/sdk-0.0.3.tgz#122a96a11a7d658c56ad1fa9bb52a3ada127ecba"
-  integrity sha512-0WdnzYYC1R34QBuAgmMLINM6bNJpXbLdUV05sBRf2oXVFCpMGJ3fLLJDCmit61u2QXACXe2NSbOFkHT4PEcrGA==
+"@goosebumps/sdk@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@goosebumps/sdk/-/sdk-0.0.6.tgz#1b84bc1f3c51dbf9c0967e65b4740e43933167a2"
+  integrity sha512-7G3TC4MtPG4eD0PnA2oAbwQMmuxswu1DxVhJ4w5lIuwwR46pjzsyV3+ZL5aioW/u6kchcdP6zAmT/rmt3cya2Q==
   dependencies:
     big.js "^5.2.2"
     decimal.js-light "^2.5.0"

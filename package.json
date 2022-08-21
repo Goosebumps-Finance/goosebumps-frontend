@@ -33,7 +33,7 @@
     "dependencies": {
         "@binance-chain/bsc-connector": "^1.0.0",
         "@ethersproject/experimental": "^5.5.0",
-        "@goosebumps/sdk": "^0.0.3",
+        "@goosebumps/sdk": "^0.0.6",
         "@goosebumps/uikit": "^0.0.7",
         "@reduxjs/toolkit": "^1.5.0",
         "@sentry/react": "^6.15.0",

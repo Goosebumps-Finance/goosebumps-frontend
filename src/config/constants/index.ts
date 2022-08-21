@@ -79,9 +79,27 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
 
 export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } = {
   [ChainId.MAINNET]: [
+    [mainnetTokens.empire, mainnetTokens.wbnb],
+    [mainnetTokens.empire, mainnetTokens.busd],
+    [mainnetTokens.busd, mainnetTokens.wbnb],
     [mainnetTokens.cake, mainnetTokens.wbnb],
     [mainnetTokens.busd, mainnetTokens.usdt],
     [mainnetTokens.dai, mainnetTokens.usdt],
+  ],
+  [ChainId.TESTNET]: [
+    [testnetTokens.empire, testnetTokens.wbnb],
+    [testnetTokens.empire, testnetTokens.busd],
+    [testnetTokens.busd, testnetTokens.wbnb],
+  ],
+  [ChainId.ETHEREUM]: [
+    // [testnetTokens.empire, testnetTokens.wbnb],
+    // [testnetTokens.empire, testnetTokens.busd],
+    // [testnetTokens.busd, testnetTokens.wbnb],
+  ],
+  [ChainId.POLYGON]: [
+    // [testnetTokens.empire, testnetTokens.wbnb],
+    // [testnetTokens.empire, testnetTokens.busd],
+    // [testnetTokens.busd, testnetTokens.wbnb],
   ],
   // [ChainId.ETH_MAIN]:[
   //   [ethTokens.weth, ethTokens.uni]
@@ -90,6 +108,15 @@ export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } 
   //   [polygonTokens.wmatic, polygonTokens.aave]
   // ]
 }
+
+export const BASE_FACTORY_ADDRESS: { [chainId in ChainId]: string } = {
+  [ChainId.MAINNET]: "0x92Be203e0dfb40c1a1F937a36929E02856257A2e", // TODO prince
+  [ChainId.TESTNET]: "0x0Cd5205550BF38cC6Bb72E4A73373E04Fc35FD44",
+  [ChainId.ETHEREUM]: "0x30cc30Ee699a7390EA887E15Bb90b3668D4308Ec", // TODO prince
+  [ChainId.POLYGON]:  "0x30cc30Ee699a7390EA887E15Bb90b3668D4308Ec", // TODO prince
+}
+
+export const BASE_INIT_CODE_HASH = "0xfd7c21b4931ba4a1259e12228dbe60d2ea8adbf05782d6ba03569e6e0f2cd961";
 
 export const NetworkContextName = 'NETWORK'
 export const ChainIdStorageName = "SELECTED_CHAIN_ID"

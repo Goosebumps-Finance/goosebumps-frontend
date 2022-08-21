@@ -24,6 +24,8 @@ type ChainTokenList = {
 
 // used to construct intermediary pairs for trading
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
+  [ChainId.ETHEREUM]: [], // [ethTokens.weth] TODO prince
+  [ChainId.POLYGON]: [], // [polygonTokens.wmatic] TODO prince
   [ChainId.MAINNET]: [
     mainnetTokens.wbnb,
     mainnetTokens.cake,
@@ -57,6 +59,8 @@ export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: To
 
 // used for display in the default list when adding liquidity
 export const SUGGESTED_BASES: ChainTokenList = {
+  [ChainId.ETHEREUM]: [], // [ethTokens.weth] TODO prince
+  [ChainId.POLYGON]: [], // [polygonTokens.wmatic] TODO prince
   [ChainId.MAINNET]: [mainnetTokens.busd, mainnetTokens.empire, mainnetTokens.btcb],
   [ChainId.TESTNET]: [testnetTokens.wbnb, testnetTokens.empire, testnetTokens.busd],
   // [ChainId.ETH_MAIN]: [ethTokens.weth],
@@ -65,6 +69,8 @@ export const SUGGESTED_BASES: ChainTokenList = {
 
 // used to construct the list of all pairs we consider by default in the frontend
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
+  [ChainId.ETHEREUM]: [], // [ethTokens.weth] TODO prince
+  [ChainId.POLYGON]: [], // [polygonTokens.wmatic] TODO prince
   [ChainId.MAINNET]: [mainnetTokens.wbnb, mainnetTokens.dai, mainnetTokens.busd, mainnetTokens.usdt],
   [ChainId.TESTNET]: [testnetTokens.wbnb, testnetTokens.cake, testnetTokens.busd],
   // [ChainId.ETH_MAIN]: [ethTokens.weth],

@@ -3,6 +3,7 @@ import { Contract, Provider } from 'ethers-multicall'
 import pairAbi from 'config/abi/pair.json'
 import tokenAbi from 'config/abi/token.json'
 import { calculatePricescaleNew } from './numberHelpers'
+import { getSimpleRpcProvider } from './providers'
 
 export const getTokenPricescale = async (pair, network) => {
   const provider = new ethers.providers.JsonRpcProvider(network.RPC)
@@ -38,42 +39,61 @@ export const getTokenPricescale = async (pair, network) => {
 
 export const getTokenInfos = async (pairs, network, addresses = []) => {
   try {
-  
-    console.log("getTokenInfos step1")
     const provider = new ethers.providers.JsonRpcProvider(network.RPC)
     const ethcallProvider = new Provider(provider)
-    console.log("getTokenInfos ethcallProvider=", ethcallProvider);
     await ethcallProvider.init()
-    console.log("getTokenInfos ethcallProvider=", ethcallProvider);
 
-    const calls = []
+    const calls:any = []
+    let callGroup = [];
+    let cnt = 0;
+    let groupCount = 0;
 
     pairs.map((pair) => {
       const pairContract = new Contract(pair.smartContract.address.address, pairAbi)
       const buyContract = new Contract(pair.buyCurrency.address, tokenAbi)
       const sellContract = new Contract(pair.sellCurrency.address, tokenAbi)
-
-      calls.push(pairContract.getReserves())
-      calls.push(buyContract.decimals())
-      calls.push(sellContract.decimals())
-      calls.push(buyContract.balanceOf('0x000000000000000000000000000000000000dEaD'))
-      calls.push(buyContract.totalSupply())
-      calls.push(pairContract.token0())
+      callGroup.push(pairContract.getReserves())
+      callGroup.push(buyContract.decimals())
+      callGroup.push(sellContract.decimals())
+      callGroup.push(buyContract.balanceOf('0x000000000000000000000000000000000000dEaD'))
+      callGroup.push(buyContract.totalSupply())
+      callGroup.push(pairContract.token0())
       addresses.map((address) => {
-        calls.push(buyContract.balanceOf(ethers.utils.getAddress(address)))
+        callGroup.push(buyContract.balanceOf(ethers.utils.getAddress(address)))
         return address
       })
+      cnt ++;
+      if(cnt === 10) {
+        cnt = 0;
+        calls[groupCount] = callGroup;
+        groupCount ++;
+        callGroup = [];
+      }
 
       return pair
     })
 
-    console.log("getTokenInfos step2")
-
     const ethUsdPriceContract = new Contract(network.USD.Pair, pairAbi)
-    calls.push(ethUsdPriceContract.getReserves())
+    callGroup.push(ethUsdPriceContract.getReserves());
 
-    const responses = await ethcallProvider.all(calls)
-    console.log("getTokenInfos step3 responses=", responses)
+    calls[groupCount] = callGroup;
+    groupCount ++;
+
+    let responses = [];
+
+    await Promise.all(calls.map(async(call) => {
+      const res = await ethcallProvider.all(call);
+      return res;
+    })).then((res) => {
+      for(let i = 0;i<res.length;i++)
+        responses = responses.concat(res[i]);
+    })
+    
+    // calls.map(async (call) => {
+    //   // console.log("call = ", call);
+    //   const res = await ethcallProvider.all(call);
+    //   responses = responses.concat(res);
+    // })
 
     const ethUsdReserves = responses[responses.length - 1]
     const result = {
@@ -82,7 +102,9 @@ export const getTokenInfos = async (pairs, network, addresses = []) => {
         formatUnits(ethUsdReserves._reserve1, network.USD.Decimals) /
         formatUnits(ethUsdReserves._reserve0, network.Currency.Decimals),
     }
-    const callCounts = (calls.length - 1) / pairs.length
+
+    // const callCounts = (calls.length - 1) / pairs.length
+    const callCounts = 7
 
     pairs.map((pair, index) => {
       const isETH =
@@ -153,7 +175,6 @@ export const getTokenInfos = async (pairs, network, addresses = []) => {
       return pair
     })
 
-    console.log("getTokenInfos step4 result=", result)
 
     return result
   } catch (err) {

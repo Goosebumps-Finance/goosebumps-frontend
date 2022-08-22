@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 import NumberFormat from 'react-number-format'
 import linq from 'linq'
+import _ from 'lodash';
 import { ethers } from 'ethers'
 import styled from 'styled-components'
 import { Button } from '@goosebumps/uikit'
@@ -88,12 +89,16 @@ const PortfolioTracker = () => {
     const res = await postAsyncData(`${API_SERVER}api/Portfolio/GetTrades`, { network: _network }, [
       _address,
     ])
+    
     console.log("fetchTokenData res=", res);
     if(res) {
       setStatus(res.status);
       if(res.status === 200) {
         if(res.address === params.address) {
-          await getLiveInfo(res.tokens);
+          const resFilter = _.filter(res.tokens, (a) => {return a.volume !== 0 && a.outs !== 0})
+          console.log("resFilter = ", resFilter)
+
+          await getLiveInfo(resFilter);
           setLoadingStep(2);
           setReqAddress(res.address);
         } else {
@@ -127,7 +132,7 @@ const PortfolioTracker = () => {
 
     if(infos === null) {
       setLoadingStep(-1);
-      return;
+      
     }
 
     const query = linq.from(infos.infos)
@@ -250,7 +255,7 @@ const PortfolioTracker = () => {
       const bPrice = b.info.isETH ? b.info.balance * b.info.price * infos.ethPrice : b.info.balance * b.info.price;
       return bPrice - aPrice
     });
-    console.log("newTokenInfos = ", newTokenInfos);
+    // console.log("newTokenInfos = ", newTokenInfos);
     setTokenInfos(newTokenInfos)
   }  
 
@@ -511,7 +516,7 @@ const PortfolioTracker = () => {
                 <h2>Portfolio For</h2>
                 <div>
                   <div className="mt-2" style={{ color: 'white' }}>
-                    {params.address}{' '}
+                    {searchKey}{' '}
                   </div>
                 </div>
               </div>

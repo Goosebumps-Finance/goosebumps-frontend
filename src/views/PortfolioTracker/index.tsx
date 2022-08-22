@@ -95,7 +95,7 @@ const PortfolioTracker = () => {
         await getLiveInfo(res.tokens);
         setLoadingStep(2);
         setReqAddress(res.address);
-      }  else if(res.status !== 0) {
+      }  else if(res.status !== 0 && res.tokens.length === 0) {
         setLoadingStep(-1);
       }
     }
@@ -235,8 +235,12 @@ const PortfolioTracker = () => {
     })
 
     setCurEthPrice(infos.ethPrice)
+    newTokenInfos.sort((a, b) => {
+      const aPrice = a.info.isETH ? a.info.balance * a.info.price * infos.ethPrice : a.info.balance * a.info.price;
+      const bPrice = b.info.isETH ? b.info.balance * b.info.price * infos.ethPrice : b.info.balance * b.info.price;
+      return bPrice - aPrice
+    });
     setTokenInfos(newTokenInfos)
-    // console.log("newTokenInfos = ", newTokenInfos)
   }  
 
   // At the beginning
@@ -533,7 +537,7 @@ const PortfolioTracker = () => {
                   <th scope="col">Name</th>
                   <th scope="col">Price</th>
                   <th scope="col">Volume</th>
-                  <th scope="col">Rewards</th>
+                  <th scope="col" style={{paddingLeft: "30px"}}>Rewards</th>
                   <th scope="col">Holdings</th>
                   <th scope="col">MarketCap</th>
                   <th scope="col">
@@ -541,7 +545,7 @@ const PortfolioTracker = () => {
                     <br />
                     Price of Holdings
                   </th>
-                  <th scope="col">Profit</th>
+                  <th scope="col" style={{paddingLeft: "60px"}}>Profit</th>
                   <th scope="col"> </th>
                 </tr>
               </thead>
@@ -821,7 +825,7 @@ const PortfolioTracker = () => {
     <Page>
       <div style={{width: "100%", minHeight: "80vh"}}>
         {loadingStep === -1 ? 
-          <HintText style={{margin: 'auto'}}>Loading data failed. {status.error}</HintText>
+          <HintText style={{margin: 'auto'}}>Loading data failed. {status?.error}</HintText>
           :
           <>
             {loadingStep === 0 && <HintText style={{margin: 'auto'}}>Please connect wallet or input wallet address.</HintText>}

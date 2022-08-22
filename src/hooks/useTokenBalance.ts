@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import { State } from 'state/types'
 import useSWR from 'swr'
 import { BIG_ZERO } from 'utils/bigNumber'
-import { getSimpleRpcProvider, simpleRpcProvider } from 'utils/providers'
+import { getSimpleRpcProvider /* , simpleRpcProvider */ } from 'utils/providers'
 import { useCake, useTokenContract } from './useContract'
 import { useSWRContract } from './useSWRContract'
 
@@ -18,10 +18,10 @@ const useTokenBalance = (tokenAddress: string) => {
   const { data, status, ...rest } = useSWRContract(
     account
       ? {
-          contract,
-          methodName: 'balanceOf',
-          params: [account],
-        }
+        contract,
+        methodName: 'balanceOf',
+        params: [account],
+      }
       : null,
     {
       refreshInterval: FAST_INTERVAL,
@@ -55,7 +55,7 @@ export const useBurnedBalance = (tokenAddress: string) => {
 
 export const useGetBnbBalance = () => {
   const { account } = useWeb3React()
-  const { network } = useSelector((state:State) => state.home)
+  const { network } = useSelector((state: State) => state.home)
   const { status, data, mutate } = useSWR([account, 'bnbBalance'], async () => {
     const rpcProvider = getSimpleRpcProvider(network.chainId)
     return rpcProvider.getBalance(account)

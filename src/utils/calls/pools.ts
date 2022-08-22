@@ -2,7 +2,7 @@
 import BigNumber from 'bignumber.js'
 import pools from 'config/constants/pools'
 import sousChefV2 from 'config/abi/sousChefV2.json'
-import { ChainIdStorageName } from 'config/constants'
+import { getChainId } from 'utils/getChainId'
 import multicall from '../multicall'
 import { getSimpleRpcProvider /* , simpleRpcProvider */ } from '../providers'
 import { getAddress } from '../addressHelpers'
@@ -14,9 +14,7 @@ export const getActivePools = async (block?: number) => {
   const eligiblePools = pools
     .filter((pool) => pool.sousId !== 0)
     .filter((pool) => pool.isFinished === false || pool.isFinished === undefined)
-  let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
-  if(Number.isNaN(chainId)) chainId = 56
-  const rpcProvider = getSimpleRpcProvider(chainId)
+  const rpcProvider = getSimpleRpcProvider(getChainId())
   const blockNumber = block || (await rpcProvider.getBlockNumber())
   const startBlockCalls = eligiblePools.map(({ contractAddress }) => ({
     address: getAddress(contractAddress),

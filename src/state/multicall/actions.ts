@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit'
-import { ChainIdStorageName } from 'config/constants'
+import { getChainId } from 'utils/getChainId'
 
 export interface Call {
   address: string
@@ -24,8 +24,7 @@ export function parseCallKey(callKey: string): Call {
   if (pcs.length !== 2) {
     throw new Error(`Invalid call key: ${callKey}`)
   }
-  let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
-  if(Number.isNaN(chainId)) chainId = 56
+  const chainId = getChainId()
   return {
     address: pcs[0],
     callData: pcs[1],

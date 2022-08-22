@@ -3,19 +3,50 @@ import { ChainId, JSBI, Percent, Token } from '@goosebumps/sdk'
 import { mainnetTokens, testnetTokens } from './tokens'
 import { Address } from './types'
 
-export const ETH_CHAIN_ID = 1
-export const POLYGON_CHAIN_ID = 137
-export const BSC_CHAIN_ID = 56
-export const BSC_TESTNET_CHAIN_ID = 97
-
-
 // change router address according to the chainid
 // export const ROUTER_ADDRESS = '0x10ED43C718714eb63d5aA57B78B54704E256024E'
 // export const ROUTER_ADDRESS = '0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3'
-export const ROUTER_ADDRESS : Address = {
-  56: "0x10ED43C718714eb63d5aA57B78B54704E256024E",
-  97: "0xd86D8f65384D4EeA2b4440acc0C4C03048106e58"
+export const ROUTER_ADDRESS: Address = {
+  [ChainId.MAINNET]: "0x10ED43C718714eb63d5aA57B78B54704E256024E", // TODO prince
+  [ChainId.TESTNET]: "0xd86D8f65384D4EeA2b4440acc0C4C03048106e58",
+  [ChainId.POLYGON]: "0xd86D8f65384D4EeA2b4440acc0C4C03048106e58", // TODO prince
+  [ChainId.ETHEREUM]: "0xd86D8f65384D4EeA2b4440acc0C4C03048106e58" // TODO prince
 }
+
+// export const BASE_INIT_CODE_HASH = "0xfd7c21b4931ba4a1259e12228dbe60d2ea8adbf05782d6ba03569e6e0f2cd961";
+export const BASE_INIT_CODE_HASH: { [chainId in ChainId]: string } = {
+  [ChainId.MAINNET]: "0xfd7c21b4931ba4a1259e12228dbe60d2ea8adbf05782d6ba03569e6e0f2cd961", // TODO prince
+  [ChainId.TESTNET]: "0xfd7c21b4931ba4a1259e12228dbe60d2ea8adbf05782d6ba03569e6e0f2cd961",
+  [ChainId.ETHEREUM]: "0xfd7c21b4931ba4a1259e12228dbe60d2ea8adbf05782d6ba03569e6e0f2cd961", // TODO prince
+  [ChainId.POLYGON]: "0xfd7c21b4931ba4a1259e12228dbe60d2ea8adbf05782d6ba03569e6e0f2cd961", // TODO prince
+}
+
+export const BASE_FACTORY_ADDRESS: { [chainId in ChainId]: string } = {
+  [ChainId.MAINNET]: "0x92Be203e0dfb40c1a1F937a36929E02856257A2e", // TODO prince
+  [ChainId.TESTNET]: "0x0Cd5205550BF38cC6Bb72E4A73373E04Fc35FD44",
+  [ChainId.ETHEREUM]: "0x30cc30Ee699a7390EA887E15Bb90b3668D4308Ec", // TODO prince
+  [ChainId.POLYGON]: "0x30cc30Ee699a7390EA887E15Bb90b3668D4308Ec", // TODO prince
+}
+
+export const FACTORY_ADDRESSES: { [chainId in ChainId]: { [key: string]: string } } = {
+  [ChainId.MAINNET]: { [BASE_FACTORY_ADDRESS[ChainId.MAINNET]]: BASE_INIT_CODE_HASH[ChainId.MAINNET] },
+  [ChainId.TESTNET]: { [BASE_FACTORY_ADDRESS[ChainId.TESTNET]]: BASE_INIT_CODE_HASH[ChainId.TESTNET] },
+  [ChainId.ETHEREUM]: { [BASE_FACTORY_ADDRESS[ChainId.ETHEREUM]]: BASE_INIT_CODE_HASH[ChainId.ETHEREUM] },
+  [ChainId.POLYGON]: { [BASE_FACTORY_ADDRESS[ChainId.POLYGON]]: BASE_INIT_CODE_HASH[ChainId.POLYGON] },
+}
+
+const PANCAKESWAP_MAINNET_FACTORY_ADDRESS = "0xca143ce32fe78f1f7019d7d551a6402fc5350c73"
+const PANCAKESWAP_TESTNET_FACTORY_ADDRESS = "0xB7926C0430Afb07AA7DEfDE6DA862aE0Bde767bc"
+const UNISWAP_V2_FACTORY_ADDRESS = "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f"
+const QUICKSWAP_FACTORY_ADDRESS = "0x5757371414417b8c6caad45baef941abc7d3ab32"
+const PANCAKESWAP_MAINNET_FACTORY_INIT_CODE_HASH = "0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5"
+const PANCAKESWAP_TESTNET_FACTORY_INIT_CODE_HASH = "0xecba335299a6693cb2ebc4782e74669b84290b6378ea3a3873c7231a8d7d1074"
+const UNISWAP_V2_FACTORY_INIT_CODE_HASH = ""
+const QUICKSWAP_FACTORY_INIT_CODE_HASH = ""
+FACTORY_ADDRESSES[ChainId.MAINNET][PANCAKESWAP_MAINNET_FACTORY_ADDRESS] = PANCAKESWAP_MAINNET_FACTORY_INIT_CODE_HASH
+FACTORY_ADDRESSES[ChainId.TESTNET][PANCAKESWAP_TESTNET_FACTORY_ADDRESS] = PANCAKESWAP_TESTNET_FACTORY_INIT_CODE_HASH
+FACTORY_ADDRESSES[ChainId.ETHEREUM][UNISWAP_V2_FACTORY_ADDRESS] = UNISWAP_V2_FACTORY_INIT_CODE_HASH
+FACTORY_ADDRESSES[ChainId.POLYGON][QUICKSWAP_FACTORY_ADDRESS] = QUICKSWAP_FACTORY_INIT_CODE_HASH
 
 // a list of tokens by chain
 type ChainTokenList = {
@@ -24,6 +55,8 @@ type ChainTokenList = {
 
 // used to construct intermediary pairs for trading
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
+  [ChainId.ETHEREUM]: [], // [ethTokens.weth] TODO prince
+  [ChainId.POLYGON]: [], // [polygonTokens.wmatic] TODO prince
   [ChainId.MAINNET]: [
     mainnetTokens.wbnb,
     mainnetTokens.cake,
@@ -57,6 +90,8 @@ export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: To
 
 // used for display in the default list when adding liquidity
 export const SUGGESTED_BASES: ChainTokenList = {
+  [ChainId.ETHEREUM]: [], // [ethTokens.weth] TODO prince
+  [ChainId.POLYGON]: [], // [polygonTokens.wmatic] TODO prince
   [ChainId.MAINNET]: [mainnetTokens.busd, mainnetTokens.empire, mainnetTokens.btcb],
   [ChainId.TESTNET]: [testnetTokens.wbnb, testnetTokens.empire, testnetTokens.busd],
   // [ChainId.ETH_MAIN]: [ethTokens.weth],
@@ -65,6 +100,8 @@ export const SUGGESTED_BASES: ChainTokenList = {
 
 // used to construct the list of all pairs we consider by default in the frontend
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
+  [ChainId.ETHEREUM]: [], // [ethTokens.weth] TODO prince
+  [ChainId.POLYGON]: [], // [polygonTokens.wmatic] TODO prince
   [ChainId.MAINNET]: [mainnetTokens.wbnb, mainnetTokens.dai, mainnetTokens.busd, mainnetTokens.usdt],
   [ChainId.TESTNET]: [testnetTokens.wbnb, testnetTokens.cake, testnetTokens.busd],
   // [ChainId.ETH_MAIN]: [ethTokens.weth],
@@ -73,9 +110,27 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
 
 export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } = {
   [ChainId.MAINNET]: [
+    [mainnetTokens.empire, mainnetTokens.wbnb],
+    [mainnetTokens.empire, mainnetTokens.busd],
+    [mainnetTokens.busd, mainnetTokens.wbnb],
     [mainnetTokens.cake, mainnetTokens.wbnb],
     [mainnetTokens.busd, mainnetTokens.usdt],
     [mainnetTokens.dai, mainnetTokens.usdt],
+  ],
+  [ChainId.TESTNET]: [
+    [testnetTokens.empire, testnetTokens.wbnb],
+    [testnetTokens.empire, testnetTokens.busd],
+    [testnetTokens.busd, testnetTokens.wbnb],
+  ],
+  [ChainId.ETHEREUM]: [
+    // [testnetTokens.empire, testnetTokens.wbnb],
+    // [testnetTokens.empire, testnetTokens.busd],
+    // [testnetTokens.busd, testnetTokens.wbnb],
+  ],
+  [ChainId.POLYGON]: [
+    // [testnetTokens.empire, testnetTokens.wbnb],
+    // [testnetTokens.empire, testnetTokens.busd],
+    // [testnetTokens.busd, testnetTokens.wbnb],
   ],
   // [ChainId.ETH_MAIN]:[
   //   [ethTokens.weth, ethTokens.uni]
@@ -86,7 +141,6 @@ export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } 
 }
 
 export const NetworkContextName = 'NETWORK'
-export const ChainIdStorageName = "SELECTED_CHAIN_ID"
 
 // default allowed slippage, in bips
 export const INITIAL_ALLOWED_SLIPPAGE = 50

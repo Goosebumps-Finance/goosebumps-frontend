@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { API_SERVER } from 'config'
-import { ChainIdStorageName } from 'config/constants'
 import { HomeState } from 'state/types'
+import { getChainId } from 'utils/getChainId'
 import { getAsyncData } from 'utils/requester'
 
 const initialState: HomeState = {
-    network: { label: 'BSC', value: 'bsc', chainId: 56},
+    network: { label: 'BSC', value: 'bsc', chainId: getChainId()}, // TODO prince
     searchKey: '',
     addressType: null,
     timer: null
@@ -51,7 +51,7 @@ export const HomeSlice = createSlice({
     },
     setNetworkInfo: (state, action) => {
       // console.log("setNetworkInfo action=", action.payload)
-      window.localStorage.setItem(ChainIdStorageName, `${action.payload.network.chainId}`)
+      window.localStorage.setItem("SELECTED_CHAIN_ID", `${action.payload.network.chainId}`)
       console.log("setNetworkInfo payload =", action.payload);
       if(action.payload.searchKey !== undefined) {
         state.searchKey = action.payload.searchKey

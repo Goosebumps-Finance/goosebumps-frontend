@@ -10,8 +10,8 @@ import { usePollBlockNumber } from 'state/block/hooks'
 import { usePollCoreFarmData } from 'state/farms/hooks'
 import { useFetchProfile } from 'state/profile/hooks'
 import SubgraphHealthIndicator from 'components/SubgraphHealthIndicator'
-import { ChainIdStorageName } from 'config/constants'
 import ComingSoon from 'components/Modal/ComingSoon'
+import { getChainId } from 'utils/getChainId'
 
 import GlobalStyle from './style/Global'
 import Menu from './components/Menu'
@@ -68,8 +68,8 @@ const App: React.FC = () => {
   useSentryUser()
 
   useEffect(() => {
-    // window.localStorage.removeItem(ChainIdStorageName)
-    window.localStorage.setItem(ChainIdStorageName, "56")
+    // window.localStorage.removeItem("SELECTED_CHAIN_ID")
+    window.localStorage.setItem("SELECTED_CHAIN_ID", `${getChainId()}`) // TODO prince
   }, [])
 
   return (
@@ -109,11 +109,11 @@ const App: React.FC = () => {
             {/* <Route exact path="/charts/:networkName/:address/:pairAddress" render={() => <SimpleCharts />} /> */}
 
             {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
-            <Route exact strict path="/swap">
+            {/* <Route exact strict path="/swap">
               <ComingSoon />
-            </Route>
-            {/* <Route exact strict path="/swap" component={Swap} />
-            <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} /> */}
+            </Route> */}
+            <Route exact strict path="/swap" component={Swap} />
+            <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
             <Route exact strict path="/liquidityFindToken" component={PoolFinder} />
             <Route exact strict path="/liquidity" component={Liquidity} />
             <Route exact path="/liquidityAdd" component={AddLiquidity} />

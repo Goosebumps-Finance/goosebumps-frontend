@@ -1,16 +1,13 @@
-import { ChainId } from '@goosebumps/sdk'
-import { ChainIdStorageName } from 'config/constants'
+// import { ChainId } from '@goosebumps/sdk'
 import addresses from 'config/constants/contracts'
 import { Address } from 'config/constants/types'
+// import { constant } from 'lodash'
 import { VaultKey } from 'state/types'
+import { getChainId } from './getChainId'
 
-export const getAddress = (address: Address, chainId?: string): string => {
-  let defaultChainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
-  if(Number.isNaN(defaultChainId))
-    defaultChainId = ChainId.MAINNET;
-  return address[chainId??defaultChainId] ? address[chainId??defaultChainId] : address[ChainId.MAINNET]
+export const getAddress = (address: Address): string => {
+  return address[getChainId()]
 }
-
 export const getMasterChefAddress = () => {
   return getAddress(addresses.masterChef)
 }

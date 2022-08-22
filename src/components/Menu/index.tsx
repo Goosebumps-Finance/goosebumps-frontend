@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router'
 import { useHistory } from 'react-router-dom'
 import { InputGroup, Menu as UikitMenu } from '@goosebumps/uikit'
+import { ChainId } from '@goosebumps/sdk'
 import linq from 'linq'
 import { ethers } from 'ethers'
 import { languageList } from 'config/localization/languages'
 import { useTranslation } from 'contexts/Localization'
-import PhishingWarningBanner from 'components/PhishingWarningBanner'
+// import PhishingWarningBanner from 'components/PhishingWarningBanner'
 import CustomSelect, { OptionProps } from 'components/CustomSelect/CustomSelect'
 import useTheme from 'hooks/useTheme'
 import { usePriceEmpireBusd } from 'state/farms/hooks'
@@ -15,7 +16,6 @@ import { setAddressType, setNetworkInfo } from 'state/home'
 import { State } from 'state/types'
 import { usePhishingBannerManager } from 'state/user/hooks'
 import { API_SERVER } from 'config'
-import { ChainIdStorageName } from 'config/constants'
 import networks from 'config/constants/networks.json';
 import { getAsyncData } from 'utils/requester'
 import changeNetwork from 'utils/changeNetwork'
@@ -144,10 +144,10 @@ const Menu = (props) => {
 
   useEffect(() => {
     let _index = 0;
-    // if(network.chainId === 1) _index = 0
-    if(network.chainId === 56) _index = 0
-    // if(network.chainId === 137) _index = 2
-    if(network.chainId === 97) _index = 1
+    // if(network.chainId === ChainId.ETHEREUM) _index = 0
+    if(network.chainId === ChainId.MAINNET) _index = 0
+    // if(network.chainId === ChainId.POLYGON) _index = 2
+    if(network.chainId === ChainId.TESTNET) _index = 1
     setNetworkIndex(_index)
     // if(searchKey) {
       // console.log("searchKey=", searchKey)

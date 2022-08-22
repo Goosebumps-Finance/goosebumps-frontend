@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { BSC_BLOCK_TIME } from 'config'
+import { getChainId } from 'utils/getChainId'
 import { getSimpleRpcProvider /* , simpleRpcProvider */ } from 'utils/providers'
-import { ChainIdStorageName } from 'config/constants'
 
 /**
  * Returns a countdown in seconds of a given block
@@ -12,9 +12,7 @@ const useBlockCountdown = (blockNumber: number) => {
 
   useEffect(() => {
     const startCountdown = async () => {
-      let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
-      if(Number.isNaN(chainId)) chainId = 56
-      const rpcProvider = getSimpleRpcProvider(chainId)
+      const rpcProvider = getSimpleRpcProvider(getChainId())
       const currentBlock = await rpcProvider.getBlockNumber()
 
       if (blockNumber > currentBlock) {

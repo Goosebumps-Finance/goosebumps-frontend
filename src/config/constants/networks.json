@@ -147,7 +147,7 @@
       "NickName": "polygon",
       "chainId": 137,
       "chainHexId": "0x89",
-      "RPC": "https://speedy-nodes-nyc.moralis.io/03eb35954a0b7ed092444a8e/polygon/mainnet",
+      "RPC": "https://matic-mainnet-archive-rpc.bwarelabs.com",
       "Explorer": "https://polygonscan.com/",
       "MulticallAddress": "0x11ce4B23bD875D7F5C6a31084f55fDe1e9A87507",
       "SwapApi": "https://polygon.api.0x.org/",

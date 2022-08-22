@@ -2,7 +2,8 @@ import { ChainId, Pair, Token } from '@goosebumps/sdk'
 import flatMap from 'lodash/flatMap'
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { BASES_TO_TRACK_LIQUIDITY_FOR, ChainIdStorageName, PINNED_PAIRS } from 'config/constants'
+import { BASE_FACTORY_ADDRESS, BASE_INIT_CODE_HASH, BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from 'config/constants'
+import { getChainId } from 'utils/getChainId'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useAllTokens } from 'hooks/Tokens'
 import { AppDispatch, AppState } from '../../index'
@@ -352,11 +353,7 @@ export function useRemoveUserAddedToken(): (chainId: number, address: string) =>
 }
 
 export function useGasPrice(): string {
-  // const chainId = process.env.REACT_APP_CHAIN_ID
-  let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
-  if(Number.isNaN(chainId)) {
-    chainId = 56
-  }
+  // let chainId = getChainId()
   const userGas = useSelector<AppState, AppState['user']['gasPrice']>((state) => state.user.gasPrice)  
   // return chainId === ChainId.MAINNET ? userGas : GAS_PRICE_GWEI.testnet
   return userGas
@@ -400,7 +397,7 @@ export function usePairAdder(): (pair: Pair) => void {
  * @param tokenB the other token
  */
 export function toV2LiquidityToken([tokenA, tokenB]: [Token, Token]): Token {
-  return new Token(tokenA.chainId, Pair.getAddress(tokenA, tokenB), 18, 'Goose-lp', 'Goosebumps LPs')
+  return new Token(tokenA.chainId, Pair.getAddress(BASE_FACTORY_ADDRESS[getChainId()], BASE_INIT_CODE_HASH[getChainId()], tokenA, tokenB), 18, 'Goose-lp', 'Goosebumps LPs') // TODO prince
 }
 
 /**

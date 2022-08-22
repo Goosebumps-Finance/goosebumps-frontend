@@ -43,3 +43,4 @@ src/config/abi/types
 firebase.json
 netlify.toml
 build.zip
+sdk.zip

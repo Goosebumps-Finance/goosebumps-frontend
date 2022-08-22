@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { request, gql } from 'graphql-request'
 import { GRAPH_HEALTH } from 'config/constants/endpoints'
-import { ChainIdStorageName } from 'config/constants'
+import { getChainId } from 'utils/getChainId'
 import { getSimpleRpcProvider /* , simpleRpcProvider */ } from 'utils/providers'
 import { useSlowFresh } from './useRefresh'
 
@@ -56,9 +56,7 @@ const useSubgraphHealth = () => {
           `,
         )
 
-        let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
-        if(Number.isNaN(chainId)) chainId = 56
-        const rpcProvider = getSimpleRpcProvider(chainId)
+        const rpcProvider = getSimpleRpcProvider(getChainId())
         const currentBlock = await rpcProvider.getBlockNumber()
 
         const isHealthy = indexingStatusForCurrentVersion.health === 'healthy'

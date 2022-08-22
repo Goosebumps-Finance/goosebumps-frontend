@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { isAddress } from 'utils'
+import { getChainId } from 'utils/getChainId'
 import LogoLoader from './LogoLoader'
 
 const StyledLogo = styled(LogoLoader)<{ size: string }>`
@@ -21,13 +22,13 @@ export const CurrencyLogo: React.FC<{
     const defaultTokenAddrs = ['0x293C3Ee9ABaCb08BB8ceD107987F00EfD1539288', '0xE7C6D00B5314EE2651Df6E18e84d6d6dF0EA96a6']
     if(typeof checksummedAddress === 'string' && defaultTokenAddrs.includes(checksummedAddress)) {
       // return `https://assets.trustwalletapp.com/blockchains/smartchain/assets/${defaultTokenAddrs[0]}/logo.png`
-      return `https://goosebumps.finance/images/tokens/56/${defaultTokenAddrs[0]}.png`
-      // return `https://cryptosnowprince.com/images/tokens/56/${defaultTokenAddrs[0]}.png`
+      return `https://goosebumps.finance/images/tokens/${getChainId()}/${defaultTokenAddrs[0]}.png`
+      // return `https://cryptosnowprince.com/images/tokens/${getChainId()}/${defaultTokenAddrs[0]}.png`
     }
     if (checksummedAddress) {
       // return `https://assets.trustwalletapp.com/blockchains/smartchain/assets/${checksummedAddress}/logo.png`
-      return `https://goosebumps.finance/images/tokens/56/${checksummedAddress}.png`
-      // return `https://cryptosnowprince.com/images/tokens/56/${checksummedAddress}.png`
+      return `https://goosebumps.finance/images/tokens/${getChainId()}/${checksummedAddress}.png`
+      // return `https://cryptosnowprince.com/images/tokens/${getChainId()}/${checksummedAddress}.png`
     }
     return null
   }, [address])

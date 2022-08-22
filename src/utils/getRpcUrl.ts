@@ -13,7 +13,7 @@ if (
 // Array of available nodes to connect to
 export const nodes = [process.env.REACT_APP_NODE_1, process.env.REACT_APP_NODE_2, process.env.REACT_APP_NODE_3]
 
-const getNodeUrl = (chainId = 56) => {
+const getNodeUrl = (chainId = ChainId.MAINNET) => {
   // Use custom node if available (both for development and production)
   // However on the testnet it wouldn't work, so if on testnet - comment out the REACT_APP_NODE_PRODUCTION from env file
   // if (process.env.REACT_APP_NODE_PRODUCTION) {
@@ -24,10 +24,10 @@ const getNodeUrl = (chainId = 56) => {
   if (chainId === ChainId.MAINNET) {
     return getBscNodeUrl()
   }
-  if(chainId === 1) { // ChainId.ETH_MAIN) 
+  if(chainId === ChainId.ETHEREUM) { // ChainId.ETH_MAIN) 
     return getEthNodeUrl()
   }
-  if(chainId === 137) { // ChainId.POLYGON_MAIN) 
+  if(chainId === ChainId.POLYGON) { // ChainId.POLYGON_MAIN) 
     return getPolygonNodeUrl()
   }
     return getBscTestnetNodeUrl()

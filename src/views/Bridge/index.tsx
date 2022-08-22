@@ -40,10 +40,10 @@ const Bridge = () => {
 
   useEffect(() => {
     let _index = 0;
-    if(network.chainId === 1) _index = 0
-    if(network.chainId === 56) _index = 1
-    if(network.chainId === 137) _index = 2
-    if(network.chainId === 97) _index = 3
+    if(network.chainId === ChainId.ETHEREUM) _index = 0
+    if(network.chainId === ChainId.MAINNET) _index = 1
+    if(network.chainId === ChainId.POLYGON) _index = 2
+    if(network.chainId === ChainId.TESTNET) _index = 3
     setFromIndex(_index)
     console.log("Bridge index = ", _index)
   }, [network])

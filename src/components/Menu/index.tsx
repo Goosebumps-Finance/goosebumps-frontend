@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router'
 import { useHistory } from 'react-router-dom'
 import { InputGroup, Menu as UikitMenu } from '@goosebumps/uikit'
+import { ChainId } from '@goosebumps/sdk'
 import linq from 'linq'
 import { ethers } from 'ethers'
 import { languageList } from 'config/localization/languages'
@@ -143,10 +144,10 @@ const Menu = (props) => {
 
   useEffect(() => {
     let _index = 0;
-    // if(network.chainId === 1) _index = 0
-    if(network.chainId === 56) _index = 0
-    // if(network.chainId === 137) _index = 2
-    if(network.chainId === 97) _index = 1
+    // if(network.chainId === ChainId.ETHEREUM) _index = 0
+    if(network.chainId === ChainId.MAINNET) _index = 0
+    // if(network.chainId === ChainId.POLYGON) _index = 2
+    if(network.chainId === ChainId.TESTNET) _index = 1
     setNetworkIndex(_index)
     // if(searchKey) {
       // console.log("searchKey=", searchKey)

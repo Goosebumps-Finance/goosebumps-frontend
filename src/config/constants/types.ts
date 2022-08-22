@@ -1,19 +1,19 @@
 import BigNumber from 'bignumber.js'
-import { Token } from '@goosebumps/sdk'
+import { ChainId, Token } from '@goosebumps/sdk'
 
 export type TranslatableText =
   | string
   | {
-      key: string
-      data?: {
-        [key: string]: string | number
-      }
+    key: string
+    data?: {
+      [key: string]: string | number
     }
+  }
 export interface Address { // TODO multichain
-  1?: string // ethereum
-  97?: string // bsc testnet
-  56: string // bsc mainnet
-  137?: string // polygon mainnet
+  [ChainId.ETHEREUM]?: string // ethereum
+  [ChainId.TESTNET]?: string // bsc testnet
+  [ChainId.MAINNET]: string // bsc mainnet
+  [ChainId.POLYGON]?: string // polygon mainnet
 }
 
 export interface SerializedToken {

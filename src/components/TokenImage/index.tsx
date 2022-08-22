@@ -7,6 +7,7 @@ import {
 } from '@goosebumps/uikit'
 import tokens from 'config/constants/tokens'
 import { Token } from '@goosebumps/sdk'
+import { getChainId } from 'utils/getChainId'
 
 interface TokenPairImageProps extends Omit<UIKitTokenPairImageProps, 'primarySrc' | 'secondarySrc'> {
   primaryToken: Token
@@ -15,7 +16,7 @@ interface TokenPairImageProps extends Omit<UIKitTokenPairImageProps, 'primarySrc
 
 const getImageUrlFromToken = (token: Token) => {
   const address = token.symbol === 'BNB' ? tokens.wbnb.address : token.address
-  return `/images/tokens/56/${address}.svg`
+  return `/images/tokens/${getChainId()}/${address}.svg`
 }
 
 export const TokenPairImage: React.FC<TokenPairImageProps> = ({ primaryToken, secondaryToken, ...props }) => {

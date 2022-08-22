@@ -91,10 +91,14 @@ const PortfolioTracker = () => {
     console.log("fetchTokenData res=", res);
     if(res) {
       setStatus(res.status);
-      if(res.status === 200 && res.address === params.address) {
-        await getLiveInfo(res.tokens);
-        setLoadingStep(2);
-        setReqAddress(res.address);
+      if(res.status === 200) {
+        if(res.address === params.address) {
+          await getLiveInfo(res.tokens);
+          setLoadingStep(2);
+          setReqAddress(res.address);
+        } else {
+          setLoadingStep(1);
+        }
       }  else if(res.status !== 0 && res.tokens.length === 0) {
         setLoadingStep(-1);
       }
@@ -119,6 +123,12 @@ const PortfolioTracker = () => {
       detailedNetwork,
       [params.address],
     )
+    console.log("getLiveInfo getTokenInfos: infos = ", infos);
+
+    if(infos === null) {
+      setLoadingStep(-1);
+      return;
+    }
 
     const query = linq.from(infos.infos)
     const newTokenInfos: any = tokens.map((item: TokenItemProps) => {
@@ -240,6 +250,7 @@ const PortfolioTracker = () => {
       const bPrice = b.info.isETH ? b.info.balance * b.info.price * infos.ethPrice : b.info.balance * b.info.price;
       return bPrice - aPrice
     });
+    console.log("newTokenInfos = ", newTokenInfos);
     setTokenInfos(newTokenInfos)
   }  
 
@@ -263,12 +274,10 @@ const PortfolioTracker = () => {
     console.log("params changed params=", params)
     if(params.address === undefined) {
       setLoadingStep(0);
-    } else {
+    } else if(params.address !== reqAddress) {
       setIsStartLoading(false);
-      if(params.address !== reqAddress) {
-        setLoadingStep(1)
-        setTokenInfos([]);
-      }
+      setLoadingStep(1)
+      setTokenInfos([]);
     }
   }, [params])
   // Get params from url and set it to state variable

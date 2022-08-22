@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { API_SERVER } from 'config'
 import { HomeState } from 'state/types'
+import { getChainId } from 'utils/getChainId'
 import { getAsyncData } from 'utils/requester'
 
 const initialState: HomeState = {
-    network: { label: 'BSC', value: 'bsc', chainId: 56},
+    network: { label: 'BSC', value: 'bsc', chainId: getChainId()}, // TODO prince
     searchKey: '',
     addressType: null,
     timer: null

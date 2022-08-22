@@ -11,6 +11,7 @@ import { usePollCoreFarmData } from 'state/farms/hooks'
 import { useFetchProfile } from 'state/profile/hooks'
 import SubgraphHealthIndicator from 'components/SubgraphHealthIndicator'
 import ComingSoon from 'components/Modal/ComingSoon'
+import { getChainId } from 'utils/getChainId'
 
 import GlobalStyle from './style/Global'
 import Menu from './components/Menu'
@@ -68,7 +69,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     // window.localStorage.removeItem("SELECTED_CHAIN_ID")
-    window.localStorage.setItem("SELECTED_CHAIN_ID", "56")
+    window.localStorage.setItem("SELECTED_CHAIN_ID", `${getChainId()}`) // TODO prince
   }, [])
 
   return (

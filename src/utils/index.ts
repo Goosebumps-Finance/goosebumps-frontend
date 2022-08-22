@@ -6,10 +6,11 @@ import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 import { BigNumber } from '@ethersproject/bignumber'
 import { abi as IUniswapV2Router02ABI } from '@uniswap/v2-periphery/build/IUniswapV2Router02.json'
 import { ChainId, JSBI, Percent, Token, CurrencyAmount, Currency, ETHER } from '@goosebumps/sdk'
-import { ChainIdStorageName, ROUTER_ADDRESS } from '../config/constants'
+import { ROUTER_ADDRESS } from '../config/constants'
 import { BASE_BSC_SCAN_URLS } from '../config'
 import { TokenAddressMap } from '../state/lists/hooks'
-import { getSimpleRpcProvider, simpleRpcProvider } from './providers'
+import { getSimpleRpcProvider /* , simpleRpcProvider */ } from './providers'
+import { getChainId } from './getChainId'
 
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {
@@ -88,24 +89,12 @@ export function getContract(address: string, ABI: any, signer?: ethers.Signer | 
     throw Error(`Invalid 'address' parameter '${address}'.`)
   }
 
-  const chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
-  if(Number.isNaN(chainId)) {
-    return new Contract(address, ABI, signer ?? simpleRpcProvider)
-  }
-  return new Contract(address, ABI, signer ?? getSimpleRpcProvider(chainId))
+  return new Contract(address, ABI, signer ?? getSimpleRpcProvider(getChainId()))
 }
 
 // account is optional
 export function getRouterContract(_: number, library: Web3Provider, account?: string): Contract {
   return getContract(ROUTER_ADDRESS[getChainId()], IUniswapV2Router02ABI, getProviderOrSigner(library, account))
-}
-
-export function getChainId(): number {
-  const chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
-  if(Number.isNaN(chainId)) {
-    return 56 // ChainId.MAINNET
-  }
-  return chainId
 }
 
 export function escapeRegExp(string: string): string {

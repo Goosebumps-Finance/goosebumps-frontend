@@ -1,6 +1,7 @@
 import { ChainId, Token } from '@goosebumps/sdk'
 import { useSelector } from 'react-redux'
 import { State } from 'state/types'
+import { getChainId } from 'utils/getChainId'
 import { serializeToken } from 'state/user/hooks/helpers'
 import { SerializedToken } from './types'
 
@@ -2042,8 +2043,7 @@ export const testnetTokens = defineTokens({
 } as const)
 
 export const tokens = () => {
-  let chainId = parseInt(window.localStorage.getItem("SELECTED_CHAIN_ID"), 10)
-  if(Number.isNaN(chainId)) chainId = 56
+  const chainId = getChainId()
   console.log("config/constants/token/tokens() chainId = ", chainId)
   // If testnet - return list comprised of testnetTokens wherever they exist, and mainnetTokens where they don't
   if (chainId === ChainId.TESTNET) {

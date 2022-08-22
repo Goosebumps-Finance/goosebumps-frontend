@@ -1,7 +1,6 @@
 import sample from 'lodash/sample'
 import linq from 'linq'
 import networks from 'config/constants/networks.json'
-import { ChainIdStorageName } from 'config/constants'
 import { ChainId } from '@goosebumps/sdk'
 
 if (
@@ -21,7 +20,7 @@ const getNodeUrl = (chainId = 56) => {
   //   return process.env.REACT_APP_NODE_PRODUCTION
   // }
   // return sample(nodes)
-  // const chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
+  // const chainId = parseInt(window.localStorage.getItem("SELECTED_CHAIN_ID"), 10)
   if (chainId === ChainId.MAINNET) {
     return getBscNodeUrl()
   }

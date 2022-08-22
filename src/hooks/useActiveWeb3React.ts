@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { Web3Provider } from '@ethersproject/providers'
+import { getChainId } from 'utils/getChainId'
 import { getSimpleRpcProvider /* , simpleRpcProvider */ } from 'utils/providers'
 // eslint-disable-next-line import/no-unresolved
 import { Web3ReactContextInterface } from '@web3-react/core/dist/types'
@@ -12,17 +13,20 @@ import { Web3ReactContextInterface } from '@web3-react/core/dist/types'
 const useActiveWeb3React = (): Web3ReactContextInterface<Web3Provider> => {
   const { library, chainId, ...web3React } = useWeb3React()
   const refEth = useRef(library)
-  const [provider, setProvider] = useState(library || getSimpleRpcProvider(chainId ?? parseInt(process.env.REACT_APP_CHAIN_ID, 10)))
+  const [provider, setProvider] = useState(library || getSimpleRpcProvider(chainId ?? getChainId()))
+  // const [provider, setProvider] = useState(library || getSimpleRpcProvider(chainId ?? parseInt(process.env.REACT_APP_CHAIN_ID, 10)))
   // const [provider, setProvider] = useState(library || simpleRpcProvider)
 
   useEffect(() => {
     if (library !== refEth.current) {
-      setProvider(library || getSimpleRpcProvider(chainId ?? parseInt(process.env.REACT_APP_CHAIN_ID, 10)))
+      setProvider(library || getSimpleRpcProvider(chainId ?? getChainId()))
+      // setProvider(library || getSimpleRpcProvider(chainId ?? parseInt(process.env.REACT_APP_CHAIN_ID, 10)))
       refEth.current = library
     }
   }, [library])
 
-  return { library: provider, chainId: chainId ?? parseInt(process.env.REACT_APP_CHAIN_ID, 10), ...web3React }
+  return { library: provider, chainId: chainId ?? getChainId(), ...web3React }
+  // return { library: provider, chainId: chainId ?? parseInt(process.env.REACT_APP_CHAIN_ID, 10), ...web3React }
 }
 
 export default useActiveWeb3React

@@ -1,5 +1,6 @@
 import { Token, Pair, ChainId } from '@goosebumps/sdk'
-import { isAddress, getChainId } from 'utils'
+import { getChainId } from 'utils/getChainId'
+import { isAddress } from 'utils'
 import { BASE_FACTORY_ADDRESS, BASE_INIT_CODE_HASH } from 'config/constants'
 
 const getLpAddress = (token1: string | Token, token2: string | Token) => {
@@ -22,7 +23,7 @@ const getLpAddress = (token1: string | Token, token2: string | Token) => {
     }
     token2AsTokenInstance = new Token(ChainId.MAINNET, checksummedToken2Address, 18)
   }
-  return Pair.getAddress(BASE_FACTORY_ADDRESS[getChainId()], BASE_INIT_CODE_HASH, token1AsTokenInstance as Token, token2AsTokenInstance as Token)
+  return Pair.getAddress(BASE_FACTORY_ADDRESS[getChainId()], BASE_INIT_CODE_HASH[getChainId()], token1AsTokenInstance as Token, token2AsTokenInstance as Token)
 }
 
 export default getLpAddress

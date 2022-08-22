@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import BigNumber from 'bignumber.js'
+import { getChainId } from 'utils/getChainId'
 // import poolsConfig from 'config/constants/pools'
-import { ChainIdStorageName } from 'config/constants'
 import { newpools } from 'config/constants/pools'
 import {
   AppThunk,
@@ -18,7 +18,7 @@ import { getPoolApr } from 'utils/apr'
 import { BIG_ZERO } from 'utils/bigNumber'
 import { getCakeContract, getMasterchefContract } from 'utils/contractHelpers'
 import { getBalanceNumber } from 'utils/formatBalance'
-import { getSimpleRpcProvider, simpleRpcProvider } from 'utils/providers'
+import { getSimpleRpcProvider /* , simpleRpcProvider */ } from 'utils/providers'
 import { fetchIfoPoolFeesData, fetchPublicIfoPoolData } from './fetchIfoPoolPublic'
 import fetchIfoPoolUserData from './fetchIfoPoolUser'
 // import { fetchPoolsBlockLimits, fetchPoolsStakingLimits, fetchPoolsTotalStaking } from './fetchPools'
@@ -122,9 +122,7 @@ export const fetchPoolsPublicDataAsync = () => async (dispatch, getState) => {
   let currentBlock = getState().block?.currentBlock
 
   if (!currentBlock) {
-    let chainId = parseInt(window.localStorage.getItem(ChainIdStorageName), 10)
-    if(Number.isNaN(chainId)) chainId = 56
-    const rpcProvider = getSimpleRpcProvider(chainId)
+    const rpcProvider = getSimpleRpcProvider(getChainId())
     currentBlock = await rpcProvider.getBlockNumber()
   }
 

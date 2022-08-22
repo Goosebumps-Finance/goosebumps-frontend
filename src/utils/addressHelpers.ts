@@ -8,7 +8,6 @@ import { getChainId } from './getChainId'
 export const getAddress = (address: Address): string => {
   return address[getChainId()]
 }
-
 export const getMasterChefAddress = () => {
   return getAddress(addresses.masterChef)
 }

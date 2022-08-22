@@ -38,9 +38,9 @@ export const GAS_PRICE = {
     testnet : '10'
   },
   [ChainId.MAINNET]: { // TODO prince
-    default: "3",
-    fast: "5",
-    instant: "8",
+    default: "5",
+    fast: "6",
+    instant: "7",
     testnet: "13",
   },
   [ChainId.TESTNET]: {

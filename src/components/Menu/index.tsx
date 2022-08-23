@@ -14,7 +14,7 @@ import useTheme from 'hooks/useTheme'
 import { usePriceEmpireBusd } from 'state/farms/hooks'
 import { setAddressType, setNetworkInfo } from 'state/home'
 import { State } from 'state/types'
-import { usePhishingBannerManager } from 'state/user/hooks'
+// import { usePhishingBannerManager } from 'state/user/hooks'
 import { API_SERVER } from 'config'
 import networks from 'config/constants/networks.json';
 import { chainList } from 'config/constants/networks'
@@ -57,7 +57,7 @@ const Menu = (props) => {
   const cakePriceUsd = usePriceEmpireBusd()
   const { currentLanguage, setLanguage, t } = useTranslation()
   const { pathname } = useLocation()
-  const [showPhishingWarningBanner] = usePhishingBannerManager()
+  // const [showPhishingWarningBanner] = usePhishingBannerManager()
 
   const { network, searchKey } = useSelector((state: State) => state.home)
   const [networkIndex, setNetworkIndex] = useState(0)

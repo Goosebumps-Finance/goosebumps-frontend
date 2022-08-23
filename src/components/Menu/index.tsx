@@ -17,6 +17,7 @@ import { State } from 'state/types'
 import { usePhishingBannerManager } from 'state/user/hooks'
 import { API_SERVER } from 'config'
 import networks from 'config/constants/networks.json';
+import { chainList } from 'config/constants/networks'
 import { getAsyncData } from 'utils/requester'
 import changeNetwork from 'utils/changeNetwork'
 
@@ -27,27 +28,11 @@ import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
 
 const SearchItem = ({ onChangeNetwork, selIndex }) => {
-  const { t } = useTranslation();
+  // console.log("network changed: selIndex", selIndex)
+
   return <>
     <CustomSelect
-      options={[
-        {
-          label: t("BSC"),
-          value: "bsc"
-        },
-        {
-          label: t("BSC Testnet"),
-          value: "bsc_testnet"
-        }
-        // {
-        //   label: t("Ethereum"),
-        //   value: "ethereum"
-        // },
-        // {
-        //   label: t("Polygon"),
-        //   value: "matic"
-        // },
-      ]}
+      options={chainList}
       header={{
         border: "1px solid #52555c",
         background: "transparent"
@@ -59,6 +44,8 @@ const SearchItem = ({ onChangeNetwork, selIndex }) => {
       defaultOptionIndex={0}
       onOptionChange={onChangeNetwork}
       selIndex={selIndex}
+      length={chainList.length}
+      startIndex={0}
     />
   </>
 }
@@ -162,6 +149,7 @@ const Menu = (props) => {
     // if(searchKey) {
     // console.log("searchKey=", searchKey)
     handleSearch(searchKey)
+    // console.log("network changed: chainId", network.chainId)
     // }
   }, [network, searchKey])
 

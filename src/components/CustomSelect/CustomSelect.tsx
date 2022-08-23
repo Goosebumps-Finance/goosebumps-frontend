@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 import { ArrowDropDownIcon, Box, BoxProps, Text } from '@goosebumps/uikit'
 import { useLocation } from 'react-router-dom'
 
-const DropDownHeader = styled.div<{isHome: boolean}>`
+const DropDownHeader = styled.div<{ isHome: boolean }>`
   width: 100%;
   height: 40px;
   display: flex;
@@ -17,8 +17,8 @@ const DropDownHeader = styled.div<{isHome: boolean}>`
   // background: ${({ theme }) => theme.colors.input};
   // background: transparent;
   background: #182132aa;
-  ${({isHome}) => 
-    isHome && 
+  ${({ isHome }) =>
+    isHome &&
     `
       background: #0a3040aa;
     `
@@ -26,7 +26,7 @@ const DropDownHeader = styled.div<{isHome: boolean}>`
   transition: border-radius 0.15s;
 `
 
-const DropDownListContainer = styled.div<{isHome: boolean}>`
+const DropDownListContainer = styled.div<{ isHome: boolean }>`
   min-width: 136px;
   height: 0;
   position: absolute;
@@ -34,8 +34,8 @@ const DropDownListContainer = styled.div<{isHome: boolean}>`
   // background: ${({ theme }) => theme.colors.input};
   // background: transparent;
   background: #182132aa;
-  ${({isHome}) => 
-    isHome && 
+  ${({ isHome }) =>
+    isHome &&
     `
       background: #0a3040aa;
     `
@@ -52,15 +52,15 @@ const DropDownListContainer = styled.div<{isHome: boolean}>`
   }
 `
 
-const DropDownContainer = styled(Box)<{ isOpen: boolean, isHome: boolean }>`
+const DropDownContainer = styled(Box) <{ isOpen: boolean, isHome: boolean }>`
   cursor: pointer;
   width: 100%;
   position: relative;
   // background: ${({ theme }) => theme.colors.input};
   // background: transparent;
   background: #182132aa;
-  ${({isHome}) => 
-    isHome && 
+  ${({ isHome }) =>
+    isHome &&
     `
       background: #0a3040aa;
     `
@@ -130,6 +130,8 @@ export interface SelectProps extends BoxProps {
   header?: any
   listContainer?: any
   selIndex?: number
+  length?: number
+  startIndex?: number
 }
 
 export interface OptionProps {
@@ -142,6 +144,8 @@ const CustomSelect: React.FunctionComponent<SelectProps> = ({
   onOptionChange,
   defaultOptionIndex = 0,
   selIndex,
+  length,
+  startIndex,
   ...props
 }) => {
   const dropdownRef = useRef(null)
@@ -177,12 +181,12 @@ const CustomSelect: React.FunctionComponent<SelectProps> = ({
   }, [])
 
   useEffect(() => {
-    if(selIndex)
+    if (selIndex >= startIndex && selIndex < length)
       setSelectedOptionIndex(selIndex)
   }, [selIndex])
 
   useEffect(() => {
-    if(selectedOptionIndex !== selIndex)
+    if (selectedOptionIndex !== selIndex)
       setSelectedOptionIndex(selIndex)
   }, [selectedOptionIndex])
 

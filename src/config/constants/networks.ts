@@ -8,3 +8,22 @@ const NETWORK_URLS: { [chainId in ChainId]: string } = {
 }
 
 export default NETWORK_URLS
+
+export const chainList = [
+  {
+    label: "BSC",
+    value: "bsc"
+  },
+  {
+    label: "BSC Testnet",
+    value: "bsc_testnet"
+  }
+  // {
+  //   label: "Ethereum",
+  //   value: "ethereum"
+  // },
+  // {
+  //   label: "Polygon",
+  //   value: "matic"
+  // },
+]

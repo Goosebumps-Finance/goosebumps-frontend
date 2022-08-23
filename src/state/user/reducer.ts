@@ -116,7 +116,7 @@ export const initialState: UserState = {
   gasPrice: GAS_PRICE_GWEI[getChainId()].default,
   watchlistTokens: [],
   watchlistPools: [],
-  showPhishingWarningBanner: true,
+  showPhishingWarningBanner: false,
 }
 
 export default createReducer(initialState, (builder) =>

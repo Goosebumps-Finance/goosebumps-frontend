@@ -10,10 +10,11 @@ import networks from 'config/constants/networks.json'
 import store from 'state'
 import { setNetworkInfo } from 'state/home'
 
-import getNodeUrl, { getBscNodeUrl, getEthNodeUrl, getPolygonNodeUrl } from './getRpcUrl'
+// import getNodeUrl, { getBscNodeUrl, getEthNodeUrl, getPolygonNodeUrl } from './getRpcUrl'
+import getNodeUrl from './getRpcUrl'
 
 const POLLING_INTERVAL = 12000
-const rpcUrl = getNodeUrl()
+// const rpcUrl = getNodeUrl()
 // const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 10)
 
 // console.log("ChainId.MAINNET = ", ChainId.MAINNET, " ChainId.TESTNET = ", ChainId.TESTNET)
@@ -22,7 +23,13 @@ const injected = new InjectedConnector({ supportedChainIds: [ChainId.MAINNET, Ch
 
 const walletconnect = new WalletConnectConnector({
   // rpc: { [chainId]: rpcUrl, [ChainId.ETHEREUM]: getEthNodeUrl(), [ChainId.POLYGON]: getPolygonNodeUrl() },
-  rpc: { [ChainId.TESTNET]: rpcUrl, [ChainId.MAINNET]: getBscNodeUrl()}, 
+  // rpc: { [ChainId.TESTNET]: rpcUrl, [ChainId.MAINNET]: getBscNodeUrl()}, 
+  rpc: {
+    [ChainId.TESTNET]: getNodeUrl(ChainId.TESTNET),
+    [ChainId.MAINNET]: getNodeUrl(ChainId.MAINNET),
+    [ChainId.ETHEREUM]: getNodeUrl(ChainId.ETHEREUM),
+    [ChainId.POLYGON]: getNodeUrl(ChainId.POLYGON),
+  },
   qrcode: true,
   pollingInterval: POLLING_INTERVAL,
 })
@@ -70,13 +77,13 @@ export const signMessage = async (
   return provider.getSigner(account).signMessage(message)
 }
 
-if(window.ethereum) {
+if (window.ethereum) {
   // @ts-ignore
   window.ethereum?.on('chainChanged', _chainId => {
     const newChainId = parseInt(_chainId)
-    if(newChainId === ChainId.ETHEREUM || newChainId === ChainId.MAINNET || newChainId === ChainId.TESTNET || newChainId === ChainId.POLYGON) {
+    if (newChainId === ChainId.ETHEREUM || newChainId === ChainId.MAINNET || newChainId === ChainId.TESTNET || newChainId === ChainId.POLYGON) {
       const newNetwork = linq.from(networks).where((x) => x.chainId === newChainId).single()
-      store.dispatch(setNetworkInfo({network: {label: newNetwork.Display, value: newNetwork.Name, chainId: newNetwork.chainId}}))
+      store.dispatch(setNetworkInfo({ network: { label: newNetwork.Display, value: newNetwork.Name, chainId: newNetwork.chainId } }))
     }
   })
 }

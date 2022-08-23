@@ -17,9 +17,9 @@ import BridgeCard from './components/BridgeCard'
 import './bridge.scss'
 
 const options = {
-  1 : 0,
+  [ChainId.ETHEREUM] : 0,
   [ChainId.MAINNET]: 1,
-  137: 2,
+  [ChainId.POLYGON]: 2,
   [ChainId.TESTNET]: 3
 }
 

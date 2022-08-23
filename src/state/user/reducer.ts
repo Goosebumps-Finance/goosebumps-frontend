@@ -1,5 +1,6 @@
 import { ChainId } from '@goosebumps/sdk'
 import { createReducer } from '@reduxjs/toolkit'
+import { getChainId } from 'utils/getChainId'
 import { SerializedToken } from 'config/constants/types'
 import { DEFAULT_DEADLINE_FROM_NOW, INITIAL_ALLOWED_SLIPPAGE } from '../../config/constants'
 import { updateVersion } from '../global/actions'
@@ -112,7 +113,7 @@ export const initialState: UserState = {
   userPredictionChartDisclaimerShow: true,
   userExpertModeAcknowledgementShow: true,
   userUsernameVisibility: false,
-  gasPrice: GAS_PRICE_GWEI[ChainId.MAINNET].default,
+  gasPrice: GAS_PRICE_GWEI[getChainId()].default,
   watchlistTokens: [],
   watchlistPools: [],
   showPhishingWarningBanner: true,

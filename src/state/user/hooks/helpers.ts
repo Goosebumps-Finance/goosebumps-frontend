@@ -26,28 +26,24 @@ export function deserializeToken(serializedToken: SerializedToken): Token {
 
 export const GAS_PRICE = {
   [ChainId.ETHEREUM]: {
-    default : '5',
-    fast : '6',
-    instant : '7',
-    testnet : '10'
+    default : '6',
+    fast : '7',
+    instant : '8',
   },
   [ChainId.POLYGON]: {
-    default : '5',
-    fast : '6',
-    instant : '7',
-    testnet : '10'
+    default : '25',
+    fast : '35',
+    instant : '50',
   },
-  [ChainId.MAINNET]: { // TODO prince
+  [ChainId.MAINNET]: {
     default: "5",
     fast: "6",
     instant: "7",
-    testnet: "13",
   },
   [ChainId.TESTNET]: {
-    default: "3",
-    fast: "5",
-    instant: "8",
-    testnet: "13",
+    default: "10",
+    fast: "12",
+    instant: "14",
   }
 }
 
@@ -56,25 +52,21 @@ export const GAS_PRICE_GWEI = {
     default: parseUnits(GAS_PRICE[ChainId.MAINNET].default, 'gwei').toString(),
     fast: parseUnits(GAS_PRICE[ChainId.MAINNET].fast, 'gwei').toString(),
     instant: parseUnits(GAS_PRICE[ChainId.MAINNET].instant, 'gwei').toString(),
-    testnet: parseUnits(GAS_PRICE[ChainId.MAINNET].testnet, 'gwei').toString(),
   },
   [ChainId.TESTNET]: {
     default: parseUnits(GAS_PRICE[ChainId.MAINNET].default, 'gwei').toString(),
     fast: parseUnits(GAS_PRICE[ChainId.MAINNET].fast, 'gwei').toString(),
     instant: parseUnits(GAS_PRICE[ChainId.MAINNET].instant, 'gwei').toString(),
-    testnet: parseUnits(GAS_PRICE[ChainId.MAINNET].testnet, 'gwei').toString(),
   },
   // TODO prince
   [ChainId.ETHEREUM]: {
     default: parseUnits(GAS_PRICE[ChainId.ETHEREUM].default, 'gwei').toString(),
     fast: parseUnits(GAS_PRICE[ChainId.ETHEREUM].fast, 'gwei').toString(),
     instant: parseUnits(GAS_PRICE[ChainId.ETHEREUM].instant, 'gwei').toString(),
-    testnet: parseUnits(GAS_PRICE[ChainId.ETHEREUM].testnet, 'gwei').toString(),
   },
   [ChainId.POLYGON]: {
     default: parseUnits(GAS_PRICE[ChainId.POLYGON].default, 'gwei').toString(),
     fast: parseUnits(GAS_PRICE[ChainId.POLYGON].fast, 'gwei').toString(),
     instant: parseUnits(GAS_PRICE[ChainId.POLYGON].instant, 'gwei').toString(),
-    testnet: parseUnits(GAS_PRICE[ChainId.POLYGON].testnet, 'gwei').toString(),
   }
 }

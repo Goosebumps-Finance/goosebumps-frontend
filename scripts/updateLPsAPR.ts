@@ -2,6 +2,7 @@ import fs from 'fs'
 import { request, gql } from 'graphql-request'
 import BigNumber from 'bignumber.js'
 import { ChainId } from '@goosebumps/sdk'
+import { getChainId } from '../src/utils/getChainId'
 import chunk from 'lodash/chunk'
 import { sub, getUnixTime } from 'date-fns'
 import farmsConfig from '../src/config/constants/farms'
@@ -100,7 +101,7 @@ const fetchAndUpdateLPsAPR = async () => {
   // pids before 250 are inactive farms from v1 and failed v2 migration
   const lowerCaseAddresses = farmsConfig
     .filter((farm) => farm.pid > 250)
-    .map((farm) => farm.lpAddresses[ChainId.MAINNET].toLowerCase())
+    .map((farm) => farm.lpAddresses[getChainId()].toLowerCase())
   console.info(`Fetching farm data for ${lowerCaseAddresses.length} addresses`)
   // Split it into chunks of 30 addresses to avoid gateway timeout
   const addressesInGroups = chunk(lowerCaseAddresses, 30)

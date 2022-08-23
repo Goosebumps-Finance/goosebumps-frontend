@@ -21,6 +21,7 @@ import { getTokenInfos } from 'utils/getTokenInfos'
 import { calculatePricescale, calculateTokenscale } from 'utils/numberHelpers'
 import networks from 'config/constants/networks.json'
 import TradesModal from './components/TradesModal'
+import { mockData } from './mockData'
 
 const HintText = styled.p`
   font-weight: bold;
@@ -90,13 +91,15 @@ const PortfolioTracker = () => {
       _address,
     ])
     
+    // const res = mockData
+
     console.log("fetchTokenData res=", res);
     if(res) {
       setStatus(res.status);
       if(res.status === 200) {
         if(res.address === params.address) {
           const resFilter = _.filter(res.tokens, (a) => {return a.volume !== 0 && a.outs !== 0})
-          console.log("resFilter = ", resFilter)
+          // console.log("resFilter = ", resFilter)
 
           await getLiveInfo(resFilter);
           setLoadingStep(2);
@@ -328,7 +331,7 @@ const PortfolioTracker = () => {
         
       }
     }
-  }, [fastRefresh])
+  }, [slowRefresh])
   // When wallet connected, set params variable
   useEffect(() => {
     console.log("useEffect 3")

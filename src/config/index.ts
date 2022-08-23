@@ -1,6 +1,7 @@
 import { ChainId } from '@goosebumps/sdk'
 import BigNumber from 'bignumber.js/bignumber'
 import { BIG_TEN } from 'utils/bigNumber'
+import { getChainId } from 'utils/getChainId'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -15,8 +16,8 @@ export const BSC_BLOCK_TIME = 3
 export const BASE_BSC_SCAN_URLS = {
   [ChainId.MAINNET]: 'https://bscscan.com',
   [ChainId.TESTNET]: 'https://testnet.bscscan.com',
-  // [ChainId.ETH_MAIN]: 'https://etherscan.io',
-  // [ChainId.POLYGON_MAIN]: 'https://polygonscan.com'
+  [ChainId.ETHEREUM]: 'https://etherscan.io',
+  [ChainId.POLYGON]: 'https://polygonscan.com'
 }
 
 // CAKE_PER_BLOCK details
@@ -31,7 +32,7 @@ export const BLOCKS_PER_YEAR = (60 / BSC_BLOCK_TIME) * 60 * 24 * 365 // 10512000
 export const CAKE_PER_YEAR = CAKE_PER_BLOCK * BLOCKS_PER_YEAR
 export const BASE_URL = 'https://goosebumps.finance'
 export const BASE_ADD_LIQUIDITY_URL = `${BASE_URL}/liquidityAdd`
-export const BASE_BSC_SCAN_URL = BASE_BSC_SCAN_URLS[ChainId.MAINNET]
+export const BASE_BSC_SCAN_URL = BASE_BSC_SCAN_URLS[getChainId()]
 export const DEFAULT_TOKEN_DECIMAL = BIG_TEN.pow(18)
 export const DEFAULT_GAS_LIMIT = 200000
 export const AUCTION_BIDDERS_TO_FETCH = 500

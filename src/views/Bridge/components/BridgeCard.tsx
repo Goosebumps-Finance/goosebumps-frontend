@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Flex } from '@goosebumps/uikit'
 import styled from 'styled-components'
 import CustomSelect from 'components/CustomSelect/CustomSelect'
+import { chainList } from 'config/constants/networks'
 import { useTranslation } from 'contexts/Localization'
 import { BRIDGE, titles, variants } from '../types'
 
@@ -39,24 +40,7 @@ const BridgeCard = ({ variant = variants.CONNECT_FROM, onChangeNetwork, selIndex
       <CardTitle>{titles[variant]}</CardTitle>
       <CardImage>{renderImage(selIndex)}</CardImage>
       <CustomSelect
-        options={[
-          // {
-          //   label: t('Ethereum'),
-          //   value: 'ethereum',
-          // },
-          {
-            label: t('BSC'),
-            value: 'bsc',
-          },
-          // {
-          //   label: t('Polygon'),
-          //   value: 'matic',
-          // },
-          {
-            label: t('BSC Testnet'),
-            value: 'bsc_testnet',
-          },
-        ]}
+        options={chainList}
         header={{
           boxShadow: 'none',
           background: '#18283A',
@@ -68,6 +52,8 @@ const BridgeCard = ({ variant = variants.CONNECT_FROM, onChangeNetwork, selIndex
         defaultOptionIndex={0}
         onOptionChange={onChangeNetwork}
         selIndex={selIndex}
+        length={chainList.length}
+        startIndex={0}
       />
     </CardWrapper>
   )

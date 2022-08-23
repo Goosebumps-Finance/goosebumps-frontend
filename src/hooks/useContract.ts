@@ -305,6 +305,10 @@ export function useENSRegistrarContract(withSignerIfPossible?: boolean): Contrac
       case ChainId.TESTNET:
         address = '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e'
         break
+      case ChainId.ETHEREUM:
+      case ChainId.POLYGON:
+      default:
+        break
     }
   }
   return useContract<EnsRegistrar>(address, ENS_ABI, withSignerIfPossible)

@@ -67,10 +67,10 @@ const App: React.FC = () => {
   useInactiveListener()
   useSentryUser()
 
-  useEffect(() => {
+  // useEffect(() => {
     // window.localStorage.removeItem("SELECTED_CHAIN_ID")
-    window.localStorage.setItem("SELECTED_CHAIN_ID", `${getChainId()}`) // TODO prince
-  }, [])
+    // window.localStorage.setItem("SELECTED_CHAIN_ID", `${getChainId()}`) // TODO prince
+  // }, [])
 
   return (
     <Router history={history}>

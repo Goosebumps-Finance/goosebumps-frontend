@@ -1,6 +1,7 @@
-import sample from 'lodash/sample'
-import linq from 'linq'
-import networks from 'config/constants/networks.json'
+// import sample from 'lodash/sample'
+// import linq from 'linq'
+// import networks from 'config/constants/networks.json'
+import NETWORK_URLS from 'config/constants/networks'
 import { ChainId } from '@goosebumps/sdk'
 // import { getChainId } from './getChainId'
 
@@ -22,41 +23,47 @@ const getNodeUrl = (chainId = ChainId.MAINNET) => {
   // }
   // return sample(nodes)
   // const chainId = getChainId()
-  if (chainId === ChainId.MAINNET) {
-    return getBscNodeUrl()
+  switch (chainId) {
+    case ChainId.MAINNET:
+      return getBscNodeUrl()
+    case ChainId.TESTNET:
+      return getBscTestnetNodeUrl()
+    // case ChainId.ETHEREUM:
+    //   return getEthNodeUrl()
+    // case ChainId.POLYGON:
+    //   return getPolygonNodeUrl()
+    default:
+      return getBscNodeUrl()
   }
-  if(chainId === ChainId.ETHEREUM) { // ChainId.ETH_MAIN) 
-    return getEthNodeUrl()
-  }
-  if(chainId === ChainId.POLYGON) { // ChainId.POLYGON_MAIN) 
-    return getPolygonNodeUrl()
-  }
-    return getBscTestnetNodeUrl()
 }
 
 export const getEthNodeUrl = () => {
   // const ethNodes = ["https://rpc.ankr.com/eth", "https://eth-mainnet.public.blastapi.io"];
-  const ethNetwork = linq.from(networks).where((x) => x.Name === "ethereum").single()
-  const ethNodes = [ethNetwork.RPC]
-  return sample(ethNodes)
+  // const ethNetwork = linq.from(networks).where((x) => x.Name === "ethereum").single()
+  // const ethNodes = [ethNetwork.RPC]
+  // return sample(ethNodes)
+  return NETWORK_URLS[ChainId.ETHEREUM]
 }
 
 export const getPolygonNodeUrl = () => {
-  const polyNetwork = linq.from(networks).where((x) => x.Name === "matic").single()
-  const polyNodes = [polyNetwork.RPC]
-  return sample(polyNodes)
+  // const polyNetwork = linq.from(networks).where((x) => x.Name === "matic").single()
+  // const polyNodes = [polyNetwork.RPC]
+  // return sample(polyNodes)
+  return NETWORK_URLS[ChainId.POLYGON]
 }
 
 export const getBscNodeUrl = () => {
-  const bscNetwork = linq.from(networks).where((x) => x.Name === "bsc").single()
-  const bscNodes = [bscNetwork.RPC]
-  return sample(bscNodes)
+  // const bscNetwork = linq.from(networks).where((x) => x.Name === "bsc").single()
+  // const bscNodes = [bscNetwork.RPC]
+  // return sample(bscNodes)
+  return NETWORK_URLS[ChainId.MAINNET]
 }
 
 export const getBscTestnetNodeUrl = () => {
-  const testNetwork = linq.from(networks).where((x) => x.Name === "bsc_testnet").single()
-  const testNodes = [testNetwork.RPC]
-  return sample(testNodes)
+  // const testNetwork = linq.from(networks).where((x) => x.Name === "bsc_testnet").single()
+  // const testNodes = [testNetwork.RPC]
+  // return sample(testNodes)
+  return NETWORK_URLS[ChainId.TESTNET]
 }
 
 export default getNodeUrl

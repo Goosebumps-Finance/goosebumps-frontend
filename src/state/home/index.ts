@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { ChainId } from '@goosebumps/sdk'
 import linq from 'linq'
 import { API_SERVER } from 'config'
 import { HomeState } from 'state/types'
@@ -58,6 +59,18 @@ export const HomeSlice = createSlice({
     },
     setNetworkInfo: (state, action) => {
       // console.log("setNetworkInfo action=", action.payload)
+      let chainId = action.payload.network.chainId
+      switch (action.payload.network.chainId) {
+        // case ChainId.ETHEREUM:
+        // case ChainId.POLYGON:
+        case ChainId.MAINNET:
+        case ChainId.TESTNET:
+          chainId = action.payload.network.chainId
+          break
+        default:
+          chainId = getChainId()
+          break
+      }
       window.localStorage.setItem("SELECTED_CHAIN_ID", `${action.payload.network.chainId}`)
       console.log("setNetworkInfo payload =", action.payload);
       if (action.payload.searchKey !== undefined) {

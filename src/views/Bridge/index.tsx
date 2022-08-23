@@ -17,56 +17,56 @@ import BridgeCard from './components/BridgeCard'
 import './bridge.scss'
 
 const options = {
-  [ChainId.ETHEREUM] : 0,
-  [ChainId.MAINNET]: 1,
-  [ChainId.POLYGON]: 2,
-  [ChainId.TESTNET]: 3
+  [ChainId.MAINNET]: 0,
+  [ChainId.TESTNET]: 1,
+  [ChainId.ETHEREUM]: 2,
+  [ChainId.POLYGON]: 3,
 }
 
 const Bridge = () => {
   const { account } = useActiveWeb3React()
-  const { network } = useSelector((state:State) => state.home)
+  const { network } = useSelector((state: State) => state.home)
   const dispatch = useDispatch()
 
-  const [ fromIndex, setFromIndex ] = useState(0)
-  const [ isChanged, setIsChanged ] = useState(0)
-  const [ toIndex, setToIndex ] = useState(3)
-  const [ tokenIndex, setTokenIndex ] = useState(3)
-  const [ loadingStatus, setLoadingStatus ] = useState(-1)
+  const [fromIndex, setFromIndex] = useState(0)
+  const [isChanged, setIsChanged] = useState(0)
+  const [toIndex, setToIndex] = useState(3)
+  const [tokenIndex, setTokenIndex] = useState(3)
+  const [loadingStatus, setLoadingStatus] = useState(-1)
 
   useEffect(() => {
-    dispatch(setNetworkInfo({searchKey: "", network}))
+    dispatch(setNetworkInfo({ searchKey: "", network }))
   }, [])
 
   useEffect(() => {
     let _index = 0;
-    if(network.chainId === ChainId.ETHEREUM) _index = 0
-    if(network.chainId === ChainId.MAINNET) _index = 1
-    if(network.chainId === ChainId.POLYGON) _index = 2
-    if(network.chainId === ChainId.TESTNET) _index = 3
+    if (network.chainId === ChainId.MAINNET) _index = 0
+    if (network.chainId === ChainId.TESTNET) _index = 1
+    if (network.chainId === ChainId.ETHEREUM) _index = 2
+    if (network.chainId === ChainId.POLYGON) _index = 3
     setFromIndex(_index)
     console.log("Bridge index = ", _index)
   }, [network])
 
   const onChangeFromNetwork = async (newNetwork) => {
     const detailedNetwork = linq.from(networks).where((x) => x.Name === newNetwork.value).single()
-    const info = {...newNetwork, chainId: detailedNetwork.chainId};
+    const info = { ...newNetwork, chainId: detailedNetwork.chainId };
     console.log("onChangeFromNetwork info = ", info)
     console.log("onChangeFromNetwork fromIndex = ", fromIndex)
     await changeNetwork(detailedNetwork, setLoadingStatus)
-    if(loadingStatus === 1) {
-      dispatch(setNetworkInfo({network: {...newNetwork, chainId: detailedNetwork.chainId}}))
+    if (loadingStatus === 1) {
+      dispatch(setNetworkInfo({ network: { ...newNetwork, chainId: detailedNetwork.chainId } }))
     }
     setLoadingStatus(-1)
-    
+
   }
 
   const onChangeToNetwork = async (newNetwork) => {
     let _index = 0;
     // if(newNetwork.value === "ethereum") _index = 0
-    if(newNetwork.value === "bsc") _index = 0
+    if (newNetwork.value === "bsc") _index = 0
     // if(newNetwork.value === "polygon") _index = 2
-    if(newNetwork.value === "bsc_testnet") _index = 1
+    if (newNetwork.value === "bsc_testnet") _index = 1
     console.log("onChangeToNetwork network = ", newNetwork, "_index=", _index)
     setToIndex(_index)
   }
@@ -74,12 +74,12 @@ const Bridge = () => {
   const onChangeTokenNetwork = async (newNetwork) => {
     let _index = 0;
     // if(newNetwork.value === "ethereum") _index = 0
-    if(newNetwork.value === "bsc") _index = 0
+    if (newNetwork.value === "bsc") _index = 0
     // if(newNetwork.value === "polygon") _index = 2
-    if(newNetwork.value === "bsc_testnet") _index = 1
+    if (newNetwork.value === "bsc_testnet") _index = 1
     setTokenIndex(_index)
   }
-  
+
   return (
     <Page style={{ marginBottom: '30px' }}>
       <StyledBridgeContainer>
@@ -90,7 +90,7 @@ const Bridge = () => {
               justifyContent={['center', 'center', 'space-between']}
               mb="30px"
             >
-              <BridgeCard 
+              <BridgeCard
                 variant="from"
                 style={{ marginBottom: '30px' }}
                 onChangeNetwork={onChangeFromNetwork}

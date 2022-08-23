@@ -26,27 +26,27 @@ import GlobalSettings from './GlobalSettings'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
 
-const SearchItem = ({onChangeNetwork, selIndex}) => {
+const SearchItem = ({ onChangeNetwork, selIndex }) => {
   const { t } = useTranslation();
   return <>
     <CustomSelect
       options={[
-        // {
-        //   label: t("Ethereum"),
-        //   value: "ethereum"
-        // },
         {
           label: t("BSC"),
           value: "bsc"
         },
-        // {
-        //   label: t("Polygon"),
-        //   value: "matic"
-        // },
         {
           label: t("BSC Testnet"),
           value: "bsc_testnet"
         }
+        // {
+        //   label: t("Ethereum"),
+        //   value: "ethereum"
+        // },
+        // {
+        //   label: t("Polygon"),
+        //   value: "matic"
+        // },
       ]}
       header={{
         border: "1px solid #52555c",
@@ -72,7 +72,7 @@ const Menu = (props) => {
   const { pathname } = useLocation()
   const [showPhishingWarningBanner] = usePhishingBannerManager()
 
-  const { network, searchKey } = useSelector((state:State) => state.home)
+  const { network, searchKey } = useSelector((state: State) => state.home)
   const [networkIndex, setNetworkIndex] = useState(0)
   const [loadingStatus, setLoadingStatus] = useState(-1)
 
@@ -83,7 +83,6 @@ const Menu = (props) => {
 
 
   const onSearchKeyChange = (newKey) => {
-    
     dispatch(setNetworkInfo({ searchKey: newKey, network }));
     if (ethers.utils.isAddress(newKey) || !newKey) {
       handleSearch(newKey)
@@ -101,7 +100,7 @@ const Menu = (props) => {
     setTimer(
       setTimeout(async () => {
         if (network === null || address === '' || !ethers.utils.isAddress(address)) {
-          dispatch(setAddressType({addressType: null}));
+          dispatch(setAddressType({ addressType: null }));
           return;
         }
         const res = await getAsyncData(`${API_SERVER}api/Search/IsToken`, { address, network: network.value })
@@ -110,14 +109,14 @@ const Menu = (props) => {
           smartcontract: "Token"  - Token address
           smartcontract: "DEX"  - Pair address
         */
-          // console.log("isToken res = ", res);
-          if(res.status !== 200) {
+        // console.log("isToken res = ", res);
+        if (res.status !== 200) {
           console.log("res = ", res)
           // alert(res.error);
           return;
         }
-        
-        dispatch(setAddressType({addressType: res.result ? res.result.contractType : null}));
+
+        dispatch(setAddressType({ addressType: res.result ? res.result.contractType : null }));
         if (res.result) {
           history.push(`/charts/${network?.value}/${address}`)
         } else if (address) {
@@ -131,7 +130,7 @@ const Menu = (props) => {
 
   const onChangeNetwork = async (newNetwork) => {
     const detailedNetwork = linq.from(networks).where((x) => x.Name === newNetwork.value).single()
-    const info = {...newNetwork, chainId: detailedNetwork.chainId};
+    const info = { ...newNetwork, chainId: detailedNetwork.chainId };
     console.log("onChangeNetwork info = ", info)
     await changeNetwork(detailedNetwork)
     // // if(loadingStatus === 1) {
@@ -143,15 +142,26 @@ const Menu = (props) => {
   }
 
   useEffect(() => {
-    let _index = 0;
-    // if(network.chainId === ChainId.ETHEREUM) _index = 0
-    if(network.chainId === ChainId.MAINNET) _index = 0
-    // if(network.chainId === ChainId.POLYGON) _index = 2
-    if(network.chainId === ChainId.TESTNET) _index = 1
-    setNetworkIndex(_index)
+    switch (network.chainId) {
+      case ChainId.MAINNET:
+        setNetworkIndex(0)
+        break
+      case ChainId.TESTNET:
+        setNetworkIndex(1)
+        break
+      // case ChainId.ETHEREUM:
+      //   setNetworkIndex(2)
+      //   break
+      // case ChainId.POLYGON:
+      //   setNetworkIndex(3)
+      //   break
+      default:
+        break
+    }
+    // setNetworkIndex(_index)
     // if(searchKey) {
-      // console.log("searchKey=", searchKey)
-      handleSearch(searchKey)
+    // console.log("searchKey=", searchKey)
+    handleSearch(searchKey)
     // }
   }, [network, searchKey])
 

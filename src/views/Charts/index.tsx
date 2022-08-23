@@ -4,9 +4,11 @@ import linq from 'linq'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
+import { ChainId } from '@goosebumps/sdk'
 
 import Page from 'views/Page'
 import networks from 'config/constants/networks.json'
+import { mainnetTokens, testnetTokens } from 'config/constants/tokens'
 import { getChartsInfo } from 'utils/getChartsInfo'
 import Info from './components/Info'
 import Chart from './components/Chart'
@@ -29,6 +31,19 @@ const LoadingPanel = styled.div`
   color: white;
 `
 
+const getDefaultToken = (chainId: number) => {
+  switch (chainId) {
+    case ChainId.MAINNET:
+      return mainnetTokens.empire.address
+    case ChainId.TESTNET:
+      return testnetTokens.empire.address
+    // case ChainId.ETHEREUM:
+    // case ChainId.POLYGON:
+    default:
+      return mainnetTokens.empire.address;
+  }
+}
+
 const compareParms = (param1: ParamProps, param2: ParamProps) => {
   return (
     param1.address === param2.address &&
@@ -43,14 +58,14 @@ const Charts = (props) => {
   const hideExchangeRef = useRef()
   const [isLoading, setIsLoading] = useState(true)
   const [info, setInfo] = useState<any>(null)
+  const { network, addressType } = useSelector((state: AppState) => state.home)
   const params: ParamProps = useParams()
-  params.networkName = params.networkName || 'bsc'
-  params.address = params.address || '0x293c3ee9abacb08bb8ced107987f00efd1539288'
-  const { addressType } = useSelector((state:AppState) => state.home)
-  console.log("charts addressType=",addressType);
+  params.networkName = params.networkName || network.value
+  params.address = params.address || getDefaultToken(network.chainId)
+  console.log("charts addressType=", addressType);
 
   const [currentParams, setParams] = useState<ParamProps>({})
-  const network = linq
+  const selectedNetwork = linq
     .from(networks)
     .where((x) => x.Name === params.networkName)
     .single()
@@ -68,13 +83,13 @@ const Charts = (props) => {
     const fetchData = async () => {
       if (!compareParms(params, currentParams)) {
         setParams(params)
-        const _info = await getChartsInfo(params.address, network, params.pairAddress)
+        const _info = await getChartsInfo(params.address, selectedNetwork, params.pairAddress)
         setInfo(_info)
         console.log("fetchData info=", _info)
       }
     }
     fetchData()
-  }, [params, currentParams, network])
+  }, [params, currentParams, selectedNetwork])
 
   const renderLoading = () => {
     return (
@@ -92,7 +107,7 @@ const Charts = (props) => {
           <div className="row">
             <div className="col-lg-3">
               <div className="overflow-hidden">
-                <Info info={info} network={network} setPair={null} />
+                <Info info={info} network={selectedNetwork} setPair={null} />
               </div>
             </div>
             <div className="col-lg-9 mt-4 mt-lg-0">
@@ -100,11 +115,11 @@ const Charts = (props) => {
                 <div
                   ref={exchangeContainerRef}
                   className="mb-4 mb-xl-0 order-1 col-12"
-                  // className={"mb-4 mb-xl-0 order-1 col-xl-7"}
+                // className={"mb-4 mb-xl-0 order-1 col-xl-7"}
                 >
                   <div className="row h-100 m-0">
                     <div className="col p-0">
-                      <Chart title={info.title} pair={info.pair} network={network} />
+                      <Chart title={info.title} pair={info.pair} network={selectedNetwork} />
                     </div>
                     {/* <div
                                 className="d-none d-xl-block col-auto hider fa fa-arrow-right"
@@ -115,7 +130,7 @@ const Charts = (props) => {
                 </div>
                 <div className="col-xl-5 order-3 order-xl-2 mt-4 mt-xl-0 ps-xl-0" ref={exchangeRef}>
                   {/* <Exchange
-                            network={network}
+                            network={selectedNetwork}
                             fromSymbol={info.pair.sellCurrency.symbol}
                             fromAddress={info.pair.sellCurrency.address}
                             toSymbol={info.pair.buyCurrency.symbol}
@@ -123,7 +138,7 @@ const Charts = (props) => {
                             /> */}
                 </div>
                 <div className="col-12 order-2 order-xl-3 mt-4">
-                  <LatestTrades pair={info.pair} network={network} />
+                  <LatestTrades pair={info.pair} network={selectedNetwork} />
                 </div>
               </div>
             </div>
@@ -134,10 +149,10 @@ const Charts = (props) => {
   }
 
   return <Page>
-    <div style={{minHeight: "80vh"}}>
+    <div style={{ minHeight: "80vh" }}>
       {isLoading ? renderLoading() : renderContent()}
     </div>
-    </Page>
+  </Page>
 }
 
 export default Charts

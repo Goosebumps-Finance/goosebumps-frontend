@@ -67,7 +67,7 @@ const PortfolioTracker = () => {
   const [curEthPrice, setCurEthPrice] = useState(0)
   const [selectedToken, setSelectedToken] = useState()
   const params: PortfolioParamProps = useParams()
-  params.networkName = params.networkName || "bsc";
+  params.networkName = params.networkName || network.value;
   params.address = params.address || connectedAddress;
   // const [currentParams, setParams] = useState<PortfolioParamProps>(params);
 

@@ -48,7 +48,7 @@ const DropDownListContainer = styled.div<{isHome: boolean}>`
   width: 100%;
 
   ${({ theme }) => theme.mediaQueries.sm} {
-    min-width: 168px;
+    min-width: 145px;
   }
 `
 
@@ -73,7 +73,7 @@ const DropDownContainer = styled(Box)<{ isOpen: boolean, isHome: boolean }>`
   z-index: 20;
 
   ${({ theme }) => theme.mediaQueries.sm} {
-    min-width: 168px;
+    min-width: 145px;
   }
 
   ${(props) =>

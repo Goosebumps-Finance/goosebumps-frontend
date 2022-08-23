@@ -250,6 +250,7 @@ const PortfolioTracker = () => {
     })
 
     setCurEthPrice(infos.ethPrice)
+    // sort by holdings
     newTokenInfos.sort((a, b) => {
       const aPrice = a.info.isETH ? a.info.balance * a.info.price * infos.ethPrice : a.info.balance * a.info.price;
       const bPrice = b.info.isETH ? b.info.balance * b.info.price * infos.ethPrice : b.info.balance * b.info.price;

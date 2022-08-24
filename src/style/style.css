@@ -1240,7 +1240,7 @@ DEX PAGE STYLE
 Wrap Area Style
 ======================================================*/
 .wrap-bg {
-    background-image: url("https://goosebumps.finance/images/style/wrap-bg.jpg");
+    background-image: url('https://goosebumps.finance/images/style/wrap-bg.jpg');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;

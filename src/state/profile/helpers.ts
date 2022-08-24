@@ -9,17 +9,26 @@ export interface GetProfileResponse {
 }
 
 const transformProfileResponse = (
-  profileResponse: Awaited<ReturnType<PancakeProfile['getUserProfile']>>,
+  // profileResponse: Awaited<ReturnType<PancakeProfile['getUserProfile']>>,
 ): Partial<Profile> => {
-  const { 0: userId, 1: numberPoints, 2: teamId, 3: collectionAddress, 4: tokenId, 5: isActive } = profileResponse
+  // const { 0: userId, 1: numberPoints, 2: teamId, 3: collectionAddress, 4: tokenId, 5: isActive } = profileResponse
+
+  // return {
+  //   userId: userId.toNumber(),
+  //   points: numberPoints.toNumber(),
+  //   teamId: teamId.toNumber(),
+  //   tokenId: tokenId.toNumber(),
+  //   collectionAddress,
+  //   isActive,
+  // }
 
   return {
-    userId: userId.toNumber(),
-    points: numberPoints.toNumber(),
-    teamId: teamId.toNumber(),
-    tokenId: tokenId.toNumber(),
-    collectionAddress,
-    isActive,
+    userId: 0,
+    points: 0,
+    teamId: 0,
+    tokenId: 0,
+    collectionAddress: "",
+    isActive: false,
   }
 }
 
@@ -54,7 +63,8 @@ export const getProfileAvatar = async (address: string) => {
     }
 
     const profileResponse = await profileContract.getUserProfile(address)
-    const { tokenId, collectionAddress, isActive } = transformProfileResponse(profileResponse)
+    // const { tokenId, collectionAddress, isActive } = transformProfileResponse(profileResponse)
+    const { tokenId, collectionAddress, isActive } = transformProfileResponse()
 
     const nft = null
     // if (isActive) {
@@ -91,7 +101,8 @@ export const getProfile = async (address: string): Promise<GetProfileResponse> =
     }
 
     const profileResponse = await profileContract.getUserProfile(address)
-    const { userId, points, teamId, tokenId, collectionAddress, isActive } = transformProfileResponse(profileResponse)
+    // const { userId, points, teamId, tokenId, collectionAddress, isActive } = transformProfileResponse(profileResponse)
+    const { userId, points, teamId, tokenId, collectionAddress, isActive } = transformProfileResponse()
     // const team = await getTeam(teamId)
     const username = await getUsername(address)
     // let nftToken: NftToken

@@ -24,8 +24,10 @@ const Info = ({ info, network, setPair }) => {
     if(!info) return;
     // console.log("bug= getData loading = ", loading)
     // console.log("bug= getData liveInfo = ", liveInfo)
-    setHasCMC(info.cmc && Object.hasOwn(info.cmc, "id"));
-    console.log("hasCMC=",info.cmc && Object.hasOwn(info.cmc, "id"))
+    // setHasCMC(info.cmc && Object.hasOwn(info.cmc, "id"));
+    // console.log("hasCMC=",info.cmc && Object.hasOwn(info.cmc, "id"))
+    setHasCMC(info.cmc && false);
+    console.log("hasCMC=",info.cmc && false)
     const getData = async () => {
       const res = await getTokenInfo(info.pair, network)
       // console.log("setLiveInfo res = ", res)

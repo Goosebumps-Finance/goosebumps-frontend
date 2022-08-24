@@ -3,7 +3,8 @@ import { useMemo } from 'react'
 import { abi as IGoosebumpsPairABI } from '@goosebumps/goosebumps-aggregator-dex/artifacts/contracts/GoosebumpsPair.sol/GoosebumpsPair.json'
 import { Interface } from '@ethersproject/abi'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { BASE_FACTORY_ADDRESS, BASE_INIT_CODE_HASH } from '../config/constants'
+import isSupportedChainId from 'utils/isSupportedChainId'
+import { FACTORY_ADDRESSES } from '../config/constants'
 
 import { useMultipleContractSingleData } from '../state/multicall/hooks'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
@@ -24,40 +25,60 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
     () =>
       currencies.map(([currencyA, currencyB]) => [
         wrappedCurrency(currencyA, chainId),
-        wrappedCurrency(currencyB, chainId),
+        wrappedCurrency(currencyB, chainId)
       ]),
-    [chainId, currencies],
+    [chainId, currencies]
   )
 
-  const pairAddresses = useMemo(
-    () =>
-      tokens.map(([tokenA, tokenB]) => {
-        return tokenA && tokenB && !tokenA.equals(tokenB) ? Pair.getAddress(BASE_FACTORY_ADDRESS[chainId], BASE_INIT_CODE_HASH[chainId], tokenA, tokenB) : undefined // TODO prince
-      }),
-    [tokens],
+  const pairTokens = useMemo(
+    () => {
+      if (tokens && isSupportedChainId(chainId)) {
+        return tokens.map(([tokenA, tokenB]) => {
+
+          return tokenA && tokenB && !tokenA.equals(tokenB) ? Object.entries(FACTORY_ADDRESSES[chainId]).map(([factory, initCodeHash]) => {
+            const initCodeHash_ = initCodeHash.toString()
+            return {
+              pairAddress: Pair.getAddress(factory, initCodeHash_, tokenA, tokenB),
+              factory,
+              initCodeHash_,
+              tokenA,
+              tokenB
+            }
+          }) : undefined
+        }).flat().reduce((address, value) => {
+          if (value !== undefined) address[value.pairAddress] = value;
+          return address;
+        }, {})
+      }
+      return {};
+    }, [chainId, tokens]
   )
 
-  const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves')
+  const results = useMultipleContractSingleData(Object.entries(pairTokens).map(([pair]) => pair), PAIR_INTERFACE, 'getReserves')
 
   return useMemo(() => {
-    return results.map((result, i) => {
+    return results.map((result) => {
       const { result: reserves, loading } = result
-      const tokenA = tokens[i][0]
-      const tokenB = tokens[i][1]
-
       if (loading) return [PairState.LOADING, null]
+      if (!isSupportedChainId(chainId) || !result.address || !pairTokens[result.address]) return [PairState.INVALID, null]
+
+      const pairToken = pairTokens[result.address]
+      const { tokenA, tokenB } = pairToken
+
       if (!tokenA || !tokenB || tokenA.equals(tokenB)) return [PairState.INVALID, null]
       if (!reserves) return [PairState.NOT_EXISTS, null]
       const { reserve0, reserve1 } = reserves
       const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA]
+
       return [
         PairState.EXISTS,
-        new Pair(new TokenAmount(token0, reserve0.toString()), new TokenAmount(token1, reserve1.toString()), BASE_FACTORY_ADDRESS[chainId], BASE_INIT_CODE_HASH[chainId]), // TODO prince
-      ]
+        new Pair(new TokenAmount(token0, reserve0), new TokenAmount(token1, reserve1), pairToken.factory, pairToken.initCodeHash)
+      ];
     })
-  }, [results, tokens])
+  }, [results, chainId, pairTokens])
 }
 
 export function usePair(tokenA?: Currency, tokenB?: Currency): [PairState, Pair | null] {
-  return usePairs([[tokenA, tokenB]])[0]
+  const pairs = usePairs([[tokenA, tokenB]])
+  return pairs && pairs.length > 0 ? pairs[0] : [PairState.NOT_EXISTS, null]
 }

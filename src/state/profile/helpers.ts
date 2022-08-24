@@ -1,4 +1,4 @@
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 import { Profile } from 'state/types'
 import { PancakeProfile } from 'config/abi/types/PancakeProfile'
 import { getProfileContract } from 'utils/contractHelpers'

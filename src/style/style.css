@@ -1112,7 +1112,7 @@ Partner Area Style
 Footer Area Style
 ======================================================*/
 .footer-area {
-    background-image: url('images/style/footer-bg.jpg');
+    background-image: url('https://goosbumps.finance/images/style/footer-bg.jpg');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -1240,7 +1240,7 @@ DEX PAGE STYLE
 Wrap Area Style
 ======================================================*/
 .wrap-bg {
-    background-image: url("images/style/wrap-bg.jpg");
+    background-image: url("https://goosebumps.finance/images/style/wrap-bg.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;

@@ -12,7 +12,9 @@ import { useTranslation } from 'contexts/Localization'
 import { isAddress } from 'utils'
 import { computeSlippageAdjustedAmounts } from 'utils/prices'
 import getLpAddress from 'utils/getLpAddress'
+import isSupportedChainId from 'utils/isSupportedChainId'
 import { getTokenAddress } from 'views/Swap/components/Chart/utils'
+import { ROUTER_ADDRESS, FACTORY_ADDRESSES } from 'config/constants/index'
 import { AppDispatch, AppState } from '../index'
 import { useCurrencyBalances } from '../wallet/hooks'
 import {
@@ -129,6 +131,7 @@ function involvesAddress(trade: Trade, checksummedAddress: string): boolean {
 
 // Get swap price for single token disregarding slippage and price impact
 export function useSingleTokenSwapInfo(): { [key: string]: number } {
+  const { chainId } = useActiveWeb3React()
   const {
     [Field.INPUT]: { currencyId: inputCurrencyId },
     [Field.OUTPUT]: { currencyId: outputCurrencyId },
@@ -141,7 +144,7 @@ export function useSingleTokenSwapInfo(): { [key: string]: number } {
 
   const parsedAmount = tryParseAmount('1', inputCurrency ?? undefined)
 
-  const bestTradeExactIn = useTradeExactIn(parsedAmount, outputCurrency ?? undefined)
+  const bestTradeExactIn = useTradeExactIn(chainId, parsedAmount, outputCurrency ?? undefined)
   if (!inputCurrency || !outputCurrency || !bestTradeExactIn) {
     return null
   }
@@ -163,7 +166,7 @@ export function useDerivedSwapInfo(): {
   v2Trade: Trade | undefined
   inputError?: string
 } {
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const { t } = useTranslation()
 
   const {
@@ -187,8 +190,8 @@ export function useDerivedSwapInfo(): {
   const isExactIn: boolean = independentField === Field.INPUT
   const parsedAmount = tryParseAmount(typedValue, (isExactIn ? inputCurrency : outputCurrency) ?? undefined)
 
-  const bestTradeExactIn = useTradeExactIn(isExactIn ? parsedAmount : undefined, outputCurrency ?? undefined)
-  const bestTradeExactOut = useTradeExactOut(inputCurrency ?? undefined, !isExactIn ? parsedAmount : undefined)
+  const bestTradeExactIn = useTradeExactIn(chainId, isExactIn ? parsedAmount : undefined, outputCurrency ?? undefined)
+  const bestTradeExactOut = useTradeExactOut(chainId, inputCurrency ?? undefined, !isExactIn ? parsedAmount : undefined)
 
   const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut
 
@@ -215,11 +218,16 @@ export function useDerivedSwapInfo(): {
     inputError = inputError ?? t('Select a token')
   }
 
+  const badRecipientAddresses = BAD_RECIPIENT_ADDRESSES;
+  if (isSupportedChainId(chainId)) {
+    badRecipientAddresses.push(...[ROUTER_ADDRESS[chainId], ...Object.keys(FACTORY_ADDRESSES[chainId]).map(([factory]) => factory)]);
+  }
+
   const formattedTo = isAddress(to)
   if (!to || !formattedTo) {
     inputError = inputError ?? t('Enter a recipient')
   } else if (
-    BAD_RECIPIENT_ADDRESSES.indexOf(formattedTo) !== -1 ||
+    badRecipientAddresses.indexOf(formattedTo) !== -1 ||
     (bestTradeExactIn && involvesAddress(bestTradeExactIn, formattedTo)) ||
     (bestTradeExactOut && involvesAddress(bestTradeExactOut, formattedTo))
   ) {

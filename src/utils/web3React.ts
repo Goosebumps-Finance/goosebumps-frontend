@@ -12,6 +12,7 @@ import { setNetworkInfo } from 'state/home'
 
 // import getNodeUrl, { getBscNodeUrl, getEthNodeUrl, getPolygonNodeUrl } from './getRpcUrl'
 import getNodeUrl from './getRpcUrl'
+import isSupportedChainId from './isSupportedChainId'
 
 const POLLING_INTERVAL = 12000
 // console.log("ChainId.MAINNET = ", ChainId.MAINNET, " ChainId.TESTNET = ", ChainId.TESTNET)
@@ -75,10 +76,9 @@ export const signMessage = async (
 if (window.ethereum) {
   // @ts-ignore
   window.ethereum?.on('chainChanged', _chainId => {
-    const newChainId = parseInt(_chainId)
-    // if (newChainId === ChainId.MAINNET || newChainId === ChainId.TESTNET || newChainId === ChainId.ETHEREUM || newChainId === ChainId.POLYGON) {
-    if (newChainId === ChainId.MAINNET || newChainId === ChainId.TESTNET) {
-      const newNetwork = linq.from(networks).where((x) => x.chainId === newChainId).single()
+    const chainId = parseInt(_chainId)
+    if (isSupportedChainId(chainId)) {
+      const newNetwork = linq.from(networks).where((x) => x.chainId === chainId).single()
       store.dispatch(setNetworkInfo({ network: { label: newNetwork.Display, value: newNetwork.Name, chainId: newNetwork.chainId } }))
     }
   })

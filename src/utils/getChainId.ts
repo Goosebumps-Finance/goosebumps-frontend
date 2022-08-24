@@ -1,12 +1,11 @@
 import { ChainId } from '@goosebumps/sdk'
+import isSupportedChainId from './isSupportedChainId'
 
 export const getChainId = (): number => {
   try {
     const chainId = parseInt(window.localStorage.getItem("SELECTED_CHAIN_ID"), 10)
     if (
-      Number.isNaN(chainId) ||
-      // (chainId !== ChainId.ETHEREUM && chainId !== ChainId.POLYGON && chainId !== ChainId.MAINNET && chainId !== ChainId.TESTNET)
-      (chainId !== ChainId.MAINNET && chainId !== ChainId.TESTNET)
+      Number.isNaN(chainId) || isSupportedChainId(chainId)
     ) {
       return ChainId.MAINNET
     }

@@ -39,13 +39,23 @@ const Bridge = () => {
   }, [])
 
   useEffect(() => {
-    let _index = 0;
-    if (network.chainId === ChainId.MAINNET) _index = 0
-    if (network.chainId === ChainId.TESTNET) _index = 1
-    if (network.chainId === ChainId.ETHEREUM) _index = 2
-    if (network.chainId === ChainId.POLYGON) _index = 3
-    setFromIndex(_index)
-    console.log("Bridge index = ", _index)
+    switch (network.chainId) {
+      case ChainId.MAINNET:
+        setFromIndex(0)
+        break
+      case ChainId.TESTNET:
+        setFromIndex(1)
+        break
+      case ChainId.ETHEREUM:
+        setFromIndex(2)
+        break
+      case ChainId.POLYGON:
+        setFromIndex(3)
+        break
+      default:
+        break
+    }
+    console.log("Bridge chainId = ", network.chainId)
   }, [network])
 
   const onChangeFromNetwork = async (newNetwork) => {

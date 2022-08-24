@@ -1,11 +1,12 @@
 /* eslint-disable no-param-reassign */
 import { isTradeBetter } from 'utils/trades'
-import { Currency, CurrencyAmount, Pair, Token, Trade } from '@goosebumps/sdk'
+import { ChainId, Currency, CurrencyAmount, Pair, Token, Trade } from '@goosebumps/sdk'
 import flatMap from 'lodash/flatMap'
 import { useMemo } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 
 import { useUserSingleHopOnly } from 'state/user/hooks'
+import isSupportedChainId from 'utils/isSupportedChainId'
 import {
   BASES_TO_CHECK_TRADES_AGAINST,
   CUSTOM_BASES,
@@ -43,31 +44,31 @@ function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
     () =>
       tokenA && tokenB
         ? [
-            // the direct pair
-            [tokenA, tokenB],
-            // token A against all bases
-            ...bases.map((base): [Token, Token] => [tokenA, base]),
-            // token B against all bases
-            ...bases.map((base): [Token, Token] => [tokenB, base]),
-            // each base against all bases
-            ...basePairs,
-          ]
-            .filter((tokens): tokens is [Token, Token] => Boolean(tokens[0] && tokens[1]))
-            .filter(([t0, t1]) => t0.address !== t1.address)
-            .filter(([tokenA_, tokenB_]) => {
-              if (!chainId) return true
-              const customBases = CUSTOM_BASES[chainId]
+          // the direct pair
+          [tokenA, tokenB],
+          // token A against all bases
+          ...bases.map((base): [Token, Token] => [tokenA, base]),
+          // token B against all bases
+          ...bases.map((base): [Token, Token] => [tokenB, base]),
+          // each base against all bases
+          ...basePairs,
+        ]
+          .filter((tokens): tokens is [Token, Token] => Boolean(tokens[0] && tokens[1]))
+          .filter(([t0, t1]) => t0.address !== t1.address)
+          .filter(([tokenA_, tokenB_]) => {
+            if (!chainId) return true
+            const customBases = CUSTOM_BASES[chainId]
 
-              const customBasesA: Token[] | undefined = customBases?.[tokenA_.address]
-              const customBasesB: Token[] | undefined = customBases?.[tokenB_.address]
+            const customBasesA: Token[] | undefined = customBases?.[tokenA_.address]
+            const customBasesB: Token[] | undefined = customBases?.[tokenB_.address]
 
-              if (!customBasesA && !customBasesB) return true
+            if (!customBasesA && !customBasesB) return true
 
-              if (customBasesA && !customBasesA.find((base) => tokenB_.equals(base))) return false
-              if (customBasesB && !customBasesB.find((base) => tokenA_.equals(base))) return false
+            if (customBasesA && !customBasesA.find((base) => tokenB_.equals(base))) return false
+            if (customBasesB && !customBasesB.find((base) => tokenA_.equals(base))) return false
 
-              return true
-            })
+            return true
+          })
         : [],
     [tokenA, tokenB, bases, basePairs, chainId],
   )
@@ -96,13 +97,13 @@ const MAX_HOPS = 3
 /**
  * Returns the best trade for the exact amount of tokens in to the given token out
  */
-export function useTradeExactIn(currencyAmountIn?: CurrencyAmount, currencyOut?: Currency): Trade | null {
+export function useTradeExactIn(chainId: ChainId | undefined, currencyAmountIn?: CurrencyAmount, currencyOut?: Currency): Trade | null {
   const allowedPairs = useAllCommonPairs(currencyAmountIn?.currency, currencyOut)
 
   const [singleHopOnly] = useUserSingleHopOnly()
 
   return useMemo(() => {
-    if (currencyAmountIn && currencyOut && allowedPairs.length > 0) {
+    if (isSupportedChainId(chainId) && currencyAmountIn && currencyOut && allowedPairs.length > 0) {
       if (singleHopOnly) {
         return (
           Trade.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, { maxHops: 1, maxNumResults: 1 })[0] ??
@@ -124,19 +125,19 @@ export function useTradeExactIn(currencyAmountIn?: CurrencyAmount, currencyOut?:
     }
 
     return null
-  }, [allowedPairs, currencyAmountIn, currencyOut, singleHopOnly])
+  }, [allowedPairs, chainId, currencyAmountIn, currencyOut, singleHopOnly])
 }
 
 /**
  * Returns the best trade for the token in to the exact amount of token out
  */
-export function useTradeExactOut(currencyIn?: Currency, currencyAmountOut?: CurrencyAmount): Trade | null {
+export function useTradeExactOut(chainId: ChainId | undefined, currencyIn?: Currency, currencyAmountOut?: CurrencyAmount): Trade | null {
   const allowedPairs = useAllCommonPairs(currencyIn, currencyAmountOut?.currency)
 
   const [singleHopOnly] = useUserSingleHopOnly()
 
   return useMemo(() => {
-    if (currencyIn && currencyAmountOut && allowedPairs.length > 0) {
+    if (isSupportedChainId(chainId) && currencyIn && currencyAmountOut && allowedPairs.length > 0) {
       if (singleHopOnly) {
         return (
           Trade.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, { maxHops: 1, maxNumResults: 1 })[0] ??
@@ -156,7 +157,7 @@ export function useTradeExactOut(currencyIn?: Currency, currencyAmountOut?: Curr
       return bestTradeSoFar
     }
     return null
-  }, [currencyIn, currencyAmountOut, allowedPairs, singleHopOnly])
+  }, [currencyIn, chainId, currencyAmountOut, allowedPairs, singleHopOnly])
 }
 
 export function useIsTransactionUnsupported(currencyIn?: Currency, currencyOut?: Currency): boolean {

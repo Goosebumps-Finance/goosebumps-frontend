@@ -1,6 +1,6 @@
 import { TokenAmount, Pair, Currency } from '@goosebumps/sdk'
 import { useMemo } from 'react'
-import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
+import { abi as IGoosebumpsPairABI } from '@goosebumps/goosebumps-aggregator-dex/artifacts/contracts/GoosebumpsPair.sol/GoosebumpsPair.json'
 import { Interface } from '@ethersproject/abi'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { BASE_FACTORY_ADDRESS, BASE_INIT_CODE_HASH } from '../config/constants'
@@ -8,7 +8,7 @@ import { BASE_FACTORY_ADDRESS, BASE_INIT_CODE_HASH } from '../config/constants'
 import { useMultipleContractSingleData } from '../state/multicall/hooks'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
 
-const PAIR_INTERFACE = new Interface(IUniswapV2PairABI)
+const PAIR_INTERFACE = new Interface(IGoosebumpsPairABI)
 
 export enum PairState {
   LOADING,

@@ -9,6 +9,7 @@ import { useTranslation } from 'contexts/Localization'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useDispatch } from 'react-redux'
+import isSupportedChainId from 'utils/isSupportedChainId'
 import { AppDispatch } from '../../state'
 import { LightCard } from '../../components/Card'
 import { AutoColumn, ColumnCenter } from '../../components/Layout/Column'
@@ -60,9 +61,9 @@ export default function AddLiquidity({
   }, [dispatch, currencyIdA, currencyIdB])
 
   const oneCurrencyIsWETH = Boolean(
-    chainId &&
-      ((currencyA && currencyEquals(currencyA, WETH[chainId])) ||
-        (currencyB && currencyEquals(currencyB, WETH[chainId]))),
+    isSupportedChainId(chainId) &&
+    ((currencyA && currencyEquals(currencyA, WETH[chainId])) ||
+      (currencyB && currencyEquals(currencyB, WETH[chainId]))),
   )
 
   const expertMode = useIsExpertMode()
@@ -123,13 +124,13 @@ export default function AddLiquidity({
   )
 
   // check whether the user has approved the router on the tokens
-  const [approvalA, approveACallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_A], ROUTER_ADDRESS[chainId])
-  const [approvalB, approveBCallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_B], ROUTER_ADDRESS[chainId])
+  const [approvalA, approveACallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_A], isSupportedChainId(chainId) ? ROUTER_ADDRESS[chainId] : undefined)
+  const [approvalB, approveBCallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_B], isSupportedChainId(chainId) ? ROUTER_ADDRESS[chainId] : undefined)
 
   const addTransaction = useTransactionAdder()
 
   async function onAdd() {
-    if (!chainId || !library || !account) return
+    if (!isSupportedChainId(chainId) || !library || !account) return
     const router = getRouterContract(chainId, library, account)
 
     const { [Field.CURRENCY_A]: parsedAmountA, [Field.CURRENCY_B]: parsedAmountB } = parsedAmounts
@@ -186,9 +187,8 @@ export default function AddLiquidity({
           setAttemptingTxn(false)
 
           addTransaction(response, {
-            summary: `Add ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${
-              currencies[Field.CURRENCY_A]?.symbol
-            } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)} ${currencies[Field.CURRENCY_B]?.symbol}`,
+            summary: `Add ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${currencies[Field.CURRENCY_A]?.symbol
+              } and ${parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)} ${currencies[Field.CURRENCY_B]?.symbol}`,
           })
 
           setTxHash(response.hash)

@@ -9,7 +9,7 @@ import {
   useModal,
   Flex,
   IconButton,
-  BottomDrawer,
+  // BottomDrawer,
   useMatchBreakpoints,
   ArrowUpDownIcon,
 } from '@goosebumps/uikit'
@@ -23,8 +23,8 @@ import { setNetworkInfo } from 'state/home'
 
 import { useTranslation } from 'contexts/Localization'
 import SwapWarningTokens from 'config/constants/swapWarningTokens'
-import { usingDifferentFactories, getFactoryNameByPair } from 'utils/factories'
-import isSupportedChainId from 'utils/isSupportedChainId'
+// import { usingDifferentFactories, getFactoryNameByPair } from 'utils/factories'
+// import isSupportedChainId from 'utils/isSupportedChainId'
 import AddressInputPanel from './components/AddressInputPanel'
 import { GreyCard } from '../../components/Card'
 import Column, { AutoColumn } from '../../components/Layout/Column'
@@ -40,7 +40,7 @@ import ProgressSteps from './components/ProgressSteps'
 import { AppBody } from '../../components/App'
 import ConnectWalletButton from '../../components/ConnectWalletButton'
 
-import { /* INITIAL_ALLOWED_SLIPPAGE, */ BASE_FACTORY_ADDRESS } from '../../config/constants'
+// import { /* INITIAL_ALLOWED_SLIPPAGE, */ BASE_FACTORY_ADDRESS } from '../../config/constants'
 import useActiveWeb3React from '../../hooks/useActiveWeb3React'
 import { useCurrency, useAllTokens } from '../../hooks/Tokens'
 import { ApprovalState, useApproveCallbackFromTrade } from '../../hooks/useApproveCallback'
@@ -155,7 +155,6 @@ export default function Swap({ history }: RouteComponentProps) {
   //   console.log("trade: ", trade)
   // }, [trade])
 
-
   const parsedAmounts = showWrap
     ? {
       [Field.INPUT]: parsedAmount,
@@ -210,14 +209,14 @@ export default function Swap({ history }: RouteComponentProps) {
   const noRoute = !route
 
   // check if the pair is on the psi dex
-  const notBaseFactory = isSupportedChainId(chainId) && route && route.pairs && route.pairs.length === 1 && route.pairs[0].factory !== BASE_FACTORY_ADDRESS[chainId];
-  const differentFactories = isSupportedChainId(chainId) && route && usingDifferentFactories(route);
-  const firstFactoryName = useMemo(() => {
-    if (route && route.pairs) {
-      return getFactoryNameByPair(route.pairs[0])
-    }
-    return null
-  }, [route])
+  // const notBaseFactory = isSupportedChainId(chainId) && route && route.pairs && route.pairs.length === 1 && route.pairs[0].factory !== BASE_FACTORY_ADDRESS[chainId];
+  // const differentFactories = isSupportedChainId(chainId) && route && usingDifferentFactories(route);
+  // const firstFactoryName = useMemo(() => {
+  //   if (route && route.pairs) {
+  //     return getFactoryNameByPair(route.pairs[0])
+  //   }
+  //   return null
+  // }, [route])
 
   // check whether the user has approved the router on the input token
   const [approval, approveCallback] = useApproveCallbackFromTrade(trade, allowedSlippage)

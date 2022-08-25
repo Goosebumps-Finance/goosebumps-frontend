@@ -9,7 +9,7 @@ export function getFactoryName(
   factory: string
 ): string {
   if (factory === BASE_FACTORY_ADDRESS[chainId]) return "Goosebumps"
-  return "Unkown";
+  return "Other";
 }
 export function getFactoryNameByPair(
   pair: Pair

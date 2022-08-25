@@ -3,13 +3,14 @@ import { TransactionResponse } from '@ethersproject/providers'
 import { Trade, TokenAmount, CurrencyAmount, ETHER } from '@goosebumps/sdk'
 import { useCallback, useMemo } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import isSupportedChainId from 'utils/isSupportedChainId'
 import { logError } from 'utils/sentry'
 import { ROUTER_ADDRESS } from '../config/constants'
 import useTokenAllowance from './useTokenAllowance'
 import { Field } from '../state/swap/actions'
 import { useTransactionAdder, useHasPendingApproval } from '../state/transactions/hooks'
 import { computeSlippageAdjustedAmounts } from '../utils/prices'
-import { getChainId } from '../utils/getChainId'
+// import { getChainId } from '../utils/getChainId'
 import { calculateGasMargin } from '../utils'
 import { useTokenContract } from './useContract'
 import { useCallWithGasPrice } from './useCallWithGasPrice'
@@ -117,5 +118,5 @@ export function useApproveCallbackFromTrade(trade?: Trade, allowedSlippage = 0) 
     [trade, allowedSlippage],
   )
 
-  return useApproveCallback(amountToApprove, ROUTER_ADDRESS[chainId])
+  return useApproveCallback(amountToApprove, isSupportedChainId(chainId) ? ROUTER_ADDRESS[chainId] : undefined)
 }

@@ -55,6 +55,9 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
   )
 
   const results = useMultipleContractSingleData(Object.entries(pairTokens).map(([pair]) => pair), PAIR_INTERFACE, 'getReserves')
+  // console.log('[usePairs] = pairTokens', pairTokens)
+  // console.log('[usePairs] = Object.entries(pairTokens).map(([pair]) => pair)', Object.entries(pairTokens).map(([pair]) => pair))
+  // console.log('[usePairs] = results', results)
 
   return useMemo(() => {
     return results.map((result) => {
@@ -67,12 +70,22 @@ export function usePairs(currencies: [Currency | undefined, Currency | undefined
 
       if (!tokenA || !tokenB || tokenA.equals(tokenB)) return [PairState.INVALID, null]
       if (!reserves) return [PairState.NOT_EXISTS, null]
-      const { reserve0, reserve1 } = reserves
+      // const { reserve0, reserve1 } = reserves
+      const reserve0 = reserves[0]
+      const reserve1 = reserves[1]
       const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA]
+      // console.log('[usePairs] = pass', result)
+      // console.log('[usePairs] = token0', token0)
+      // console.log('[usePairs] = token1', token1)
+      // console.log('[usePairs] = reserve0', reserve0)
+      // console.log('[usePairs] = reserve1', reserve1)
+      // console.log('[usePairs] = TokenAmount', new TokenAmount(token0, reserve0.toString()))
+      // console.log('[usePairs] = TokenAmount', new TokenAmount(token0, reserve0))
+      // console.log('[usePairs] = new Pair', new Pair(new TokenAmount(token0, reserve0.toString()), new TokenAmount(token1, reserve1.toString()), pairToken.factory, pairToken.initCodeHash))
 
       return [
         PairState.EXISTS,
-        new Pair(new TokenAmount(token0, reserve0), new TokenAmount(token1, reserve1), pairToken.factory, pairToken.initCodeHash)
+        new Pair(new TokenAmount(token0, reserve0.toString()), new TokenAmount(token1, reserve1.toString()), pairToken.factory, pairToken.initCodeHash)
       ];
     })
   }, [results, chainId, pairTokens])

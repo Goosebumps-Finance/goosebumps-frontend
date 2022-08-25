@@ -59,10 +59,10 @@ export function useSwapActionHandlers(): {
         selectCurrency({
           field,
           currencyId: currency instanceof Token ? currency.address : currency === ETHER ? 'BNB' : '',
-        }),
+        })
       )
     },
-    [dispatch],
+    [dispatch]
   )
 
   const onSwitchTokens = useCallback(() => {
@@ -73,14 +73,14 @@ export function useSwapActionHandlers(): {
     (field: Field, typedValue: string) => {
       dispatch(typeInput({ field, typedValue }))
     },
-    [dispatch],
+    [dispatch]
   )
 
   const onChangeRecipient = useCallback(
     (recipient: string | null) => {
       dispatch(setRecipient({ recipient }))
     },
-    [dispatch],
+    [dispatch]
   )
 
   return {
@@ -105,16 +105,16 @@ export function tryParseAmount(value?: string, currency?: Currency): CurrencyAmo
     }
   } catch (error) {
     // should fail if the user specifies too many decimal places of precision (or maybe exceed max uint?)
-    console.debug(`Failed to parse input amount: "${value}"`, error)
+    console.info(`Failed to parse input amount: "${value}"`, error)
   }
   // necessary for all paths to return a value
   return undefined
 }
 
 const BAD_RECIPIENT_ADDRESSES: string[] = [
-  '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f', // v2 factory
+  '0xBCfCcbde45cE874adCB698cC183deBcF17952812', // v2 factory
   '0xf164fC0Ec4E93095b804a4795bBe1e041497b92a', // v2 router 01
-  '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D', // v2 router 02
+  '0x05fF2B0DB69458A0750badebc4f9e13aDd608C7F', // v2 router 02
 ]
 
 /**
@@ -310,8 +310,6 @@ export function queryParametersToSwapState(parsedQs: ParsedQs, chainId: ChainId)
     typedValue: parseTokenAmountURLParameter(parsedQs.exactAmount),
     independentField: parseIndependentFieldURLParameter(parsedQs.exactField),
     recipient,
-    pairDataById: {},
-    derivedPairDataById: {},
   }
 }
 
@@ -327,7 +325,7 @@ export function useDefaultsFromURLSearch():
   >()
 
   useEffect(() => {
-    if (!chainId) return
+    if (!isSupportedChainId(chainId)) return
     const parsed = queryParametersToSwapState(parsedQs, chainId)
 
     dispatch(
@@ -336,8 +334,8 @@ export function useDefaultsFromURLSearch():
         field: parsed.independentField,
         inputCurrencyId: parsed[Field.INPUT].currencyId,
         outputCurrencyId: parsed[Field.OUTPUT].currencyId,
-        recipient: null,
-      }),
+        recipient: parsed.recipient,
+      })
     )
 
     setResult({ inputCurrencyId: parsed[Field.INPUT].currencyId, outputCurrencyId: parsed[Field.OUTPUT].currencyId })

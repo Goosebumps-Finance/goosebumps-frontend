@@ -23,6 +23,8 @@ import { setNetworkInfo } from 'state/home'
 
 import { useTranslation } from 'contexts/Localization'
 import SwapWarningTokens from 'config/constants/swapWarningTokens'
+import { usingDifferentFactories, getFactoryNameByPair } from 'utils/factories'
+import isSupportedChainId from 'utils/isSupportedChainId'
 import AddressInputPanel from './components/AddressInputPanel'
 import { GreyCard } from '../../components/Card'
 import Column, { AutoColumn } from '../../components/Layout/Column'
@@ -38,7 +40,7 @@ import ProgressSteps from './components/ProgressSteps'
 import { AppBody } from '../../components/App'
 import ConnectWalletButton from '../../components/ConnectWalletButton'
 
-// import { INITIAL_ALLOWED_SLIPPAGE } from '../../config/constants'
+import { /* INITIAL_ALLOWED_SLIPPAGE, */ BASE_FACTORY_ADDRESS } from '../../config/constants'
 import useActiveWeb3React from '../../hooks/useActiveWeb3React'
 import { useCurrency, useAllTokens } from '../../hooks/Tokens'
 import { ApprovalState, useApproveCallbackFromTrade } from '../../hooks/useApproveCallback'
@@ -104,7 +106,7 @@ export default function Swap({ history }: RouteComponentProps) {
   const { network } = useSelector((state: State) => state.home)
 
   useEffect(() => {
-    dispatch(setNetworkInfo({searchKey: "", network}));
+    dispatch(setNetworkInfo({ searchKey: "", network }));
   }, [])
 
   useEffect(() => {
@@ -118,7 +120,7 @@ export default function Swap({ history }: RouteComponentProps) {
   ]
   const urlLoadedTokens: Token[] = useMemo(
     () => [loadedInputCurrency, loadedOutputCurrency]?.filter((c): c is Token => c instanceof Token) ?? [],
-    [loadedInputCurrency, loadedOutputCurrency],
+    [loadedInputCurrency, loadedOutputCurrency]
   )
 
   // dismiss warning if all imported tokens are in active lists
@@ -129,7 +131,7 @@ export default function Swap({ history }: RouteComponentProps) {
       return !(token.address in defaultTokens)
     })
 
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
 
   // for expert mode
   const [isExpertMode] = useExpertModeManager()
@@ -141,31 +143,28 @@ export default function Swap({ history }: RouteComponentProps) {
   const { independentField, typedValue, recipient } = useSwapState()
   const { v2Trade, currencyBalances, parsedAmount, currencies, inputError: swapInputError } = useDerivedSwapInfo()
 
-  // Price data
-  const {
-    [Field.INPUT]: { currencyId: inputCurrencyId },
-    [Field.OUTPUT]: { currencyId: outputCurrencyId },
-  } = useSwapState()
-
   const {
     wrapType,
     execute: onWrap,
-    inputError: wrapInputError,
+    inputError: wrapInputError
   } = useWrapCallback(currencies[Field.INPUT], currencies[Field.OUTPUT], typedValue)
   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE
   const trade = showWrap ? undefined : v2Trade
 
-  // const singleTokenPrice = useSingleTokenSwapInfo()
+  // useEffect(() => {
+  //   console.log("trade: ", trade)
+  // }, [trade])
+
 
   const parsedAmounts = showWrap
     ? {
-        [Field.INPUT]: parsedAmount,
-        [Field.OUTPUT]: parsedAmount,
-      }
+      [Field.INPUT]: parsedAmount,
+      [Field.OUTPUT]: parsedAmount,
+    }
     : {
-        [Field.INPUT]: independentField === Field.INPUT ? parsedAmount : trade?.inputAmount,
-        [Field.OUTPUT]: independentField === Field.OUTPUT ? parsedAmount : trade?.outputAmount,
-      }
+      [Field.INPUT]: independentField === Field.INPUT ? parsedAmount : trade?.inputAmount,
+      [Field.OUTPUT]: independentField === Field.OUTPUT ? parsedAmount : trade?.outputAmount,
+    }
 
   const { onSwitchTokens, onCurrencySelection, onUserInput, onChangeRecipient } = useSwapActionHandlers()
   const isValid = !swapInputError
@@ -175,13 +174,13 @@ export default function Swap({ history }: RouteComponentProps) {
     (value: string) => {
       onUserInput(Field.INPUT, value)
     },
-    [onUserInput],
+    [onUserInput]
   )
   const handleTypeOutput = useCallback(
     (value: string) => {
       onUserInput(Field.OUTPUT, value)
     },
-    [onUserInput],
+    [onUserInput]
   )
 
   // modal and loading
@@ -206,9 +205,19 @@ export default function Swap({ history }: RouteComponentProps) {
 
   const route = trade?.route
   const userHasSpecifiedInputOutput = Boolean(
-    currencies[Field.INPUT] && currencies[Field.OUTPUT] && parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0)),
+    currencies[Field.INPUT] && currencies[Field.OUTPUT] && parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
   )
   const noRoute = !route
+
+  // check if the pair is on the psi dex
+  const notBaseFactory = isSupportedChainId(chainId) && route && route.pairs && route.pairs.length === 1 && route.pairs[0].factory !== BASE_FACTORY_ADDRESS[chainId];
+  const differentFactories = isSupportedChainId(chainId) && route && usingDifferentFactories(route);
+  const firstFactoryName = useMemo(() => {
+    if (route && route.pairs) {
+      return getFactoryNameByPair(route.pairs[0])
+    }
+    return null
+  }, [route])
 
   // check whether the user has approved the router on the input token
   const [approval, approveCallback] = useApproveCallbackFromTrade(trade, allowedSlippage)
@@ -312,7 +321,7 @@ export default function Swap({ history }: RouteComponentProps) {
         setSwapWarningCurrency(null)
       }
     },
-    [onCurrencySelection],
+    [onCurrencySelection, setApprovalSubmitted]
   )
 
   const handleMaxInput = useCallback(() => {
@@ -332,7 +341,7 @@ export default function Swap({ history }: RouteComponentProps) {
       }
     },
 
-    [onCurrencySelection],
+    [onCurrencySelection]
   )
 
   const swapIsUnsupported = useIsTransactionUnsupported(currencies?.INPUT, currencies?.OUTPUT)
@@ -532,13 +541,13 @@ export default function Swap({ history }: RouteComponentProps) {
                             approval !== ApprovalState.APPROVED ||
                             (priceImpactSeverity > 3 && !isExpertMode)
                           }
-                          style={{background: (!isValid || approval !== ApprovalState.APPROVED || (priceImpactSeverity > 3 && !isExpertMode))? "#26292e":"#121e30"}}
+                          style={{ background: (!isValid || approval !== ApprovalState.APPROVED || (priceImpactSeverity > 3 && !isExpertMode)) ? "#26292e" : "#121e30" }}
                         >
                           {priceImpactSeverity > 3 && !isExpertMode
                             ? t('Price Impact High')
                             : priceImpactSeverity > 2
-                            ? t('Swap Anyway')
-                            : t('Swap')}
+                              ? t('Swap Anyway')
+                              : t('Swap')}
                         </Button>
                       </RowBetween>
                     ) : (
@@ -560,14 +569,14 @@ export default function Swap({ history }: RouteComponentProps) {
                         id="swap-button"
                         width="100%"
                         disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
-                        style={{background: (!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError) ? "#26292e" : "#04c0d7"}} // #3c3742
+                        style={{ background: (!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError) ? "#26292e" : "#04c0d7" }} // #3c3742
                       >
                         {swapInputError ||
                           (priceImpactSeverity > 3 && !isExpertMode
                             ? t('Price Impact Too High')
                             : priceImpactSeverity > 2
-                            ? t('Swap Anyway')
-                            : t('Swap'))}
+                              ? t('Swap Anyway')
+                              : t('Swap'))}
                       </Button>
                     )}
                     {showApproveFlow && (

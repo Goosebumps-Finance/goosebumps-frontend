@@ -54,9 +54,9 @@ export const GAS_PRICE_GWEI = {
     instant: parseUnits(GAS_PRICE[ChainId.MAINNET].instant, 'gwei').toString(),
   },
   [ChainId.TESTNET]: {
-    default: parseUnits(GAS_PRICE[ChainId.MAINNET].default, 'gwei').toString(),
-    fast: parseUnits(GAS_PRICE[ChainId.MAINNET].fast, 'gwei').toString(),
-    instant: parseUnits(GAS_PRICE[ChainId.MAINNET].instant, 'gwei').toString(),
+    default: parseUnits(GAS_PRICE[ChainId.TESTNET].default, 'gwei').toString(),
+    fast: parseUnits(GAS_PRICE[ChainId.TESTNET].fast, 'gwei').toString(),
+    instant: parseUnits(GAS_PRICE[ChainId.TESTNET].instant, 'gwei').toString(),
   },
   // TODO prince
   [ChainId.ETHEREUM]: {

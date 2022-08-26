@@ -1,7 +1,8 @@
+import { getChainId } from 'utils/getChainId'
 import { serializeTokens } from './tokens'
 import { SerializedFarmConfig } from './types'
 
-const serializedTokens = serializeTokens()
+const serializedTokens = serializeTokens(getChainId())
 
 export const newfarms: SerializedFarmConfig[] = [
   {

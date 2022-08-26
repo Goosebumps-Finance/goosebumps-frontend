@@ -1,5 +1,6 @@
 import { useWeb3React } from '@web3-react/core'
 import BigNumber from 'bignumber.js'
+import { getChainId } from 'utils/getChainId'
 import tokens from 'config/constants/tokens'
 import { FAST_INTERVAL, SLOW_INTERVAL } from 'contexts/RefreshContext'
 import { ethers } from 'ethers'
@@ -65,7 +66,7 @@ export const useGetBnbBalance = () => {
 }
 
 export const useGetCakeBalance = () => {
-  const { balance, fetchStatus } = useTokenBalance(tokens.cake.address)
+  const { balance, fetchStatus } = useTokenBalance(tokens(getChainId()).cake.address)
 
   // TODO: Remove ethers conversion once useTokenBalance is converted to ethers.BigNumber
   return { balance: ethers.BigNumber.from(balance.toString()), fetchStatus }

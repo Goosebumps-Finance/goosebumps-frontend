@@ -2,12 +2,13 @@ import { ChainId, Currency, currencyEquals, JSBI, Price } from '@goosebumps/sdk'
 import tokens, { mainnetTokens } from 'config/constants/tokens'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useMemo } from 'react'
+import { getChainId } from 'utils/getChainId'
 import { multiplyPriceByAmount } from 'utils/prices'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
 import { PairState, usePairs } from './usePairs'
 
 const BUSD_MAINNET = mainnetTokens.busd
-const { wbnb: WBNB } = tokens
+const { wbnb: WBNB } = tokens(getChainId())
 
 /**
  * Returns the price in BUSD of the input currency
@@ -71,7 +72,7 @@ export default function useBUSDPrice(currency?: Currency): Price | undefined {
 }
 
 export const useCakeBusdPrice = (): Price | undefined => {
-  const cakeBusdPrice = useBUSDPrice(tokens.cake)
+  const cakeBusdPrice = useBUSDPrice(tokens(getChainId()).cake)
   return cakeBusdPrice
 }
 
@@ -94,6 +95,6 @@ export const useBUSDCakeAmount = (amount: number): number | undefined => {
 }
 
 export const useBNBBusdPrice = (): Price | undefined => {
-  const bnbBusdPrice = useBUSDPrice(tokens.wbnb)
+  const bnbBusdPrice = useBUSDPrice(tokens(getChainId()).wbnb)
   return bnbBusdPrice
 }

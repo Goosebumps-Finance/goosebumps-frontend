@@ -284,9 +284,16 @@ const PortfolioTracker = () => {
     if(params.address === undefined) {
       setLoadingStep(0);
     } else if(params.address !== reqAddress) {
-      setIsStartLoading(false);
+      if(!isStartLoading) {
+        console.log("need fetch");
+        setIsStartLoading(true);
+        fetchTokenData(params.networkName, params.address);
+      } else {
+        setIsStartLoading(false);
+      }
       setLoadingStep(1)
       setTokenInfos([]);
+      
     }
   }, [params])
   // Get params from url and set it to state variable

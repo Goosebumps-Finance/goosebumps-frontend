@@ -1,8 +1,8 @@
 import { EN } from 'config/localization/languages'
 
-const publicUrl = process.env.PUBLIC_URL
+const publicUrl = process.env.REACT_APP_PUBLIC_URL
 
-export const LS_KEY = 'pancakeswap_language'
+export const LS_KEY = 'goosebumps_language'
 
 export const fetchLocale = async (locale) => {
   const response = await fetch(`${publicUrl}/locales/${locale}.json`)

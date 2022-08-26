@@ -106,7 +106,7 @@ export const getCustomMeta = (path: string, t: ContextApi['t']): PageMeta => {
     case '/info':
       return {
         title: `${t('Goosebumps Info & Analytics')}`,
-        description: 'View statistics for Pancakeswap exchanges.',
+        description: 'View statistics for Goosebumps exchanges.',
       }
     case '/info/pools':
       return {

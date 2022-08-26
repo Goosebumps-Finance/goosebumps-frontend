@@ -140,15 +140,16 @@ const Farms: React.FC = () => {
 
   useEffect(() => {
     console.log("Farms: network=", network)
+    window?.location?.reload();
   }, [network])
 
-  useEffect(() => {
-    console.log("Farms: farmsLP=", farmsLP)
-  }, [farmsLP])
+  // useEffect(() => {
+  //   console.log("Farms: farmsLP=", farmsLP)
+  // }, [farmsLP])
 
-  useEffect(() => {
-    console.log("Farms: userDataLoaded=", userDataLoaded)
-  }, [userDataLoaded])
+  // useEffect(() => {
+  //   console.log("Farms: userDataLoaded=", userDataLoaded)
+  // }, [userDataLoaded])
 
   // const isArchived = pathname.includes('archived')
   // const isInactive = pathname.includes('history')

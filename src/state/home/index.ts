@@ -12,6 +12,24 @@ const getInitialState = () => {
   return { label: initialNetwork.Display, value: initialNetwork.Name, chainId: initialNetwork.chainId }
 }
 
+const isStakeOrFarm = () => {
+  if (window?.location?.href) {
+    switch (window?.location?.href) {
+      case "https://cryptosnowprince.com/farms":
+      case "https://cryptosnowprince.com/stake":
+      case "https://goosebumps.finance/stake":
+      case "https://goosebumps.finance/farms":
+      case "http://localhost:3010/stake":
+      case "http://localhost:3010/farms":
+        return true;
+      default:
+        return false;
+    }
+  } else {
+    return false;
+  }
+}
+
 const initialState: HomeState = {
   network: getInitialState(), // TODO prince
   searchKey: '',
@@ -71,7 +89,8 @@ export const HomeSlice = createSlice({
           chainId = getChainId()
           break
       }
-      window.localStorage.setItem("SELECTED_CHAIN_ID", `${action.payload.network.chainId}`)
+      // window.localStorage.setItem("SELECTED_CHAIN_ID", `${action.payload.network.chainId}`)
+      window.localStorage.setItem("SELECTED_CHAIN_ID", `${chainId}`)
       console.log("setNetworkInfo payload =", action.payload);
       if (action.payload.searchKey !== undefined) {
         state.searchKey = action.payload.searchKey
@@ -85,8 +104,13 @@ export const HomeSlice = createSlice({
         // clearTimeout(timer);
         // timer = setTimeout(() => setSearchKey(state, action), 1000)
       }
-      if (action.payload.network)
+      if (action.payload.network) {
+        const tempVal = state.network.chainId
         state.network = action.payload.network
+        if (isStakeOrFarm() && tempVal !== state.network.chainId) {
+          window?.location?.reload()
+        }
+      }
     },
     setAddressType: (state, action) => {
       // console.log("setAddressType, action=", action)

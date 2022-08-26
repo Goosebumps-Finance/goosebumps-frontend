@@ -110,13 +110,8 @@ const Pools: React.FC = () => {
   const { network } = useSelector((state: State) => state.home)
 
   useEffect(() => {
-    dispatch(setNetworkInfo({searchKey: "", network}));
+    dispatch(setNetworkInfo({ searchKey: "", network }));
   }, [])
-
-  useEffect(() => {
-    console.log("Stakes: network=", network)
-    // window?.location?.reload();
-  }, [network])
 
   const pools = usePoolsWithVault()
 

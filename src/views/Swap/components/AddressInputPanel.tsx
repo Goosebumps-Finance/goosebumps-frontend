@@ -2,7 +2,8 @@ import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import { Text, Link } from '@goosebumps/uikit'
 import { useTranslation } from 'contexts/Localization'
-import useENS from '../../../hooks/ENS/useENS'
+import { isAddress } from 'utils'
+// import useENS from '../../../hooks/ENS/useENS'
 import useActiveWeb3React from '../../../hooks/useActiveWeb3React'
 import { AutoColumn } from '../../../components/Layout/Column'
 import { RowBetween } from '../../../components/Layout/Row'
@@ -81,7 +82,8 @@ export default function AddressInputPanel({
 
   const { t } = useTranslation()
 
-  const { address, loading, name } = useENS(value)
+  const address = isAddress(value) ? value : undefined
+  // const { address, loading, name } = useENS(value)
 
   const handleInput = useCallback(
     (event) => {
@@ -92,7 +94,8 @@ export default function AddressInputPanel({
     [onChange],
   )
 
-  const error = Boolean(value.length > 0 && !loading && !address)
+  // const error = Boolean(value.length > 0 && !loading && !address)
+  const error = Boolean(value.length > 0 && !address)
 
   return (
     <InputPanel id={id}>
@@ -102,7 +105,8 @@ export default function AddressInputPanel({
             <RowBetween>
               <Text>{t('Recipient')}</Text>
               {address && chainId && (
-                <Link external small href={getBscScanLink(name ?? address, 'address', chainId)}>
+                // <Link external small href={getBscScanLink(name ?? address, 'address', chainId)}>
+                <Link external small href={getBscScanLink(address, 'address', chainId)}>
                   ({t('View on Scan')})
                 </Link>
               )}

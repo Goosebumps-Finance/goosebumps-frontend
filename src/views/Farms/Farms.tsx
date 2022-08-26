@@ -140,7 +140,7 @@ const Farms: React.FC = () => {
 
   useEffect(() => {
     console.log("Farms: network=", network)
-    window?.location?.reload();
+    // window?.location?.reload();
   }, [network])
 
   // useEffect(() => {

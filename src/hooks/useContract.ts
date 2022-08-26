@@ -295,28 +295,29 @@ export function useWETHContract(withSignerIfPossible?: boolean): Contract | null
   return useContract<Weth>(chainId ? WETH[chainId].address : undefined, WETH_ABI, withSignerIfPossible)
 }
 
-export function useENSRegistrarContract(withSignerIfPossible?: boolean): Contract | null {
-  const { chainId } = useActiveWeb3React()
-  let address: string | undefined
-  if (chainId) {
-    // eslint-disable-next-line default-case
-    switch (chainId) {
-      case ChainId.MAINNET:
-      case ChainId.TESTNET:
-        address = '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e'
-        break
-      case ChainId.ETHEREUM:
-      case ChainId.POLYGON:
-      default:
-        break
-    }
-  }
-  return useContract<EnsRegistrar>(address, ENS_ABI, withSignerIfPossible)
-}
+// export function useENSRegistrarContract(withSignerIfPossible?: boolean): Contract | null {
+//   const { chainId } = useActiveWeb3React()
+//   let address: string | undefined
+//   if (chainId) {
+//     // eslint-disable-next-line default-case
+//     switch (chainId) {
+//       case ChainId.MAINNET:
+//       case ChainId.TESTNET:
+//         break
+//       case ChainId.ETHEREUM:
+//         address = '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e'
+//         break
+//       case ChainId.POLYGON:
+//       default:
+//         break
+//     }
+//   }
+//   return useContract<EnsRegistrar>(address, ENS_ABI, withSignerIfPossible)
+// }
 
-export function useENSResolverContract(address: string | undefined, withSignerIfPossible?: boolean): Contract | null {
-  return useContract<EnsPublicResolver>(address, ENS_PUBLIC_RESOLVER_ABI, withSignerIfPossible)
-}
+// export function useENSResolverContract(address: string | undefined, withSignerIfPossible?: boolean): Contract | null {
+//   return useContract<EnsPublicResolver>(address, ENS_PUBLIC_RESOLVER_ABI, withSignerIfPossible)
+// }
 
 export function useBytes32TokenContract(tokenAddress?: string, withSignerIfPossible?: boolean): Contract | null {
   return useContract<Erc20Bytes32>(tokenAddress, ERC20_BYTES32_ABI, withSignerIfPossible)

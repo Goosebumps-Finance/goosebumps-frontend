@@ -8,6 +8,8 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useDispatch, useSelector } from 'react-redux'
 import { State } from 'state/types'
 import { setNetworkInfo } from 'state/home'
+import isSupportedChainId from 'utils/isSupportedChainId'
+import { BASE_FACTORY_ADDRESS } from 'config/constants'
 
 import FullPositionCard from '../../components/PositionCard'
 import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
@@ -24,20 +26,20 @@ const Body = styled(CardBody)`
 `
 
 export default function Pool() {
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const { t } = useTranslation()
 
   const dispatch = useDispatch();
-  const { network } = useSelector((state:State) => state.home);
+  const { network } = useSelector((state: State) => state.home);
 
   useEffect(() => {
-    dispatch(setNetworkInfo({searchKey: "", network}))
+    dispatch(setNetworkInfo({ searchKey: "", network }))
   }, [])
 
   // fetch the user's balances of all tracked V2 LP tokens
   const trackedTokenPairs = useTrackedTokenPairs()
   const tokenPairsWithLiquidityTokens = useMemo(
-    () => trackedTokenPairs.map((tokens) => ({ liquidityToken: toV2LiquidityToken(tokens), tokens })),
+    () => isSupportedChainId(chainId) ? trackedTokenPairs.map((tokens) => ({ liquidityToken: toV2LiquidityToken(tokens, chainId), tokens })) : undefined,
     [trackedTokenPairs],
   )
   const liquidityTokens = useMemo(
@@ -62,7 +64,10 @@ export default function Pool() {
   const v2IsLoading =
     fetchingV2PairBalances || v2Pairs?.length < liquidityTokensWithBalances.length || v2Pairs?.some((V2Pair) => !V2Pair)
 
-  const allV2PairsWithLiquidity = v2Pairs.map(([, pair]) => pair).filter((v2Pair): v2Pair is Pair => Boolean(v2Pair))
+  // filter if pair is set and if the liquidity is provided on goosebumps dex
+  const allV2PairsWithLiquidity = v2Pairs.map(([, pair]) => pair).filter(
+    (v2Pair): v2Pair is Pair => Boolean(v2Pair && isSupportedChainId(chainId) && v2Pair.factory === BASE_FACTORY_ADDRESS[chainId])
+  )
 
   const renderBody = () => {
     if (!account) {

@@ -3,7 +3,7 @@ import flatMap from 'lodash/flatMap'
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BASE_FACTORY_ADDRESS, BASE_INIT_CODE_HASH, BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from 'config/constants'
-import { getChainId } from 'utils/getChainId'
+// import { getChainId } from 'utils/getChainId'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useAllTokens } from 'hooks/Tokens'
 import { AppDispatch, AppState } from '../../index'
@@ -396,8 +396,8 @@ export function usePairAdder(): (pair: Pair) => void {
  * @param tokenA one of the two tokens
  * @param tokenB the other token
  */
-export function toV2LiquidityToken([tokenA, tokenB]: [Token, Token]): Token {
-  return new Token(tokenA.chainId, Pair.getAddress(BASE_FACTORY_ADDRESS[getChainId()], BASE_INIT_CODE_HASH[getChainId()], tokenA, tokenB), 18, 'Goose-lp', 'Goosebumps LPs') // TODO prince
+export function toV2LiquidityToken([tokenA, tokenB]: [Token, Token], chainId: ChainId): Token {
+  return new Token(tokenA.chainId, Pair.getAddress(BASE_FACTORY_ADDRESS[chainId], BASE_INIT_CODE_HASH[chainId], tokenA, tokenB), 18, 'Goose-lp', 'Goosebumps LPs') // TODO prince
 }
 
 /**

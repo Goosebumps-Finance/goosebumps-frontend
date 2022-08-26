@@ -1,4 +1,4 @@
-import React, { lazy, useEffect } from 'react'
+import React, { lazy /* , useEffect */ } from 'react'
 import { Router, Redirect, Route, Switch } from 'react-router-dom'
 import { ResetCSS } from '@goosebumps/uikit'
 // import { useWeb3React } from '@web3-react/core'
@@ -11,7 +11,7 @@ import { usePollCoreFarmData } from 'state/farms/hooks'
 import { useFetchProfile } from 'state/profile/hooks'
 import SubgraphHealthIndicator from 'components/SubgraphHealthIndicator'
 import ComingSoon from 'components/Modal/ComingSoon'
-import { getChainId } from 'utils/getChainId'
+// import { getChainId } from 'utils/getChainId'
 
 import GlobalStyle from './style/Global'
 import Menu from './components/Menu'
@@ -84,12 +84,10 @@ const App: React.FC = () => {
               <Home />
             </Route>
             <Route path="/farms">
-              <ComingSoon />
-              {/* <Farms /> */}
+              <Farms />
             </Route>
             <Route path="/stake">
-              {/* <Pools /> */}
-              <ComingSoon />
+              <Pools />
             </Route>
             <Route path="/bridge">
               {/* <Bridge /> */}
@@ -109,9 +107,6 @@ const App: React.FC = () => {
             {/* <Route exact path="/charts/:networkName/:address/:pairAddress" render={() => <SimpleCharts />} /> */}
 
             {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
-            {/* <Route exact strict path="/swap">
-              <ComingSoon />
-            </Route> */}
             <Route exact strict path="/swap" component={Swap} />
             <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
             <Route exact strict path="/liquidityFindToken" component={PoolFinder} />

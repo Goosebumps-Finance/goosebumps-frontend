@@ -2044,17 +2044,17 @@ export const testnetTokens = defineTokens({
 
 export const tokens = () => {
   const chainId = getChainId()
-  console.log("config/constants/token/tokens() chainId = ", chainId)
+  // console.log("config/constants/token/tokens() chainId = ", chainId)
   // If testnet - return list comprised of testnetTokens wherever they exist, and mainnetTokens where they don't
   if (chainId === ChainId.TESTNET) {
     return Object.keys(mainnetTokens).reduce((accum, key) => {
       return { ...accum, [key]: testnetTokens[key] || mainnetTokens[key] }
     }, {} as typeof testnetTokens & typeof mainnetTokens)
   }
-  // if (parseInt(chainId, 10) === ChainId.ETH_MAIN) {
+  // if (chainId === ChainId.ETHEREUM) {
   //   return ethTokens
   // }
-  // if (parseInt(chainId, 10) === ChainId.POLYGON_MAIN) {
+  // if (chainId === ChainId.POLYGON) {
   //   return polygonTokens
   // }
   console.log("tokens() mainnetTokens=", mainnetTokens)

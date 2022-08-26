@@ -10,7 +10,7 @@ const GasSettings = () => {
   const { t } = useTranslation()
   const [gasPrice, setGasPrice] = useGasPriceManager()
   const { chainId } = useActiveWeb3React();
-console.log("gasSettings gasPrice=", gasPrice)
+  // console.log("gasSettings gasPrice=", gasPrice)
   return (
     <Flex flexDirection="column">
       <Flex mb="12px" alignItems="center">

@@ -22,8 +22,6 @@ export interface SwapState {
   }
   // the typed recipient address or ENS name, or null if swap should go to sender
   readonly recipient: string | null
-  readonly pairDataById: Record<number, Record<string, PairDataNormalized>> | null
-  readonly derivedPairDataById: Record<number, Record<string, DerivedPairDataNormalized>> | null
 }
 
 const initialState: SwapState = {
@@ -35,8 +33,6 @@ const initialState: SwapState = {
   [Field.OUTPUT]: {
     currencyId: '',
   },
-  pairDataById: {},
-  derivedPairDataById: {},
   recipient: null,
 }
 
@@ -55,10 +51,8 @@ export default createReducer<SwapState>(initialState, (builder) =>
           independentField: field,
           typedValue,
           recipient,
-          pairDataById: state.pairDataById,
-          derivedPairDataById: state.derivedPairDataById,
         }
-      },
+      }
     )
     .addCase(selectCurrency, (state, { payload: { currencyId, field } }) => {
       const otherField = field === Field.INPUT ? Field.OUTPUT : Field.INPUT
@@ -95,16 +89,4 @@ export default createReducer<SwapState>(initialState, (builder) =>
     .addCase(setRecipient, (state, { payload: { recipient } }) => {
       state.recipient = recipient
     })
-    .addCase(updatePairData, (state, { payload: { pairData, pairId, timeWindow } }) => {
-      if (!state.pairDataById[pairId]) {
-        state.pairDataById[pairId] = {}
-      }
-      state.pairDataById[pairId][timeWindow] = pairData
-    })
-    .addCase(updateDerivedPairData, (state, { payload: { pairData, pairId, timeWindow } }) => {
-      if (!state.derivedPairDataById[pairId]) {
-        state.derivedPairDataById[pairId] = {}
-      }
-      state.derivedPairDataById[pairId][timeWindow] = pairData
-    }),
 )

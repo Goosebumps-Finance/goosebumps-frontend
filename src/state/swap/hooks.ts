@@ -12,7 +12,9 @@ import { useTranslation } from 'contexts/Localization'
 import { isAddress } from 'utils'
 import { computeSlippageAdjustedAmounts } from 'utils/prices'
 import getLpAddress from 'utils/getLpAddress'
+import isSupportedChainId from 'utils/isSupportedChainId'
 import { getTokenAddress } from 'views/Swap/components/Chart/utils'
+import { ROUTER_ADDRESS, FACTORY_ADDRESSES } from 'config/constants/index'
 import { AppDispatch, AppState } from '../index'
 import { useCurrencyBalances } from '../wallet/hooks'
 import {
@@ -57,10 +59,10 @@ export function useSwapActionHandlers(): {
         selectCurrency({
           field,
           currencyId: currency instanceof Token ? currency.address : currency === ETHER ? 'BNB' : '',
-        }),
+        })
       )
     },
-    [dispatch],
+    [dispatch]
   )
 
   const onSwitchTokens = useCallback(() => {
@@ -71,14 +73,14 @@ export function useSwapActionHandlers(): {
     (field: Field, typedValue: string) => {
       dispatch(typeInput({ field, typedValue }))
     },
-    [dispatch],
+    [dispatch]
   )
 
   const onChangeRecipient = useCallback(
     (recipient: string | null) => {
       dispatch(setRecipient({ recipient }))
     },
-    [dispatch],
+    [dispatch]
   )
 
   return {
@@ -103,16 +105,16 @@ export function tryParseAmount(value?: string, currency?: Currency): CurrencyAmo
     }
   } catch (error) {
     // should fail if the user specifies too many decimal places of precision (or maybe exceed max uint?)
-    console.debug(`Failed to parse input amount: "${value}"`, error)
+    console.info(`Failed to parse input amount: "${value}"`, error)
   }
   // necessary for all paths to return a value
   return undefined
 }
 
 const BAD_RECIPIENT_ADDRESSES: string[] = [
-  '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f', // v2 factory
+  '0xBCfCcbde45cE874adCB698cC183deBcF17952812', // v2 factory
   '0xf164fC0Ec4E93095b804a4795bBe1e041497b92a', // v2 router 01
-  '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D', // v2 router 02
+  '0x05fF2B0DB69458A0750badebc4f9e13aDd608C7F', // v2 router 02
 ]
 
 /**
@@ -129,6 +131,7 @@ function involvesAddress(trade: Trade, checksummedAddress: string): boolean {
 
 // Get swap price for single token disregarding slippage and price impact
 export function useSingleTokenSwapInfo(): { [key: string]: number } {
+  const { chainId } = useActiveWeb3React()
   const {
     [Field.INPUT]: { currencyId: inputCurrencyId },
     [Field.OUTPUT]: { currencyId: outputCurrencyId },
@@ -141,7 +144,7 @@ export function useSingleTokenSwapInfo(): { [key: string]: number } {
 
   const parsedAmount = tryParseAmount('1', inputCurrency ?? undefined)
 
-  const bestTradeExactIn = useTradeExactIn(parsedAmount, outputCurrency ?? undefined)
+  const bestTradeExactIn = useTradeExactIn(chainId, parsedAmount, outputCurrency ?? undefined)
   if (!inputCurrency || !outputCurrency || !bestTradeExactIn) {
     return null
   }
@@ -163,7 +166,7 @@ export function useDerivedSwapInfo(): {
   v2Trade: Trade | undefined
   inputError?: string
 } {
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const { t } = useTranslation()
 
   const {
@@ -187,8 +190,8 @@ export function useDerivedSwapInfo(): {
   const isExactIn: boolean = independentField === Field.INPUT
   const parsedAmount = tryParseAmount(typedValue, (isExactIn ? inputCurrency : outputCurrency) ?? undefined)
 
-  const bestTradeExactIn = useTradeExactIn(isExactIn ? parsedAmount : undefined, outputCurrency ?? undefined)
-  const bestTradeExactOut = useTradeExactOut(inputCurrency ?? undefined, !isExactIn ? parsedAmount : undefined)
+  const bestTradeExactIn = useTradeExactIn(chainId, isExactIn ? parsedAmount : undefined, outputCurrency ?? undefined)
+  const bestTradeExactOut = useTradeExactOut(chainId, inputCurrency ?? undefined, !isExactIn ? parsedAmount : undefined)
 
   const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut
 
@@ -215,11 +218,16 @@ export function useDerivedSwapInfo(): {
     inputError = inputError ?? t('Select a token')
   }
 
+  const badRecipientAddresses = BAD_RECIPIENT_ADDRESSES;
+  if (isSupportedChainId(chainId)) {
+    badRecipientAddresses.push(...[ROUTER_ADDRESS[chainId], ...Object.keys(FACTORY_ADDRESSES[chainId]).map(([factory]) => factory)]);
+  }
+
   const formattedTo = isAddress(to)
   if (!to || !formattedTo) {
     inputError = inputError ?? t('Enter a recipient')
   } else if (
-    BAD_RECIPIENT_ADDRESSES.indexOf(formattedTo) !== -1 ||
+    badRecipientAddresses.indexOf(formattedTo) !== -1 ||
     (bestTradeExactIn && involvesAddress(bestTradeExactIn, formattedTo)) ||
     (bestTradeExactOut && involvesAddress(bestTradeExactOut, formattedTo))
   ) {
@@ -302,8 +310,6 @@ export function queryParametersToSwapState(parsedQs: ParsedQs, chainId: ChainId)
     typedValue: parseTokenAmountURLParameter(parsedQs.exactAmount),
     independentField: parseIndependentFieldURLParameter(parsedQs.exactField),
     recipient,
-    pairDataById: {},
-    derivedPairDataById: {},
   }
 }
 
@@ -319,7 +325,7 @@ export function useDefaultsFromURLSearch():
   >()
 
   useEffect(() => {
-    if (!chainId) return
+    if (!isSupportedChainId(chainId)) return
     const parsed = queryParametersToSwapState(parsedQs, chainId)
 
     dispatch(
@@ -328,8 +334,8 @@ export function useDefaultsFromURLSearch():
         field: parsed.independentField,
         inputCurrencyId: parsed[Field.INPUT].currencyId,
         outputCurrencyId: parsed[Field.OUTPUT].currencyId,
-        recipient: null,
-      }),
+        recipient: parsed.recipient,
+      })
     )
 
     setResult({ inputCurrencyId: parsed[Field.INPUT].currencyId, outputCurrencyId: parsed[Field.OUTPUT].currencyId })

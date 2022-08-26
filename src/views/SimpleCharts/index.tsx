@@ -9,7 +9,7 @@ import networks from 'config/constants/networks.json';
 import { mainnetTokens, testnetTokens } from 'config/constants/tokens'
 import { fetchAddressType, setNetworkInfo, setTimer } from 'state/home';
 import { AppState } from 'state';
-import Info from 'views/Charts/components/Info';
+import Info from 'views/SimpleCharts/components/Info';
 import { getChartsInfo } from 'utils/getChartsInfo';
 // import { getTokenAddress } from 'utils/getTokenInfos';
 

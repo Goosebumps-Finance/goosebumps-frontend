@@ -26,6 +26,8 @@ const isStakeOrFarm = () => {
         return false;
     }
   } else {
+    // eslint-disable-next-line no-alert
+    window.alert(`Please refresh website to switch network correctly!`)
     return false;
   }
 }

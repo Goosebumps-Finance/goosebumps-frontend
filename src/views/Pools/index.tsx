@@ -113,6 +113,11 @@ const Pools: React.FC = () => {
     dispatch(setNetworkInfo({searchKey: "", network}));
   }, [])
 
+  useEffect(() => {
+    console.log("Stakes: network=", network)
+    // window?.location?.reload();
+  }, [network])
+
   const pools = usePoolsWithVault()
 
   // TODO aren't arrays in dep array checked just by reference, i.e. it will rerender every time reference changes?

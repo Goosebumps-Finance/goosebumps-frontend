@@ -12,25 +12,25 @@ const getInitialState = () => {
   return { label: initialNetwork.Display, value: initialNetwork.Name, chainId: initialNetwork.chainId }
 }
 
-const isStakeOrFarm = () => {
-  if (window?.location?.href) {
-    switch (window?.location?.href) {
-      case "https://cryptosnowprince.com/farms":
-      case "https://cryptosnowprince.com/stake":
-      case "https://goosebumps.finance/stake":
-      case "https://goosebumps.finance/farms":
-      case "http://localhost:3010/stake":
-      case "http://localhost:3010/farms":
-        return true;
-      default:
-        return false;
-    }
-  } else {
-    // eslint-disable-next-line no-alert
-    window.alert(`Please refresh website to switch network correctly!`)
-    return false;
-  }
-}
+// const isStakeOrFarm = () => {
+//   if (window?.location?.href) {
+//     switch (window?.location?.href) {
+//       case "https://cryptosnowprince.com/farms":
+//       case "https://cryptosnowprince.com/stake":
+//       case "https://goosebumps.finance/stake":
+//       case "https://goosebumps.finance/farms":
+//       case "http://localhost:3010/stake":
+//       case "http://localhost:3010/farms":
+//         return true;
+//       default:
+//         return false;
+//     }
+//   } else {
+//     // eslint-disable-next-line no-alert
+//     window.alert(`Please refresh website to switch network correctly!`)
+//     return false;
+//   }
+// }
 
 const initialState: HomeState = {
   network: getInitialState(), // TODO prince
@@ -109,8 +109,15 @@ export const HomeSlice = createSlice({
       if (action.payload.network) {
         const tempVal = state.network.chainId
         state.network = action.payload.network
-        if (isStakeOrFarm() && tempVal !== state.network.chainId) {
-          window?.location?.reload()
+        // if (isStakeOrFarm() && tempVal !== state.network.chainId) {
+        //   window?.location?.reload()
+        // }
+        if (tempVal !== state.network.chainId) {
+          if (window?.location?.href) {
+            window?.location?.reload()
+          } else {
+            window.alert(`Please refresh website to switch network correctly!`)
+          }
         }
       }
     },

@@ -38,7 +38,7 @@ import {
   setChartViewMode,
   setSubgraphHealthIndicatorDisplayed,
 } from '../actions'
-import { deserializeToken, GAS_PRICE_GWEI, serializeToken } from './helpers'
+import { deserializeToken, serializeToken } from './helpers'
 
 export function useAudioModeManager(): [boolean, () => void] {
   const dispatch = useDispatch<AppDispatch>()

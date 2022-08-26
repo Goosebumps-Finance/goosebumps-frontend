@@ -12,6 +12,8 @@ import { useTranslation } from 'contexts/Localization'
 import CustomSelect, { OptionProps } from 'components/CustomSelect/CustomSelect'
 import useTheme from 'hooks/useTheme'
 import { usePriceEmpireBusd } from 'state/farms/hooks'
+import { GAS_PRICE_GWEI } from 'state/user/hooks/helpers'
+import { useGasPriceManager } from 'state/user/hooks'
 import { setAddressType, setNetworkInfo } from 'state/home'
 import { State } from 'state/types'
 // import { usePhishingBannerManager } from 'state/user/hooks'
@@ -67,7 +69,7 @@ const Menu = (props) => {
   const activeSubMenuItem = getActiveSubMenuItem({ menuItem: activeMenuItem, pathname })
 
   const [timer, setTimer] = useState<any>();
-
+  const [gasPrice, setGasPrice] = useGasPriceManager()
 
   const onSearchKeyChange = (newKey) => {
     dispatch(setNetworkInfo({ searchKey: newKey, network }));
@@ -145,13 +147,12 @@ const Menu = (props) => {
       default:
         break
     }
-    // setNetworkIndex(_index)
-    // if(searchKey) {
-    // console.log("searchKey=", searchKey)
+    setGasPrice(GAS_PRICE_GWEI[network.chainId].default)
+  }, [network])
+
+  useEffect(() => {
     handleSearch(searchKey)
-    // console.log("network changed: chainId", network.chainId)
-    // }
-  }, [network, searchKey])
+  }, [searchKey])
 
   return (
     <UikitMenu

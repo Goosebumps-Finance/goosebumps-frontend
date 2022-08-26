@@ -18,7 +18,7 @@ interface Props {
     onDismiss?: () => void
 }
 
-const ComingSoonModal: React.FC<Props> = ({title, onDismiss, ...props}) => {
+const ComingSoonModal: React.FC<Props> = ({ title, onDismiss, ...props }) => {
 
     return <Modal title="" maxWidth="380px">
         <Heading textAlign="center">Coming soon</Heading>
@@ -32,14 +32,14 @@ const ComingSoon = () => {
     // }
 
     // const [onPresentModal] = useModal(<ComingSoonModal onDismiss={onDismiss}/>, false);
-    
+
     // useEffect(() => {
     //     // onPresentModal();
     // }, [])
     const dispatch = useDispatch();
-    const { network } = useSelector((state:State) => state.home)
+    const { network } = useSelector((state: State) => state.home)
     useEffect(() => {
-        dispatch(setNetworkInfo({searchKey: "", network}));
+        dispatch(setNetworkInfo({ searchKey: "", network }));
     }, [])
 
     return <Page>

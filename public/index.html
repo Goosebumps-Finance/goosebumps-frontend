@@ -1,73 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <!-- Links -->
-    <link rel="preconnect" href="%REACT_APP_NODE_1%" />
-    <link rel="preconnect" href="%REACT_APP_NODE_2%" />
-    <link rel="preconnect" href="%REACT_APP_NODE_3%" />
-    <link rel="preconnect" href="%REACT_APP_NODE_PRODUCTION%" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link rel="preconnect" href="%REACT_APP_ETH_RPC_URL%" />
-    <link rel="preconnect" href="%REACT_APP_BSC_RPC_URL%" />
-    <link rel="preconnect" href="%REACT_APP_BSC_TESTNET_RPC_URL%" />
-    <link rel="preconnect" href="%REACT_APP_POLYGON_RPC_URL%" />
 
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.png" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!-- Meta -->
-    <title>Goosebumps</title>
-    <meta
-      name="description"
-      content="Cheaper and faster than Uniswap? Discover Goosebumps."
-    />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1, viewport-fit=cover"
-    />
-    <meta name="theme-color" content="#1FC7D4" />
-    <meta name="twitter:image" content="https://goosebumps.finance/images/hero.png" />
-    <meta
-      name="twitter:description"
-      content="The most popular AMM on multi-chain by user count! Earn EMPIRE token!"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="🥞 Goosebumps - A next evolution DeFi exchange on Binance Smart Chain (BSC)" />
-    <!-- GTAG -->
-    <script>
-      ;(function (w, d, s, l, i) {
-        w[l] = w[l] || []
-        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != 'dataLayer' ? '&l=' + l : ''
-        j.async = true
-        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
-        f.parentNode.insertBefore(j, f)
-      })(window, document, 'script', 'dataLayer', '%REACT_APP_GTAG%')
-    </script>
-    <script type="text/javascript" src="%PUBLIC_URL%/charting_library/charting_library.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  </head>
-  <body style="font-family: Circular Std;">
-    <!-- GTAG (noscript) -->
-    <noscript>
-      <iframe
-        src="https://www.googletagmanager.com/ns.html?id=%REACT_APP_GTAG%"
-        height="0"
-        width="0"
-        style="display: none; visibility: hidden"
-      ></iframe>
-    </noscript>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <link rel="stylesheet" href="%PUBLIC_URL%/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="%PUBLIC_URL%/assets/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="%PUBLIC_URL%/assets/css/responsive.css" />
-    <link rel="stylesheet" href="%PUBLIC_URL%/assets/css/style.css" />
-    <div id="root"></div>
-    <div id="portal-root"></div>
+<head>
+  <meta charset="utf-8" />
+  <!-- Links -->
+  <link rel="preconnect" href="%REACT_APP_NODE_1%" />
+  <link rel="preconnect" href="%REACT_APP_NODE_2%" />
+  <link rel="preconnect" href="%REACT_APP_NODE_3%" />
+  <link rel="preconnect" href="%REACT_APP_NODE_PRODUCTION%" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link rel="preconnect" href="%REACT_APP_ETH_RPC_URL%" />
+  <link rel="preconnect" href="%REACT_APP_BSC_RPC_URL%" />
+  <link rel="preconnect" href="%REACT_APP_BSC_TESTNET_RPC_URL%" />
+  <link rel="preconnect" href="%REACT_APP_POLYGON_RPC_URL%" />
 
-  </body>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="shortcut icon" href="%REACT_APP_PUBLIC_URL%/favicon.png" />
+  <link rel="apple-touch-icon" href="%REACT_APP_PUBLIC_URL%/logo.png" />
+  <link rel="manifest" href="%REACT_APP_PUBLIC_URL%/manifest.json" />
+  <!-- Meta -->
+  <title>Goosebumps</title>
+  <meta name="description" content="Cheaper and faster than Uniswap? Discover Goosebumps." />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#1FC7D4" />
+  <meta name="twitter:image" content="https://goosebumps.finance/images/hero.png" />
+  <meta name="twitter:description" content="The most popular AMM on multi-chain by user count! Earn EMPIRE token!" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="🥞 Goosebumps - A next evolution DeFi exchange on Binance Smart Chain (BSC)" />
+  <!-- GTAG -->
+  <script>
+    // ;(function (w, d, s, l, i) {
+    //   w[l] = w[l] || []
+    //   w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' })
+    //   var f = d.getElementsByTagName(s)[0],
+    //     j = d.createElement(s),
+    //     dl = l != 'dataLayer' ? '&l=' + l : ''
+    //   j.async = true
+    //   j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
+    //   f.parentNode.insertBefore(j, f)
+    // })(window, document, 'script', 'dataLayer', '%REACT_APP_GTAG%')
+    
+    // (function (w, d, s, l, i) {
+    //   w[l] = w[l] || []; w[l].push({
+    //     'gtm.start':
+    //       new Date().getTime(), event: 'gtm.js'
+    //   }); var f = d.getElementsByTagName(s)[0],
+    //     j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+    //       'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    // })(window, document, 'script', 'dataLayer', '%REACT_APP_GTAG%');
+  </script>
+  <!-- <script type="text/javascript" src="%REACT_APP_PUBLIC_URL%/charting_library/charting_library.js"></script> -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body style="font-family: Circular Std;">
+  <!-- GTAG (noscript) -->
+  <!-- <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=%REACT_APP_GTAG%" height="0" width="0"
+      style="display: none; visibility: hidden"></iframe>
+  </noscript> -->
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <link rel="stylesheet" href="%REACT_APP_PUBLIC_URL%/assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="%REACT_APP_PUBLIC_URL%/assets/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="%REACT_APP_PUBLIC_URL%/assets/css/responsive.css" />
+  <link rel="stylesheet" href="%REACT_APP_PUBLIC_URL%/assets/css/style.css" />
+  <div id="root"></div>
+  <div id="portal-root"></div>
+
+</body>
+
 </html>

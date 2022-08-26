@@ -242,7 +242,8 @@ function ManageLists({
           <Input
             id="list-add-input"
             scale="lg"
-            placeholder={t('https:// or ipfs:// or ENS name')}
+            // placeholder={t('https:// or ipfs:// or ENS name')}
+            placeholder={t('https:// or ipfs://')}
             value={listUrlInput}
             onChange={handleInput}
           />

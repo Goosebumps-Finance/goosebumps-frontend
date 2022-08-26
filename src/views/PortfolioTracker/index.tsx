@@ -338,8 +338,26 @@ const PortfolioTracker = () => {
     if( connectedAddress ) {
       setTokenInfos([]);
       setIsStartLoading(false);
-      params.address = connectedAddress;
+      dispatch(setNetworkInfo({
+        searchKey: connectedAddress,
+        network: {
+            label: detailedNetwork.Display,
+            value: detailedNetwork.Name,
+            chainId: detailedNetwork.chainId
+        }
+      })) 
+      // params.address = connectedAddress;
       // setParams({address: connectedAddress, networkName: currentParams.networkName});
+    } else if(!params.address) {
+      setLoadingStep(-1);
+      dispatch(setNetworkInfo({
+        searchKey: "",
+        network: {
+            label: detailedNetwork.Display,
+            value: detailedNetwork.Name,
+            chainId: detailedNetwork.chainId
+        }
+      })) 
     }
   }, [connectedAddress])
 

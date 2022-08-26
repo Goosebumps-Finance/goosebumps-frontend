@@ -10,7 +10,7 @@ export const getChartsInfo = async (address, network, pairAddress) => {
   // );
   // const pairs = mockPairsData;
   // console.log('getChartsInfo address=', address, ' network =', network, ' pairAddress=', pairAddress)
-  if (address === '' || network === null) return []
+  if (address === '' || network === null) return [];
   const pairs = await getAsyncData(`${API_SERVER}api/Charts/GetPairs`, { address, network: network.Name })
   // console.log("getChartsInfo pairs=", pairs)
   let pair

@@ -93,7 +93,7 @@ const SettingsModal: React.FC<InjectedModalProps> = ({ onDismiss }) => {
           </Flex>
           <Toggle id="toggle-expert-mode-button" scale="md" checked={expertMode} onChange={handleExpertModeToggle} />
         </Flex>
-        <Flex justifyContent="space-between" alignItems="center" mb="24px">
+        {/* <Flex justifyContent="space-between" alignItems="center" mb="24px">
           <Flex alignItems="center">
             <Text>{t('Disable Multihops')}</Text>
             <QuestionHelper text={t('Restricts swaps to direct pairs only.')} placement="top-start" ml="4px" />
@@ -126,7 +126,7 @@ const SettingsModal: React.FC<InjectedModalProps> = ({ onDismiss }) => {
               setSubgraphHealh(!subgraphHealth)
             }}
           />
-        </Flex>
+        </Flex> */}
         <Flex justifyContent="space-between" alignItems="center">
           <Flex alignItems="center">
             <Text>{t('Flippy sounds')}</Text>

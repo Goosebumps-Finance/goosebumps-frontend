@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { ChainId } from '@goosebumps/sdk'
 import linq from 'linq'
-import { API_SERVER } from 'config'
+import { API_SERVER, BASE_URL } from 'config'
 import { HomeState } from 'state/types'
 import { getChainId } from 'utils/getChainId'
 import { getAsyncData } from 'utils/requester'
@@ -30,6 +30,12 @@ const getInitialState = () => {
 //     window.alert(`Please refresh website to switch network correctly!`)
 //     return false;
 //   }
+// }
+
+// const isChartOrPortfolio = () => {
+//   const isChart: boolean = window?.location?.href?.toLowerCase().indexOf("chart") !== -1
+//   const isPortfolio: boolean = window?.location?.href?.toLowerCase().indexOf("portfolio-tracker") !== -1
+//   return isChart || isPortfolio
 // }
 
 const initialState: HomeState = {
@@ -113,7 +119,11 @@ export const HomeSlice = createSlice({
         //   window?.location?.reload()
         // }
         if (tempVal !== state.network.chainId) {
-          if (window?.location?.href) {
+          if (window?.location?.href?.toLowerCase().indexOf("chart") !== -1) {
+            window.location.href = `${BASE_URL}/chart`
+          } else if (window?.location?.href?.toLowerCase().indexOf("portfolio-tracker") !== -1) {
+            window.location.href = `${BASE_URL}/portfolio-tracker`
+          } else if (window?.location?.href) {
             window?.location?.reload()
           } else {
             window.alert(`Please refresh website to switch network correctly!`)

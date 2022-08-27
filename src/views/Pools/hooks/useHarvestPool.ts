@@ -1,8 +1,9 @@
 import { useCallback } from 'react'
 import { useWeb3React } from '@web3-react/core'
+import { Contract } from '@ethersproject/contracts'
 import { useAppDispatch } from 'state'
 import { updateUserBalance, updateUserPendingReward } from 'state/actions'
-import { harvestFarm } from 'utils/calls'
+import { harvestFarm, estimateGas } from 'utils/calls'
 import { BIG_ZERO } from 'utils/bigNumber'
 import getGasPrice from 'utils/getGasPrice'
 import { useMasterchef, useSousChef, useStakingContract } from 'hooks/useContract'
@@ -19,9 +20,13 @@ const options = {
 //   return receipt.status
 // }
 
-const harvestPool = async (stakingContract) => {
+const harvestPool = async (stakingContract: Contract) => {
   const gasPrice = getGasPrice()
-  const tx = await stakingContract.withdrawRewards({ ...options, gasPrice })
+  const estimatedGas = estimateGas(stakingContract, 'withdrawRewards', [], 2000)
+  // console.log("harvestPool estimatedGas=", estimatedGas)
+  const tx = await stakingContract.withdrawRewards({ gasLimit: estimatedGas, gasPrice })
+  
+  // const tx = await stakingContract.withdrawRewards({ ...options, gasPrice })
   const receipt = await tx.wait()
   return receipt.status
 }

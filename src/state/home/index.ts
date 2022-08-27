@@ -93,7 +93,7 @@ export const HomeSlice = createSlice({
       }
       // window.localStorage.setItem("SELECTED_CHAIN_ID", `${action.payload.network.chainId}`)
       window.localStorage.setItem("SELECTED_CHAIN_ID", `${chainId}`)
-      console.log("setNetworkInfo payload =", action.payload);
+      // console.log("setNetworkInfo payload =", action.payload);
       if (action.payload.searchKey !== undefined) {
         state.searchKey = action.payload.searchKey
         // const setSearchKey = (state1, action1) => {

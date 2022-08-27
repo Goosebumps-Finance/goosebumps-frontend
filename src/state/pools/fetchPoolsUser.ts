@@ -24,13 +24,13 @@ export const fetchPoolsAllowance = async (account) => {
     name: 'allowance',
     params: [account, getAddress(pool.approveAddresses)],
   }))
-  console.log("test= fetchPoolsAllowance calls=", calls)
+  // console.log("test= fetchPoolsAllowance calls=", calls)
   nonBnbPools.map((pool) => {
-    console.log("test= fetchPoolsAllowance pool.address=", pool.stakingToken.address)
+    // console.log("test= fetchPoolsAllowance pool.address=", pool.stakingToken.address)
     return {address: pool.stakingToken.address}
   })
   const allowances = await multicall(erc20ABI, calls)
-  console.log("test= multicall allowances=", allowances)
+  // console.log("test= multicall allowances=", allowances)
   return nonBnbPools.reduce(
     (acc, pool, index) => ({ ...acc, [pool.sousId]: new BigNumber(allowances[index]).toJSON() }),
     {},

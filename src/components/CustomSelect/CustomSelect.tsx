@@ -181,11 +181,11 @@ const CustomSelect: React.FunctionComponent<SelectProps> = ({
       setSelectedOptionIndex(selIndex)
   }, [selIndex])
 
-  useEffect(() => {
-    console.log("CustomSelect: selectedOptionIndex, selIndex", selectedOptionIndex, selIndex)
-    if (selectedOptionIndex !== selIndex)
-      setSelectedOptionIndex(selIndex)
-  }, [selectedOptionIndex])
+  // useEffect(() => {
+  //   console.log("CustomSelect: selectedOptionIndex, selIndex", selectedOptionIndex, selIndex)
+  //   if (selectedOptionIndex !== selIndex)
+  //     setSelectedOptionIndex(selIndex)
+  // }, [selectedOptionIndex])
 
   return (
     <DropDownContainer isOpen={isOpen} isHome={isHome} {...props} >

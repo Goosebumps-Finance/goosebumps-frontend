@@ -270,11 +270,12 @@ const PortfolioTracker = () => {
     if(searchKey !== params.address) {
       dispatch(setNetworkInfo({
         searchKey: params.address,
-        network: {
-            label: detailedNetwork.Display,
-            value: detailedNetwork.Name,
-            chainId: detailedNetwork.chainId
-        }
+        // network: {
+        //     label: detailedNetwork.Display,
+        //     value: detailedNetwork.Name,
+        //     chainId: detailedNetwork.chainId
+        // }
+        network
       })) 
     }
   }, [])
@@ -347,11 +348,12 @@ const PortfolioTracker = () => {
       setIsStartLoading(false);
       dispatch(setNetworkInfo({
         searchKey: connectedAddress,
-        network: {
-            label: detailedNetwork.Display,
-            value: detailedNetwork.Name,
-            chainId: detailedNetwork.chainId
-        }
+        // network: {
+        //     label: detailedNetwork.Display,
+        //     value: detailedNetwork.Name,
+        //     chainId: detailedNetwork.chainId
+        // }
+        network
       })) 
       // params.address = connectedAddress;
       // setParams({address: connectedAddress, networkName: currentParams.networkName});
@@ -359,11 +361,12 @@ const PortfolioTracker = () => {
       setLoadingStep(-1);
       dispatch(setNetworkInfo({
         searchKey: "",
-        network: {
-            label: detailedNetwork.Display,
-            value: detailedNetwork.Name,
-            chainId: detailedNetwork.chainId
-        }
+        // network: {
+        //     label: detailedNetwork.Display,
+        //     value: detailedNetwork.Name,
+        //     chainId: detailedNetwork.chainId
+        // }
+        network
       })) 
     }
   }, [connectedAddress])

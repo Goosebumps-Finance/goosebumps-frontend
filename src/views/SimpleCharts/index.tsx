@@ -74,11 +74,12 @@ const SimpleCharts = (props) => {
         if (params.address !== searchKey) {
             dispatch(setNetworkInfo({
                 searchKey: params.address,
-                network: {
-                    label: selectedNetwork.Display,
-                    value: selectedNetwork.Name,
-                    chainId: selectedNetwork.chainId
-                }
+                // network: {
+                //     label: selectedNetwork.Display,
+                //     value: selectedNetwork.Name,
+                //     chainId: selectedNetwork.chainId
+                // }
+                network
             }))
         }
         // Determine the address type 

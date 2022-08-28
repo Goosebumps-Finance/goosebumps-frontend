@@ -113,27 +113,25 @@ export const HomeSlice = createSlice({
         // clearTimeout(timer);
         // timer = setTimeout(() => setSearchKey(state, action), 1000)
       }
-      if (action.payload.network) {
-        const tempVal = state.network.chainId
+      if (action.payload.network && action.payload.network.chainId !== state.network.chainId) {
+        console.log("setNetworkInfo: network changed")
         state.network = action.payload.network
-        // if (isStakeOrFarm() && tempVal !== state.network.chainId) {
+        // if (isStakeOrFarm()) {
         //   window?.location?.reload()
         // }
-        if (tempVal !== state.network.chainId) {
-          if (window?.location?.href?.toLowerCase().indexOf("charts") !== -1) {
-            console.log("setNetworkInfo on charts")
-            window.location.href = `${BASE_URL}/charts`
-          } else if (window?.location?.href?.toLowerCase().indexOf("portfolio-tracker") !== -1) {
-            console.log("setNetworkInfo on portfolio-tracker")
-            window.location.href = `${BASE_URL}/portfolio-tracker`
-            // window.alert(`Please visit portfolio tracker page again after chain switching!`)
-          } else if (window?.location?.href) {
-            console.log("setNetworkInfo on other part")
-            window?.location?.reload()
-          } else {
-            console.log("setNetworkInfo on exception")
-            window.alert(`Please refresh website to switch network correctly!`)
-          }
+        if (window?.location?.href?.toLowerCase().indexOf("charts") !== -1) {
+          console.log("setNetworkInfo on charts")
+          window.location.href = `${BASE_URL}/charts`
+        } else if (window?.location?.href?.toLowerCase().indexOf("portfolio-tracker") !== -1) {
+          console.log("setNetworkInfo on portfolio-tracker")
+          window.location.href = `${BASE_URL}/portfolio-tracker`
+          // window.alert(`Please visit portfolio tracker page again after chain switching!`)
+        } else if (window?.location?.href) {
+          console.log("setNetworkInfo on other part")
+          window?.location?.reload()
+        } else {
+          console.log("setNetworkInfo on exception")
+          window.alert(`Please refresh website to switch network correctly!`)
         }
       }
     },

@@ -1,6 +1,9 @@
-import farms from 'config/constants/farms'
+// import farms from 'config/constants/farms'
+import { newfarms } from 'config/constants/farms'
 import { SerializedFarm } from 'state/types'
 import { getLpContract } from 'utils/contractHelpers'
+
+const farms = newfarms
 
 // Test only against the last 10 farms, for performance concern
 const farmsToTest: [number, SerializedFarm][] = farms

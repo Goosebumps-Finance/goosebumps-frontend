@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { ArrowDropDownIcon, Box, BoxProps, Text } from '@goosebumps/uikit'
 import { useLocation } from 'react-router-dom'
+import { OptionProps } from 'config/constants/types'
 
 const DropDownHeader = styled.div<{ isHome: boolean }>`
   width: 100%;
@@ -125,18 +126,13 @@ const ListItem = styled.li`
 
 export interface SelectProps extends BoxProps {
   options: OptionProps[]
-  onOptionChange?: (option: OptionProps) => void
+  onOptionChange?: (newOption: OptionProps, nowOption: OptionProps) => void
   defaultOptionIndex?: number
   header?: any
   listContainer?: any
   selIndex?: number
   length?: number
   startIndex?: number
-}
-
-export interface OptionProps {
-  label: string
-  value: any
 }
 
 const CustomSelect: React.FunctionComponent<SelectProps> = ({
@@ -165,7 +161,7 @@ const CustomSelect: React.FunctionComponent<SelectProps> = ({
     setIsOpen(false)
 
     if (onOptionChange) {
-      onOptionChange(options[selectedIndex])
+      onOptionChange(options[selectedIndex], options[selectedOptionIndex])
     }
   }
 
@@ -186,6 +182,7 @@ const CustomSelect: React.FunctionComponent<SelectProps> = ({
   }, [selIndex])
 
   useEffect(() => {
+    console.log("CustomSelect: selectedOptionIndex, selIndex", selectedOptionIndex, selIndex)
     if (selectedOptionIndex !== selIndex)
       setSelectedOptionIndex(selIndex)
   }, [selectedOptionIndex])

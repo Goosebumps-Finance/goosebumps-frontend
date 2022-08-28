@@ -9,7 +9,7 @@ import { ethers } from 'ethers'
 import { languageList } from 'config/localization/languages'
 import { useTranslation } from 'contexts/Localization'
 // import PhishingWarningBanner from 'components/PhishingWarningBanner'
-import CustomSelect, { OptionProps } from 'components/CustomSelect/CustomSelect'
+import CustomSelect from 'components/CustomSelect/CustomSelect'
 import useTheme from 'hooks/useTheme'
 import { usePriceEmpireBusd } from 'state/farms/hooks'
 import { GAS_PRICE_GWEI } from 'state/user/hooks/helpers'
@@ -71,7 +71,7 @@ const Menu = (props) => {
   const [timer, setTimer] = useState<any>();
   const [gasPrice, setGasPrice] = useGasPriceManager()
 
-  const onSearchKeyChange = (newKey) => {
+  const onSearchKeyChange = (newKey: string) => {
     dispatch(setNetworkInfo({ searchKey: newKey, network }));
     if (ethers.utils.isAddress(newKey) || !newKey) {
       handleSearch(newKey)
@@ -117,7 +117,7 @@ const Menu = (props) => {
     );
   }
 
-  const onChangeNetwork = async (newNetwork) => {
+  const onChangeNetwork = async (newNetwork: any, nowNetwork: any) => {
     const detailedNetwork = linq.from(networks).where((x) => x.Name === newNetwork.value).single()
     const info = { ...newNetwork, chainId: detailedNetwork.chainId };
     console.log("onChangeNetwork info = ", info)

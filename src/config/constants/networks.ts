@@ -1,4 +1,5 @@
 import { ChainId } from '@goosebumps/sdk'
+import { OptionProps } from 'config/constants/types'
 
 const NETWORK_URLS: { [chainId in ChainId]: string } = {
   [ChainId.ETHEREUM]: 'https://mainnet.infura.io/v3/687f55defdfe416faa0b388c1332727c',
@@ -9,7 +10,7 @@ const NETWORK_URLS: { [chainId in ChainId]: string } = {
 
 export default NETWORK_URLS
 
-export const chainList = [
+export const chainList: OptionProps[] = [
   {
     label: "BSC",
     value: "bsc"

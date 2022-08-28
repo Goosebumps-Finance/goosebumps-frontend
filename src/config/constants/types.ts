@@ -240,3 +240,8 @@ export enum FetchStatus {
   Fetched = 'FETCHED',
   Failed = 'FAILED',
 }
+
+export interface OptionProps {
+  label: string
+  value: any
+}

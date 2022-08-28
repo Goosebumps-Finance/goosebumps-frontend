@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { ChainId } from '@goosebumps/sdk'
+// import { ChainId } from '@goosebumps/sdk'
 import linq from 'linq'
 import { API_SERVER, BASE_URL } from 'config'
 import { HomeState } from 'state/types'
 import { getChainId } from 'utils/getChainId'
 import { getAsyncData } from 'utils/requester'
 import networks from 'config/constants/networks.json'
+// import tokens from 'config/constants/tokens'
 
 const getInitialState = () => {
   const initialNetwork = linq.from(networks).where((x) => x.chainId === getChainId()).single()
@@ -33,7 +34,7 @@ const getInitialState = () => {
 // }
 
 // const isChartOrPortfolio = () => {
-//   const isChart: boolean = window?.location?.href?.toLowerCase().indexOf("chart") !== -1
+//   const isChart: boolean = window?.location?.href?.toLowerCase().indexOf("charts") !== -1
 //   const isPortfolio: boolean = window?.location?.href?.toLowerCase().indexOf("portfolio-tracker") !== -1
 //   return isChart || isPortfolio
 // }
@@ -85,21 +86,21 @@ export const HomeSlice = createSlice({
     },
     setNetworkInfo: (state, action) => {
       // console.log("setNetworkInfo action=", action.payload)
-      let chainId = action.payload.network.chainId
-      switch (action.payload.network.chainId) {
-        // case ChainId.ETHEREUM:
-        // case ChainId.POLYGON:
-        case ChainId.MAINNET:
-        case ChainId.TESTNET:
-          chainId = action.payload.network.chainId
-          break
-        default:
-          chainId = getChainId()
-          break
-      }
-      // window.localStorage.setItem("SELECTED_CHAIN_ID", `${action.payload.network.chainId}`)
-      window.localStorage.setItem("SELECTED_CHAIN_ID", `${chainId}`)
-      // console.log("setNetworkInfo payload =", action.payload);
+      // let chainId: number
+      // switch (action.payload.network.chainId) {
+      //   // case ChainId.ETHEREUM:
+      //   // case ChainId.POLYGON:
+      //   case ChainId.MAINNET:
+      //   case ChainId.TESTNET:
+      //     chainId = action.payload.network.chainId
+      //     break
+      //   default:
+      //     chainId = getChainId()
+      //     break
+      // }
+      // window.localStorage.setItem("SELECTED_CHAIN_ID", `${chainId}`)
+      console.log("setNetworkInfo payload =", action.payload);
+      window.localStorage.setItem("SELECTED_CHAIN_ID", `${action.payload.network.chainId}`)
       if (action.payload.searchKey !== undefined) {
         state.searchKey = action.payload.searchKey
         // const setSearchKey = (state1, action1) => {
@@ -119,13 +120,18 @@ export const HomeSlice = createSlice({
         //   window?.location?.reload()
         // }
         if (tempVal !== state.network.chainId) {
-          if (window?.location?.href?.toLowerCase().indexOf("chart") !== -1) {
-            window.location.href = `${BASE_URL}/chart`
+          if (window?.location?.href?.toLowerCase().indexOf("charts") !== -1) {
+            console.log("setNetworkInfo on charts")
+            window.location.href = `${BASE_URL}/charts`
           } else if (window?.location?.href?.toLowerCase().indexOf("portfolio-tracker") !== -1) {
+            console.log("setNetworkInfo on portfolio-tracker")
             window.location.href = `${BASE_URL}/portfolio-tracker`
+            // window.alert(`Please visit portfolio tracker page again after chain switching!`)
           } else if (window?.location?.href) {
+            console.log("setNetworkInfo on other part")
             window?.location?.reload()
           } else {
+            console.log("setNetworkInfo on exception")
             window.alert(`Please refresh website to switch network correctly!`)
           }
         }

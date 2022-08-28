@@ -1,5 +1,5 @@
-import { getChainId } from "./getChainId"
 import { BASE_URL } from "config"
+import { getChainId } from "./getChainId"
 
 const getTokenLogoURL = (address: string) => {
   // const defaultTokenAddrs = ['0x293C3Ee9ABaCb08BB8ceD107987F00EfD1539288', '0xE7C6D00B5314EE2651Df6E18e84d6d6dF0EA96a6']

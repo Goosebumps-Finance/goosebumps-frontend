@@ -1,20 +1,13 @@
-const CMC = 'https://goosebumps.finance/token-lists/cmc.json'
-const COINGECKO = 'https://goosebumps.finance/token-lists/coingecko.json'
-const GOOSEBUMPS_DEFAULT = 'https://goosebumps.finance/token-lists/goosebumps-default.json'
-const GOOSEBUMPS_EXTENDED = 'https://goosebumps.finance/token-lists/goosebumps-extended.json'
-const GOOSEBUMPS_MINI_EXTENDED = 'https://goosebumps.finance/token-lists/goosebumps-mini-extended.json'
-const GOOSEBUMPS_MINI = 'https://goosebumps.finance/token-lists/goosebumps-mini.json'
-const GOOSEBUMPS_TOP15 = 'https://goosebumps.finance/token-lists/goosebumps-top-15.json'
-const GOOSEBUMPS_TOP100 = 'https://goosebumps.finance/token-lists/goosebumps-top-100.json'
-// const CMC = 'https://cryptosnowprince.com/token-lists/cmc.json'
-// const COINGECKO = 'https://cryptosnowprince.com/token-lists/coingecko.json'
-// const GOOSEBUMPS_DEFAULT = 'https://cryptosnowprince.com/token-lists/goosebumps-default.json'
-// const GOOSEBUMPS_EXTENDED = 'https://cryptosnowprince.com/token-lists/goosebumps-extended.json'
-// const GOOSEBUMPS_MINI_EXTENDED = 'https://cryptosnowprince.com/token-lists/goosebumps-mini-extended.json'
-// const GOOSEBUMPS_MINI = 'https://cryptosnowprince.com/token-lists/goosebumps-mini.json'
-// const GOOSEBUMPS_TOP15 = 'https://cryptosnowprince.com/token-lists/goosebumps-top-15.json'
-// const GOOSEBUMPS_TOP100 = 'https://cryptosnowprince.com/token-lists/goosebumps-top-100.json'
+import { BASE_URL } from "config"
 
+const CMC = `${BASE_URL}/token-lists/cmc.json`
+const COINGECKO = `${BASE_URL}/token-lists/coingecko.json`
+const GOOSEBUMPS_DEFAULT = `${BASE_URL}/token-lists/goosebumps-default.json`
+const GOOSEBUMPS_EXTENDED = `${BASE_URL}/token-lists/goosebumps-extended.json`
+const GOOSEBUMPS_MINI_EXTENDED = `${BASE_URL}/token-lists/goosebumps-mini-extended.json`
+const GOOSEBUMPS_MINI = `${BASE_URL}/token-lists/goosebumps-mini.json`
+const GOOSEBUMPS_TOP15 = `${BASE_URL}/token-lists/goosebumps-top-15.json`
+const GOOSEBUMPS_TOP100 = `${BASE_URL}/token-lists/goosebumps-top-100.json`
 
 export const UNSUPPORTED_LIST_URLS: string[] = []
 

@@ -16,12 +16,8 @@ const getInitialState = () => {
 // const isStakeOrFarm = () => {
 //   if (window?.location?.href) {
 //     switch (window?.location?.href) {
-//       case "https://cryptosnowprince.com/farms":
-//       case "https://cryptosnowprince.com/stake":
-//       case "https://goosebumps.finance/stake":
-//       case "https://goosebumps.finance/farms":
-//       case "http://localhost:3010/stake":
-//       case "http://localhost:3010/farms":
+//       case `${BASE_URL}/farms`:
+//       case `${BASE_URL}/stake`:
 //         return true;
 //       default:
 //         return false;

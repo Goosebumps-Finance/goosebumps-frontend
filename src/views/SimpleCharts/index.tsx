@@ -156,7 +156,7 @@ const SimpleCharts = (props) => {
                 <div className="row">
                     <div className="col-lg-3" style={{ display: addressType === "DEX" ? "none" : "" }}>
                         <div className="overflow-hidden">
-                            <Info info={info} network={selectedNetwork} setPair={setChartAddress} />
+                            <Info info={info} network={selectedNetwork} setPair={setChartAddress} tokenAddress={params.address} />
                         </div>
                     </div>
                     <div className="col-lg-9 mt-4 mt-lg-0" style={{ margin: "auto", display: isReady ? "" : "none" }}>

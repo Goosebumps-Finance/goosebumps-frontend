@@ -13,7 +13,7 @@ const LoadingPanel = styled.div`
   color: white;
 `
 
-const Info = ({ info, network, setPair }) => {
+const Info = ({ info, network, setPair, tokenAddress }) => {
   // const fastRefresh = useFastFresh()
   const [loading, setLoading] = useState(true)
   const [liveInfo, setLiveInfo] = useState<any>({})
@@ -21,7 +21,7 @@ const Info = ({ info, network, setPair }) => {
   const [hasCMC, setHasCMC] = useState(false);
 
   useEffect(() => {
-    if(!info) return;
+    if (!info) return;
     // console.log("bug= getData loading = ", loading)
     // console.log("bug= getData liveInfo = ", liveInfo)
     // @ts-ignore
@@ -36,7 +36,7 @@ const Info = ({ info, network, setPair }) => {
         setLiveInfo(res)
         if (loading) setLoading(false)
       }
-      
+
     }
     getData()
   }, [loading, info, network])
@@ -84,7 +84,7 @@ const Info = ({ info, network, setPair }) => {
   const onPairChange = (e) => {
     // window.location = `/charts/${network.Name}/${info.address}/${e.target.value}`;
     console.log("setPair=", setPair, e.target.value)
-    if(setPair) {
+    if (setPair) {
       setPair(e.target.value)
     }
     // alert(e.target.value)
@@ -99,19 +99,19 @@ const Info = ({ info, network, setPair }) => {
   }
 
   const renderCMC = () => {
-    if(hasCMC)
-    {
+    if (hasCMC) {
       info.cmc.urls.chat.map((item) => {
         return item
       })
     }
-    
+
     return (
       <>
         <div className="row">
           <div className="row col">
             <img
-              src={ hasCMC && info.cmc.logo || '/images/logo-icon.png'}
+              // src={ hasCMC && info.cmc.logo || '/images/logo-icon.png'}
+              src={`/images/tokens/${network.chainId}/${tokenAddress}.png`}
               width="64"
               className="col-auto"
               alt="{info.pair.buyCurrency.symbol}"
@@ -350,7 +350,7 @@ const Info = ({ info, network, setPair }) => {
             }}
             style={{ color: 'white' }}
           />
-          {hasCMC?<div className="mt-4">
+          {hasCMC ? <div className="mt-4">
             <div className="social-icons">
               {info.cmc.urls.website.map((item, index) => (
                 <a key={item} href={item} rel="noopener noreferrer">
@@ -398,8 +398,8 @@ const Info = ({ info, network, setPair }) => {
                 </a>
               ))}
             </div>
-          </div>:<></>}
-          
+          </div> : <></>}
+
         </div>
       </>
     )
@@ -411,13 +411,14 @@ const Info = ({ info, network, setPair }) => {
         <div className="row">
           <div className="row col">
             <img
-              src="/images/unknown_token.png"
+              // src="/images/unknown_token.png"
+              src={`/images/tokens/${network.chainId}/${tokenAddress}.png`}
               width="64"
               className="col-auto"
               alt="{info.pair.buyCurrency.symbol}"
-              style={{width: "64px", height: "auto", padding: "0.5rem", marginLeft: "1rem"}}
+              style={{ width: "64px", height: "auto", padding: "0.5rem", marginLeft: "1rem" }}
             />
-            <div className="col align-self-center" style={{color: 'white'}}>
+            <div className="col align-self-center" style={{ color: 'white' }}>
               <div className="fs-5">{info.pair.buyCurrency.name}</div>
               <div className="fs-6">{info.pair.buyCurrency.symbol}</div>
             </div>
@@ -472,7 +473,7 @@ const Info = ({ info, network, setPair }) => {
                 <i className="fa fa-external-link" />
               </a>
             </span>
-            <span style={{color: 'white'}}>{info.address}</span>
+            <span style={{ color: 'white' }}>{info.address}</span>
           </div>
         </div>
 
@@ -497,7 +498,7 @@ const Info = ({ info, network, setPair }) => {
         <div className={show ? 'd-lg-block' : 'd-none d-lg-block'}>
           <div className="mt-4">
             <div>
-              <b style={{color: 'white'}}>Price:</b>
+              <b style={{ color: 'white' }}>Price:</b>
               <div className="color-green">
                 {liveInfo.isETH ? (
                   <>
@@ -535,7 +536,7 @@ const Info = ({ info, network, setPair }) => {
               </div>
             </div>
             <div className="mt-2">
-              <b style={{color: 'white'}}>Market Cap (Includes locked, excludes burned):</b>
+              <b style={{ color: 'white' }}>Market Cap (Includes locked, excludes burned):</b>
               <div className="color-green">
                 {liveInfo.isETH ? (
                   <>
@@ -573,7 +574,7 @@ const Info = ({ info, network, setPair }) => {
               </div>
             </div>
             <div className="mt-2">
-              <b style={{color: 'white'}}>
+              <b style={{ color: 'white' }}>
                 LP Holdings for {info.pair.buyCurrency.symbol}/{info.pair.sellCurrency.symbol}:
               </b>
               <div className="color-green">
@@ -613,7 +614,7 @@ const Info = ({ info, network, setPair }) => {
               </div>
             </div>
             <div className="mt-2">
-              <b style={{color: 'white'}}>Total Supply:</b>
+              <b style={{ color: 'white' }}>Total Supply:</b>
               <div className="color-green">
                 <NumberFormat
                   value={liveInfo.supply.total}
@@ -625,7 +626,7 @@ const Info = ({ info, network, setPair }) => {
               </div>
             </div>
             <div className="mt-2">
-              <b style={{color: 'white'}}>Circulation Supply:</b>
+              <b style={{ color: 'white' }}>Circulation Supply:</b>
               <br />
               <div className="color-green">
                 <NumberFormat

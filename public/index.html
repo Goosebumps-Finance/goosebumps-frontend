@@ -40,14 +40,18 @@
     //   j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl
     //   f.parentNode.insertBefore(j, f)
     // })(window, document, 'script', 'dataLayer', '%REACT_APP_GTAG%')
-    (function (w, d, s, l, i) {
-      w[l] = w[l] || []; w[l].push({
-        'gtm.start':
-          new Date().getTime(), event: 'gtm.js'
-      }); var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', '%REACT_APP_GTAG%');
+    try {
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || []; w[l].push({
+          'gtm.start':
+            new Date().getTime(), event: 'gtm.js'
+        }); var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', '%REACT_APP_GTAG%');
+    } catch (error) {
+      console.log("https://www.googletagmanager.com/gtm.js err catched: ", error)
+    }
   </script>
   <!-- <script type="text/javascript" src="%REACT_APP_PUBLIC_URL%/charting_library/charting_library.js"></script> -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />

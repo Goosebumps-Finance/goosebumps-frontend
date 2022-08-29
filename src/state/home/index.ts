@@ -5,7 +5,7 @@ import { API_SERVER, BASE_URL } from 'config'
 import { HomeState } from 'state/types'
 import { getChainId } from 'utils/getChainId'
 import { getAsyncData } from 'utils/requester'
-import networks from 'config/constants/networks.json'
+import networks from 'config/constants/networks'
 // import tokens from 'config/constants/tokens'
 
 const getInitialState = () => {

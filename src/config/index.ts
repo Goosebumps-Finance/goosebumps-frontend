@@ -46,4 +46,10 @@ export const DEBUG_MODE = true
 export const RELEASE_MODE = !DEBUG_MODE
 
 export const LOG_VIEW = RELEASE_MODE
+
 export const API_SERVER = process.env.REACT_APP_API_SERVER
+
+export const MAINNET_RPC = process.env.REACT_APP_MAINNET_RPC_URL
+export const TESTNET_RPC = process.env.REACT_APP_TESTNET_RPC_URL
+export const ETHEREUM_RPC = process.env.REACT_APP_ETHEREUM_RPC_URL
+export const POLYGON_RPC = process.env.REACT_APP_POLYGON_RPC_URL

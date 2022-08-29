@@ -19,7 +19,7 @@ import { postAsyncData } from 'utils/requester'
 import { API_SERVER } from 'config'
 import { getTokenInfos } from 'utils/getTokenInfos'
 import { calculatePricescale, calculateTokenscale } from 'utils/numberHelpers'
-import networks from 'config/constants/networks.json'
+import networks from 'config/constants/networks'
 import TradesModal from './components/TradesModal'
 import { mockData } from './mockData'
 

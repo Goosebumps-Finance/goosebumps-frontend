@@ -18,8 +18,7 @@ import { setAddressType, setNetworkInfo } from 'state/home'
 import { State } from 'state/types'
 // import { usePhishingBannerManager } from 'state/user/hooks'
 import { API_SERVER } from 'config'
-import networks from 'config/constants/networks.json';
-import { chainList } from 'config/constants/networks'
+import networks, { chainList } from 'config/constants/networks'
 import { getAsyncData } from 'utils/requester'
 import changeNetwork from 'utils/changeNetwork'
 

@@ -1,7 +1,7 @@
 // import sample from 'lodash/sample'
 // import linq from 'linq'
-// import networks from 'config/constants/networks.json'
-import NETWORK_URLS from 'config/constants/networks'
+// import networks from 'config/constants/networks'
+import { NETWORK_URLS } from 'config/constants/networks'
 import { ChainId } from '@goosebumps/sdk'
 // import { getChainId } from './getChainId'
 

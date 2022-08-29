@@ -12,7 +12,7 @@ import { useTranslation } from 'contexts/Localization'
 import { useSelector } from 'react-redux'
 import { State } from 'state/types'
 import linq from 'linq'
-import networks from 'config/constants/networks.json'
+import networks from 'config/constants/networks'
 
 interface ImportProps {
   tokens: Token[]

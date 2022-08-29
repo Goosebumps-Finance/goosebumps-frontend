@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux'
 import linq from 'linq'
 import { State } from 'state/types'
 import { getBscScanLink } from 'utils'
-import networks from 'config/constants/networks.json'
+import networks from 'config/constants/networks'
 import { formatBigNumber, getFullDisplayBalance } from 'utils/formatBalance'
 import CopyAddress from './CopyAddress'
 

@@ -20,7 +20,7 @@ import useToast from 'hooks/useToast'
 import { useAppDispatch } from 'state'
 import { State } from 'state/types'
 import { useTranslation } from 'contexts/Localization'
-import networks from 'config/constants/networks.json';
+import networks from 'config/constants/networks';
 
 import { clearUserStates } from '../utils/clearUserStates'
 

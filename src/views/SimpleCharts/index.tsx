@@ -5,7 +5,7 @@ import linq from 'linq';
 import Page from 'views/Page';
 import { ChainId } from '@goosebumps/sdk'
 import styled from 'styled-components';
-import networks from 'config/constants/networks.json';
+import networks from 'config/constants/networks';
 import { mainnetTokens, testnetTokens } from 'config/constants/tokens'
 import { fetchAddressType, setNetworkInfo, setTimer } from 'state/home';
 import { AppState } from 'state';

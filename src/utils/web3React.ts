@@ -6,7 +6,7 @@ import { ConnectorNames } from '@goosebumps/uikit'
 import { ChainId } from '@goosebumps/sdk'
 import { ethers } from 'ethers'
 import linq from 'linq'
-import networks from 'config/constants/networks.json'
+import networks from 'config/constants/networks'
 import store from 'state'
 import { setNetworkInfo } from 'state/home'
 

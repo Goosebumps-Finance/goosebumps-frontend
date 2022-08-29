@@ -45,9 +45,5 @@ export const PANCAKE_BUNNIES_UPDATE_FREQUENCY = 8000
 export const DEBUG_MODE = true
 export const RELEASE_MODE = !DEBUG_MODE
 
-export const INFURA_ID = process.env.REACT_APP_INFURA_ID
-export const GET_TOEKN_LIST_API_KEY = process.env.REACT_APP_BITQUERY_API_KEY
-export const SWAP_FEE_0X = process.env.REACT_APP_SWAP_FEE_0X
-export const SWAP_DEADLINE = 1200
 export const LOG_VIEW = RELEASE_MODE
 export const API_SERVER = process.env.REACT_APP_API_SERVER

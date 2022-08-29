@@ -84,10 +84,12 @@ const App: React.FC = () => {
               <Home />
             </Route>
             <Route path="/farms">
-              <Farms />
+              {/* <Farms /> */}
+              <ComingSoon />
             </Route>
             <Route path="/stake">
-              <Pools />
+              {/* <Pools /> */}
+              <ComingSoon />
             </Route>
             <Route path="/bridge">
               {/* <Bridge /> */}

@@ -112,11 +112,11 @@ export default {
     97: '0x03fD18a960Ab8e16527814457a0E44a183b93be9',
   },
   stakingWithReflection: {
-    56: '',
+    56: '0xD68c53B94Ac6d5cBa2a6A39CD7D5895d7545BC1C',
     97: '0x91dacAB1617b8873533FE4819bBCa4BDAD0078D8',
   },
   stakingWithReflectionAndLock: {
-    56: '',
+    56: '0xfc6844b88EbD2c988f0e836AF472e749d2b60aba',
     97: '0x0a538ffefd71046A17c02FaBe5B7572a166B8F04',
   },
   farming: {

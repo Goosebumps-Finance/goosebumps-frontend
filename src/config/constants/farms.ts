@@ -13,16 +13,16 @@ export const newfarms: SerializedFarmConfig[] = [
       56: '0x58F876857a02D6762E0101bb5C46A8c1ED44Dc16',
     },
     targetAddresses: {
-      97: '0x1d32c2945C8FDCBc7156c553B7cEa4325a17f4f9',
-      56: '0x73feaa1eE314F8c655E354234017bE2193C9E24E',
+      97: '',
+      56: '',
     },
     treasuryAddresses: {
-      97: '0xCD021A8Ecd028dF947d60c0bF0e30Bfdd93859c5',
-      56: '0xCD021A8Ecd028dF947d60c0bF0e30Bfdd93859c5',
+      97: '',
+      56: '',
     },
     rewardSymbols: {
-      97: 'fReward',
-      56: 'EMPIRE'
+      97: '',
+      56: ''
     },
     token: serializedTokens.busd,
     quoteToken: serializedTokens.wbnb,

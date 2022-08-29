@@ -21,7 +21,7 @@ export interface FarmWithStakedValue extends DeserializedFarm {
   liquidity?: BigNumber
 }
 
-const StyledCard = styled(Card)<{ isActive?: boolean}>`
+const StyledCard = styled(Card) <{ isActive?: boolean }>`
   background: none;
   max-width: 352px;
   margin: 0 8px 24px;
@@ -32,7 +32,7 @@ const StyledCard = styled(Card)<{ isActive?: boolean}>`
   align-self: baseline;
   position: relative;
 
-  color: ${({ isActive, theme }) => theme.colors[isActive ? 'secondary': 'textDisabled']};
+  color: ${({ isActive, theme }) => theme.colors[isActive ? 'secondary' : 'textDisabled']};
   
 `
 
@@ -74,7 +74,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
       ? `$${farm.liquidity.toNumber().toLocaleString('en-US', { maximumFractionDigits: 0 })}`
       : ''
 
-  const lpLabel = farm.lpSymbol && farm.lpSymbol.toUpperCase().replace('PANCAKE', '')
+  const lpLabel = farm.lpSymbol && farm.lpSymbol.toUpperCase().replace('Goosebumps', '')
   // const earnLabel = farm.dual ? farm.dual.earnLabel : t('CAKE + Fees')
   const earnLabel = farm.dual ? farm.dual.earnLabel : getAddress(farm.rewardSymbols)
 

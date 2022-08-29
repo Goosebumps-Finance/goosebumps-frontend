@@ -120,19 +120,19 @@ export default {
     97: '0x0a538ffefd71046A17c02FaBe5B7572a166B8F04',
   },
   farming: {
-    56: '',
+    56: '0xAf554A6e6eC13DE0f36542D4488522b4fdCaF23A',
     97: '0xAFc34AC89AD84cf46a6d9e8D3228B5c25E4a4804',
   },
   farmingBUSD: {
-    56: '',
+    56: '0xbE112881Ae4b1A81431d64548aF6BdE87Eb33c12',
     97: '0x15Fa177595b01E3e100d1f1367a2f6f6c74E2a29',
   },
   farmingWithFixedLockTime: {
-    56: '',
+    56: '0x4f5b8E7E070BaaAc9fdAe0cDAc3266860D04851f',
     97: '0xec604726325dd99dfD801933283219f9784e7A09',
   },
   farmingWithFixedLockTimeBUSD: {
-    56: '',
+    56: '0xD8c15518491e3B03BaeAfa986d41C90b4016a613',
     97: '0x21146F323e24F6f64B807F66D2Ca2532cB80865e',
   },
 }

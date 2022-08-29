@@ -10,9 +10,9 @@ export type TranslatableText =
     }
   }
 export interface Address { // TODO multichain
-  [ChainId.ETHEREUM]?: string // ethereum
-  [ChainId.TESTNET]?: string // bsc testnet
   [ChainId.MAINNET]: string // bsc mainnet
+  [ChainId.TESTNET]?: string // bsc testnet
+  [ChainId.ETHEREUM]?: string // ethereum
   [ChainId.POLYGON]?: string // polygon mainnet
 }
 

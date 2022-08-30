@@ -36,16 +36,16 @@ export const getChartsInfo = async (address, network, pairAddress) => {
   //     { address: ethers.utils.getAddress(address), network: network.Name }
   // );
   // const cmc = mockCMCData;
-  const cmc = await getAsyncData(`${API_SERVER}api/Charts/GetCMCInfo`, {
-    address: ethers.utils.getAddress(address),
-    network: network.Name,
-  })
-  // console.log("getChartsInfo info=", info)
-  // console.log('getChartsInfo cmc=', cmc)
+  // const cmc = await getAsyncData(`${API_SERVER}api/Charts/GetCMCInfo`, {
+  //   address: ethers.utils.getAddress(address),
+  //   network: network.Name,
+  // })
+  // // console.log("getChartsInfo info=", info)
+  // // console.log('getChartsInfo cmc=', cmc)
 
-  if (cmc != null && cmc.id) {
-    info.cmc = cmc
-  }
+  // if (cmc != null && cmc.id) {
+  //   info.cmc = cmc
+  // }
 
   return info
 }

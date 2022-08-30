@@ -4,6 +4,8 @@ import NumberFormat from 'react-number-format'
 import { useFastFresh } from 'hooks/useRefresh'
 import { getTokenInfo } from 'utils/getTokenInfos'
 import { calculatePricescale } from 'utils/numberHelpers'
+import { useCurrency } from 'hooks/Tokens'
+import { CurrencyLogo } from 'components/Logo'
 
 const LoadingPanel = styled.div`
   display: flex;
@@ -19,6 +21,9 @@ const Info = ({ info, network, setPair, tokenAddress }) => {
   const [liveInfo, setLiveInfo] = useState<any>({})
   const [show, setShow] = useState(false)
   const [hasCMC, setHasCMC] = useState(false);
+  
+  const selCurrency = useCurrency(tokenAddress);
+  console.log("selCurrency = ", selCurrency)
 
   useEffect(() => {
     if (!info) return;
@@ -109,14 +114,15 @@ const Info = ({ info, network, setPair, tokenAddress }) => {
       <>
         <div className="row">
           <div className="row col">
-            <img
-              src={ hasCMC && info.cmc.logo || '/images/logo-icon.png'}
-              // src={`/images/tokens/${network.chainId}/${tokenAddress}.png`}
+            {/* <img
+              // src={ hasCMC && info.cmc.logo || '/images/logo-icon.png'}
+              src={`/images/tokens/${network.chainId}/${tokenAddress}.png`}
               width="64"
               className="col-auto"
               alt="{info.pair.buyCurrency.symbol}"
               style={{width: "90px"}}
-            />
+            /> */}
+            <CurrencyLogo currency={selCurrency} size="24px" style={{ marginRight: '8px' }}/>
             <div className="col align-self-center" style={{ color: 'white' }}>
               <div className="fs-5">{info.pair.buyCurrency.name}</div>
               <div className="fs-6">{info.pair.buyCurrency.symbol}</div>
@@ -411,14 +417,17 @@ const Info = ({ info, network, setPair, tokenAddress }) => {
       <>
         <div className="row">
           <div className="row col">
-            <img
+            <div className="col-auto">
+              <CurrencyLogo currency={selCurrency} size="64px" style={{ marginRight: '8px' }}/>
+            </div>
+            {/* <img
               // src="/images/unknown_token.png"
               src={`/images/tokens/${network.chainId}/${tokenAddress}.png`}
               width="64"
               className="col-auto"
               alt="{info.pair.buyCurrency.symbol}"
               style={{ width: "64px", height: "auto", padding: "0.5rem", marginLeft: "1rem" }}
-            />
+            /> */}
             <div className="col align-self-center" style={{ color: 'white' }}>
               <div className="fs-5">{info.pair.buyCurrency.name}</div>
               <div className="fs-6">{info.pair.buyCurrency.symbol}</div>

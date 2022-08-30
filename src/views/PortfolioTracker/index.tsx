@@ -358,7 +358,7 @@ const PortfolioTracker = () => {
       // params.address = connectedAddress;
       // setParams({address: connectedAddress, networkName: currentParams.networkName});
     } else if(!params.address) {
-      setLoadingStep(-1);
+      setLoadingStep(0);
       dispatch(setNetworkInfo({
         searchKey: "",
         // network: {
@@ -866,7 +866,7 @@ const PortfolioTracker = () => {
       </>
     )
   }
-
+  
   return (
     <Page>
       <div style={{width: "100%", minHeight: "80vh"}}>

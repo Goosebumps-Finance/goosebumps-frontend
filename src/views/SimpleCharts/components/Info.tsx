@@ -61,24 +61,24 @@ const Info = ({ info, network, setPair, tokenAddress }) => {
 
   const getIconForUrl = (url) => {
     if (url.indexOf('//t.me') > 0) {
-      return 'fa fa-telegram'
+      return 'fab fa-telegram'
     }
     if (url.indexOf('discord.gg') > 0) {
       return 'fab fa-discord'
     }
     if (url.indexOf('medium.com') > 0) {
-      return 'fa fa-medium'
+      return 'fab fa-medium'
     }
     if (url.indexOf('twitter.com') > 0) {
-      return 'fa fa-twitter'
+      return 'fab fa-twitter'
     }
     if (url.indexOf('reddit.com') > 0) {
-      return 'fa fa-reddit'
+      return 'fab fa-reddit'
     }
     if (url.indexOf('facebook.com') > 0) {
-      return 'fa fa-facebook'
+      return 'fab fa-facebook'
     }
-    return 'fa fa-question-circle'
+    return 'fab fa-question-circle'
   }
 
   const onPairChange = (e) => {
@@ -110,11 +110,12 @@ const Info = ({ info, network, setPair, tokenAddress }) => {
         <div className="row">
           <div className="row col">
             <img
-              // src={ hasCMC && info.cmc.logo || '/images/logo-icon.png'}
-              src={`/images/tokens/${network.chainId}/${tokenAddress}.png`}
+              src={ hasCMC && info.cmc.logo || '/images/logo-icon.png'}
+              // src={`/images/tokens/${network.chainId}/${tokenAddress}.png`}
               width="64"
               className="col-auto"
               alt="{info.pair.buyCurrency.symbol}"
+              style={{width: "90px"}}
             />
             <div className="col align-self-center" style={{ color: 'white' }}>
               <div className="fs-5">{info.pair.buyCurrency.name}</div>

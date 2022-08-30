@@ -81,7 +81,7 @@ export const getTokenInfos = async (pairs, network, addresses = []) => {
 
     let responses = [];
 
-    await Promise.all(calls.map(async(call) => {
+    await Promise.all(calls.map(async(call, index) => {
       const res = await ethcallProvider.all(call);
       return res;
     })).then((res) => {

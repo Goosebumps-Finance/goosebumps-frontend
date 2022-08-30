@@ -194,7 +194,7 @@ const TradesModal = ({ hide, token, network }) => {
                         padding: '0.25rem 1rem',
                       }}
                       onClick={() => {
-                        window.open(`${network.Explorer}tx/${trade.tx}`, '_blank', 'noopener noreferrer')
+                        window.open(`${network.Explorer}/tx/${trade.tx}`, '_blank', 'noopener noreferrer')
                       }}
                     >
                       Details

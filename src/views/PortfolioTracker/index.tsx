@@ -97,11 +97,11 @@ const PortfolioTracker = () => {
     if(res) {
       setStatus(res.status);
       if(res.status === 200) {
-        if(res.address === params.address) {
-          const resFilter = _.filter(res.tokens, (a) => {return a.volume !== 0 && a.outs !== 0})
+        if(res.address === searchKey && res.address === params.address) {
+          // const resFilter = _.filter(res.tokens, (a) => {return a.pair.smartContract.address.address === "0x145f83ad6108391cbf9ed554e5ce1dbd984437f8"})
           // console.log("resFilter = ", resFilter)
 
-          await getLiveInfo(resFilter);
+          await getLiveInfo(res.tokens, res.address);
           setLoadingStep(2);
           setReqAddress(res.address);
         } else {
@@ -122,7 +122,7 @@ const PortfolioTracker = () => {
   //   }
   }
 
-  const getLiveInfo = async (tokens) => {
+  const getLiveInfo = async (tokens, resAddress) => {
     const infos = await getTokenInfos(
       linq
         .from(tokens)
@@ -135,7 +135,8 @@ const PortfolioTracker = () => {
 
     if(infos === null) {
       setLoadingStep(-1);
-      
+      setIsStartLoading(false);
+      return;
     }
 
     const query = linq.from(infos.infos)
@@ -197,10 +198,10 @@ const PortfolioTracker = () => {
         .from(newItem.trades)
         .where((x: any) => x.transactionType === 1 || x.transactionType === 3)
 
-      // console.log("buysAndIns: ", buysAndIns)
       try {
+        const buysAndInsPriceAry = buysAndIns.select((x: any) => x.priceUSD * x.holdingAmount).toArray();
         newItem.avarageBuyPriceOfHoldings =
-          newItem.info.balance > 0
+          newItem.info.balance > 0 && buysAndInsPriceAry.length !== 0
             ? buysAndIns
                 .select((x: any) => x.priceUSD * x.holdingAmount)
                 .toArray()
@@ -251,6 +252,11 @@ const PortfolioTracker = () => {
       )
       return newItem
     })
+
+    console.log("here resAddress =", resAddress)
+    console.log("here params.address =", params.address)
+    if(resAddress !== params.address) 
+      return;
 
     setCurEthPrice(infos.ethPrice)
     // sort by holdings
@@ -812,7 +818,7 @@ const PortfolioTracker = () => {
                           }}
                           onClick={() => {
                             window.open(
-                              `${detailedNetwork.Explorer}token/${token.pair.buyCurrency.address}`,
+                              `${detailedNetwork.Explorer}/token/${token.pair.buyCurrency.address}`,
                               '_blank',
                               'noopener noreferrer',
                             )

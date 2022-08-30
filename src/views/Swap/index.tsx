@@ -131,7 +131,7 @@ export default function Swap({ history }: RouteComponentProps) {
       return !(token.address in defaultTokens)
     })
 
-  const { account, chainId } = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
 
   // for expert mode
   const [isExpertMode] = useExpertModeManager()

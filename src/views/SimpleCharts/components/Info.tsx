@@ -110,12 +110,12 @@ const Info = ({ info, network, setPair, tokenAddress }) => {
         <div className="row">
           <div className="row col">
             <img
-              src={ hasCMC && info.cmc.logo || '/images/logo-icon.png'}
+              src={hasCMC && info.cmc.logo || '/images/logo-icon.png'}
               // src={`/images/tokens/${network.chainId}/${tokenAddress}.png`}
               width="64"
               className="col-auto"
               alt="{info.pair.buyCurrency.symbol}"
-              style={{width: "90px"}}
+              style={{ width: "90px" }}
             />
             <div className="col align-self-center" style={{ color: 'white' }}>
               <div className="fs-5">{info.pair.buyCurrency.name}</div>
@@ -346,6 +346,7 @@ const Info = ({ info, network, setPair, tokenAddress }) => {
 
           <div
             className="mt-4"
+            // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
               __html: hasCMC ? linkify(info.cmc.description) : "No description",
             }}

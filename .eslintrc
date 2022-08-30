@@ -13,7 +13,8 @@
   },
   "extends": "@goosebumps/eslint-config-goosebumps",
   "rules": {
-    "no-console": ["warn", { "allow": ["info", "warn", "error", "debug"] }],
+    // "no-console": ["warn", { "allow": ["info", "warn", "error", "debug"] }],
+    "no-console": 0,
     "no-plusplus": 0,
     "prefer-destructuring": ["warn", { "object": true, "array": false }],
     "no-underscore-dangle": 0,
@@ -40,8 +41,10 @@
     "class-methods-use-this": 0,
     "guard-for-in": 0,
     "no-restricted-syntax": 0,
-    "react-hooks/exhaustive-deps": 1,
-    "import/no-named-as-default": 0
+    // "react-hooks/exhaustive-deps": 1,
+    "react-hooks/exhaustive-deps": 0,
+    "import/no-named-as-default": 0,
+    "@typescript-eslint/no-unused-vars": 0
     // End temporary rules
   }
 }

@@ -127,6 +127,7 @@ export const HomeSlice = createSlice({
           window?.location?.reload()
         } else {
           console.log("setNetworkInfo on exception")
+          // eslint-disable-next-line no-alert
           window.alert(`Please refresh website to switch network correctly!`)
         }
       }

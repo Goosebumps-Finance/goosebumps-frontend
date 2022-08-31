@@ -1,7 +1,7 @@
 import { ChainId, Token } from '@goosebumps/sdk'
-import { useSelector } from 'react-redux'
-import { State } from 'state/types'
-import { getChainId } from 'utils/getChainId'
+// import { useSelector } from 'react-redux'
+// import { State } from 'state/types'
+// import { getChainId } from 'utils/getChainId'
 import { serializeToken } from 'state/user/hooks/helpers'
 import { SerializedToken } from './types'
 
@@ -15,12 +15,12 @@ const defineTokens = <T extends TokenList>(t: T) => t
 
 export const ethTokens = defineTokens({
   weth: new Token(ETHEREUM, '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', 18, 'WETH', 'Wrapped ETHER', 'https://weth.io/'),
-  uni: new Token(ETHEREUM, '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984', 18, "UNI", "Uniswap", 'https://uniswap.org/'),
+  uni: new Token(ETHEREUM, '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984', 18, "UNI", "Uniswap", 'https://uniswap.org/'),
 })
 
 export const polygonTokens = defineTokens({
-  wmatic: new Token(POLYGON, '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270', 18, 'WMATIC', 'Wrapped MATIC', 'https://polygon.technology/'),
-  aave: new Token(POLYGON, '0xd6df932a45c0f255f85145f286ea0b292b21c90b', 18, 'AAVE', 'Aave (PoS)', 'https://aave.com/'),
+  wmatic: new Token(POLYGON, '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270', 18, 'WMATIC', 'Wrapped MATIC', 'https://polygon.technology/'),
+  aave: new Token(POLYGON, '0xD6DF932A45C0f255f85145f286eA0b292B21C90B', 18, 'AAVE', 'Aave (PoS)', 'https://aave.com/'),
 })
 
 export const mainnetTokens = defineTokens({

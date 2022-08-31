@@ -352,6 +352,7 @@ const Info = ({ info, network, setPair, tokenAddress }) => {
 
           <div
             className="mt-4"
+            // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
               __html: hasCMC ? linkify(info.cmc.description) : "No description",
             }}

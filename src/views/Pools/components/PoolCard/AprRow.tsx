@@ -69,28 +69,37 @@ const AprRow: React.FC<AprRowProps> = ({ pool, stakedBalance, performanceFee = 0
       {/* {tooltipVisible && tooltip} */}
       {/* <TooltipText ref={targetRef}>{vaultKey ? `${t('APY')}:` : `${t('APR')}:`}</TooltipText> */}
       <Text>{t('APR')}</Text>
-      {apr || isFinished || true ? (
-        // <ApyLabelContainer alignItems="center" onClick={onPresentApyModal}>
+      {/* {apr || isFinished || true ? (
+        <ApyLabelContainer alignItems="center" onClick={onPresentApyModal}>
         <ApyLabelContainer alignItems="center">
           <Balance
             fontSize="16px"
-            // isDisabled={isFinished}
+            isDisabled={isFinished}
             isDisabled={false}
             value={apr}
-            // value={isFinished ? 0 : apr}
+            value={isFinished ? 0 : apr}
             decimals={2}
             unit="%"
-            // onClick={onPresentApyModal}
+            onClick={onPresentApyModal}
           />
-          {/* {!isFinished && (
+          {!isFinished && (
             <IconButton variant="text" scale="sm">
               <CalculateIcon color="textSubtle" width="18px" />
             </IconButton>
-          )} */}
+          )}
         </ApyLabelContainer>
       ) : (
         <Skeleton width="82px" height="32px" />
-      )}
+      )} */}
+      <ApyLabelContainer alignItems="center">
+        <Balance
+          fontSize="16px"
+          isDisabled={false}
+          value={apr}
+          decimals={2}
+          unit="%"
+        />
+      </ApyLabelContainer>
     </Flex>
   )
 }

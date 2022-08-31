@@ -29,7 +29,7 @@ const useAuth = () => {
   const dispatch = useAppDispatch()
   const { chainId, activate, deactivate } = useWeb3React()
   const { toastError } = useToast()
-  const { network } = useSelector( (state:State) => state.home)
+  const { network } = useSelector((state: State) => state.home)
 
   const login = useCallback(
     (connectorID: ConnectorNames) => {
@@ -37,8 +37,12 @@ const useAuth = () => {
       const detailedNetwork = linq.from(networks).where((x) => x.Name === network.value).single()
       if (connector) {
         // @ts-ignore
-        const currentVersion = window.ethereum.networkVersion
-        if(currentVersion !== detailedNetwork.chainId) {
+        // const currentVersion = window.ethereum.networkVersion
+        // @ts-ignore
+        const currentVersion = window.ethereum?.networkVersion ?? undefined
+        // @ts-ignore
+        // console.log("window.ethereum?.networkVersion ?? undefined: ", window.ethereum?.networkVersion ?? undefined)
+        if (currentVersion !== detailedNetwork.chainId) {
           changeNetwork(detailedNetwork)
         }
         activate(connector, async (error: Error) => {
@@ -48,7 +52,7 @@ const useAuth = () => {
               activate(connector)
             }
           } else {
-            window.localStorage.removeItem(connectorLocalStorageKey)
+            window?.localStorage?.removeItem(connectorLocalStorageKey)
             if (error instanceof NoEthereumProviderError || error instanceof NoBscProviderError) {
               toastError(t('Provider Error'), t('No provider was found'))
             } else if (

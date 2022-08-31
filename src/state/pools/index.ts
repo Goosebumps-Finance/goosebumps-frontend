@@ -13,10 +13,10 @@ import {
   VaultFees,
   VaultUser,
 } from 'state/types'
-import { getAddress } from 'utils/addressHelpers'
+// import { getAddress } from 'utils/addressHelpers'
 import { getPoolApr } from 'utils/apr'
 import { BIG_ZERO } from 'utils/bigNumber'
-import { getCakeContract, getMasterchefContract } from 'utils/contractHelpers'
+// import { getCakeContract, getMasterchefContract } from 'utils/contractHelpers'
 import { getBalanceNumber } from 'utils/formatBalance'
 import { getSimpleRpcProvider /* , simpleRpcProvider */ } from 'utils/providers'
 import { fetchIfoPoolFeesData, fetchPublicIfoPoolData } from './fetchIfoPoolPublic'

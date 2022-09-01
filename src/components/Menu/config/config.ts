@@ -47,6 +47,20 @@ const config: (t: ContextApi['t']) => ConfigMenuItemsType[] = (t) => [
       },
     ],
   },
+  // {
+  //   label: t('ZxDEX'),
+  //   href: '/ZxSwap',
+  //   items:  [
+  //     {
+  //       label: t('ZxExchange'),
+  //       href: '/ZxSwap',
+  //     },
+  //     {
+  //       label: t('ZxLiquidity'),
+  //       href: '/ZxLiquidity',
+  //     },
+  //   ],
+  // },
   {
     label: t('Bridge'),
     href: '/bridge',

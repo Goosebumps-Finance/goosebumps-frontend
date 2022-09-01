@@ -23,14 +23,22 @@ import GlobalCheckClaimStatus from './components/GlobalCheckClaimStatus'
 import history from './routerHistory'
 // Views included in the main bundle
 import Pools from './views/Pools'
-import Swap from './views/Swap'
+// import Swap from './views/Swap'
+import ZxSwap from './views/ZxSwap'
+// import {
+//   RedirectDuplicateTokenIds,
+//   RedirectOldAddLiquidityPathStructure,
+//   RedirectToAddLiquidity,
+// } from './views/AddLiquidity/redirects'
 import {
-  RedirectDuplicateTokenIds,
-  RedirectOldAddLiquidityPathStructure,
-  RedirectToAddLiquidity,
-} from './views/AddLiquidity/redirects'
-import RedirectOldRemoveLiquidityPathStructure from './views/RemoveLiquidity/redirects'
-import { RedirectPathToSwapOnly, RedirectToSwap } from './views/Swap/redirects'
+  ZxRedirectDuplicateTokenIds,
+  ZxRedirectOldAddLiquidityPathStructure,
+  ZxRedirectToAddLiquidity,
+} from './views/ZxAddLiquidity/redirects'
+// import RedirectOldRemoveLiquidityPathStructure from './views/RemoveLiquidity/redirects'
+import ZxRedirectOldRemoveLiquidityPathStructure from './views/ZxRemoveLiquidity/redirects'
+// import { RedirectPathToSwapOnly, RedirectToSwap } from './views/Swap/redirects'
+import { ZxRedirectPathToSwapOnly, ZxRedirectToSwap } from './views/ZxSwap/redirects'
 import { useInactiveListener } from './hooks/useInactiveListener'
 import useSentryUser from './hooks/useSentryUser'
 
@@ -38,14 +46,18 @@ import useSentryUser from './hooks/useSentryUser'
 // Only pool is included in the main bundle because of it's the most visited page
 const Home = lazy(() => import('./views/Home'))
 const NotFound = lazy(() => import('./views/NotFound'))
-const AddLiquidity = lazy(() => import('./views/AddLiquidity'))
-const RemoveLiquidity = lazy(() => import('./views/RemoveLiquidity'))
+// const AddLiquidity = lazy(() => import('./views/AddLiquidity'))
+const ZxAddLiquidity = lazy(() => import('./views/ZxAddLiquidity'))
+// const RemoveLiquidity = lazy(() => import('./views/RemoveLiquidity'))
+const ZxRemoveLiquidity = lazy(() => import('./views/ZxRemoveLiquidity'))
 // const Bridge = lazy(() => import('./views/Bridge'))
 const PortfolioTracker = lazy(() => import('./views/PortfolioTracker'))
 // const Charts = lazy(() => import('./views/Charts'))
 const SimpleCharts = lazy(() => import('./views/SimpleCharts'))
-const Liquidity = lazy(() => import('./views/Pool'))
-const PoolFinder = lazy(() => import('./views/PoolFinder'))
+// const Liquidity = lazy(() => import('./views/Pool'))
+const ZxLiquidity = lazy(() => import('./views/ZxPool'))
+// const PoolFinder = lazy(() => import('./views/PoolFinder'))
+const ZxPoolFinder = lazy(() => import('./views/ZxPoolFinder'))
 
 const Farms = lazy(() => import('./views/Farms'))
 
@@ -68,8 +80,8 @@ const App: React.FC = () => {
   useSentryUser()
 
   // useEffect(() => {
-    // window.localStorage.removeItem("SELECTED_CHAIN_ID")
-    // window.localStorage.setItem("SELECTED_CHAIN_ID", `${getChainId()}`) // TODO prince
+  // window.localStorage.removeItem("SELECTED_CHAIN_ID")
+  // window.localStorage.setItem("SELECTED_CHAIN_ID", `${getChainId()}`) // TODO prince
   // }, [])
 
   return (
@@ -108,8 +120,27 @@ const App: React.FC = () => {
             <Route exact path="/charts/:networkName/:address" render={() => <SimpleCharts />} />
             {/* <Route exact path="/charts/:networkName/:address/:pairAddress" render={() => <SimpleCharts />} /> */}
 
+            {/* DEX(v1 dex) */}
             {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
-            <Route exact strict path="/swap" component={Swap} />
+            <Route exact strict path="/swap" component={ZxSwap} />
+            <Route exact strict path="/swap/:outputCurrency" component={ZxRedirectToSwap} />
+            <Route exact strict path="/liquidityFindToken" component={ZxPoolFinder} />
+            <Route exact strict path="/liquidity" component={ZxLiquidity} />
+            <Route exact path="/liquidityAdd" component={ZxAddLiquidity} />
+            <Route exact path="/liquidityAdd/:currencyIdA" component={ZxRedirectOldAddLiquidityPathStructure} />
+            <Route exact path="/liquidityAdd/:currencyIdA/:currencyIdB" component={ZxRedirectDuplicateTokenIds} />
+
+            <Route exact strict path="/create" component={ZxRedirectToAddLiquidity} />
+            <Route exact strict path="/send" component={ZxRedirectPathToSwapOnly} />
+            <Route exact path="/create" component={ZxAddLiquidity} />
+            <Route exact path="/create/:currencyIdA" component={ZxRedirectOldAddLiquidityPathStructure} />
+            <Route exact path="/create/:currencyIdA/:currencyIdB" component={ZxRedirectDuplicateTokenIds} />
+            <Route exact strict path="/liquidityRemove/:tokens" component={ZxRedirectOldRemoveLiquidityPathStructure} />
+            <Route exact strict path="/liquidityRemove/:currencyIdA/:currencyIdB" component={ZxRemoveLiquidity} />
+
+            {/* DEX(v2 dex) */}
+            {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
+            {/* <Route exact strict path="/swap" component={Swap} />
             <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
             <Route exact strict path="/liquidityFindToken" component={PoolFinder} />
             <Route exact strict path="/liquidity" component={Liquidity} />
@@ -123,7 +154,7 @@ const App: React.FC = () => {
             <Route exact path="/create/:currencyIdA" component={RedirectOldAddLiquidityPathStructure} />
             <Route exact path="/create/:currencyIdA/:currencyIdB" component={RedirectDuplicateTokenIds} />
             <Route exact strict path="/liquidityRemove/:tokens" component={RedirectOldRemoveLiquidityPathStructure} />
-            <Route exact strict path="/liquidityRemove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+            <Route exact strict path="/liquidityRemove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} /> */}
 
             {/* Redirect */}
             <Route path="/pool">

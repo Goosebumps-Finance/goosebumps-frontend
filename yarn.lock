@@ -2433,6 +2433,14 @@
     dotenv "^16.0.1"
     hardhat "^2.10.0"
 
+"@goosebumps/goosebumps-v1-aggregator-dex@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@goosebumps/goosebumps-v1-aggregator-dex/-/goosebumps-v1-aggregator-dex-1.0.0.tgz#34d301e3d3095fb392ac0812c9cefba4a483e173"
+  integrity sha512-tFJUnNLaXajjn+PELhnDDKE9mh51jwaWmkIAEJMSyg+/cbbrwTBa6T1bOqgE+QOx9Q+5kUbGpmBgEzU15/nsPw==
+  dependencies:
+    "@openzeppelin/contracts" "^4.6.0"
+    hardhat "^2.9.3"
+
 "@goosebumps/sdk@^0.0.6":
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/@goosebumps/sdk/-/sdk-0.0.6.tgz#1b84bc1f3c51dbf9c0967e65b4740e43933167a2"
@@ -2773,6 +2781,11 @@
   dependencies:
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
+
+"@openzeppelin/contracts@^4.6.0":
+  version "4.7.3"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.7.3.tgz#939534757a81f8d69cc854c7692805684ff3111e"
+  integrity sha512-dGRS0agJzu8ybo44pCIf3xBaPQN/65AIXNgK8+4gzKd5kbvlqyxryUYVLJv7fK98Seyd2hDZzVEHSWAh0Bt1Yw==
 
 "@pmmmwh/react-refresh-webpack-plugin@0.4.3":
   version "0.4.3"
@@ -9206,7 +9219,7 @@ hard-rejection@^2.1.0:
   resolved "https://registry.yarnpkg.com/hard-rejection/-/hard-rejection-2.1.0.tgz#1c6eda5c1685c63942766d79bb40ae773cecd883"
   integrity sha512-VIZB+ibDhx7ObhAe7OVtoEbuP4h/MuOTHJ+J8h/eBXotJYl0fBgR72xDFCKgIh22OJZIOVNxBMWuhAr10r8HdA==
 
-hardhat@^2.10.0:
+hardhat@^2.10.0, hardhat@^2.9.3:
   version "2.10.2"
   resolved "https://registry.yarnpkg.com/hardhat/-/hardhat-2.10.2.tgz#ff94ee4cb144a9c114641581ff5e4d7bea5f93a9"
   integrity sha512-L/KvDDT/MA6332uAtYTqdcHoSABljw4pPjHQe5SHdIJ+xKfaSc6vDKw03CmrQ5Xup0gHs8XnVSBpZo1AbbIW7g==

@@ -2457,6 +2457,18 @@
     react-popper "^2.2.5"
     styled-system "^5.1.5"
 
+"@goosebumps/zx-sdk@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@goosebumps/zx-sdk/-/zx-sdk-0.0.1.tgz#1f29381c9f84f0be88fabe6e0b7990fdae4f6e08"
+  integrity sha512-U9sLa7u2+qi877KWu+dMBThVyOnPl0wnSHtupGAPrKHz5pKWKsczl719KT00XLaRfGrytPHS05ivnRWs0tcfnQ==
+  dependencies:
+    big.js "^5.2.2"
+    decimal.js-light "^2.5.0"
+    jsbi "^3.1.4"
+    tiny-invariant "^1.1.0"
+    tiny-warning "^1.0.3"
+    toformat "^2.0.0"
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"

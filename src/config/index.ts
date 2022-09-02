@@ -45,6 +45,7 @@ export const PANCAKE_BUNNIES_UPDATE_FREQUENCY = 8000
 export const DEBUG_MODE = true
 export const RELEASE_MODE = !DEBUG_MODE
 
+export const SWAP_FEE_0X = process.env.REACT_APP_SWAP_FEE_0X
 export const LOG_VIEW = RELEASE_MODE
 
 export const API_SERVER = process.env.REACT_APP_API_SERVER

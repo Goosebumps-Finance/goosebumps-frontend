@@ -1,4 +1,5 @@
 import { CurrencyAmount, Fraction, JSBI, Percent, Price, TokenAmount, Trade } from '@goosebumps/sdk'
+import { Trade as ZxTrade } from '@goosebumps/zx-sdk'
 import {
   BLOCKED_PRICE_IMPACT_NON_EXPERT,
   ALLOWED_PRICE_IMPACT_HIGH,
@@ -50,7 +51,7 @@ export function computeTradePriceBreakdown(trade?: Trade | null): {
 
 // computes the minimum amount out and maximum amount in for a trade given a user specified allowed slippage in bips
 export function computeSlippageAdjustedAmounts(
-  trade: Trade | undefined,
+  trade: Trade | ZxTrade | undefined,
   allowedSlippage: number,
 ): { [field in Field]?: CurrencyAmount } {
   const pct = basisPointsToPercent(allowedSlippage)

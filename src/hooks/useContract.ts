@@ -59,6 +59,7 @@ import {
 import { Contract } from '@ethersproject/contracts'
 import { ChainId, WETH } from '@goosebumps/sdk'
 import { abi as IGoosebumpsPairABI } from '@goosebumps/goosebumps-aggregator-dex/artifacts/contracts/GoosebumpsPair.sol/GoosebumpsPair.json'
+import { abi as IZxGoosebumpsPairABI } from '@goosebumps/goosebumps-v1-aggregator-dex/artifacts/contracts/GooseBumpsSwapPair.sol/GooseBumpsSwapPair.json'
 import ENS_PUBLIC_RESOLVER_ABI from '../config/abi/ens-public-resolver.json'
 import ENS_ABI from '../config/abi/ens-registrar.json'
 import { ERC20_BYTES32_ABI } from '../config/abi/erc20'
@@ -325,6 +326,9 @@ export function useBytes32TokenContract(tokenAddress?: string, withSignerIfPossi
 
 export function usePairContract(pairAddress?: string, withSignerIfPossible?: boolean): Contract | null {
   return useContract(pairAddress, IGoosebumpsPairABI, withSignerIfPossible)
+}
+export function useZxPairContract(pairAddress?: string, withSignerIfPossible?: boolean): Contract | null {
+  return useContract(pairAddress, IZxGoosebumpsPairABI, withSignerIfPossible)
 }
 
 export function useMulticallContract() {

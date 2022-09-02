@@ -1,4 +1,5 @@
 import { Currency, CurrencyAmount, JSBI, Pair, Percent, TokenAmount } from '@goosebumps/sdk'
+import { Pair as ZxPair } from '@goosebumps/zx-sdk'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -135,7 +136,7 @@ export function useZxDerivedBurnInfo(
   currencyA: Currency | undefined,
   currencyB: Currency | undefined,
 ): {
-  pair?: Pair | null
+  pair?: Pair | ZxPair | null
   parsedAmounts: {
     [Field.LIQUIDITY_PERCENT]: Percent
     [Field.LIQUIDITY]?: TokenAmount

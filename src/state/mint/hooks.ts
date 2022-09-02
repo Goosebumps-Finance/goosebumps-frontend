@@ -1,4 +1,5 @@
 import { Currency, CurrencyAmount, ETHER, JSBI, Pair, Percent, Price, TokenAmount } from '@goosebumps/sdk'
+import { Pair as ZxPair } from '@goosebumps/zx-sdk'
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -205,7 +206,7 @@ export function useZxDerivedMintInfo(
 ): {
   dependentField: Field
   currencies: { [field in Field]?: Currency }
-  pair?: Pair | null
+  pair?: Pair | ZxPair | null
   pairState: PairState
   currencyBalances: { [field in Field]?: CurrencyAmount }
   parsedAmounts: { [field in Field]?: CurrencyAmount }

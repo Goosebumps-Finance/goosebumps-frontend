@@ -1,5 +1,6 @@
 import React from 'react'
 import { Currency, Pair } from '@goosebumps/sdk'
+import { Pair as ZxPair } from '@goosebumps/zx-sdk'
 import { Button, ChevronDownIcon, Text, useModal, Flex, Box } from '@goosebumps/uikit'
 import styled from 'styled-components'
 import { useTranslation } from 'contexts/Localization'
@@ -53,7 +54,7 @@ interface CurrencyInputPanelProps {
   currency?: Currency | null
   disableCurrencySelect?: boolean
   hideBalance?: boolean
-  pair?: Pair | null
+  pair?: Pair | ZxPair | null
   otherCurrency?: Currency | null
   id: string
   showCommonBases?: boolean

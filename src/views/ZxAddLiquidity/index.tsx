@@ -24,7 +24,7 @@ import ConnectWalletButton from '../../components/ConnectWalletButton'
 import { ZX_ROUTER_ADDRESS } from '../../config/constants'
 import { PairState } from '../../hooks/usePairs'
 import { useCurrency } from '../../hooks/Tokens'
-import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
+import { ApprovalState, useZxApproveCallback } from '../../hooks/useZxApproveCallback'
 import useTransactionDeadline from '../../hooks/useTransactionDeadline'
 import { Field, resetMintState } from '../../state/mint/actions'
 import { useDerivedMintInfo, useMintActionHandlers, useMintState } from '../../state/mint/hooks'
@@ -124,8 +124,8 @@ export default function ZxAddLiquidity({
   )
 
   // check whether the user has approved the router on the tokens
-  const [approvalA, approveACallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_A], isSupportedChainId(chainId) ? ZX_ROUTER_ADDRESS[chainId] : undefined)
-  const [approvalB, approveBCallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_B], isSupportedChainId(chainId) ? ZX_ROUTER_ADDRESS[chainId] : undefined)
+  const [approvalA, approveACallback] = useZxApproveCallback(parsedAmounts[Field.CURRENCY_A], isSupportedChainId(chainId) ? ZX_ROUTER_ADDRESS[chainId] : undefined)
+  const [approvalB, approveBCallback] = useZxApproveCallback(parsedAmounts[Field.CURRENCY_B], isSupportedChainId(chainId) ? ZX_ROUTER_ADDRESS[chainId] : undefined)
 
   const addTransaction = useTransactionAdder()
 

@@ -31,7 +31,7 @@ import { calculateGasMargin, calculateSlippageAmount, getZxRouterContract } from
 import { currencyId } from '../../utils/currencyId'
 import useDebouncedChangeHandler from '../../hooks/useDebouncedChangeHandler'
 import { wrappedCurrency } from '../../utils/wrappedCurrency'
-import { useApproveCallback, ApprovalState } from '../../hooks/useApproveCallback'
+import { useZxApproveCallback, ApprovalState } from '../../hooks/useZxApproveCallback'
 import Dots from '../../components/Loader/Dots'
 import { useBurnActionHandlers, useDerivedBurnInfo, useBurnState } from '../../state/burn/hooks'
 
@@ -97,7 +97,7 @@ export default function ZxRemoveLiquidity({
 
   // allowance handling
   const [signatureData, setSignatureData] = useState<{ v: number; r: string; s: string; deadline: number } | null>(null)
-  const [approval, approveCallback] = useApproveCallback(parsedAmounts[Field.LIQUIDITY], isSupportedChainId(chainId) ? ZX_ROUTER_ADDRESS[chainId] : undefined)
+  const [approval, approveCallback] = useZxApproveCallback(parsedAmounts[Field.LIQUIDITY], isSupportedChainId(chainId) ? ZX_ROUTER_ADDRESS[chainId] : undefined)
 
   async function onAttemptToApprove() {
     if (!pairContract || !pair || !library || !deadline) throw new Error('missing dependencies')

@@ -23,8 +23,6 @@ import { setNetworkInfo } from 'state/home'
 
 import { useTranslation } from 'contexts/Localization'
 import SwapWarningTokens from 'config/constants/swapWarningTokens'
-// import { usingDifferentFactories, getFactoryNameByPair } from 'utils/factories'
-// import isSupportedChainId from 'utils/isSupportedChainId'
 import AddressInputPanel from './components/AddressInputPanel'
 import { GreyCard } from '../../components/Card'
 import Column, { AutoColumn } from '../../components/Layout/Column'
@@ -52,7 +50,7 @@ import {
   useDerivedSwapInfo,
   useSwapActionHandlers,
   useSwapState,
-  // useSingleTokenSwapInfo,
+  useSingleTokenSwapInfo,
 } from '../../state/swap/hooks'
 import {
   useExpertModeManager,
@@ -151,9 +149,7 @@ export default function ZxSwap({ history }: RouteComponentProps) {
   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE
   const trade = showWrap ? undefined : v2Trade
 
-  // useEffect(() => {
-  //   console.log("trade: ", trade)
-  // }, [trade])
+  const singleTokenPrice = useSingleTokenSwapInfo()
 
   const parsedAmounts = showWrap
     ? {
@@ -207,16 +203,6 @@ export default function ZxSwap({ history }: RouteComponentProps) {
     currencies[Field.INPUT] && currencies[Field.OUTPUT] && parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
   )
   const noRoute = !route
-
-  // check if the pair is on the psi dex
-  // const notBaseFactory = isSupportedChainId(chainId) && route && route.pairs && route.pairs.length === 1 && route.pairs[0].factory !== BASE_FACTORY_ADDRESS[chainId];
-  // const differentFactories = isSupportedChainId(chainId) && route && usingDifferentFactories(route);
-  // const firstFactoryName = useMemo(() => {
-  //   if (route && route.pairs) {
-  //     return getFactoryNameByPair(route.pairs[0])
-  //   }
-  //   return null
-  // }, [route])
 
   // check whether the user has approved the router on the input token
   const [approval, approveCallback] = useApproveCallbackFromTrade(trade, allowedSlippage)
@@ -320,7 +306,7 @@ export default function ZxSwap({ history }: RouteComponentProps) {
         setSwapWarningCurrency(null)
       }
     },
-    [onCurrencySelection, setApprovalSubmitted]
+    [onCurrencySelection]
   )
 
   const handleMaxInput = useCallback(() => {

@@ -2465,10 +2465,10 @@
     react-popper "^2.2.5"
     styled-system "^5.1.5"
 
-"@goosebumps/zx-sdk@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@goosebumps/zx-sdk/-/zx-sdk-0.0.2.tgz#3bf0751ef3a5ae296042d9d2800b226ccbb2a24d"
-  integrity sha512-0rit2mPh41kQ53Yon2COgQwi9IkpSFuyjivXcR8YzucNzLfraEghRT2H/sHr/rA2K4Krlct6U+dBFbdfCdrRFQ==
+"@goosebumps/zx-sdk@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@goosebumps/zx-sdk/-/zx-sdk-0.0.3.tgz#034ea4c404c9a1c4e22c2f5d8ce56626d21559ea"
+  integrity sha512-T6noWvNE5ecQezpgjqfy93LbdaQNaFawuFBg7lTj/S4/wBfKHyMPUHXpQMSkKGSMqVrHWDkoldCwaJzjilUF/w==
   dependencies:
     big.js "^5.2.2"
     decimal.js-light "^2.5.0"

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { JSBI, Pair, Percent } from '@goosebumps/sdk'
+import { Pair as ZxPair } from '@goosebumps/zx-sdk'
 import {
   Button,
   Text,
@@ -34,7 +35,7 @@ const FixedHeightRow = styled(RowBetween)`
 `
 
 interface PositionCardProps extends CardProps {
-  pair: Pair
+  pair: Pair | ZxPair
   showUnwrapped?: boolean
 }
 

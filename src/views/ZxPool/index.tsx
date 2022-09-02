@@ -11,7 +11,7 @@ import { setNetworkInfo } from 'state/home'
 
 import FullPositionCard from '../../components/PositionCard'
 import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
-import { usePairs } from '../../hooks/usePairs'
+import { useZxPairs } from '../../hooks/useZxPairs'
 import { toZxV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
 import Dots from '../../components/Loader/Dots'
 import { AppHeader, AppBody } from '../../components/App'
@@ -58,7 +58,7 @@ export default function ZxPool() {
     [tokenPairsWithLiquidityTokens, v2PairsBalances],
   )
 
-  const v2Pairs = usePairs(liquidityTokensWithBalances.map(({ tokens }) => tokens))
+  const v2Pairs = useZxPairs(liquidityTokensWithBalances.map(({ tokens }) => tokens))
   const v2IsLoading =
     fetchingV2PairBalances || v2Pairs?.length < liquidityTokensWithBalances.length || v2Pairs?.some((V2Pair) => !V2Pair)
 

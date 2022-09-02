@@ -22,12 +22,12 @@ import Row, { RowBetween } from '../../components/Layout/Row'
 import ConnectWalletButton from '../../components/ConnectWalletButton'
 
 import { ZX_ROUTER_ADDRESS } from '../../config/constants'
-import { PairState } from '../../hooks/usePairs'
+import { PairState } from '../../hooks/useZxPairs'
 import { useCurrency } from '../../hooks/Tokens'
 import { ApprovalState, useZxApproveCallback } from '../../hooks/useZxApproveCallback'
 import useTransactionDeadline from '../../hooks/useTransactionDeadline'
 import { Field, resetMintState } from '../../state/mint/actions'
-import { useDerivedMintInfo, useMintActionHandlers, useMintState } from '../../state/mint/hooks'
+import { useZxDerivedMintInfo, useMintActionHandlers, useMintState } from '../../state/mint/hooks'
 
 import { useTransactionAdder } from '../../state/transactions/hooks'
 import { useGasPrice, useIsExpertMode, useUserSlippageTolerance } from '../../state/user/hooks'
@@ -82,7 +82,7 @@ export default function ZxAddLiquidity({
     liquidityMinted,
     poolTokenPercentage,
     error,
-  } = useDerivedMintInfo(currencyA ?? undefined, currencyB ?? undefined)
+  } = useZxDerivedMintInfo(currencyA ?? undefined, currencyB ?? undefined)
 
   const { onFieldAInput, onFieldBInput } = useMintActionHandlers(noLiquidity)
 

@@ -9,7 +9,7 @@ import { CurrencyLogo } from '../../components/Logo'
 import { MinimalPositionCard } from '../../components/PositionCard'
 import Row from '../../components/Layout/Row'
 import CurrencySearchModal from '../../components/SearchModal/CurrencySearchModal'
-import { PairState, usePair } from '../../hooks/usePairs'
+import { PairState, useZxPair } from '../../hooks/useZxPairs'
 import useActiveWeb3React from '../../hooks/useActiveWeb3React'
 import { usePairAdder } from '../../state/user/hooks'
 import { useTokenBalance } from '../../state/wallet/hooks'
@@ -41,7 +41,7 @@ export default function ZxPoolFinder() {
   const [currency0, setCurrency0] = useState<Currency | null>(ETHER)
   const [currency1, setCurrency1] = useState<Currency | null>(null)
 
-  const [pairState, pair] = usePair(currency0 ?? undefined, currency1 ?? undefined)
+  const [pairState, pair] = useZxPair(currency0 ?? undefined, currency1 ?? undefined)
   const addPair = usePairAdder()
   useEffect(() => {
     if (pair) {

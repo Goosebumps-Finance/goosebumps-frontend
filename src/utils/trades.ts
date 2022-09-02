@@ -1,10 +1,11 @@
 import { Trade, Percent, currencyEquals } from '@goosebumps/sdk'
+import { Trade as ZxTrade } from '@goosebumps/zx-sdk'
 import { ZERO_PERCENT, ONE_HUNDRED_PERCENT } from '../config/constants/index'
 
 // returns whether tradeB is better than tradeA by at least a threshold percentage amount
 export function isTradeBetter(
-  tradeA: Trade | undefined | null,
-  tradeB: Trade | undefined | null,
+  tradeA: Trade | ZxTrade | undefined | null,
+  tradeB: Trade | ZxTrade | undefined | null,
   minimumDelta: Percent = ZERO_PERCENT,
 ): boolean | undefined {
   if (tradeA && !tradeB) return false

@@ -13,7 +13,7 @@ import {
   useMatchBreakpoints,
   ArrowUpDownIcon,
 } from '@goosebumps/uikit'
-import { useIsTransactionUnsupported } from 'hooks/Trades'
+import { useZxIsTransactionUnsupported } from 'hooks/ZxTrades'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
 import Footer from 'components/Menu/Footer'
 import { RouteComponentProps } from 'react-router-dom'
@@ -329,7 +329,7 @@ export default function ZxSwap({ history }: RouteComponentProps) {
     [onCurrencySelection]
   )
 
-  const swapIsUnsupported = useIsTransactionUnsupported(currencies?.INPUT, currencies?.OUTPUT)
+  const swapIsUnsupported = useZxIsTransactionUnsupported(currencies?.INPUT, currencies?.OUTPUT)
 
   const [onPresentImportTokenWarningModal] = useModal(
     <ImportTokenWarningModal tokens={importTokensNotInDefault} onCancel={() => history.push('/swap')} />,

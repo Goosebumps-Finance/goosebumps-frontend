@@ -4,7 +4,7 @@ import { TransactionResponse } from '@ethersproject/providers'
 import { Currency, currencyEquals, ETHER, TokenAmount, WETH } from '@goosebumps/sdk'
 import { Button, Text, Flex, AddIcon, CardBody, Message, useModal } from '@goosebumps/uikit'
 import { RouteComponentProps } from 'react-router-dom'
-import { useIsTransactionUnsupported } from 'hooks/Trades'
+import { useZxIsTransactionUnsupported } from 'hooks/ZxTrades'
 import { useTranslation } from 'contexts/Localization'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -298,7 +298,7 @@ export default function ZxAddLiquidity({
     setTxHash('')
   }, [onFieldAInput, txHash])
 
-  const addIsUnsupported = useIsTransactionUnsupported(currencies?.CURRENCY_A, currencies?.CURRENCY_B)
+  const addIsUnsupported = useZxIsTransactionUnsupported(currencies?.CURRENCY_A, currencies?.CURRENCY_B)
 
   const [onPresentAddLiquidityModal] = useModal(
     <TransactionConfirmationModal

@@ -21,7 +21,7 @@ import { MinimalPositionCard } from '../../components/PositionCard'
 import Row, { RowBetween } from '../../components/Layout/Row'
 import ConnectWalletButton from '../../components/ConnectWalletButton'
 
-import { ROUTER_ADDRESS } from '../../config/constants'
+import { ZX_ROUTER_ADDRESS } from '../../config/constants'
 import { PairState } from '../../hooks/usePairs'
 import { useCurrency } from '../../hooks/Tokens'
 import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
@@ -31,7 +31,7 @@ import { useDerivedMintInfo, useMintActionHandlers, useMintState } from '../../s
 
 import { useTransactionAdder } from '../../state/transactions/hooks'
 import { useGasPrice, useIsExpertMode, useUserSlippageTolerance } from '../../state/user/hooks'
-import { calculateGasMargin, calculateSlippageAmount, getRouterContract } from '../../utils'
+import { calculateGasMargin, calculateSlippageAmount, getZxRouterContract } from '../../utils'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import { wrappedCurrency } from '../../utils/wrappedCurrency'
 import Dots from '../../components/Loader/Dots'
@@ -124,14 +124,14 @@ export default function ZxAddLiquidity({
   )
 
   // check whether the user has approved the router on the tokens
-  const [approvalA, approveACallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_A], isSupportedChainId(chainId) ? ROUTER_ADDRESS[chainId] : undefined)
-  const [approvalB, approveBCallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_B], isSupportedChainId(chainId) ? ROUTER_ADDRESS[chainId] : undefined)
+  const [approvalA, approveACallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_A], isSupportedChainId(chainId) ? ZX_ROUTER_ADDRESS[chainId] : undefined)
+  const [approvalB, approveBCallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_B], isSupportedChainId(chainId) ? ZX_ROUTER_ADDRESS[chainId] : undefined)
 
   const addTransaction = useTransactionAdder()
 
   async function onAdd() {
     if (!isSupportedChainId(chainId) || !library || !account) return
-    const router = getRouterContract(chainId, library, account)
+    const router = getZxRouterContract(chainId, library, account)
 
     const { [Field.CURRENCY_A]: parsedAmountA, [Field.CURRENCY_B]: parsedAmountB } = parsedAmounts
     if (!parsedAmountA || !parsedAmountB || !currencyA || !currencyB || !deadline) {

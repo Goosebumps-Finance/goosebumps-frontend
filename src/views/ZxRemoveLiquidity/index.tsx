@@ -19,7 +19,7 @@ import ConnectWalletButton from '../../components/ConnectWalletButton'
 import { LightGreyCard } from '../../components/Card'
 
 import { CurrencyLogo, DoubleCurrencyLogo } from '../../components/Logo'
-import { ROUTER_ADDRESS } from '../../config/constants'
+import { ZX_ROUTER_ADDRESS } from '../../config/constants'
 import useActiveWeb3React from '../../hooks/useActiveWeb3React'
 import { useCurrency } from '../../hooks/Tokens'
 import { usePairContract } from '../../hooks/useContract'
@@ -27,7 +27,7 @@ import useTransactionDeadline from '../../hooks/useTransactionDeadline'
 
 import { useTransactionAdder } from '../../state/transactions/hooks'
 import StyledInternalLink from '../../components/Links'
-import { calculateGasMargin, calculateSlippageAmount, getRouterContract } from '../../utils'
+import { calculateGasMargin, calculateSlippageAmount, getZxRouterContract } from '../../utils'
 import { currencyId } from '../../utils/currencyId'
 import useDebouncedChangeHandler from '../../hooks/useDebouncedChangeHandler'
 import { wrappedCurrency } from '../../utils/wrappedCurrency'
@@ -97,7 +97,7 @@ export default function ZxRemoveLiquidity({
 
   // allowance handling
   const [signatureData, setSignatureData] = useState<{ v: number; r: string; s: string; deadline: number } | null>(null)
-  const [approval, approveCallback] = useApproveCallback(parsedAmounts[Field.LIQUIDITY], isSupportedChainId(chainId) ? ROUTER_ADDRESS[chainId] : undefined)
+  const [approval, approveCallback] = useApproveCallback(parsedAmounts[Field.LIQUIDITY], isSupportedChainId(chainId) ? ZX_ROUTER_ADDRESS[chainId] : undefined)
 
   async function onAttemptToApprove() {
     if (!pairContract || !pair || !library || !deadline) throw new Error('missing dependencies')
@@ -114,7 +114,7 @@ export default function ZxRemoveLiquidity({
       { name: 'verifyingContract', type: 'address' },
     ]
     const domain = {
-      name: 'Goosebumps LPs',
+      name: 'GooseBumps LPs',
       version: '1',
       chainId,
       verifyingContract: pair.liquidityToken.address,
@@ -128,7 +128,7 @@ export default function ZxRemoveLiquidity({
     ]
     const message = {
       owner: account,
-      spender: isSupportedChainId(chainId) ? ROUTER_ADDRESS[chainId] : undefined,
+      spender: isSupportedChainId(chainId) ? ZX_ROUTER_ADDRESS[chainId] : undefined,
       value: liquidityAmount.raw.toString(),
       nonce: nonce.toHexString(),
       deadline: deadline.toNumber(),
@@ -183,7 +183,7 @@ export default function ZxRemoveLiquidity({
     if (!currencyAmountA || !currencyAmountB) {
       throw new Error('missing currency amounts')
     }
-    const router = getRouterContract(chainId, library, account)
+    const router = getZxRouterContract(chainId, library, account)
 
     const amountsMin = {
       [Field.CURRENCY_A]: calculateSlippageAmount(currencyAmountA, allowedSlippage)[0],

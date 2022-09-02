@@ -1,4 +1,5 @@
 import { ChainId, Pair, Token } from '@goosebumps/sdk'
+import { Pair as ZxPair } from '@goosebumps/zx-sdk'
 import flatMap from 'lodash/flatMap'
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -354,7 +355,7 @@ export function useRemoveUserAddedToken(): (chainId: number, address: string) =>
 
 export function useGasPrice(): string {
   // let chainId = getChainId()
-  const userGas = useSelector<AppState, AppState['user']['gasPrice']>((state) => state.user.gasPrice)  
+  const userGas = useSelector<AppState, AppState['user']['gasPrice']>((state) => state.user.gasPrice)
   // return chainId === ChainId.MAINNET ? userGas : GAS_PRICE_GWEI.testnet
   return userGas
 }
@@ -373,22 +374,31 @@ export function useGasPriceManager(): [string, (userGasPrice: string) => void] {
   return [userGasPrice, setGasPrice]
 }
 
-function serializePair(pair: Pair): SerializedPair {
+function serializePair(pair: Pair | ZxPair): SerializedPair {
   return {
     token0: serializeToken(pair.token0),
     token1: serializeToken(pair.token1),
   }
 }
 
-export function usePairAdder(): (pair: Pair) => void {
+export function usePairAdder(): (pair: Pair | ZxPair) => void {
   const dispatch = useDispatch<AppDispatch>()
 
   return useCallback(
-    (pair: Pair) => {
+    (pair: Pair | ZxPair) => {
       dispatch(addSerializedPair({ serializedPair: serializePair(pair) }))
     },
     [dispatch],
   )
+}
+
+/**
+ * Given two tokens return the liquidity token that represents its liquidity shares
+ * @param tokenA one of the two tokens
+ * @param tokenB the other token
+ */
+export function toZxV2LiquidityToken([tokenA, tokenB]: [Token, Token]): Token {
+  return new Token(tokenA.chainId, ZxPair.getAddress(tokenA, tokenB), 18, 'GooseBumps-LP', 'GooseBumps LPs')
 }
 
 /**
@@ -415,21 +425,21 @@ export function useTrackedTokenPairs(): [Token, Token][] {
     () =>
       chainId
         ? flatMap(Object.keys(tokens), (tokenAddress) => {
-            const token = tokens[tokenAddress]
-            // for each token on the current chain,
-            return (
-              // loop though all bases on the current chain
-              (BASES_TO_TRACK_LIQUIDITY_FOR[chainId] ?? [])
-                // to construct pairs of the given token with each base
-                .map((base) => {
-                  if (base.address === token.address) {
-                    return null
-                  }
-                  return [base, token]
-                })
-                .filter((p): p is [Token, Token] => p !== null)
-            )
-          })
+          const token = tokens[tokenAddress]
+          // for each token on the current chain,
+          return (
+            // loop though all bases on the current chain
+            (BASES_TO_TRACK_LIQUIDITY_FOR[chainId] ?? [])
+              // to construct pairs of the given token with each base
+              .map((base) => {
+                if (base.address === token.address) {
+                  return null
+                }
+                return [base, token]
+              })
+              .filter((p): p is [Token, Token] => p !== null)
+          )
+        })
         : [],
     [tokens, chainId],
   )

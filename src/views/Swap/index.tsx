@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
-import { CurrencyAmount, JSBI, Token, Trade } from '@goosebumps/sdk'
+import { CurrencyAmount, JSBI, Token, Trade } from '@goosebumps/zx-sdk'
 import {
   Button,
   Text,

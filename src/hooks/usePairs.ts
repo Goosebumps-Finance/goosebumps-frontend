@@ -1,4 +1,4 @@
-import { TokenAmount, Pair, Currency } from '@goosebumps/sdk'
+import { TokenAmount, Pair, Currency } from '@goosebumps/zx-sdk'
 import { useMemo } from 'react'
 import { abi as IGoosebumpsPairABI } from '@goosebumps/goosebumps-aggregator-dex/artifacts/contracts/GoosebumpsPair.sol/GoosebumpsPair.json'
 import { Interface } from '@ethersproject/abi'

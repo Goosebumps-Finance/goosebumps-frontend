@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { ChainId, Token } from '@goosebumps/sdk'
+import { ChainId, Token } from '@goosebumps/zx-sdk'
 
 export type TranslatableText =
   | string

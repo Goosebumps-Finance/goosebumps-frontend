@@ -1,4 +1,4 @@
-import { ChainId } from '@goosebumps/sdk'
+import { ChainId } from '@goosebumps/zx-sdk'
 import isSupportedChainId from './isSupportedChainId'
 
 export const getChainId = (): number => {

@@ -1,4 +1,4 @@
-import { ChainId } from '@goosebumps/sdk'
+import { ChainId } from '@goosebumps/zx-sdk'
 
 export default function isSupportedChainId(chainId: number) {
   // return (chainId === ChainId.MAINNET || chainId === ChainId.TESTNET || chainId === ChainId.ETHEREUM || chainId === ChainId.POLYGON)

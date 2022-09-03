@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Flex, Input } from '@goosebumps/uikit'
-import { ChainId } from '@goosebumps/sdk'
+import { ChainId } from '@goosebumps/zx-sdk'
 import linq from 'linq'
 import { AppBody } from 'components/App'
 import ConnectWalletButton from 'components/ConnectWalletButton'

@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Token, TokenAmount } from '@goosebumps/sdk'
+import { Token, TokenAmount } from '@goosebumps/zx-sdk'
 import { useTokenContract } from './useContract'
 import { useSingleCallResult } from '../state/multicall/hooks'
 

@@ -1,4 +1,4 @@
-// import { ChainId } from '@goosebumps/sdk'
+// import { ChainId } from '@goosebumps/zx-sdk'
 import addresses from 'config/constants/contracts'
 import { Address } from 'config/constants/types'
 // import { constant } from 'lodash'

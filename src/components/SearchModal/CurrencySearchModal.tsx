@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { Currency, Token } from '@goosebumps/sdk'
+import { Currency, Token } from '@goosebumps/zx-sdk'
 import {
   ModalContainer,
   ModalHeader,

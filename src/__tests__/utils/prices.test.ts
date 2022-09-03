@@ -1,4 +1,4 @@
-import { ChainId, JSBI, Pair, Route, Token, TokenAmount, Trade, TradeType } from '@goosebumps/sdk'
+import { ChainId, JSBI, Pair, Route, Token, TokenAmount, Trade, TradeType } from '@goosebumps/zx-sdk'
 import { computeTradePriceBreakdown } from 'utils/prices'
 
 describe('prices', () => {

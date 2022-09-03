@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
 import styled from 'styled-components'
-import { Pair } from '@goosebumps/sdk'
+import { Pair } from '@goosebumps/zx-sdk'
 import { Text, Flex, CardBody, CardFooter, Button, AddIcon } from '@goosebumps/uikit'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'contexts/Localization'

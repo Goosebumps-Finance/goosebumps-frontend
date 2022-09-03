@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { ChainId, Currency, Token } from '@goosebumps/sdk'
+import { ChainId, Currency, Token } from '@goosebumps/zx-sdk'
 import styled from 'styled-components'
 import {
   Button,

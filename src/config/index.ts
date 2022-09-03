@@ -1,4 +1,4 @@
-import { ChainId } from '@goosebumps/sdk'
+import { ChainId } from '@goosebumps/zx-sdk'
 import BigNumber from 'bignumber.js/bignumber'
 import { BIG_TEN } from 'utils/bigNumber'
 import { getChainId } from 'utils/getChainId'

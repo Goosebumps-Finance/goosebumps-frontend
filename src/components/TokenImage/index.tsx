@@ -6,7 +6,7 @@ import {
   ImageProps,
 } from '@goosebumps/uikit'
 import tokens from 'config/constants/tokens'
-import { Token } from '@goosebumps/sdk'
+import { Token } from '@goosebumps/zx-sdk'
 import { getChainId } from 'utils/getChainId'
 
 interface TokenPairImageProps extends Omit<UIKitTokenPairImageProps, 'primarySrc' | 'secondarySrc'> {

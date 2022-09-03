@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { Token } from '@goosebumps/sdk'
+import { Token } from '@goosebumps/zx-sdk'
 import { isAddress } from '../../utils'
 
 export function filterTokens(tokens: Token[], search: string): Token[] {

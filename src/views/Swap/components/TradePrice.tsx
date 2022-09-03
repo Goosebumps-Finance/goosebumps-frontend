@@ -1,5 +1,5 @@
 import React from 'react'
-import { Price } from '@goosebumps/sdk'
+import { Price } from '@goosebumps/zx-sdk'
 import { Text, AutoRenewIcon } from '@goosebumps/uikit'
 import { StyledBalanceMaxMini } from './styleds'
 

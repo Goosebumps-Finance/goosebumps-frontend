@@ -1,4 +1,4 @@
-import { ChainId, Pair, Route } from '@goosebumps/sdk'
+import { ChainId, Pair, Route } from '@goosebumps/zx-sdk'
 import {
   BASE_FACTORY_ADDRESS,
 } from 'config/constants'

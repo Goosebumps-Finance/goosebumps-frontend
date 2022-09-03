@@ -1,4 +1,4 @@
-import { ChainId } from "@goosebumps/sdk"
+import { ChainId } from "@goosebumps/zx-sdk"
 
 // BNB
 export const DEFAULT_INPUT_CURRENCY = {

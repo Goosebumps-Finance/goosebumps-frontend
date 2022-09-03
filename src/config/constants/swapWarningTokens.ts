@@ -1,4 +1,4 @@
-import { Token } from '@goosebumps/sdk'
+import { Token } from '@goosebumps/zx-sdk'
 import { getChainId } from 'utils/getChainId'
 import tokens from 'config/constants/tokens'
 

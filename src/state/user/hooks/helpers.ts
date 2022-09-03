@@ -1,4 +1,4 @@
-import { ChainId, Token } from '@goosebumps/sdk'
+import { ChainId, Token } from '@goosebumps/zx-sdk'
 import { SerializedToken } from 'config/constants/types'
 import { parseUnits } from 'ethers/lib/utils'
 

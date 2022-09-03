@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ChainId } from '@goosebumps/sdk'
+import { ChainId } from '@goosebumps/zx-sdk'
 import { useFarms, usePriceEmpireBusd } from 'state/farms/hooks'
 import { useAppDispatch } from 'state'
 import { fetchFarmsPublicDataAsync, nonArchivedFarms } from 'state/farms'

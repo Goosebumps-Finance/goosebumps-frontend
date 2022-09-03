@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Token } from '@goosebumps/sdk'
+import { Token } from '@goosebumps/zx-sdk'
 import { ButtonMenu, ButtonMenuItem, ModalBody } from '@goosebumps/uikit'
 import styled from 'styled-components'
 import { TokenList } from '@uniswap/token-lists'

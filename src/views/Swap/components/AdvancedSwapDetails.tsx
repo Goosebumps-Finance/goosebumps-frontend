@@ -1,5 +1,5 @@
 import React from 'react'
-import { Trade, TradeType } from '@goosebumps/sdk'
+import { Trade, TradeType } from '@goosebumps/zx-sdk'
 import { Text } from '@goosebumps/uikit'
 import { Field } from 'state/swap/actions'
 import { useTranslation } from 'contexts/Localization'

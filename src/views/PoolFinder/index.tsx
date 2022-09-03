@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Currency, ETHER, JSBI, TokenAmount } from '@goosebumps/sdk'
+import { Currency, ETHER, JSBI, TokenAmount } from '@goosebumps/zx-sdk'
 import { Button, ChevronDownIcon, Text, AddIcon, useModal } from '@goosebumps/uikit'
 import styled from 'styled-components'
 import { useTranslation } from 'contexts/Localization'

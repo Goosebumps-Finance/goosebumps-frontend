@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { isTradeBetter } from 'utils/trades'
-import { ChainId, Currency, CurrencyAmount, Pair, Token, Trade } from '@goosebumps/sdk'
+import { ChainId, Currency, CurrencyAmount, Pair, Token, Trade } from '@goosebumps/zx-sdk'
 import flatMap from 'lodash/flatMap'
 import { useMemo } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'

@@ -1,4 +1,4 @@
-import { Token, ChainId } from '@goosebumps/sdk'
+import { Token, ChainId } from '@goosebumps/zx-sdk'
 import { getChainId } from 'utils/getChainId'
 import tokens from './tokens'
 // import farms from './farms'

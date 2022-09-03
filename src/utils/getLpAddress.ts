@@ -1,4 +1,4 @@
-import { Token, Pair, ChainId } from '@goosebumps/sdk'
+import { Token, Pair, ChainId } from '@goosebumps/zx-sdk'
 import { isAddress } from 'utils'
 import { BASE_FACTORY_ADDRESS, BASE_INIT_CODE_HASH } from 'config/constants'
 import { getChainId } from './getChainId'

@@ -1,4 +1,4 @@
-import { ChainId } from '@goosebumps/sdk'
+import { ChainId } from '@goosebumps/zx-sdk'
 import { MAINNET_RPC, TESTNET_RPC, ETHEREUM_RPC, POLYGON_RPC, BASE_BSC_SCAN_URLS } from 'config'
 import { OptionProps } from 'config/constants/types'
 

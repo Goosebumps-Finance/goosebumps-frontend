@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
-import { currencyEquals, Trade } from '@goosebumps/sdk'
+import { currencyEquals, Trade } from '@goosebumps/zx-sdk'
 import { InjectedModalProps } from '@goosebumps/uikit'
 import { useTranslation } from 'contexts/Localization'
 import TransactionConfirmationModal, {

@@ -1,4 +1,4 @@
-import { Currency, ETHER, Token } from '@goosebumps/sdk'
+import { Currency, ETHER, Token } from '@goosebumps/zx-sdk'
 
 export function currencyId(currency: Currency): string {
   if (currency === ETHER) return 'BNB'

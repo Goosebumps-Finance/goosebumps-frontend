@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { JSBI, Pair, Percent } from '@goosebumps/sdk'
+import { JSBI, Pair, Percent } from '@goosebumps/zx-sdk'
 import {
   Button,
   Text,

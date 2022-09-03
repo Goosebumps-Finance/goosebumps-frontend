@@ -1,5 +1,5 @@
 import React from 'react'
-import { ChainId, Currency, currencyEquals, ETHER, Token } from '@goosebumps/sdk'
+import { ChainId, Currency, currencyEquals, ETHER, Token } from '@goosebumps/zx-sdk'
 import { Text } from '@goosebumps/uikit'
 import styled from 'styled-components'
 import { useTranslation } from 'contexts/Localization'

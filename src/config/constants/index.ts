@@ -1,4 +1,4 @@
-import { ChainId, JSBI, Percent, Token } from '@goosebumps/sdk'
+import { ChainId, JSBI, Percent, Token } from '@goosebumps/zx-sdk'
 // import { ethTokens, mainnetTokens, polygonTokens, testnetTokens } from './tokens'
 import { mainnetTokens, testnetTokens } from './tokens'
 import { Address } from './types'

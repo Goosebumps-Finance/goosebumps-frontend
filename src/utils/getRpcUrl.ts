@@ -2,7 +2,7 @@
 // import linq from 'linq'
 // import networks from 'config/constants/networks'
 import { NETWORK_URLS } from 'config/constants/networks'
-import { ChainId } from '@goosebumps/sdk'
+import { ChainId } from '@goosebumps/zx-sdk'
 // import { getChainId } from './getChainId'
 
 if (

@@ -1,5 +1,5 @@
 import { ethers } from 'ethers'
-// import { ChainId } from '@goosebumps/sdk'
+// import { ChainId } from '@goosebumps/zx-sdk'
 import getRpcUrl from 'utils/getRpcUrl'
 
 // const RPC_URL = getRpcUrl(ChainId.MAINNET)

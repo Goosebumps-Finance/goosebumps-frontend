@@ -57,7 +57,7 @@ import {
 
 // Imports below migrated from Exchange useContract.ts
 import { Contract } from '@ethersproject/contracts'
-import { ChainId, WETH } from '@goosebumps/sdk'
+import { ChainId, WETH } from '@goosebumps/zx-sdk'
 import { abi as IGoosebumpsPairABI } from '@goosebumps/goosebumps-aggregator-dex/artifacts/contracts/GoosebumpsPair.sol/GoosebumpsPair.json'
 import ENS_PUBLIC_RESOLVER_ABI from '../config/abi/ens-public-resolver.json'
 import ENS_ABI from '../config/abi/ens-registrar.json'

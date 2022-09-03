@@ -1,5 +1,5 @@
 import React, { useRef, RefObject, useCallback, useState, useMemo } from 'react'
-import { Token } from '@goosebumps/sdk'
+import { Token } from '@goosebumps/zx-sdk'
 import { Text, Button, CloseIcon, IconButton, LinkExternal, Input, Link } from '@goosebumps/uikit'
 import styled from 'styled-components'
 import Row, { RowBetween, RowFixed } from 'components/Layout/Row'

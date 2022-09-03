@@ -1,4 +1,4 @@
-import { Currency } from '@goosebumps/sdk'
+import { Currency } from '@goosebumps/zx-sdk'
 import { Box, BunnyPlaceholderIcon, Flex, Text } from '@goosebumps/uikit'
 import TradingView, { TradingViewLabel, useTradingViewEvent } from 'components/TradingView'
 import { useTranslation } from 'contexts/Localization'

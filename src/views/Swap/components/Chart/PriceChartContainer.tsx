@@ -1,4 +1,4 @@
-import { Currency } from '@goosebumps/sdk'
+import { Currency } from '@goosebumps/zx-sdk'
 import useTheme from 'hooks/useTheme'
 import React, { useCallback, useState } from 'react'
 import BnbWbnbNotice from './BnbWbnbNotice'

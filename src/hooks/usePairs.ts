@@ -1,6 +1,7 @@
 import { TokenAmount, Pair, Currency } from '@goosebumps/zx-sdk'
 import { useMemo } from 'react'
-import { abi as IGoosebumpsPairABI } from '@goosebumps/goosebumps-aggregator-dex/artifacts/contracts/GoosebumpsPair.sol/GoosebumpsPair.json'
+// import { abi as IGoosebumpsPairABI } from '@goosebumps/goosebumps-aggregator-dex/artifacts/contracts/GoosebumpsPair.sol/GoosebumpsPair.json'
+import { abi as IGoosebumpsPairABI } from '@goosebumps/goosebumps-v1-aggregator-dex/artifacts/contracts/GooseBumpsSwapPair.sol/GooseBumpsSwapPair.json'
 import { Interface } from '@ethersproject/abi'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import isSupportedChainId from 'utils/isSupportedChainId'

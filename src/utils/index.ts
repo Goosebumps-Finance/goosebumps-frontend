@@ -4,8 +4,9 @@ import { getAddress } from '@ethersproject/address'
 import { AddressZero } from '@ethersproject/constants'
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 import { BigNumber } from '@ethersproject/bignumber'
-// import { abi as IGoosebumpsRouterABI } from '@goosebumps/goosebumps-aggregator-dex/artifacts/contracts/GoosebumpsRouter.sol/GoosebumpsRouter.json'
-import { abi as IGoosebumpsRouterABI } from '@goosebumps/goosebumps-v1-aggregator-dex/artifacts/contracts/GooseBumpsSwapRouter02.sol/GooseBumpsSwapRouter02.json'
+import { abi as IGoosebumpsRouterABI } from '@goosebumps/goosebumps-aggregator-dex/artifacts/contracts/GoosebumpsRouter.sol/GoosebumpsRouter.json'
+// import { abi as IGoosebumpsRouterABI } from '@goosebumps/goosebumps-v1-aggregator-dex/artifacts/contracts/GooseBumpsSwapRouter02.sol/GooseBumpsSwapRouter02.json'
+import { GooseBumpsSwapRouter02 } from 'config/abi/types'
 import { ChainId, JSBI, Percent, Token, CurrencyAmount, Currency, ETHER } from '@goosebumps/zx-sdk'
 import { ROUTER_ADDRESS } from '../config/constants'
 import { BASE_BSC_SCAN_URLS } from '../config'
@@ -94,8 +95,10 @@ export function getContract(address: string, ABI: any, signer?: ethers.Signer | 
 }
 
 // account is optional
-export function getRouterContract(_: number, library: Web3Provider, account?: string): Contract {
-  return getContract(ROUTER_ADDRESS[getChainId()], IGoosebumpsRouterABI, getProviderOrSigner(library, account))
+export function getRouterContract(chainId: number, library: Web3Provider, account?: string): Contract {
+  // return getContract(ROUTER_ADDRESS[chainId], IGoosebumpsRouterABI, getProviderOrSigner(library, account))
+  // return getContract(ROUTER_ADDRESS[chainId], IGoosebumpsRouterABI, getProviderOrSigner(library, account)) as GooseBumpsSwapRouter02
+  return getContract(ROUTER_ADDRESS[chainId], IGoosebumpsRouterABI) as GooseBumpsSwapRouter02
 }
 
 export function escapeRegExp(string: string): string {

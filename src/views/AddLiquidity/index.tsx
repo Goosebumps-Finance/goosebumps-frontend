@@ -130,18 +130,28 @@ export default function AddLiquidity({
   const addTransaction = useTransactionAdder()
 
   async function onAdd() {
+    console.log("pass0")
     if (!isSupportedChainId(chainId) || !library || !account) return
+    console.log("pass1")
     const router = getRouterContract(chainId, library, account)
+    console.log("pass2 chainId, library, account", chainId, library, account)
+    console.log("pass2 router", router)
 
     const { [Field.CURRENCY_A]: parsedAmountA, [Field.CURRENCY_B]: parsedAmountB } = parsedAmounts
     if (!parsedAmountA || !parsedAmountB || !currencyA || !currencyB || !deadline) {
       return
     }
+    console.log("pass3 parsedAmounts", parsedAmounts)
+    console.log("pass3 parsedAmountA", parsedAmountA)
+    console.log("pass3 parsedAmountB", parsedAmountB)
+    console.log("pass3 currencyA", currencyA)
+    console.log("pass3 currencyB", currencyB)
 
     const amountsMin = {
       [Field.CURRENCY_A]: calculateSlippageAmount(parsedAmountA, noLiquidity ? 0 : allowedSlippage)[0],
       [Field.CURRENCY_B]: calculateSlippageAmount(parsedAmountB, noLiquidity ? 0 : allowedSlippage)[0],
     }
+    console.log("pass4 amountsMin", amountsMin)
 
     let estimate
     let method: (...args: any) => Promise<TransactionResponse>
@@ -175,12 +185,21 @@ export default function AddLiquidity({
       ]
       value = null
     }
+    console.log("pass5 estimate", estimate)
+    console.log("pass5 method", method)
+    console.log("pass5 args", args)
+    console.log("pass5 value", value)
 
     setAttemptingTxn(true)
+    console.log("pass6 start")
     await estimate(...args, value ? { value } : {})
-      .then((estimatedGasLimit) =>
+      .then((estimatedGasLimit) => {
+        console.log("pass7 then")
+        console.log("pass7 calculateGasMargin(estimatedGasLimit)", calculateGasMargin(estimatedGasLimit))
+
         method(...args, {
           ...(value ? { value } : {}),
+          from: account,
           gasLimit: calculateGasMargin(estimatedGasLimit),
           gasPrice,
         }).then((response) => {
@@ -192,9 +211,11 @@ export default function AddLiquidity({
           })
 
           setTxHash(response.hash)
-        }),
+        })
+      }
       )
       .catch((err) => {
+        console.log("pass7 catched")
         setAttemptingTxn(false)
         // we only care if the error is something _other_ than the user rejected the tx
         if (err?.code !== 4001) {

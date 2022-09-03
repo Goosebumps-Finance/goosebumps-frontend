@@ -72,22 +72,54 @@ const Bridge = () => {
   }
 
   const onChangeToNetwork = async (newNetwork) => {
-    let _index = 0;
+    // let _index = 0;
     // if(newNetwork.value === "ethereum") _index = 0
-    if (newNetwork.value === "bsc") _index = 0
+    // if (newNetwork.value === "bsc") _index = 0
     // if(newNetwork.value === "polygon") _index = 2
-    if (newNetwork.value === "bsc_testnet") _index = 1
-    console.log("onChangeToNetwork network = ", newNetwork, "_index=", _index)
-    setToIndex(_index)
+    // if (newNetwork.value === "bsc_testnet") _index = 1
+    switch (newNetwork.value) {
+      case "bsc":
+        setToIndex(0)
+        return
+      case "bsc_testnet":
+        setToIndex(1)
+        return
+      // case "ethereum":
+      //   setToIndex(2)
+      //   return
+      // case "polygon":
+      //   setToIndex(3)
+      //   return
+      default:
+        return
+    }
+    // console.log("onChangeToNetwork network = ", newNetwork, "_index=", _index)
+    // setToIndex(_index)
   }
 
   const onChangeTokenNetwork = async (newNetwork) => {
-    let _index = 0;
+    // let _index = 0;
     // if(newNetwork.value === "ethereum") _index = 0
-    if (newNetwork.value === "bsc") _index = 0
+    // if (newNetwork.value === "bsc") _index = 0
     // if(newNetwork.value === "polygon") _index = 2
-    if (newNetwork.value === "bsc_testnet") _index = 1
-    setTokenIndex(_index)
+    // if (newNetwork.value === "bsc_testnet") _index = 1
+    // setTokenIndex(_index)
+    switch (newNetwork.value) {
+      case "bsc":
+        setTokenIndex(0)
+        return
+      case "bsc_testnet":
+        setTokenIndex(1)
+        return
+      // case "ethereum":
+      //   setTokenIndex(2)
+      //   return
+      // case "polygon":
+      //   setTokenIndex(3)
+      //   return
+      default:
+        return
+    }
   }
 
   return (

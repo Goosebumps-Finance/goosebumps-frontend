@@ -16,16 +16,16 @@ export const getCustomMeta = (path: string, t: ContextApi['t']): PageMeta => {
     basePath = '/liquidityAdd'
   } else if (path.startsWith('/liquidityRemove')) {
     basePath = '/liquidityRemove'
-  } else if (path.startsWith('/teams')) {
-    basePath = '/teams'
-  } else if (path.startsWith('/voting/proposal') && path !== '/voting/proposal/create') {
-    basePath = '/voting/proposal'
-  } else if (path.startsWith('/nfts/collections')) {
-    basePath = '/nfts/collections'
-  } else if (path.startsWith('/nfts/profile')) {
-    basePath = '/nfts/profile'
-  } else if (path.startsWith('/pancake-squad')) {
-    basePath = '/pancake-squad'
+  // } else if (path.startsWith('/teams')) {
+  //   basePath = '/teams'
+  // } else if (path.startsWith('/voting/proposal') && path !== '/voting/proposal/create') {
+  //   basePath = '/voting/proposal'
+  // } else if (path.startsWith('/nfts/collections')) {
+  //   basePath = '/nfts/collections'
+  // } else if (path.startsWith('/nfts/profile')) {
+  //   basePath = '/nfts/profile'
+  // } else if (path.startsWith('/pancake-squad')) {
+  //   basePath = '/pancake-squad'
   } else {
     basePath = path
   }
@@ -55,89 +55,89 @@ export const getCustomMeta = (path: string, t: ContextApi['t']): PageMeta => {
       return {
         title: `${t('Goosebumps')}`,
       }
-    case '/competition':
-      return {
-        title: `${t('Goosebumps')}`,
-      }
-    case '/prediction':
-      return {
-        title: `${t('Goosebumps')}`,
-      }
-    case '/prediction/leaderboard':
-      return {
-        title: `${t('Goosebumps')}`,
-      }
+    // case '/competition':
+    //   return {
+    //     title: `${t('Goosebumps')}`,
+    //   }
+    // case '/prediction':
+    //   return {
+    //     title: `${t('Goosebumps')}`,
+    //   }
+    // case '/prediction/leaderboard':
+    //   return {
+    //     title: `${t('Goosebumps')}`,
+    //   }
     case '/farms':
       return {
         title: `${t('Goosebumps')}`,
       }
-    case '/farms/auction':
-      return {
-        title: `${t('Goosebumps')}`,
-      }
+    // case '/farms/auction':
+    //   return {
+    //     title: `${t('Goosebumps')}`,
+    //   }
     case '/pools':
       return {
         title: `${t('Goosebumps')}`,
       }
-    case '/lottery':
-      return {
-        title: `${t('Goosebumps')}`,
-      }
-    case '/ifo':
-      return {
-        title: `${t('Goosebumps')}`,
-      }
-    case '/teams':
-      return {
-        title: `${t('Goosebumps')}`,
-      }
-    case '/voting':
-      return {
-        title: `${t('Goosebumps')}`,
-      }
-    case '/voting/proposal':
-      return {
-        title: `${t('Goosebumps')}`,
-      }
-    case '/voting/proposal/create':
-      return {
-        title: `${t('Goosebumps')}`,
-      }
-    case '/info':
-      return {
-        title: `${t('Goosebumps Info & Analytics')}`,
-        description: 'View statistics for Goosebumps exchanges.',
-      }
-    case '/info/pools':
-      return {
-        title: `${t('Goosebumps Info & Analytics')}`,
-        description: 'View statistics for Goosebumps exchanges.',
-      }
-    case '/info/tokens':
-      return {
-        title: `${t('Goosebumps Info & Analytics')}`,
-        description: 'View statistics for Goosebumps exchanges.',
-      }
-    case '/nfts':
-      return {
-        title: `${t('Goosebumps')}`,
-      }
-    case '/nfts/collections':
-      return {
-        title: `${t('Goosebumps')}`,
-      }
-    case '/nfts/activity':
-      return {
-        title: `${t('Goosebumps')}`,
-      }
-    case '/nfts/profile':
-      return {
-        title: `${t('Goosebumps')}`,
-      }
-    case '/pancake-squad':
-      return {
-        title: `${t('Goosebumps')}`,
-      }
+    // case '/lottery':
+    //   return {
+    //     title: `${t('Goosebumps')}`,
+    //   }
+    // case '/ifo':
+    //   return {
+    //     title: `${t('Goosebumps')}`,
+    //   }
+    // case '/teams':
+    //   return {
+    //     title: `${t('Goosebumps')}`,
+    //   }
+    // case '/voting':
+    //   return {
+    //     title: `${t('Goosebumps')}`,
+    //   }
+    // case '/voting/proposal':
+    //   return {
+    //     title: `${t('Goosebumps')}`,
+    //   }
+    // case '/voting/proposal/create':
+    //   return {
+    //     title: `${t('Goosebumps')}`,
+    //   }
+    // case '/info':
+    //   return {
+    //     title: `${t('Goosebumps Info & Analytics')}`,
+    //     description: 'View statistics for Goosebumps exchanges.',
+    //   }
+    // case '/info/pools':
+    //   return {
+    //     title: `${t('Goosebumps Info & Analytics')}`,
+    //     description: 'View statistics for Goosebumps exchanges.',
+    //   }
+    // case '/info/tokens':
+    //   return {
+    //     title: `${t('Goosebumps Info & Analytics')}`,
+    //     description: 'View statistics for Goosebumps exchanges.',
+    //   }
+    // case '/nfts':
+    //   return {
+    //     title: `${t('Goosebumps')}`,
+    //   }
+    // case '/nfts/collections':
+    //   return {
+    //     title: `${t('Goosebumps')}`,
+    //   }
+    // case '/nfts/activity':
+    //   return {
+    //     title: `${t('Goosebumps')}`,
+    //   }
+    // case '/nfts/profile':
+    //   return {
+    //     title: `${t('Goosebumps')}`,
+    //   }
+    // case '/pancake-squad':
+    //   return {
+    //     title: `${t('Goosebumps')}`,
+    //   }
     default:
       return null
   }

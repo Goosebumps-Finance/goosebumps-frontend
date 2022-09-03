@@ -138,9 +138,9 @@ const Farms: React.FC = () => {
     }))
   }, [])
 
-  useEffect(() => {
-    console.log("Farm:", network);
-  }, [network])
+  // useEffect(() => {
+  //   console.log("Farm:", network);
+  // }, [network])
 
   // const isArchived = pathname.includes('archived')
   // const isInactive = pathname.includes('history')

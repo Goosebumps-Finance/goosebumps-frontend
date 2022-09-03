@@ -53,3 +53,5 @@ export const MAINNET_RPC = process.env.REACT_APP_MAINNET_RPC_URL
 export const TESTNET_RPC = process.env.REACT_APP_TESTNET_RPC_URL
 export const ETHEREUM_RPC = process.env.REACT_APP_ETHEREUM_RPC_URL
 export const POLYGON_RPC = process.env.REACT_APP_POLYGON_RPC_URL
+
+export const SWAP_FEE_0X = process.env.REACT_APP_SWAP_FEE_0X

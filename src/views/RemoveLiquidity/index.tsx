@@ -113,8 +113,15 @@ export default function RemoveLiquidity({
       { name: 'chainId', type: 'uint256' },
       { name: 'verifyingContract', type: 'address' },
     ]
+    // const domain = {
+    //   name: 'Goosebumps LPs',
+    //   version: '1',
+    //   chainId,
+    //   verifyingContract: pair.liquidityToken.address,
+    // }
+    // v1 DEX
     const domain = {
-      name: 'Goosebumps LPs',
+      name: 'GooseBumps LPs',
       version: '1',
       chainId,
       verifyingContract: pair.liquidityToken.address,

@@ -34,7 +34,7 @@ import Column, { AutoColumn } from '../../components/Layout/Column'
 import ConfirmSwapModal from './components/ConfirmSwapModal'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import { AutoRow, RowBetween } from '../../components/Layout/Row'
-import AdvancedSwapDetailsDropdown from './components/AdvancedSwapDetailsDropdown'
+import AdvancedSwapDetailsDropdown, { AdvancedSwap0xDetailsDropdown } from './components/AdvancedSwapDetailsDropdown'
 import confirmPriceImpactWithoutFee from './components/confirmPriceImpactWithoutFee'
 import { ArrowWrapper, SwapCallbackError, Wrapper } from './components/styleds'
 import TradePrice from './components/TradePrice'
@@ -760,7 +760,10 @@ export default function Swap({ history }: RouteComponentProps) {
                 </Wrapper>
               </AppBody>
               {!swapIsUnsupported ? (
-                trade && <AdvancedSwapDetailsDropdown trade={trade} />
+                trade ? <AdvancedSwapDetailsDropdown trade={trade} />
+                : is0xSwap && !isFetching && zxResponse && !zxResponse.fetchError && (
+                  <AdvancedSwap0xDetailsDropdown response={zxResponse} />
+                ) 
               ) : (
                 <UnsupportedCurrencyFooter currencies={[currencies.INPUT, currencies.OUTPUT]} />
               )}

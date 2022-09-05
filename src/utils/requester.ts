@@ -1,7 +1,8 @@
-import { BigNumber } from "@ethersproject/bignumber";
-import { ChainId } from "@goosebumps/zx-sdk";
+import { BigNumber } from "@ethersproject/bignumber"
+import { ChainId } from "@goosebumps/zx-sdk"
 import { SWAP_FEE_0X } from 'config'
-import { ZxFetchResult } from "config/constants/types";
+import { ZxFetchResult } from 'config/constants/types'
+import getGasPrice from './getGasPrice'
 
 export const requestUrls = {
   [ChainId.MAINNET]: "https://bsc.api.0x.org/",
@@ -57,6 +58,7 @@ export async function zxTradeExactIn(
       buyToken: buyTokenAddress,
       sellAmount: sellTokenAmount.mul(10000 - SWAP_FEE_0X).div(10000),
       slippagePercentage: slippage / 10000,
+      gasPrice: getGasPrice(),
     });
     // console.log("zxTradeExactIn", response)
   } catch (err) {
@@ -114,7 +116,8 @@ export async function zxTradeExactOut(
       sellToken: sellTokenAddress,
       buyToken: buyTokenAddress,
       buyAmount: buyTokenAmount,
-      slippagePercentage: slippage / 10000
+      slippagePercentage: slippage / 10000,
+      gasPrice: getGasPrice(),
     });
     // console.log("zxTradeExactOut", response)
   } catch (err) {

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { parseUnits } from '@ethersproject/units'
 import styled from 'styled-components'
-import { CurrencyAmount, JSBI, Token, Trade } from '@goosebumps/zx-sdk'
+import { CurrencyAmount, JSBI, Token, Trade, Price } from '@goosebumps/zx-sdk'
 import {
   Button,
   Text,
@@ -564,6 +564,16 @@ export default function Swap({ history }: RouteComponentProps) {
                             />
                           </RowBetween>
                         )}
+                        {is0xSwap && Boolean(zxResponse) && (
+                          <RowBetween align="center">
+                            <Label>{t('Price')}</Label>
+                            <TradePrice
+                              price={new Price(currencies[Field.INPUT], currencies[Field.OUTPUT], zxResponse.sellAmount, zxResponse.buyAmount)}
+                              showInverted={showInverted}
+                              setShowInverted={setShowInverted}
+                            />
+                          </RowBetween>
+                        )}
                         {/* allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && */ (
                           <RowBetween align="center">
                             <Label>{t('Slippage Tolerance')}</Label>
@@ -761,9 +771,9 @@ export default function Swap({ history }: RouteComponentProps) {
               </AppBody>
               {!swapIsUnsupported ? (
                 trade ? <AdvancedSwapDetailsDropdown trade={trade} />
-                : is0xSwap && !isFetching && zxResponse && !zxResponse.fetchError && (
-                  <AdvancedSwap0xDetailsDropdown response={zxResponse} />
-                ) 
+                  : is0xSwap && !isFetching && zxResponse && !zxResponse.fetchError && (
+                    <AdvancedSwap0xDetailsDropdown response={zxResponse} />
+                  )
               ) : (
                 <UnsupportedCurrencyFooter currencies={[currencies.INPUT, currencies.OUTPUT]} />
               )}

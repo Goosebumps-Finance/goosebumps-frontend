@@ -21,6 +21,13 @@ export const ROUTER_ADDRESS: Address = {
   [ChainId.ETHEREUM]: "0xd86D8f65384D4EeA2b4440acc0C4C03048106e58" // TODO prince
 }
 
+export const MANAGE_ADDRESS: Address = {
+  [ChainId.MAINNET]: "0x02662D594f8E716D0B3EB9Bc7E7B5B03b3b8dD60",
+  [ChainId.TESTNET]: "0xD86f5faE6247Cb13829Bc378484010d2Ce3D8872", // TODO prince
+  [ChainId.POLYGON]: "0xd86D8f65384D4EeA2b4440acc0C4C03048106e58", // TODO prince
+  [ChainId.ETHEREUM]: "0xd86D8f65384D4EeA2b4440acc0C4C03048106e58" // TODO prince
+}
+
 // export const BASE_INIT_CODE_HASH = "0xfd7c21b4931ba4a1259e12228dbe60d2ea8adbf05782d6ba03569e6e0f2cd961";
 export const BASE_INIT_CODE_HASH: { [chainId in ChainId]: string } = {
   [ChainId.MAINNET]: "0x2f99e4e5d90ec174df09a4e89fcfd61ab68cd5c396b9c26f95cf6ec2a7b44712",

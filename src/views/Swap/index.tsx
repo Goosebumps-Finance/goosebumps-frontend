@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { parseUnits } from '@ethersproject/units'
 import styled from 'styled-components'
 import { CurrencyAmount, JSBI, Token, Trade } from '@goosebumps/zx-sdk'
 import {
@@ -23,8 +24,10 @@ import { setNetworkInfo } from 'state/home'
 
 import { useTranslation } from 'contexts/Localization'
 import SwapWarningTokens from 'config/constants/swapWarningTokens'
+import { ZxFetchResult } from "config/constants/types";
 // import { usingDifferentFactories, getFactoryNameByPair } from 'utils/factories'
 // import isSupportedChainId from 'utils/isSupportedChainId'
+import { zxTradeExactIn, zxTradeExactOut } from 'utils/requester'
 import AddressInputPanel from './components/AddressInputPanel'
 import { GreyCard } from '../../components/Card'
 import Column, { AutoColumn } from '../../components/Layout/Column'
@@ -43,7 +46,7 @@ import ConnectWalletButton from '../../components/ConnectWalletButton'
 // import { /* INITIAL_ALLOWED_SLIPPAGE, */ BASE_FACTORY_ADDRESS } from '../../config/constants'
 import useActiveWeb3React from '../../hooks/useActiveWeb3React'
 import { useCurrency, useAllTokens } from '../../hooks/Tokens'
-import { ApprovalState, useApproveCallbackFromTrade } from '../../hooks/useApproveCallback'
+import { ApprovalState, useApproveCallbackFromTrade, useApprove0xCallbackFromTrade } from '../../hooks/useApproveCallback'
 import { useSwapCallback } from '../../hooks/useSwapCallback'
 import useWrapCallback, { WrapType } from '../../hooks/useWrapCallback'
 import { Field } from '../../state/swap/actions'
@@ -52,7 +55,8 @@ import {
   useDerivedSwapInfo,
   useSwapActionHandlers,
   useSwapState,
-  // useSingleTokenSwapInfo,
+  // useSingleTokenSwapInfo,,
+  tryParseAmountFromBN,
 } from '../../state/swap/hooks'
 import {
   useExpertModeManager,
@@ -101,6 +105,10 @@ export default function Swap({ history }: RouteComponentProps) {
   const [isChartExpanded, setIsChartExpanded] = useState(false)
   const [userChartPreference, setUserChartPreference] = useExchangeChartManager(isMobile)
   const [isChartDisplayed, setIsChartDisplayed] = useState(userChartPreference)
+  // 0x Swap
+  const [is0xSwap, setIs0xSwap] = useState(false)
+  const [zxResponse, setZxResponse] = useState<ZxFetchResult>(null)
+  const [isFetching, setIsFetching] = useState(false)
 
   const dispatch = useDispatch();
   const { network } = useSelector((state: State) => state.home)
@@ -131,7 +139,7 @@ export default function Swap({ history }: RouteComponentProps) {
       return !(token.address in defaultTokens)
     })
 
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
 
   // for expert mode
   const [isExpertMode] = useExpertModeManager()
@@ -151,18 +159,20 @@ export default function Swap({ history }: RouteComponentProps) {
   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE
   const trade = showWrap ? undefined : v2Trade
 
-  // useEffect(() => {
-  //   console.log("trade: ", trade)
-  // }, [trade])
-
   const parsedAmounts = showWrap
     ? {
       [Field.INPUT]: parsedAmount,
       [Field.OUTPUT]: parsedAmount,
     }
     : {
-      [Field.INPUT]: independentField === Field.INPUT ? parsedAmount : trade?.inputAmount,
-      [Field.OUTPUT]: independentField === Field.OUTPUT ? parsedAmount : trade?.outputAmount,
+      [Field.INPUT]:
+        independentField === Field.INPUT ?
+          parsedAmount :
+          is0xSwap && !isFetching && zxResponse && !zxResponse.fetchError ? tryParseAmountFromBN(zxResponse.sellAmount, currencies[Field.INPUT]) : trade?.inputAmount,
+      [Field.OUTPUT]:
+        independentField === Field.OUTPUT ?
+          parsedAmount :
+          is0xSwap && !isFetching && zxResponse && !zxResponse.fetchError ? tryParseAmountFromBN(zxResponse.buyAmount, currencies[Field.OUTPUT]) : trade?.outputAmount,
     }
 
   const { onSwitchTokens, onCurrencySelection, onUserInput, onChangeRecipient } = useSwapActionHandlers()
@@ -221,8 +231,12 @@ export default function Swap({ history }: RouteComponentProps) {
   // check whether the user has approved the router on the input token
   const [approval, approveCallback] = useApproveCallbackFromTrade(trade, allowedSlippage)
 
+  const [approval0x, approve0xCallback] = useApprove0xCallbackFromTrade(parsedAmounts[Field.INPUT])
+
   // check if user has gone through approval process, used to show two step buttons, reset on token change
   const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
+  const [approval0xSubmitted, setApproval0xSubmitted] = useState<boolean>(false)
+  const [is0xSwapping, setIs0xSwapping] = useState<boolean>(false)
 
   // mark when a user has submitted an approval, reset onTokenSelection for input field
   useEffect(() => {
@@ -230,6 +244,13 @@ export default function Swap({ history }: RouteComponentProps) {
       setApprovalSubmitted(true)
     }
   }, [approval, approvalSubmitted])
+
+  // mark when a user has submitted an approval0x, reset onTokenSelection for input field
+  useEffect(() => {
+    if (approval0x === ApprovalState.PENDING) {
+      setApproval0xSubmitted(true)
+    }
+  }, [approval0x, approval0xSubmitted])
 
   const maxAmountInput: CurrencyAmount | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
   const atMaxAmountInput = Boolean(maxAmountInput && parsedAmounts[Field.INPUT]?.equalTo(maxAmountInput))
@@ -263,6 +284,28 @@ export default function Swap({ history }: RouteComponentProps) {
       })
   }, [priceImpactWithoutFee, swapCallback, tradeToConfirm, t])
 
+  const handle0xSwap = useCallback(() => {
+    (async () => {
+      setIs0xSwapping(true)
+      let response = await zxTradeExactIn(
+        chainId,
+        currencies.INPUT instanceof Token ? currencies.INPUT.address : currencies.INPUT.name,
+        currencies.OUTPUT instanceof Token ? currencies.OUTPUT.address : currencies.OUTPUT.name,
+        parseUnits(typedValue, currencies[Field.INPUT].decimals),
+        allowedSlippage
+      )
+      response = await zxTradeExactOut(
+        chainId,
+        currencies.INPUT instanceof Token ? currencies.INPUT.address : currencies.INPUT.name,
+        currencies.OUTPUT instanceof Token ? currencies.OUTPUT.address : currencies.OUTPUT.name,
+        parseUnits(typedValue, currencies[Field.OUTPUT].decimals),
+        allowedSlippage
+      )
+      console.log("handle0xSwap end: ", response)
+      setIs0xSwapping(false)
+    })()
+  }, [is0xSwap, zxResponse])
+
   // errors
   const [showInverted, setShowInverted] = useState<boolean>(false)
 
@@ -277,6 +320,12 @@ export default function Swap({ history }: RouteComponentProps) {
       approval === ApprovalState.PENDING ||
       (approvalSubmitted && approval === ApprovalState.APPROVED)) &&
     !(priceImpactSeverity > 3 && !isExpertMode)
+
+  const showApprove0xFlow =
+    zxResponse && !zxResponse.fetchError &&
+    (approval0x === ApprovalState.NOT_APPROVED ||
+      approval0x === ApprovalState.PENDING ||
+      (approval0xSubmitted && approval0x === ApprovalState.APPROVED))
 
   const handleConfirmDismiss = useCallback(() => {
     setSwapState({ tradeToConfirm, attemptingTxn, swapErrorMessage, txHash })
@@ -309,9 +358,56 @@ export default function Swap({ history }: RouteComponentProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [swapWarningCurrency])
 
+  useEffect(() => {
+    // console.log("Swap noRoute, userHasSpecifiedInputOutput: ", noRoute, userHasSpecifiedInputOutput)
+    if (noRoute && userHasSpecifiedInputOutput) {
+      // console.log("enalble 0x swap")
+      setIs0xSwap(true)
+    } else {
+      // console.log("disable 0x swap")
+      setIs0xSwap(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [noRoute, userHasSpecifiedInputOutput])
+
+  useEffect(() => {
+    (async () => {
+      let response: ZxFetchResult = null
+      console.log("independentField, is0xSwap, parsedAmount: pass", independentField, is0xSwap, typedValue)
+      if (is0xSwap) {
+        setIsFetching(true)
+        // console.log("independentField, is0xSwap, parsedAmount: ", independentField, is0xSwap, typedValue, currencies, allowedSlippage)
+        if (independentField === Field.INPUT) {
+          // console.log("independentField INPUT, is0xSwap, parsedAmount: ", response)
+          response = await zxTradeExactIn(
+            chainId,
+            currencies.INPUT instanceof Token ? currencies.INPUT.address : currencies.INPUT.name,
+            currencies.OUTPUT instanceof Token ? currencies.OUTPUT.address : currencies.OUTPUT.name,
+            parseUnits(typedValue, currencies[Field.INPUT].decimals),
+            allowedSlippage
+          )
+        } else if (independentField === Field.OUTPUT) {
+          // console.log("independentField OUTPUT, is0xSwap, parsedAmount: ", response)
+          response = await zxTradeExactOut(
+            chainId,
+            currencies.INPUT instanceof Token ? currencies.INPUT.address : currencies.INPUT.name,
+            currencies.OUTPUT instanceof Token ? currencies.OUTPUT.address : currencies.OUTPUT.name,
+            parseUnits(typedValue, currencies[Field.OUTPUT].decimals),
+            allowedSlippage
+          )
+        }
+        setIsFetching(false)
+        console.log("independentField, is0xSwap, parsedAmount: ", response)
+      }
+      setZxResponse(response)
+    })()
+  }, [independentField, is0xSwap, typedValue])
+
   const handleInputSelect = useCallback(
     (inputCurrency) => {
       setApprovalSubmitted(false) // reset 2 step UI for approvals
+      setApproval0xSubmitted(false) // reset 2 step UI for approvals
+      setIs0xSwapping(false)
       onCurrencySelection(Field.INPUT, inputCurrency)
       const showSwapWarning = shouldShowSwapWarning(inputCurrency)
       if (showSwapWarning) {
@@ -320,7 +416,7 @@ export default function Swap({ history }: RouteComponentProps) {
         setSwapWarningCurrency(null)
       }
     },
-    [onCurrencySelection, setApprovalSubmitted]
+    [onCurrencySelection, setApprovalSubmitted, setApproval0xSubmitted, setIs0xSwapping]
   )
 
   const handleMaxInput = useCallback(() => {
@@ -410,6 +506,8 @@ export default function Swap({ history }: RouteComponentProps) {
                           scale="sm"
                           onClick={() => {
                             setApprovalSubmitted(false) // reset 2 step UI for approvals
+                            setApproval0xSubmitted(false) // reset 2 step UI for approvals
+                            setIs0xSwapping(false)
                             onSwitchTokens()
                           }}
                         >
@@ -489,6 +587,80 @@ export default function Swap({ history }: RouteComponentProps) {
                         {wrapInputError ??
                           (wrapType === WrapType.WRAP ? 'Wrap' : wrapType === WrapType.UNWRAP ? 'Unwrap' : null)}
                       </Button>
+                    ) : is0xSwap ? (
+                      isFetching || !zxResponse ? (
+                        <GreyCard style={{ textAlign: 'center' }}>
+                          <AutoRow gap="6px" justify="center">
+                            {t('Please wait')} <CircleLoader stroke="white" />
+                          </AutoRow>
+                        </GreyCard>
+                      ) : zxResponse.fetchError ? (
+                        <GreyCard style={{ textAlign: 'center' }}>
+                          <Text color="textSubtle" mb="4px">
+                            {zxResponse.fetchError}
+                          </Text>
+                        </GreyCard>
+                      ) : showApprove0xFlow ? (
+                        <RowBetween>
+                          <Button
+                            variant={approval0x === ApprovalState.APPROVED ? 'success' : 'primary'}
+                            onClick={approve0xCallback}
+                            disabled={approval0x !== ApprovalState.NOT_APPROVED || approval0xSubmitted}
+                            width="48%"
+                          >
+                            {approval0x === ApprovalState.PENDING ? (
+                              <AutoRow gap="6px" justify="center">
+                                {t('Enabling')} <CircleLoader stroke="white" />
+                              </AutoRow>
+                            ) : approval0xSubmitted && approval0x === ApprovalState.APPROVED ? (
+                              t('Enabled')
+                            ) : (
+                              t('Enable %asset%', { asset: currencies[Field.INPUT]?.symbol ?? '' })
+                            )}
+                          </Button>
+                          <Button
+                            variant='primary'
+                            onClick={handle0xSwap}
+                            width="48%"
+                            id="swap-button"
+                            disabled={
+                              isFetching ||
+                              !zxResponse ||
+                              zxResponse.fetchError !== null ||
+                              approval0x !== ApprovalState.APPROVED ||
+                              is0xSwapping
+                            }
+                          >
+                            {is0xSwapping ? (
+                              <AutoRow gap="6px" justify="center">
+                                {t('Swapping on 0x API')} <CircleLoader stroke="white" />
+                              </AutoRow>
+                            ) :
+                              t('Swap on 0x API')}
+                          </Button>
+                        </RowBetween>
+                      ) : (
+                        <Button
+                          variant='primary'
+                          onClick={handle0xSwap}
+                          width="100%"
+                          id="swap-button"
+                          disabled={
+                            isFetching ||
+                            !zxResponse ||
+                            zxResponse.fetchError !== null ||
+                            approval0x !== ApprovalState.APPROVED ||
+                            is0xSwapping
+                          }
+                        >
+                          {is0xSwapping ? (
+                            <AutoRow gap="6px" justify="center">
+                              {t('Swapping on 0x API')} <CircleLoader stroke="white" />
+                            </AutoRow>
+                          ) :
+                            t('Swap on 0x API')}
+                        </Button>
+                      )
                     ) : noRoute && userHasSpecifiedInputOutput ? (
                       <GreyCard style={{ textAlign: 'center' }}>
                         <Text color="textSubtle" mb="4px">

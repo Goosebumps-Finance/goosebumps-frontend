@@ -710,11 +710,12 @@ export default function Swap({ history }: RouteComponentProps) {
                             )}
                           </Button>
                           <Button
-                            variant={is0xPriceImpactTooHigh ? 'danger' : 'primary'}
+                            variant={isValid && is0xPriceImpactTooHigh ? 'danger' : 'primary'}
                             onClick={handle0xSwap}
                             width="48%"
                             id="swap-button"
                             disabled={
+                              !isValid ||
                               isFetching ||
                               !zxResponse ||
                               zxResponse.fetchError !== null ||
@@ -723,7 +724,9 @@ export default function Swap({ history }: RouteComponentProps) {
                               (!isExpertMode && is0xPriceImpactTooHigh)
                             }
                             style={{
-                              background: (isFetching ||
+                              background: (
+                                !isValid ||
+                                isFetching ||
                                 !zxResponse ||
                                 zxResponse.fetchError !== null ||
                                 approval0x !== ApprovalState.APPROVED ||
@@ -745,11 +748,12 @@ export default function Swap({ history }: RouteComponentProps) {
                         </RowBetween>
                       ) : (
                         <Button
-                          variant={is0xPriceImpactTooHigh && !swap0xCallbackError ? 'danger' : 'primary'}
+                          variant={isValid && is0xPriceImpactTooHigh && !swap0xCallbackError ? 'danger' : 'primary'}
                           onClick={handle0xSwap}
                           width="100%"
                           id="swap-button"
                           disabled={
+                            !isValid ||
                             isFetching ||
                             !zxResponse ||
                             zxResponse.fetchError !== null ||
@@ -759,7 +763,9 @@ export default function Swap({ history }: RouteComponentProps) {
                             !!swap0xCallbackError
                           }
                           style={{
-                            background: (isFetching ||
+                            background: (
+                              !isValid ||
+                              isFetching ||
                               !zxResponse ||
                               zxResponse.fetchError !== null ||
                               approval0x !== ApprovalState.APPROVED ||

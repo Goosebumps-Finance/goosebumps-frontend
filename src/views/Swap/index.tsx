@@ -362,9 +362,11 @@ export default function Swap({ history }: RouteComponentProps) {
       swap0xCallback()
         .then((hash) => {
           setSwap0xState({ attempting0xTxn: false, zxResponseToConfirm, swap0xErrorMessage: undefined, txHash0x: hash })
+          console.log("handle0xSwap hash:", hash)
         })
         .catch((error) => {
           setSwap0xState({ attempting0xTxn: false, zxResponseToConfirm, swap0xErrorMessage: error.message, txHash0x: undefined })
+          console.log("handle0xSwap error:", error)
         })
 
       setIs0xSwapping(false)

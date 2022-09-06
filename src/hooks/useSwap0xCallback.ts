@@ -45,7 +45,7 @@ export function useSwap0xCallback(
 
   const recipient = recipientAddressOrName === null ? account : recipientAddressOrName
   const deadline = useTransactionDeadline()
-  const manageContract: Contract | null = getManageContract(chainId, library, account)
+  const contract: Contract | null = getManageContract(chainId, library, account)
   const {
     [Field.INPUT]: { currencyId: inputCurrencyId },
     [Field.OUTPUT]: { currencyId: outputCurrencyId },
@@ -56,7 +56,7 @@ export function useSwap0xCallback(
 
   return useMemo(() => {
     console.log("useSwap0xCallback useMemo: pass")
-    if (!manageContract || !zxResponse || !inputCurrency || !outputCurrency || !library || !account || !isSupportedChainId(chainId)) {
+    if (!contract || !zxResponse || !inputCurrency || !outputCurrency || !library || !account || !isSupportedChainId(chainId)) {
       return { state: SwapCallbackState.INVALID, callback: null, error: 'Missing dependencies' }
     }
     if (!recipient) {
@@ -70,24 +70,27 @@ export function useSwap0xCallback(
       state: SwapCallbackState.VALID,
       callback: async function onSwap(): Promise<string> {
         console.log("useSwap0xCallback useMemo onSwap: pass")
-        const swapCall: SwapCall = null;
-        swapCall.contract = manageContract
+        let methodName: string = null
+        let args: (string | string[])[] = null
+        let value: string = null
+
+        console.log("useSwap0xCallback useMemo onSwap: pass1")
 
         if (inputCurrency === ETHER) {
           console.log("INPUT ETHER")
-          swapCall.parameters.methodName = 'swapExactETHForTokensOn0x'
-          swapCall.parameters.args = [
+          methodName = 'swapExactETHForTokensOn0x'
+          args = [
             zxResponse.response.buyTokenAddress,
             zxResponse.response.to,
             zxResponse.response.data,
             recipient,
             deadline
           ]
-          swapCall.parameters.value = zxResponse.sellAmount
+          value = zxResponse.sellAmount.toString()
         } else if (outputCurrency === ETHER) {
           console.log("OUTPUT ETHER")
-          swapCall.parameters.methodName = 'swapExactTokenForETHOn0x'
-          swapCall.parameters.args = [
+          methodName = 'swapExactTokenForETHOn0x'
+          args = [
             zxResponse.response.sellTokenAddress,
             zxResponse.sellAmount,
             zxResponse.response.allowanceTarget,
@@ -98,8 +101,8 @@ export function useSwap0xCallback(
           ]
         } else {
           console.log("INPUT OUTPUT")
-          swapCall.parameters.methodName = 'swapExactTokensForTokensOn0x'
-          swapCall.parameters.args = [
+          methodName = 'swapExactTokensForTokensOn0x'
+          args = [
             zxResponse.response.sellTokenAddress,
             zxResponse.response.buyTokenAddress,
             zxResponse.sellAmount,
@@ -111,12 +114,13 @@ export function useSwap0xCallback(
           ]
         }
 
-        console.log("swapCall: ", swapCall)
+        console.log("swapCall: ", methodName, args, value, contract)
 
-        const {
+        const swapCall: SwapCall = {
           parameters: { methodName, args, value },
           contract,
-        } = swapCall
+        }
+
         const options = !value || isZero(value) ? {} : { value }
 
         const estimatedGasAndError: Estimated0xSwapCall = await contract.estimateGas[methodName](...args, options)
@@ -140,6 +144,8 @@ export function useSwap0xCallback(
                 return { gasEstimate: null, error: new Error(errorMessage) }
               })
           })
+
+        console.log("estimatedGasAndError: ", estimatedGasAndError)
 
         if (estimatedGasAndError.error) {
           throw estimatedGasAndError.error

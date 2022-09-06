@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { parseUnits } from '@ethersproject/units'
 import styled from 'styled-components'
-import { CurrencyAmount, JSBI, Token, Trade, Price, ETHER } from '@goosebumps/zx-sdk'
+import { CurrencyAmount, JSBI, Token, Trade, Price } from '@goosebumps/zx-sdk'
 import {
   Button,
   Text,
@@ -48,6 +48,7 @@ import useActiveWeb3React from '../../hooks/useActiveWeb3React'
 import { useCurrency, useAllTokens } from '../../hooks/Tokens'
 import { ApprovalState, useApproveCallbackFromTrade, useApprove0xCallbackFromTrade } from '../../hooks/useApproveCallback'
 import { useSwapCallback } from '../../hooks/useSwapCallback'
+import { useSwap0xCallback } from '../../hooks/useSwap0xCallback'
 import useWrapCallback, { WrapType } from '../../hooks/useWrapCallback'
 import { Field } from '../../state/swap/actions'
 import {
@@ -206,6 +207,18 @@ export default function Swap({ history }: RouteComponentProps) {
     txHash: undefined,
   })
 
+  const [{ zxResponseToConfirm, swap0xErrorMessage, attempting0xTxn, txHash0x }, setSwap0xState] = useState<{
+    zxResponseToConfirm: ZxFetchResult | undefined
+    attempting0xTxn: boolean
+    swap0xErrorMessage: string | undefined
+    txHash0x: string | undefined
+  }>({
+    zxResponseToConfirm: undefined,
+    attempting0xTxn: false,
+    swap0xErrorMessage: undefined,
+    txHash0x: undefined,
+  })
+
   const formattedAmounts = {
     [independentField]: typedValue,
     [dependentField]: showWrap
@@ -219,7 +232,7 @@ export default function Swap({ history }: RouteComponentProps) {
   )
   const noRoute = !route
 
-  // check if the pair is on the psi dex
+  // check if the pair is on the goosebumps dex
   // const notBaseFactory = isSupportedChainId(chainId) && route && route.pairs && route.pairs.length === 1 && route.pairs[0].factory !== BASE_FACTORY_ADDRESS[chainId];
   // const differentFactories = isSupportedChainId(chainId) && route && usingDifferentFactories(route);
   // const firstFactoryName = useMemo(() => {
@@ -271,7 +284,7 @@ export default function Swap({ history }: RouteComponentProps) {
 
   // the callback to execute the swap
   const { callback: swapCallback, error: swapCallbackError } = useSwapCallback(trade, allowedSlippage, recipient)
-  // const { callback: swapCallback, error: swapCallbackError } = useSwap0xCallback(trade, allowedSlippage, recipient)
+  const { callback: swap0xCallback, error: swap0xCallbackError } = useSwap0xCallback(zxResponse, currencies, recipient)
 
   const { priceImpactWithoutFee } = computeTradePriceBreakdown(trade)
 
@@ -302,6 +315,10 @@ export default function Swap({ history }: RouteComponentProps) {
   const handle0xSwap = useCallback(() => {
     (async () => {
       setIs0xSwapping(true)
+      if (!swap0xCallback) {
+        return
+      }
+
       const response = await zxTradeExactIn(
         chainId,
         currencies.INPUT instanceof Token ? currencies.INPUT.address : currencies.INPUT.name,
@@ -309,22 +326,42 @@ export default function Swap({ history }: RouteComponentProps) {
         parseUnits(typedValue, currencies[Field.INPUT].decimals),
         allowedSlippage
       )
-      if (response.fetchError) return;
+
+      if (response.fetchError) {
+        setSwap0xState({
+          zxResponseToConfirm: undefined,
+          attempting0xTxn: false,
+          swap0xErrorMessage: response.fetchError,
+          txHash0x: undefined,
+        })
+        return;
+      }
+
       const priceImpact = parseFloat(response?.response?.estimatedPriceImpact)
-      if (priceImpact && priceImpact * 100 > allowedSlippage)
+      if (!isExpertMode && priceImpact && priceImpact * 100 > allowedSlippage) {
+        setSwap0xState({
+          zxResponseToConfirm: undefined,
+          attempting0xTxn: false,
+          swap0xErrorMessage: 'Price Impact High on 0x API',
+          txHash0x: undefined,
+        })
+        return;
+      }
 
-        if (currencies[Field.INPUT] === ETHER) {
-          console.log("INPUT ETHER")
+      setZxResponse(response)
+      setSwap0xState({ attempting0xTxn: true, zxResponseToConfirm, swap0xErrorMessage: undefined, txHash0x: undefined })
 
-        } else if (currencies[Field.OUTPUT] === ETHER) {
-          console.log("OUTPUT ETHER")
-        } else {
-          console.log("normal")
-        }
-      console.log("handle0xSwap end: ", response)
+      swap0xCallback()
+        .then((hash) => {
+          setSwap0xState({ attempting0xTxn: false, zxResponseToConfirm, swap0xErrorMessage: undefined, txHash0x: hash })
+        })
+        .catch((error) => {
+          setSwap0xState({ attempting0xTxn: false, zxResponseToConfirm, swap0xErrorMessage: error.message, txHash0x: undefined })
+        })
+
       setIs0xSwapping(false)
     })()
-  }, [is0xSwap, zxResponse, zxTradeExactIn])
+  }, [is0xSwap, zxResponse, zxTradeExactIn, isExpertMode])
 
   // errors
   const [showInverted, setShowInverted] = useState<boolean>(false)
@@ -428,6 +465,18 @@ export default function Swap({ history }: RouteComponentProps) {
       setApprovalSubmitted(false) // reset 2 step UI for approvals
       setApproval0xSubmitted(false) // reset 2 step UI for approvals
       setIs0xSwapping(false)
+      setSwapState({
+        tradeToConfirm: undefined,
+        attemptingTxn: false,
+        swapErrorMessage: undefined,
+        txHash: undefined,
+      })
+      setSwap0xState({
+        zxResponseToConfirm: undefined,
+        attempting0xTxn: false,
+        swap0xErrorMessage: undefined,
+        txHash0x: undefined,
+      })
       onCurrencySelection(Field.INPUT, inputCurrency)
       const showSwapWarning = shouldShowSwapWarning(inputCurrency)
       if (showSwapWarning) {
@@ -436,7 +485,7 @@ export default function Swap({ history }: RouteComponentProps) {
         setSwapWarningCurrency(null)
       }
     },
-    [onCurrencySelection, setApprovalSubmitted, setApproval0xSubmitted, setIs0xSwapping]
+    [onCurrencySelection, setApprovalSubmitted, setApproval0xSubmitted, setIs0xSwapping, setSwapState, setSwap0xState]
   )
 
   const handleMaxInput = useCallback(() => {
@@ -528,6 +577,18 @@ export default function Swap({ history }: RouteComponentProps) {
                             setApprovalSubmitted(false) // reset 2 step UI for approvals
                             setApproval0xSubmitted(false) // reset 2 step UI for approvals
                             setIs0xSwapping(false)
+                            setSwapState({
+                              tradeToConfirm: undefined,
+                              attemptingTxn: false,
+                              swapErrorMessage: undefined,
+                              txHash: undefined,
+                            })
+                            setSwap0xState({
+                              zxResponseToConfirm: undefined,
+                              attempting0xTxn: false,
+                              swap0xErrorMessage: undefined,
+                              txHash0x: undefined,
+                            })
                             onSwitchTokens()
                           }}
                         >
@@ -661,6 +722,14 @@ export default function Swap({ history }: RouteComponentProps) {
                               is0xSwapping ||
                               (!isExpertMode && is0xPriceImpactTooHigh)
                             }
+                            style={{
+                              background: (isFetching ||
+                                !zxResponse ||
+                                zxResponse.fetchError !== null ||
+                                approval0x !== ApprovalState.APPROVED ||
+                                is0xSwapping ||
+                                (!isExpertMode && is0xPriceImpactTooHigh)) ? "#26292e" : "#04c0d7"
+                            }} // #3c3742
                           >
                             {is0xSwapping ? (
                               <AutoRow gap="6px" justify="center">
@@ -676,7 +745,7 @@ export default function Swap({ history }: RouteComponentProps) {
                         </RowBetween>
                       ) : (
                         <Button
-                          variant={is0xPriceImpactTooHigh ? 'danger' : 'primary'}
+                          variant={is0xPriceImpactTooHigh && !swap0xCallbackError ? 'danger' : 'primary'}
                           onClick={handle0xSwap}
                           width="100%"
                           id="swap-button"
@@ -686,8 +755,18 @@ export default function Swap({ history }: RouteComponentProps) {
                             zxResponse.fetchError !== null ||
                             approval0x !== ApprovalState.APPROVED ||
                             is0xSwapping ||
-                            (!isExpertMode && is0xPriceImpactTooHigh)
+                            (!isExpertMode && is0xPriceImpactTooHigh) ||
+                            !!swap0xCallbackError
                           }
+                          style={{
+                            background: (isFetching ||
+                              !zxResponse ||
+                              zxResponse.fetchError !== null ||
+                              approval0x !== ApprovalState.APPROVED ||
+                              is0xSwapping ||
+                              (!isExpertMode && is0xPriceImpactTooHigh) ||
+                              !!swap0xCallbackError) ? "#26292e" : "#04c0d7"
+                          }} // #3c3742
                         >
                           {is0xSwapping ? (
                             <AutoRow gap="6px" justify="center">
@@ -796,6 +875,7 @@ export default function Swap({ history }: RouteComponentProps) {
                       </Column>
                     )}
                     {isExpertMode && swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
+                    {isExpertMode && swap0xErrorMessage ? <SwapCallbackError error={swap0xErrorMessage} /> : null}
                   </Box>
                 </Wrapper>
               </AppBody>

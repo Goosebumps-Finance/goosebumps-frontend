@@ -1,0 +1,180 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import { Contract } from '@ethersproject/contracts'
+import { SwapParameters, Currency, ETHER } from '@goosebumps/zx-sdk'
+import { Field } from 'state/swap/actions'
+import { useMemo } from 'react'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { useGasPrice } from 'state/user/hooks'
+import truncateHash from 'utils/truncateHash'
+import { ZxFetchResult } from 'config/constants/types'
+import isSupportedChainId from 'utils/isSupportedChainId'
+import { useTransactionAdder } from '../state/transactions/hooks'
+import { calculateGasMargin, getManageContract, isAddress } from '../utils'
+import isZero from '../utils/isZero'
+import useTransactionDeadline from './useTransactionDeadline'
+
+export enum SwapCallbackState {
+  INVALID,
+  LOADING,
+  VALID,
+}
+
+interface SwapCall {
+  contract: Contract
+  parameters: SwapParameters
+}
+
+interface Estimated0xSwapCall {
+  gasEstimate: BigNumber | null
+  error: Error | null
+}
+
+// returns a function that will execute a swap, if the parameters are all valid
+// and the user has approved the slippage adjusted input amount for the trade
+export function useSwap0xCallback(
+  zxResponse: ZxFetchResult | null | undefined, // trade to execute, required
+  currencies: { [field in Field]?: Currency },
+  recipientAddressOrName: string | null, // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
+): { state: SwapCallbackState; callback: null | (() => Promise<string>); error: string | null } {
+  console.log("useSwap0xCallback: pass")
+  const { account, chainId, library } = useActiveWeb3React()
+  const gasPrice = useGasPrice()
+
+  const addTransaction = useTransactionAdder()
+
+  const recipient = recipientAddressOrName === null ? account : recipientAddressOrName
+  const deadline = useTransactionDeadline()
+  const manageContract: Contract | null = getManageContract(chainId, library, account)
+
+  return useMemo(() => {
+    if (!manageContract || !zxResponse || !currencies || !library || !account || !isSupportedChainId(chainId)) {
+      return { state: SwapCallbackState.INVALID, callback: null, error: 'Missing dependencies' }
+    }
+    if (!recipient) {
+      if (recipientAddressOrName !== null) {
+        return { state: SwapCallbackState.INVALID, callback: null, error: 'Invalid recipient' }
+      }
+      return { state: SwapCallbackState.LOADING, callback: null, error: null }
+    }
+
+    return {
+      state: SwapCallbackState.VALID,
+      callback: async function onSwap(): Promise<string> {
+        const swapCall: SwapCall = null;
+        swapCall.contract = manageContract
+
+        if (currencies[Field.INPUT] === ETHER) {
+          console.log("INPUT ETHER")
+          swapCall.parameters.methodName = 'swapExactETHForTokensOn0x'
+          swapCall.parameters.args = [
+            zxResponse.response.buyTokenAddress,
+            zxResponse.response.to,
+            zxResponse.response.data,
+            recipient,
+            deadline
+          ]
+          swapCall.parameters.value = zxResponse.sellAmount
+        } else if (currencies[Field.OUTPUT] === ETHER) {
+          console.log("OUTPUT ETHER")
+          swapCall.parameters.methodName = 'swapExactTokenForETHOn0x'
+          swapCall.parameters.args = [
+            zxResponse.response.sellTokenAddress,
+            zxResponse.sellAmount,
+            zxResponse.response.allowanceTarget,
+            zxResponse.response.to,
+            zxResponse.response.data,
+            recipient,
+            deadline
+          ]
+        } else {
+          console.log("INPUT OUTPUT")
+          swapCall.parameters.methodName = 'swapExactTokensForTokensOn0x'
+          swapCall.parameters.args = [
+            zxResponse.response.sellTokenAddress,
+            zxResponse.response.buyTokenAddress,
+            zxResponse.sellAmount,
+            zxResponse.response.allowanceTarget,
+            zxResponse.response.to,
+            zxResponse.response.data,
+            recipient,
+            deadline
+          ]
+        }
+
+        console.log("swapCall: ", swapCall)
+
+        const {
+          parameters: { methodName, args, value },
+          contract,
+        } = swapCall
+        const options = !value || isZero(value) ? {} : { value }
+
+        const estimatedGasAndError: Estimated0xSwapCall = await contract.estimateGas[methodName](...args, options)
+          .then((gasEstimate) => {
+            return { gasEstimate, error: null }
+          })
+          .catch((gasError) => {
+            console.error('Gas estimate failed, trying eth_call to extract error', swapCall)
+
+            return contract.callStatic[methodName](...args, options)
+              .then((result) => {
+                console.error('Unexpected successful call after failed estimate gas', swapCall, gasError, result)
+                return { gasEstimate: null, error: new Error('Unexpected issue with estimating the gas. Please try again.') }
+              })
+              .catch((callError) => {
+                console.error('Call threw error', swapCall, callError)
+                const reason: string = callError.reason || callError.data?.message || callError.message
+                const errorMessage = `The transaction cannot succeed due to error: ${reason ?? 'Unknown error, check the logs'
+                  }.`
+
+                return { gasEstimate: null, error: new Error(errorMessage) }
+              })
+          })
+
+        if (estimatedGasAndError.error) {
+          throw estimatedGasAndError.error
+        } else if (!estimatedGasAndError.gasEstimate) {
+          throw new Error('Unexpected error. Please contact support: none of the calls threw an error')
+        }
+
+        return contract[methodName](...args, {
+          gasLimit: calculateGasMargin(estimatedGasAndError.gasEstimate),
+          gasPrice,
+          ...(value && !isZero(value) ? { value, from: account } : { from: account }),
+        })
+          .then((response: any) => {
+            const inputSymbol = currencies[Field.INPUT].symbol
+            const outputSymbol = currencies[Field.OUTPUT].symbol
+            const inputAmount = zxResponse.response.sellAmount.toSignificant(3)
+            const outputAmount = zxResponse.response.buyAmount.toSignificant(3)
+
+            const base = `Swap ${inputAmount} ${inputSymbol} for ${outputAmount} ${outputSymbol}`
+            const withRecipient =
+              recipient === account
+                ? base
+                : `${base} to ${recipientAddressOrName && isAddress(recipientAddressOrName)
+                  ? truncateHash(recipientAddressOrName)
+                  : recipientAddressOrName
+                }`
+
+            addTransaction(response, {
+              summary: withRecipient,
+            })
+
+            return response.hash
+          })
+          .catch((error: any) => {
+            // if the user rejected the tx, pass this along
+            if (error?.code === 4001) {
+              throw new Error('Transaction rejected.')
+            } else {
+              // otherwise, the error was unexpected and we need to convey that
+              console.error(`Swap failed`, error, methodName, args, value)
+              throw new Error(`Swap failed: ${error.message}`)
+            }
+          })
+      },
+      error: null,
+    }
+  }, [zxResponse, library, account, chainId, recipient, recipientAddressOrName, addTransaction, gasPrice])
+}

@@ -111,6 +111,7 @@ export default function Swap({ history }: RouteComponentProps) {
   const [zxResponse, setZxResponse] = useState<ZxFetchResult>(null)
   const [isFetching, setIsFetching] = useState(false)
   const [is0xPriceImpactTooHigh, setIs0xPriceImpactTooHigh] = useState(false)
+  const [is0xInsufficient, setIs0xInsufficient] = useState(false)
 
   const dispatch = useDispatch();
   const { network } = useSelector((state: State) => state.home)
@@ -274,8 +275,15 @@ export default function Swap({ history }: RouteComponentProps) {
       } else {
         setIs0xPriceImpactTooHigh(false)
       }
+
+      if (currencyBalances[Field.INPUT].lessThan(parsedAmounts[Field.INPUT])) {
+        setIs0xInsufficient(true)
+      } else {
+        setIs0xInsufficient(false)
+      }
     } else {
       setIs0xPriceImpactTooHigh(false)
+      setIs0xInsufficient(false)
     }
   }, [is0xSwap, zxResponse, allowedSlippage])
 
@@ -715,6 +723,7 @@ export default function Swap({ history }: RouteComponentProps) {
                             width="48%"
                             id="swap-button"
                             disabled={
+                              is0xInsufficient ||
                               !isValid ||
                               isFetching ||
                               !zxResponse ||
@@ -725,6 +734,7 @@ export default function Swap({ history }: RouteComponentProps) {
                             }
                             style={{
                               background: (
+                                is0xInsufficient ||
                                 !isValid ||
                                 isFetching ||
                                 !zxResponse ||
@@ -734,15 +744,19 @@ export default function Swap({ history }: RouteComponentProps) {
                                 (!isExpertMode && is0xPriceImpactTooHigh)) ? "#26292e" : "#04c0d7"
                             }} // #3c3742
                           >
-                            {is0xSwapping ? (
-                              <AutoRow gap="6px" justify="center">
-                                {t('Swapping on 0x API')} <CircleLoader stroke="white" />
-                              </AutoRow>
-                            ) : !is0xPriceImpactTooHigh
-                              ? t('Swap on 0x API')
-                              : isExpertMode
-                                ? t('Swap Anyway on 0x API')
-                                : t('Price Impact High on 0x API')
+                            {
+                              is0xInsufficient ?
+                                (t('Insufficient %symbol% balance', { symbol: currencies[Field.INPUT].symbol }))
+                                : swapInputError ||
+                                  is0xSwapping ? (
+                                  <AutoRow gap="6px" justify="center">
+                                    {t('Swapping on 0x API')} <CircleLoader stroke="white" />
+                                  </AutoRow>
+                                ) : !is0xPriceImpactTooHigh
+                                  ? t('Swap on 0x API')
+                                  : isExpertMode
+                                    ? t('Swap Anyway on 0x API')
+                                    : t('Price Impact High on 0x API')
                             }
                           </Button>
                         </RowBetween>
@@ -753,6 +767,7 @@ export default function Swap({ history }: RouteComponentProps) {
                           width="100%"
                           id="swap-button"
                           disabled={
+                            is0xInsufficient ||
                             !isValid ||
                             isFetching ||
                             !zxResponse ||
@@ -764,6 +779,7 @@ export default function Swap({ history }: RouteComponentProps) {
                           }
                           style={{
                             background: (
+                              is0xInsufficient ||
                               !isValid ||
                               isFetching ||
                               !zxResponse ||
@@ -774,15 +790,19 @@ export default function Swap({ history }: RouteComponentProps) {
                               !!swap0xCallbackError) ? "#26292e" : "#04c0d7"
                           }} // #3c3742
                         >
-                          {is0xSwapping ? (
-                            <AutoRow gap="6px" justify="center">
-                              {t('Swapping on 0x API')} <CircleLoader stroke="white" />
-                            </AutoRow>
-                          ) : !is0xPriceImpactTooHigh
-                            ? t('Swap on 0x API')
-                            : isExpertMode
-                              ? t('Swap Anyway on 0x API')
-                              : t('Price Impact High on 0x API')
+                          {
+                            is0xInsufficient ?
+                              (t('Insufficient %symbol% balance', { symbol: currencies[Field.INPUT].symbol }))
+                              : swapInputError ||
+                                is0xSwapping ? (
+                                <AutoRow gap="6px" justify="center">
+                                  {t('Swapping on 0x API')} <CircleLoader stroke="white" />
+                                </AutoRow>
+                              ) : !is0xPriceImpactTooHigh
+                                ? t('Swap on 0x API')
+                                : isExpertMode
+                                  ? t('Swap Anyway on 0x API')
+                                  : t('Price Impact High on 0x API')
                           }
                         </Button>
                       )

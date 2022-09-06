@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { parseUnits } from '@ethersproject/units'
 import styled from 'styled-components'
-import { CurrencyAmount, JSBI, Token, Trade, Price } from '@goosebumps/zx-sdk'
+import { CurrencyAmount, JSBI, Token, Trade, Price, ETHER } from '@goosebumps/zx-sdk'
 import {
   Button,
   Text,
@@ -109,6 +109,7 @@ export default function Swap({ history }: RouteComponentProps) {
   const [is0xSwap, setIs0xSwap] = useState(false)
   const [zxResponse, setZxResponse] = useState<ZxFetchResult>(null)
   const [isFetching, setIsFetching] = useState(false)
+  const [is0xPriceImpactTooHigh, setIs0xPriceImpactTooHigh] = useState(false)
 
   const dispatch = useDispatch();
   const { network } = useSelector((state: State) => state.home)
@@ -252,11 +253,25 @@ export default function Swap({ history }: RouteComponentProps) {
     }
   }, [approval0x, approval0xSubmitted])
 
+  useEffect(() => {
+    if (is0xSwap && zxResponse && !zxResponse.fetchError) {
+      const priceImpact = parseFloat(zxResponse?.response?.estimatedPriceImpact)
+      if (priceImpact && priceImpact * 100 > allowedSlippage) {
+        setIs0xPriceImpactTooHigh(true)
+      } else {
+        setIs0xPriceImpactTooHigh(false)
+      }
+    } else {
+      setIs0xPriceImpactTooHigh(false)
+    }
+  }, [is0xSwap, zxResponse, allowedSlippage])
+
   const maxAmountInput: CurrencyAmount | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
   const atMaxAmountInput = Boolean(maxAmountInput && parsedAmounts[Field.INPUT]?.equalTo(maxAmountInput))
 
   // the callback to execute the swap
   const { callback: swapCallback, error: swapCallbackError } = useSwapCallback(trade, allowedSlippage, recipient)
+  // const { callback: swapCallback, error: swapCallbackError } = useSwap0xCallback(trade, allowedSlippage, recipient)
 
   const { priceImpactWithoutFee } = computeTradePriceBreakdown(trade)
 
@@ -287,24 +302,29 @@ export default function Swap({ history }: RouteComponentProps) {
   const handle0xSwap = useCallback(() => {
     (async () => {
       setIs0xSwapping(true)
-      let response = await zxTradeExactIn(
+      const response = await zxTradeExactIn(
         chainId,
         currencies.INPUT instanceof Token ? currencies.INPUT.address : currencies.INPUT.name,
         currencies.OUTPUT instanceof Token ? currencies.OUTPUT.address : currencies.OUTPUT.name,
         parseUnits(typedValue, currencies[Field.INPUT].decimals),
         allowedSlippage
       )
-      response = await zxTradeExactOut(
-        chainId,
-        currencies.INPUT instanceof Token ? currencies.INPUT.address : currencies.INPUT.name,
-        currencies.OUTPUT instanceof Token ? currencies.OUTPUT.address : currencies.OUTPUT.name,
-        parseUnits(typedValue, currencies[Field.OUTPUT].decimals),
-        allowedSlippage
-      )
+      if (response.fetchError) return;
+      const priceImpact = parseFloat(response?.response?.estimatedPriceImpact)
+      if (priceImpact && priceImpact * 100 > allowedSlippage)
+
+        if (currencies[Field.INPUT] === ETHER) {
+          console.log("INPUT ETHER")
+
+        } else if (currencies[Field.OUTPUT] === ETHER) {
+          console.log("OUTPUT ETHER")
+        } else {
+          console.log("normal")
+        }
       console.log("handle0xSwap end: ", response)
       setIs0xSwapping(false)
     })()
-  }, [is0xSwap, zxResponse])
+  }, [is0xSwap, zxResponse, zxTradeExactIn])
 
   // errors
   const [showInverted, setShowInverted] = useState<boolean>(false)
@@ -629,7 +649,7 @@ export default function Swap({ history }: RouteComponentProps) {
                             )}
                           </Button>
                           <Button
-                            variant='primary'
+                            variant={is0xPriceImpactTooHigh ? 'danger' : 'primary'}
                             onClick={handle0xSwap}
                             width="48%"
                             id="swap-button"
@@ -638,20 +658,25 @@ export default function Swap({ history }: RouteComponentProps) {
                               !zxResponse ||
                               zxResponse.fetchError !== null ||
                               approval0x !== ApprovalState.APPROVED ||
-                              is0xSwapping
+                              is0xSwapping ||
+                              (!isExpertMode && is0xPriceImpactTooHigh)
                             }
                           >
                             {is0xSwapping ? (
                               <AutoRow gap="6px" justify="center">
                                 {t('Swapping on 0x API')} <CircleLoader stroke="white" />
                               </AutoRow>
-                            ) :
-                              t('Swap on 0x API')}
+                            ) : !is0xPriceImpactTooHigh
+                              ? t('Swap on 0x API')
+                              : isExpertMode
+                                ? t('Swap Anyway on 0x API')
+                                : t('Price Impact High on 0x API')
+                            }
                           </Button>
                         </RowBetween>
                       ) : (
                         <Button
-                          variant='primary'
+                          variant={is0xPriceImpactTooHigh ? 'danger' : 'primary'}
                           onClick={handle0xSwap}
                           width="100%"
                           id="swap-button"
@@ -660,15 +685,20 @@ export default function Swap({ history }: RouteComponentProps) {
                             !zxResponse ||
                             zxResponse.fetchError !== null ||
                             approval0x !== ApprovalState.APPROVED ||
-                            is0xSwapping
+                            is0xSwapping ||
+                            (!isExpertMode && is0xPriceImpactTooHigh)
                           }
                         >
                           {is0xSwapping ? (
                             <AutoRow gap="6px" justify="center">
                               {t('Swapping on 0x API')} <CircleLoader stroke="white" />
                             </AutoRow>
-                          ) :
-                            t('Swap on 0x API')}
+                          ) : !is0xPriceImpactTooHigh
+                            ? t('Swap on 0x API')
+                            : isExpertMode
+                              ? t('Swap Anyway on 0x API')
+                              : t('Price Impact High on 0x API')
+                          }
                         </Button>
                       )
                     ) : noRoute && userHasSpecifiedInputOutput ? (

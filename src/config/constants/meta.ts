@@ -4,7 +4,7 @@ import { PageMeta } from './types'
 export const DEFAULT_META: PageMeta = {
   title: 'Goosebumps',
   description:
-    'The most popular AMM on multi-chain by user count! Earn EMPIRE token!',
+    'Goosebumps powered by Empire Token is a fully decentralized exchange and portfolio tracker in one platform, integrated with a built-in IDO Launchpad.',
   image: 'https://goosebumps.finance/images/hero.png',
 }
 

@@ -37,7 +37,7 @@
         "@goosebumps/goosebumps-v1-aggregator-dex": "^1.0.0",
         "@goosebumps/zx-sdk": "^0.0.4",
         "@goosebumps/sdk": "^0.0.6",
-        "@goosebumps/uikit": "^0.0.10",
+        "@goosebumps/uikit": "^0.1.0",
         "@reduxjs/toolkit": "^1.5.0",
         "@sentry/react": "^6.15.0",
         "@sentry/tracing": "^6.15.0",

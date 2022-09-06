@@ -468,7 +468,7 @@ export default function Swap({ history }: RouteComponentProps) {
       }
       setZxResponse(response)
     })()
-  }, [independentField, is0xSwap, typedValue])
+  }, [independentField, is0xSwap, typedValue, allowedSlippage])
 
   const handleInputSelect = useCallback(
     (inputCurrency) => {

@@ -4,10 +4,12 @@ import { SwapParameters, Currency, ETHER } from '@goosebumps/zx-sdk'
 import { Field } from 'state/swap/actions'
 import { useMemo } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { useCurrency } from 'hooks/Tokens'
 import { useGasPrice } from 'state/user/hooks'
 import truncateHash from 'utils/truncateHash'
 import { ZxFetchResult } from 'config/constants/types'
 import isSupportedChainId from 'utils/isSupportedChainId'
+import { useSwapState } from 'state/swap/hooks'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { calculateGasMargin, getManageContract, isAddress } from '../utils'
 import isZero from '../utils/isZero'
@@ -33,7 +35,6 @@ interface Estimated0xSwapCall {
 // and the user has approved the slippage adjusted input amount for the trade
 export function useSwap0xCallback(
   zxResponse: ZxFetchResult | null | undefined, // trade to execute, required
-  currencies: { [field in Field]?: Currency },
   recipientAddressOrName: string | null, // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
 ): { state: SwapCallbackState; callback: null | (() => Promise<string>); error: string | null } {
   console.log("useSwap0xCallback: pass")
@@ -45,9 +46,17 @@ export function useSwap0xCallback(
   const recipient = recipientAddressOrName === null ? account : recipientAddressOrName
   const deadline = useTransactionDeadline()
   const manageContract: Contract | null = getManageContract(chainId, library, account)
+  const {
+    [Field.INPUT]: { currencyId: inputCurrencyId },
+    [Field.OUTPUT]: { currencyId: outputCurrencyId },
+  } = useSwapState()
+
+  const inputCurrency = useCurrency(inputCurrencyId)
+  const outputCurrency = useCurrency(outputCurrencyId)
 
   return useMemo(() => {
-    if (!manageContract || !zxResponse || !currencies || !library || !account || !isSupportedChainId(chainId)) {
+    console.log("useSwap0xCallback useMemo: pass")
+    if (!manageContract || !zxResponse || !inputCurrency || !outputCurrency || !library || !account || !isSupportedChainId(chainId)) {
       return { state: SwapCallbackState.INVALID, callback: null, error: 'Missing dependencies' }
     }
     if (!recipient) {
@@ -60,10 +69,11 @@ export function useSwap0xCallback(
     return {
       state: SwapCallbackState.VALID,
       callback: async function onSwap(): Promise<string> {
+        console.log("useSwap0xCallback useMemo onSwap: pass")
         const swapCall: SwapCall = null;
         swapCall.contract = manageContract
 
-        if (currencies[Field.INPUT] === ETHER) {
+        if (inputCurrency === ETHER) {
           console.log("INPUT ETHER")
           swapCall.parameters.methodName = 'swapExactETHForTokensOn0x'
           swapCall.parameters.args = [
@@ -74,7 +84,7 @@ export function useSwap0xCallback(
             deadline
           ]
           swapCall.parameters.value = zxResponse.sellAmount
-        } else if (currencies[Field.OUTPUT] === ETHER) {
+        } else if (outputCurrency === ETHER) {
           console.log("OUTPUT ETHER")
           swapCall.parameters.methodName = 'swapExactTokenForETHOn0x'
           swapCall.parameters.args = [
@@ -143,8 +153,8 @@ export function useSwap0xCallback(
           ...(value && !isZero(value) ? { value, from: account } : { from: account }),
         })
           .then((response: any) => {
-            const inputSymbol = currencies[Field.INPUT].symbol
-            const outputSymbol = currencies[Field.OUTPUT].symbol
+            const inputSymbol = inputCurrency.symbol
+            const outputSymbol = outputCurrency.symbol
             const inputAmount = zxResponse.response.sellAmount.toSignificant(3)
             const outputAmount = zxResponse.response.buyAmount.toSignificant(3)
 
@@ -176,5 +186,5 @@ export function useSwap0xCallback(
       },
       error: null,
     }
-  }, [zxResponse, library, account, chainId, recipient, recipientAddressOrName, addTransaction, gasPrice])
+  }, [zxResponse, library, account, chainId, recipient, inputCurrency, outputCurrency, recipientAddressOrName, addTransaction, gasPrice])
 }

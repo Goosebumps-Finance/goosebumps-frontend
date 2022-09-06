@@ -292,7 +292,7 @@ export default function Swap({ history }: RouteComponentProps) {
 
   // the callback to execute the swap
   const { callback: swapCallback, error: swapCallbackError } = useSwapCallback(trade, allowedSlippage, recipient)
-  const { callback: swap0xCallback, error: swap0xCallbackError } = useSwap0xCallback(zxResponse, currencies, recipient)
+  const { callback: swap0xCallback, error: swap0xCallbackError } = useSwap0xCallback(zxResponse, recipient)
 
   const { priceImpactWithoutFee } = computeTradePriceBreakdown(trade)
 
@@ -438,7 +438,7 @@ export default function Swap({ history }: RouteComponentProps) {
   useEffect(() => {
     (async () => {
       let response: ZxFetchResult = null
-      console.log("independentField, is0xSwap, parsedAmount: pass", independentField, is0xSwap, typedValue)
+      // console.log("independentField, is0xSwap, parsedAmount: pass", independentField, is0xSwap, typedValue)
       if (is0xSwap) {
         setIsFetching(true)
         // console.log("independentField, is0xSwap, parsedAmount: ", independentField, is0xSwap, typedValue, currencies, allowedSlippage)
@@ -462,7 +462,7 @@ export default function Swap({ history }: RouteComponentProps) {
           )
         }
         setIsFetching(false)
-        console.log("independentField, is0xSwap, parsedAmount: ", response)
+        // console.log("independentField, is0xSwap, parsedAmount: ", response)
       }
       setZxResponse(response)
     })()

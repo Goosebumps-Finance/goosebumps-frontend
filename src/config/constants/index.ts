@@ -6,7 +6,7 @@ import { Address } from './types'
 // change router address according to the chainid
 // export const ROUTER_ADDRESS = '0x10ED43C718714eb63d5aA57B78B54704E256024E'
 // export const ROUTER_ADDRESS = '0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3'
-// export const ROUTER_ADDRESS: Address = {
+// export const V2_ROUTER_ADDRESS: Address = {
 //   [ChainId.MAINNET]: "0x0A630CB0C793b00A61b2941663bD17fC1ca123a2",
 //   [ChainId.TESTNET]: "0xd86D8f65384D4EeA2b4440acc0C4C03048106e58",
 //   [ChainId.POLYGON]: "0xd86D8f65384D4EeA2b4440acc0C4C03048106e58", // TODO prince
@@ -15,7 +15,7 @@ import { Address } from './types'
 
 // v1 DEX
 export const ROUTER_ADDRESS: Address = {
-  [ChainId.MAINNET]: "0xa3A855df71C1CD35149113f5161b7Dd24801755a",
+  [ChainId.MAINNET]: "0x5c2A7365a552f6D33Ed5898Cb0ac94A4EbD56378",
   [ChainId.TESTNET]: "0xE9b2947594d28aE7c845A152e944214FF89bdf20",
   [ChainId.POLYGON]: "0xd86D8f65384D4EeA2b4440acc0C4C03048106e58", // TODO prince
   [ChainId.ETHEREUM]: "0xd86D8f65384D4EeA2b4440acc0C4C03048106e58" // TODO prince
@@ -23,7 +23,7 @@ export const ROUTER_ADDRESS: Address = {
 
 export const MANAGE_ADDRESS: Address = {
   [ChainId.MAINNET]: "0x02662D594f8E716D0B3EB9Bc7E7B5B03b3b8dD60",
-  [ChainId.TESTNET]: "0xD86f5faE6247Cb13829Bc378484010d2Ce3D8872", // TODO prince
+  [ChainId.TESTNET]: "0xD86f5faE6247Cb13829Bc378484010d2Ce3D8872", // TODO prince 0x API doesn't support bsctestnet
   [ChainId.POLYGON]: "0xd86D8f65384D4EeA2b4440acc0C4C03048106e58", // TODO prince
   [ChainId.ETHEREUM]: "0xd86D8f65384D4EeA2b4440acc0C4C03048106e58" // TODO prince
 }

@@ -331,7 +331,7 @@ export default function Swap({ history }: RouteComponentProps) {
         chainId,
         currencies.INPUT instanceof Token ? currencies.INPUT.address : currencies.INPUT.name,
         currencies.OUTPUT instanceof Token ? currencies.OUTPUT.address : currencies.OUTPUT.name,
-        parseUnits(typedValue, currencies[Field.INPUT].decimals),
+        independentField === Field.INPUT ? parseUnits(typedValue, currencies[Field.INPUT].decimals) : zxResponse.sellAmount,
         allowedSlippage
       )
 
@@ -468,7 +468,7 @@ export default function Swap({ history }: RouteComponentProps) {
       }
       setZxResponse(response)
     })()
-  }, [independentField, is0xSwap, typedValue, allowedSlippage])
+  }, [independentField, is0xSwap, typedValue, allowedSlippage, currencies.INPUT, currencies.OUTPUT])
 
   const handleInputSelect = useCallback(
     (inputCurrency) => {

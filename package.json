@@ -35,7 +35,7 @@
         "@ethersproject/experimental": "^5.5.0",
         "@goosebumps/goosebumps-aggregator-dex": "^0.0.5",
         "@goosebumps/goosebumps-v1-aggregator-dex": "^1.0.0",
-        "@goosebumps/zx-sdk": "^0.0.4",
+        "@goosebumps/zx-sdk": "^0.1.0",
         "@goosebumps/sdk": "^0.0.6",
         "@goosebumps/uikit": "^0.1.0",
         "@reduxjs/toolkit": "^1.5.0",

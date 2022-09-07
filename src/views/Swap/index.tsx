@@ -276,7 +276,7 @@ export default function Swap({ history }: RouteComponentProps) {
         setIs0xPriceImpactTooHigh(false)
       }
 
-      if (currencyBalances[Field.INPUT].lessThan(parsedAmounts[Field.INPUT])) {
+      if (account && currencyBalances[Field.INPUT] && parsedAmounts[Field.INPUT] && currencyBalances[Field.INPUT].lessThan(parsedAmounts[Field.INPUT])) {
         setIs0xInsufficient(true)
       } else {
         setIs0xInsufficient(false)

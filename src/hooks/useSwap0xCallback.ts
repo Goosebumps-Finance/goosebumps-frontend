@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
-import { SwapParameters, Currency, ETHER } from '@goosebumps/zx-sdk'
+import { SwapParameters, ETHER } from '@goosebumps/zx-sdk'
 import { Field } from 'state/swap/actions'
 import { useMemo } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -9,7 +9,7 @@ import { useGasPrice } from 'state/user/hooks'
 import truncateHash from 'utils/truncateHash'
 import { ZxFetchResult } from 'config/constants/types'
 import isSupportedChainId from 'utils/isSupportedChainId'
-import { useSwapState } from 'state/swap/hooks'
+import { useSwapState, tryParseAmountFromBN } from 'state/swap/hooks'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { calculateGasMargin, getManageContract, isAddress } from '../utils'
 import isZero from '../utils/isZero'
@@ -37,7 +37,7 @@ export function useSwap0xCallback(
   zxResponse: ZxFetchResult | null | undefined, // trade to execute, required
   recipientAddressOrName: string | null, // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
 ): { state: SwapCallbackState; callback: null | (() => Promise<string>); error: string | null } {
-  console.log("useSwap0xCallback: pass")
+  // console.log("useSwap0xCallback: pass")
   const { account, chainId, library } = useActiveWeb3React()
   const gasPrice = useGasPrice()
 
@@ -55,7 +55,7 @@ export function useSwap0xCallback(
   const outputCurrency = useCurrency(outputCurrencyId)
 
   return useMemo(() => {
-    console.log("useSwap0xCallback useMemo: pass")
+    // console.log("useSwap0xCallback useMemo: pass")
     if (!contract || !zxResponse || !inputCurrency || !outputCurrency || !library || !account || !isSupportedChainId(chainId)) {
       return { state: SwapCallbackState.INVALID, callback: null, error: 'Missing dependencies' }
     }
@@ -69,15 +69,15 @@ export function useSwap0xCallback(
     return {
       state: SwapCallbackState.VALID,
       callback: async function onSwap(): Promise<string> {
-        console.log("useSwap0xCallback useMemo onSwap: pass")
+        // console.log("useSwap0xCallback useMemo onSwap: pass")
         let methodName: string = null
         let args: (string | string[])[] = null
         let value: string = null
 
-        console.log("useSwap0xCallback useMemo onSwap: pass1")
+        // console.log("useSwap0xCallback useMemo onSwap: pass1")
 
         if (inputCurrency === ETHER) {
-          console.log("INPUT ETHER")
+          // console.log("INPUT ETHER")
           methodName = 'swapExactETHForTokensOn0x'
           args = [
             zxResponse.response.buyTokenAddress,
@@ -88,7 +88,7 @@ export function useSwap0xCallback(
           ]
           value = zxResponse.sellAmount.toString()
         } else if (outputCurrency === ETHER) {
-          console.log("OUTPUT ETHER")
+          // console.log("OUTPUT ETHER")
           methodName = 'swapExactTokenForETHOn0x'
           args = [
             zxResponse.response.sellTokenAddress,
@@ -100,7 +100,7 @@ export function useSwap0xCallback(
             deadline
           ]
         } else {
-          console.log("INPUT OUTPUT")
+          // console.log("INPUT OUTPUT")
           methodName = 'swapExactTokensForTokensOn0x'
           args = [
             zxResponse.response.sellTokenAddress,
@@ -114,7 +114,7 @@ export function useSwap0xCallback(
           ]
         }
 
-        console.log("swapCall: ", methodName, args, value, contract)
+        // console.log("swapCall: ", methodName, args, value, contract)
 
         const swapCall: SwapCall = {
           parameters: { methodName, args, value },
@@ -145,7 +145,7 @@ export function useSwap0xCallback(
               })
           })
 
-        console.log("estimatedGasAndError: ", estimatedGasAndError)
+        // console.log("estimatedGasAndError: ", estimatedGasAndError)
 
         if (estimatedGasAndError.error) {
           throw estimatedGasAndError.error
@@ -161,10 +161,10 @@ export function useSwap0xCallback(
           .then((response: any) => {
             const inputSymbol = inputCurrency.symbol
             const outputSymbol = outputCurrency.symbol
-            const inputAmount = zxResponse.response.sellAmount.toSignificant(3)
-            const outputAmount = zxResponse.response.buyAmount.toSignificant(3)
+            const inputAmount = tryParseAmountFromBN(zxResponse.response.sellAmount, inputCurrency).toSignificant(3)
+            const outputAmount = tryParseAmountFromBN(zxResponse.response.buyAmount, outputCurrency).toSignificant(3)
 
-            const base = `Swap ${inputAmount} ${inputSymbol} for ${outputAmount} ${outputSymbol}`
+            const base = `Swap on 0x API ${inputAmount} ${inputSymbol} for ${outputAmount} ${outputSymbol}`
             const withRecipient =
               recipient === account
                 ? base

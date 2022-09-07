@@ -365,7 +365,7 @@ export default function Swap({ history }: RouteComponentProps) {
           console.log("handle0xSwap hash:", hash)
         })
         .catch((error) => {
-          setSwap0xState({ attempting0xTxn: false, zxResponseToConfirm, swap0xErrorMessage: error.message, txHash0x: undefined })
+          setSwap0xState({ attempting0xTxn: false, zxResponseToConfirm, swap0xErrorMessage: error.toString(), txHash0x: undefined })
           console.log("handle0xSwap error:", error)
         })
 
@@ -903,7 +903,7 @@ export default function Swap({ history }: RouteComponentProps) {
                       </Column>
                     )}
                     {isExpertMode && swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
-                    {isExpertMode && swap0xErrorMessage ? <SwapCallbackError error={swap0xErrorMessage} /> : null}
+                    {swap0xErrorMessage ? <SwapCallbackError error={swap0xErrorMessage} /> : null}
                   </Box>
                 </Wrapper>
               </AppBody>

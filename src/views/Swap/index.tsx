@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { parseUnits } from '@ethersproject/units'
 import styled from 'styled-components'
-import { CurrencyAmount, JSBI, Token, Trade, Price } from '@goosebumps/zx-sdk'
+import { CurrencyAmount, JSBI, Token, Trade, Price, ChainId } from '@goosebumps/zx-sdk'
 import {
   Button,
   Text,
@@ -26,7 +26,7 @@ import { useTranslation } from 'contexts/Localization'
 import SwapWarningTokens from 'config/constants/swapWarningTokens'
 import { ZxFetchResult } from "config/constants/types";
 // import { usingDifferentFactories, getFactoryNameByPair } from 'utils/factories'
-// import isSupportedChainId from 'utils/isSupportedChainId'
+import isSupportedChainId from 'utils/isSupportedChainId'
 import { zxTradeExactIn, zxTradeExactOut } from 'utils/requester'
 import AddressInputPanel from './components/AddressInputPanel'
 import { GreyCard } from '../../components/Card'
@@ -427,7 +427,7 @@ export default function Swap({ history }: RouteComponentProps) {
 
   useEffect(() => {
     // console.log("Swap noRoute, userHasSpecifiedInputOutput: ", noRoute, userHasSpecifiedInputOutput)
-    if (noRoute && userHasSpecifiedInputOutput) {
+    if (noRoute && userHasSpecifiedInputOutput && isSupportedChainId(chainId) && chainId !== ChainId.TESTNET) {
       // console.log("enalble 0x swap")
       setIs0xSwap(true)
     } else {
@@ -435,7 +435,7 @@ export default function Swap({ history }: RouteComponentProps) {
       setIs0xSwap(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [noRoute, userHasSpecifiedInputOutput])
+  }, [noRoute, userHasSpecifiedInputOutput, chainId])
 
   useEffect(() => {
     (async () => {

@@ -349,7 +349,7 @@ const PortfolioTracker = () => {
   // When wallet connected, set params variable
   useEffect(() => {
     console.log("useEffect 3")
-    if( connectedAddress ) {
+    if( connectedAddress && !searchKey ) {
       setTokenInfos([]);
       setIsStartLoading(false);
       dispatch(setNetworkInfo({

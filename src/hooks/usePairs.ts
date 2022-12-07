@@ -105,10 +105,9 @@ import { Interface } from '@ethersproject/abi'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import isSupportedChainId from 'utils/isSupportedChainId'
 
+import { LOG_VIEW } from 'config'
 import { useMultipleContractSingleData } from '../state/multicall/hooks'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
-
-import { LOG_VIEW } from 'config'
 
 const PAIR_INTERFACE = new Interface(IGoosebumpsPairABI)
 

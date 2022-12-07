@@ -44,6 +44,7 @@
     // "react-hooks/exhaustive-deps": 1,
     "react-hooks/exhaustive-deps": 0,
     "import/no-named-as-default": 0,
+    "import/no-cycle": 0,
     "@typescript-eslint/no-unused-vars": 0
     // End temporary rules
   }

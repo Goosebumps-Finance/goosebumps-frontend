@@ -182,6 +182,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 
 import { useUserSingleHopOnly } from 'state/user/hooks'
 import isSupportedChainId from 'utils/isSupportedChainId'
+import { LOG_VIEW } from 'config'
 import {
   BASES_TO_CHECK_TRADES_AGAINST,
   CUSTOM_BASES,
@@ -192,7 +193,6 @@ import { PairState, usePairs } from './usePairs'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
 
 import { useUnsupportedTokens } from './Tokens'
-import { LOG_VIEW } from 'config'
 
 function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
   const { chainId } = useActiveWeb3React()

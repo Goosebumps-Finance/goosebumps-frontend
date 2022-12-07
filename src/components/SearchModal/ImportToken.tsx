@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Token, Currency } from '@goosebumps/sdk'
+import { Token, Currency } from '@goosebumps/zx-sdk'
 import { Button, Text, ErrorIcon, Flex, Message, Checkbox, Link, Tag, Grid } from '@goosebumps/uikit'
 import { AutoColumn } from 'components/Layout/Column'
 import { useAddUserToken } from 'state/user/hooks'

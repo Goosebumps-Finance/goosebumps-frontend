@@ -1,5 +1,5 @@
 import React, { CSSProperties } from 'react'
-import { Token } from '@goosebumps/sdk'
+import { Token } from '@goosebumps/zx-sdk'
 import { Button, Text, CheckmarkCircleIcon } from '@goosebumps/uikit'
 import { AutoRow, RowFixed } from 'components/Layout/Row'
 import { AutoColumn } from 'components/Layout/Column'

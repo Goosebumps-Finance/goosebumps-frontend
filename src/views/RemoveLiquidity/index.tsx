@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { splitSignature } from '@ethersproject/bytes'
 import { Contract } from '@ethersproject/contracts'
 import { TransactionResponse } from '@ethersproject/providers'
-import { Currency, currencyEquals, ETHER, Percent, WETH } from '@goosebumps/sdk'
+import { Currency, currencyEquals, ETHER, Percent, WETH } from '@goosebumps/zx-sdk'
 import { Button, Text, AddIcon, ArrowDownIcon, CardBody, Slider, Box, Flex, useModal } from '@goosebumps/uikit'
 import { RouteComponentProps } from 'react-router'
 import { BigNumber } from '@ethersproject/bignumber'
@@ -113,8 +113,15 @@ export default function RemoveLiquidity({
       { name: 'chainId', type: 'uint256' },
       { name: 'verifyingContract', type: 'address' },
     ]
+    // const domain = {
+    //   name: 'Goosebumps LPs',
+    //   version: '1',
+    //   chainId,
+    //   verifyingContract: pair.liquidityToken.address,
+    // }
+    // v1 DEX
     const domain = {
-      name: 'Goosebumps LPs',
+      name: 'GooseBumps LPs',
       version: '1',
       chainId,
       verifyingContract: pair.liquidityToken.address,

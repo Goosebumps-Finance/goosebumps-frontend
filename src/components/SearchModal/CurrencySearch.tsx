@@ -1,6 +1,6 @@
 import React, { KeyboardEvent, RefObject, useCallback, useMemo, useRef, useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Currency, ETHER, Token } from '@goosebumps/sdk'
+import { Currency, ETHER, Token } from '@goosebumps/zx-sdk'
 import { Text, Input, Box } from '@goosebumps/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { FixedSizeList } from 'react-window'

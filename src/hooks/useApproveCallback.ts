@@ -1,11 +1,11 @@
 import { MaxUint256 } from '@ethersproject/constants'
 import { TransactionResponse } from '@ethersproject/providers'
-import { Trade, TokenAmount, CurrencyAmount, ETHER } from '@goosebumps/sdk'
+import { Trade, TokenAmount, CurrencyAmount, ETHER } from '@goosebumps/zx-sdk'
 import { useCallback, useMemo } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import isSupportedChainId from 'utils/isSupportedChainId'
 import { logError } from 'utils/sentry'
-import { ROUTER_ADDRESS } from '../config/constants'
+import { ROUTER_ADDRESS, MANAGE_ADDRESS } from '../config/constants'
 import useTokenAllowance from './useTokenAllowance'
 import { Field } from '../state/swap/actions'
 import { useTransactionAdder, useHasPendingApproval } from '../state/transactions/hooks'
@@ -119,4 +119,11 @@ export function useApproveCallbackFromTrade(trade?: Trade, allowedSlippage = 0) 
   )
 
   return useApproveCallback(amountToApprove, isSupportedChainId(chainId) ? ROUTER_ADDRESS[chainId] : undefined)
+}
+
+// wraps useApproveCallback in the context of a swap
+export function useApprove0xCallbackFromTrade(amountToApprove?: CurrencyAmount) {
+  const { chainId } = useActiveWeb3React()
+
+  return useApproveCallback(amountToApprove, isSupportedChainId(chainId) ? MANAGE_ADDRESS[chainId] : undefined)
 }

@@ -1,4 +1,4 @@
-import { Currency } from '@goosebumps/sdk'
+import { Currency } from '@goosebumps/zx-sdk'
 import React from 'react'
 import styled from 'styled-components'
 import CurrencyLogo from './CurrencyLogo'

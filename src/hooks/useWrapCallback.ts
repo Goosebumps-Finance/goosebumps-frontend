@@ -1,4 +1,4 @@
-import { Currency, currencyEquals, ETHER, WETH } from '@goosebumps/sdk'
+import { Currency, currencyEquals, ETHER, WETH } from '@goosebumps/zx-sdk'
 import { useMemo } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { tryParseAmount } from '../state/swap/hooks'

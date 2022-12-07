@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-// import { ChainId } from '@goosebumps/sdk'
+// import { ChainId } from '@goosebumps/zx-sdk'
 import linq from 'linq'
 import { API_SERVER, BASE_URL } from 'config'
 import { HomeState } from 'state/types'

@@ -1,4 +1,4 @@
-import { ChainId, Pair, Token } from '@goosebumps/sdk'
+import { ChainId, Pair, Token } from '@goosebumps/zx-sdk'
 import flatMap from 'lodash/flatMap'
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -397,7 +397,8 @@ export function usePairAdder(): (pair: Pair) => void {
  * @param tokenB the other token
  */
 export function toV2LiquidityToken([tokenA, tokenB]: [Token, Token], chainId: ChainId): Token {
-  return new Token(tokenA.chainId, Pair.getAddress(BASE_FACTORY_ADDRESS[chainId], BASE_INIT_CODE_HASH[chainId], tokenA, tokenB), 18, 'Goose-lp', 'Goosebumps LPs') // TODO prince
+  // return new Token(tokenA.chainId, Pair.getAddress(BASE_FACTORY_ADDRESS[chainId], BASE_INIT_CODE_HASH[chainId], tokenA, tokenB), 18, 'Goose-lp', 'Goosebumps LPs') // TODO prince
+  return new Token(tokenA.chainId, Pair.getAddress(tokenA, tokenB), 18, 'GooseBumps-LP', 'GooseBumps LPs') // TODO prince
 }
 
 /**

@@ -1,4 +1,4 @@
-import { Currency, Percent, Price } from '@goosebumps/sdk'
+import { Currency, Percent, Price } from '@goosebumps/zx-sdk'
 import React from 'react'
 import { Text } from '@goosebumps/uikit'
 import { useTranslation } from 'contexts/Localization'

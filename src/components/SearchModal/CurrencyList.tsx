@@ -1,5 +1,5 @@
 import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
-import { Currency, CurrencyAmount, currencyEquals, ETHER, Token } from '@goosebumps/sdk'
+import { Currency, CurrencyAmount, currencyEquals, ETHER, Token } from '@goosebumps/zx-sdk'
 import { Text } from '@goosebumps/uikit'
 import styled from 'styled-components'
 import { FixedSizeList } from 'react-window'

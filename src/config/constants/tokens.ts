@@ -1,4 +1,4 @@
-import { ChainId, Token } from '@goosebumps/sdk'
+import { ChainId, Token } from '@goosebumps/zx-sdk'
 // import { useSelector } from 'react-redux'
 // import { State } from 'state/types'
 // import { getChainId } from 'utils/getChainId'

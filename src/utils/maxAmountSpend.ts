@@ -1,4 +1,4 @@
-import { CurrencyAmount, ETHER, JSBI } from '@goosebumps/sdk'
+import { CurrencyAmount, ETHER, JSBI } from '@goosebumps/zx-sdk'
 import { MIN_BNB } from '../config/constants'
 
 /**

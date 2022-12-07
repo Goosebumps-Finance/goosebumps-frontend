@@ -1,4 +1,4 @@
-import { Percent } from '@goosebumps/sdk'
+import { Percent } from '@goosebumps/zx-sdk'
 import React from 'react'
 import { warningSeverity } from 'utils/prices'
 import { ONE_BIPS } from '../../../config/constants'

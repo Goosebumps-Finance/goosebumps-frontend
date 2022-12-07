@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import linq from 'linq';
 import Page from 'views/Page';
-import { ChainId } from '@goosebumps/sdk'
+import { ChainId } from '@goosebumps/zx-sdk'
 import styled from 'styled-components';
 import networks from 'config/constants/networks';
 import { mainnetTokens, testnetTokens } from 'config/constants/tokens'

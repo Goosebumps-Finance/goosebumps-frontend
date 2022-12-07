@@ -1,5 +1,12 @@
 import BigNumber from 'bignumber.js'
-import { ChainId, Token } from '@goosebumps/sdk'
+import { ChainId, Token } from '@goosebumps/zx-sdk'
+
+export interface ZxFetchResult {
+  response: any | null
+  sellAmount: any | null
+  buyAmount: any | null
+  fetchError: string | null
+}
 
 export type TranslatableText =
   | string

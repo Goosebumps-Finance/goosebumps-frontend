@@ -1,5 +1,5 @@
 import React from 'react'
-import { Currency, Pair } from '@goosebumps/sdk'
+import { Currency, Pair } from '@goosebumps/zx-sdk'
 import { Button, ChevronDownIcon, Text, useModal, Flex, Box } from '@goosebumps/uikit'
 import styled from 'styled-components'
 import { useTranslation } from 'contexts/Localization'

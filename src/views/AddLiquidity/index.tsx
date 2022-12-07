@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
-import { Currency, currencyEquals, ETHER, TokenAmount, WETH } from '@goosebumps/sdk'
+import { Currency, currencyEquals, ETHER, TokenAmount, WETH } from '@goosebumps/zx-sdk'
 import { Button, Text, Flex, AddIcon, CardBody, Message, useModal } from '@goosebumps/uikit'
 import { RouteComponentProps } from 'react-router-dom'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
@@ -178,9 +178,11 @@ export default function AddLiquidity({
 
     setAttemptingTxn(true)
     await estimate(...args, value ? { value } : {})
-      .then((estimatedGasLimit) =>
+      .then((estimatedGasLimit) => {
+
         method(...args, {
           ...(value ? { value } : {}),
+          from: account,
           gasLimit: calculateGasMargin(estimatedGasLimit),
           gasPrice,
         }).then((response) => {
@@ -192,7 +194,8 @@ export default function AddLiquidity({
           })
 
           setTxHash(response.hash)
-        }),
+        })
+      }
       )
       .catch((err) => {
         setAttemptingTxn(false)

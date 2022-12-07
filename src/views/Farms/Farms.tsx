@@ -3,7 +3,7 @@ import { Route, useRouteMatch, useLocation, NavLink } from 'react-router-dom'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
 import { Image, Heading, RowType, Toggle, Text, Button, ArrowForwardIcon, Flex } from '@goosebumps/uikit'
-import { ChainId } from '@goosebumps/sdk'
+import { ChainId } from '@goosebumps/zx-sdk'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNetworkInfo } from 'state/home'
 import styled from 'styled-components'
@@ -138,9 +138,9 @@ const Farms: React.FC = () => {
     }))
   }, [])
 
-  useEffect(() => {
-    console.log("Farm:", network);
-  }, [network])
+  // useEffect(() => {
+  //   console.log("Farm:", network);
+  // }, [network])
 
   // const isArchived = pathname.includes('archived')
   // const isInactive = pathname.includes('history')

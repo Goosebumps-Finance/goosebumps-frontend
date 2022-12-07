@@ -1,4 +1,4 @@
-import { ChainId } from '@goosebumps/sdk'
+import { ChainId } from '@goosebumps/zx-sdk'
 import { createReducer } from '@reduxjs/toolkit'
 import { getChainId } from 'utils/getChainId'
 import { SerializedToken } from 'config/constants/types'

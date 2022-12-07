@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import styled from 'styled-components'
-import { Trade, TradeType } from '@goosebumps/sdk'
+import { Trade, TradeType } from '@goosebumps/zx-sdk'
 import { Button, Text, AutoRenewIcon } from '@goosebumps/uikit'
 import { useTranslation } from 'contexts/Localization'
 import { Field } from 'state/swap/actions'

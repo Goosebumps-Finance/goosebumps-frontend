@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
 import styled from 'styled-components'
-import { Pair } from '@goosebumps/sdk'
+import { Pair } from '@goosebumps/zx-sdk'
 import { Text, Flex, CardBody, CardFooter, Button, AddIcon } from '@goosebumps/uikit'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'contexts/Localization'
@@ -65,9 +65,10 @@ export default function Pool() {
     fetchingV2PairBalances || v2Pairs?.length < liquidityTokensWithBalances.length || v2Pairs?.some((V2Pair) => !V2Pair)
 
   // filter if pair is set and if the liquidity is provided on goosebumps dex
-  const allV2PairsWithLiquidity = v2Pairs.map(([, pair]) => pair).filter(
-    (v2Pair): v2Pair is Pair => Boolean(v2Pair && isSupportedChainId(chainId) && v2Pair.factory === BASE_FACTORY_ADDRESS[chainId])
-  )
+  // const allV2PairsWithLiquidity = v2Pairs.map(([, pair]) => pair).filter(
+  //   (v2Pair): v2Pair is Pair => Boolean(v2Pair && isSupportedChainId(chainId) && v2Pair.factory === BASE_FACTORY_ADDRESS[chainId])
+  // )
+  const allV2PairsWithLiquidity = v2Pairs.map(([, pair]) => pair).filter((v2Pair): v2Pair is Pair => Boolean(v2Pair))
 
   const renderBody = () => {
     if (!account) {

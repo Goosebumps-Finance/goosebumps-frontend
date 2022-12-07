@@ -1,5 +1,5 @@
 import React from 'react'
-import { Currency, Token } from '@goosebumps/sdk'
+import { Currency, Token } from '@goosebumps/zx-sdk'
 import { Button, Text, Modal, useModal, InjectedModalProps, Link } from '@goosebumps/uikit'
 import styled from 'styled-components'
 import { AutoRow } from 'components/Layout/Row'

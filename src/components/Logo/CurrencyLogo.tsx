@@ -1,4 +1,4 @@
-import { Currency, ETHER, Token } from '@goosebumps/sdk'
+import { Currency, ETHER, Token } from '@goosebumps/zx-sdk'
 import { BinanceIcon } from '@goosebumps/uikit'
 import React, { useMemo } from 'react'
 import styled from 'styled-components'

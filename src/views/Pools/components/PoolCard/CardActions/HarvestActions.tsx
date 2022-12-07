@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex, Text, Button, Heading, useModal, Skeleton } from '@goosebumps/uikit'
 import BigNumber from 'bignumber.js'
-import { Token } from '@goosebumps/sdk'
+import { Token } from '@goosebumps/zx-sdk'
 import { useTranslation } from 'contexts/Localization'
 import { getFullDisplayBalance, getBalanceNumber, formatNumber } from 'utils/formatBalance'
 import Balance from 'components/Balance'

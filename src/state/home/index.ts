@@ -73,9 +73,9 @@ export const HomeSlice = createSlice({
   initialState,
   reducers: {
     setTimer: (state, action) => {
-      console.log("setNetworkInfo state.timer =", state.timer)
+      // console.log("setNetworkInfo state.timer =", state.timer)
       if (state.timer) {
-        console.log("setNetworkInfo clearTimeout=", state.timer)
+        // console.log("setNetworkInfo clearTimeout=", state.timer)
         clearTimeout(state.timer);
       }
       state.timer = action.payload.timer
@@ -95,7 +95,7 @@ export const HomeSlice = createSlice({
       //     break
       // }
       // window.localStorage.setItem("SELECTED_CHAIN_ID", `${chainId}`)
-      console.log("setNetworkInfo payload =", action.payload);
+      // console.log("setNetworkInfo payload =", action.payload);
       window.localStorage.setItem("SELECTED_CHAIN_ID", `${action.payload.network.chainId}`)
       if (action.payload.searchKey !== undefined) {
         state.searchKey = action.payload.searchKey
@@ -110,23 +110,23 @@ export const HomeSlice = createSlice({
         // timer = setTimeout(() => setSearchKey(state, action), 1000)
       }
       if (action.payload.network && action.payload.network.chainId !== state.network.chainId) {
-        console.log("setNetworkInfo: network changed")
+        // console.log("setNetworkInfo: network changed")
         state.network = action.payload.network
         // if (isStakeOrFarm()) {
         //   window?.location?.reload()
         // }
         if (window?.location?.href?.toLowerCase().indexOf("charts") !== -1) {
-          console.log("setNetworkInfo on charts")
+          // console.log("setNetworkInfo on charts")
           window.location.href = `${BASE_URL}/charts`
         } else if (window?.location?.href?.toLowerCase().indexOf("portfolio-tracker") !== -1) {
-          console.log("setNetworkInfo on portfolio-tracker")
+          // console.log("setNetworkInfo on portfolio-tracker")
           window.location.href = `${BASE_URL}/portfolio-tracker`
           // window.alert(`Please visit portfolio tracker page again after chain switching!`)
         } else if (window?.location?.href) {
-          console.log("setNetworkInfo on other part")
+          // console.log("setNetworkInfo on other part")
           window?.location?.reload()
         } else {
-          console.log("setNetworkInfo on exception")
+          // console.log("setNetworkInfo on exception")
           // eslint-disable-next-line no-alert
           window.alert(`Please refresh website to switch network correctly!`)
         }

@@ -42,10 +42,13 @@ export const IPFS_GATEWAY = 'https://ipfs.io/ipfs'
 // In reality its 10000 because of fast refresh, a bit less here to cover for possible long request times
 export const PANCAKE_BUNNIES_UPDATE_FREQUENCY = 8000
 
-export const DEBUG_MODE = true
-export const RELEASE_MODE = !DEBUG_MODE
+export const DEBUG_MODE = false
 
-export const LOG_VIEW = RELEASE_MODE
+function EMPTY(param1: any, param2: any, ...param3: any[]) {
+  return true;
+}
+
+export const LOG_VIEW = DEBUG_MODE ? console.log : EMPTY
 
 export const API_SERVER = process.env.REACT_APP_API_SERVER
 

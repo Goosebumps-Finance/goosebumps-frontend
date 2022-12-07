@@ -23,7 +23,7 @@ const Info = ({ info, network, setPair, tokenAddress }) => {
   const [hasCMC, setHasCMC] = useState(false);
   
   const selCurrency = useCurrency(tokenAddress);
-  console.log("selCurrency = ", selCurrency)
+  // console.log("selCurrency = ", selCurrency)
 
   useEffect(() => {
     if (!info) return;
@@ -88,7 +88,7 @@ const Info = ({ info, network, setPair, tokenAddress }) => {
 
   const onPairChange = (e) => {
     // window.location = `/charts/${network.Name}/${info.address}/${e.target.value}`;
-    console.log("setPair=", setPair, e.target.value)
+    // console.log("setPair=", setPair, e.target.value)
     if (setPair) {
       setPair(e.target.value)
     }

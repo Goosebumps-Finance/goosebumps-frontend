@@ -66,7 +66,7 @@ export const getLatestTrades = async (pair, network, startTime, endTime, limit =
   //   });
   // const res = mockLatestTradeData;
   let params = {}
-  console.log('getLatestTrades : pair = ', pair, ' network: ', network)
+  // console.log('getLatestTrades : pair = ', pair, ' network: ', network)
   if (limit === 20) {
     params = {
       token0: pair.buyCurrency.address,
@@ -87,8 +87,8 @@ export const getLatestTrades = async (pair, network, startTime, endTime, limit =
       endTime,
     }
   }
-  console.log('getLatestTrades params = ', params)
+  // console.log('getLatestTrades params = ', params)
   const res = await getAsyncData(`${API_SERVER}api/Charts/GetLatestTrades`, params)
-  console.log('GetLatestTrades: res = ', res)
+  // console.log('GetLatestTrades: res = ', res)
   return res
 }

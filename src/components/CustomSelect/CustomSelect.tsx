@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components'
 import { ArrowDropDownIcon, Box, BoxProps, Text } from '@goosebumps/uikit'
 import { useLocation } from 'react-router-dom'
 import { OptionProps } from 'config/constants/types'
+import { LOG_VIEW } from 'config'
 
 const DropDownHeader = styled.div<{ isHome: boolean }>`
   width: 100%;

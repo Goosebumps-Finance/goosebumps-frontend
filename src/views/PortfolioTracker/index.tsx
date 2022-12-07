@@ -93,7 +93,7 @@ const PortfolioTracker = () => {
     
     // const res = mockData
 
-    console.log("fetchTokenData res=", res);
+    // console.log("fetchTokenData res=", res);
     if(res) {
       setStatus(res.status);
       if(res.status === 200) {
@@ -131,7 +131,7 @@ const PortfolioTracker = () => {
       detailedNetwork,
       [params.address],
     )
-    console.log("getLiveInfo getTokenInfos: infos = ", infos);
+    // console.log("getLiveInfo getTokenInfos: infos = ", infos);
 
     if(infos === null) {
       setLoadingStep(-1);
@@ -253,8 +253,8 @@ const PortfolioTracker = () => {
       return newItem
     })
 
-    console.log("here resAddress =", resAddress)
-    console.log("here params.address =", params.address)
+    // console.log("here resAddress =", resAddress)
+    // console.log("here params.address =", params.address)
     if(resAddress !== params.address) 
       return;
 
@@ -271,7 +271,7 @@ const PortfolioTracker = () => {
 
   // At the beginning
   useEffect(() => {
-    console.log("useEffect 1 searchKey = ", searchKey)
+    // console.log("useEffect 1 searchKey = ", searchKey)
     // setParams(params);
     if(searchKey !== params.address) {
       dispatch(setNetworkInfo({
@@ -287,12 +287,12 @@ const PortfolioTracker = () => {
   }, [])
 
   useEffect(() => {
-    console.log("params changed params=", params)
+    // console.log("params changed params=", params)
     if(params.address === undefined) {
       setLoadingStep(0);
     } else if(params.address !== reqAddress) {
       if(!isStartLoading) {
-        console.log("need fetch");
+        // console.log("need fetch");
         setIsStartLoading(true);
         fetchTokenData(params.networkName, params.address);
       } else {
@@ -305,7 +305,7 @@ const PortfolioTracker = () => {
   }, [params])
   // Get params from url and set it to state variable
   useEffect(() => {
-    console.log("useEffect 2")
+    // console.log("useEffect 2")
     // console.log("Params = ", params)
     // console.log("CurrentParams = ", currentParams)
     // console.log("searchKey=", searchKey, "!=", !searchKey);
@@ -348,7 +348,7 @@ const PortfolioTracker = () => {
   }, [slowRefresh])
   // When wallet connected, set params variable
   useEffect(() => {
-    console.log("useEffect 3")
+    // console.log("useEffect 3")
     if( connectedAddress && !searchKey ) {
       setTokenInfos([]);
       setIsStartLoading(false);

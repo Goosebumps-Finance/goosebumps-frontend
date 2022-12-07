@@ -75,11 +75,11 @@ export const fetchTokenData = createAsyncThunk(
     //   );
     // const response = await fetch(`https://reqres.in/api/users/${userId}`)
     // const response = mockData;
-    console.log('fetchTokenData args = ', args)
+    // console.log('fetchTokenData args = ', args)
     const res = await postAsyncData(`${API_SERVER}api/Portfolio/GetTrades`, { network: args.network }, [
       args.address,
     ])
-    console.log('fetchTokenData tokens = ', res)
+    // console.log('fetchTokenData tokens = ', res)
     return res
   },
 )

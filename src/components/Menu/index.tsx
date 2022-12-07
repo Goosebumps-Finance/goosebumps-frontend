@@ -99,7 +99,7 @@ const Menu = (props) => {
         */
         // console.log("isToken res = ", res);
         if (res.status !== 200) {
-          console.log("res = ", res)
+          // console.log("res = ", res)
           // alert(res.error);
           return;
         }
@@ -119,7 +119,7 @@ const Menu = (props) => {
   const onChangeNetwork = async (newNetwork: any, nowNetwork: any) => {
     const detailedNetwork = linq.from(networks).where((x) => x.Name === newNetwork.value).single()
     const info = { ...newNetwork, chainId: detailedNetwork.chainId };
-    console.log("onChangeNetwork info = ", info)
+    // console.log("onChangeNetwork info = ", info)
     await changeNetwork(detailedNetwork)
     // // if(loadingStatus === 1) {
     //   console.log("onChangeNetwork searchKey=", searchKey)

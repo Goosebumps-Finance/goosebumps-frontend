@@ -11,7 +11,7 @@ export const getChainId = (): number => {
     }
     return chainId
   } catch (error) {
-    console.log("getChainId error", error)
+    // console.log("getChainId error", error)
     return ChainId.MAINNET
   }
 }

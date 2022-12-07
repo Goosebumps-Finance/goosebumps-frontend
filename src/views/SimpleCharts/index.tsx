@@ -89,7 +89,7 @@ const SimpleCharts = (props) => {
     }, [])
     // Get params from url and set it to state variable
     useEffect(() => {
-        console.log("Charts Params = ", params);
+        // console.log("Charts Params = ", params);
         // console.log("Charts CurrentParams = ", currentParams);
         // console.log("PathName=", location.pathname);
         if (params.address !== reqAddress) {

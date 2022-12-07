@@ -3,6 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { LOG_VIEW } from 'config'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useBlock } from 'state/block/hooks'
 import { AppDispatch, AppState } from '../index'
@@ -171,7 +172,7 @@ export function useSingleContractMultipleData(
   options?: ListenerOptions
 ): CallState[] {
   const fragment = useMemo(() => contract?.interface?.getFunction(methodName), [contract, methodName])
-  // console.log("useSingleContractMultipleData contract=",contract," methodName=", methodName, " callInputs=", callInputs, " options=", options)
+  // LOG_VIEW("useSingleContractMultipleData contract=",contract," methodName=", methodName, " callInputs=", callInputs, " options=", options)
   const calls = useMemo(
     () =>
       contract && fragment && callInputs && callInputs.length > 0
@@ -186,7 +187,7 @@ export function useSingleContractMultipleData(
   )
 
   const results = useCallsData(calls, options)
-  // console.log("useSingleContractMultipleData results=", results, " calls=", calls, " options=", options)
+  // LOG_VIEW("useSingleContractMultipleData results=", results, " calls=", calls, " options=", options)
 
   const { currentBlock } = useBlock()
 

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { API_SERVER } from 'config'
+import { API_SERVER, LOG_VIEW } from 'config'
 import { postAsyncData } from 'utils/requester'
 
 // export interface TokenInfoProps {
@@ -67,7 +67,7 @@ const initialState = {
 export const fetchTokenData = createAsyncThunk(
   'portfolio/fetchTokenData',
   async (args: { network: string; address: string }, thunkAPI) => {
-    // console.log("portfolio/fetchTokenData network = ", args.network, " address = ", args.address);
+    // LOG_VIEW("portfolio/fetchTokenData network = ", args.network, " address = ", args.address);
     // tokens = await Requester.postAsync(
     //     `${config.API_SERVER}api/Portfolio/GetTrades`,
     //     { network: network.Name },
@@ -75,11 +75,11 @@ export const fetchTokenData = createAsyncThunk(
     //   );
     // const response = await fetch(`https://reqres.in/api/users/${userId}`)
     // const response = mockData;
-    // console.log('fetchTokenData args = ', args)
+    // LOG_VIEW('fetchTokenData args = ', args)
     const res = await postAsyncData(`${API_SERVER}api/Portfolio/GetTrades`, { network: args.network }, [
       args.address,
     ])
-    // console.log('fetchTokenData tokens = ', res)
+    // LOG_VIEW('fetchTokenData tokens = ', res)
     return res
   },
 )

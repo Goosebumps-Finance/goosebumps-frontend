@@ -17,7 +17,7 @@ import { useGasPriceManager } from 'state/user/hooks'
 import { setAddressType, setNetworkInfo } from 'state/home'
 import { State } from 'state/types'
 // import { usePhishingBannerManager } from 'state/user/hooks'
-import { API_SERVER } from 'config'
+import { API_SERVER, LOG_VIEW } from 'config'
 import networks, { chainList } from 'config/constants/networks'
 import { getAsyncData } from 'utils/requester'
 import changeNetwork from 'utils/changeNetwork'
@@ -29,7 +29,7 @@ import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
 
 const SearchItem = ({ onChangeNetwork, selIndex }) => {
-  // console.log("network changed: selIndex", selIndex)
+  // LOG_VIEW("network changed: selIndex", selIndex)
 
   return <>
     <CustomSelect
@@ -78,10 +78,10 @@ const Menu = (props) => {
   }
 
   const handleSearch = async (address: string) => {
-    // console.log('handleSearch address = ', address)
+    // LOG_VIEW('handleSearch address = ', address)
 
     if (timer) {
-      // console.log("handleSearch clear time:", timer);
+      // LOG_VIEW("handleSearch clear time:", timer);
       clearTimeout(timer);
     }
 
@@ -92,14 +92,14 @@ const Menu = (props) => {
           return;
         }
         const res = await getAsyncData(`${API_SERVER}api/Search/IsToken`, { address, network: network.value })
-        // console.log('After getAsyncData isToken = ', res)
+        // LOG_VIEW('After getAsyncData isToken = ', res)
         /*
           smartcontract: "Token"  - Token address
           smartcontract: "DEX"  - Pair address
         */
-        // console.log("isToken res = ", res);
+        // LOG_VIEW("isToken res = ", res);
         if (res.status !== 200) {
-          // console.log("res = ", res)
+          // LOG_VIEW("res = ", res)
           // alert(res.error);
           return;
         }
@@ -119,10 +119,10 @@ const Menu = (props) => {
   const onChangeNetwork = async (newNetwork: any, nowNetwork: any) => {
     const detailedNetwork = linq.from(networks).where((x) => x.Name === newNetwork.value).single()
     const info = { ...newNetwork, chainId: detailedNetwork.chainId };
-    // console.log("onChangeNetwork info = ", info)
+    // LOG_VIEW("onChangeNetwork info = ", info)
     await changeNetwork(detailedNetwork)
     // // if(loadingStatus === 1) {
-    //   console.log("onChangeNetwork searchKey=", searchKey)
+    //   LOG_VIEW("onChangeNetwork searchKey=", searchKey)
     //   dispatch(setNetworkInfo({network: {...newNetwork, chainId: detailedNetwork.chainId}}))
     //   handleSearch(searchKey)
     // // }

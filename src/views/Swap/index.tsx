@@ -23,6 +23,7 @@ import { State } from 'state/types'
 import { setNetworkInfo } from 'state/home'
 
 import { useTranslation } from 'contexts/Localization'
+import { LOG_VIEW } from 'config'
 import SwapWarningTokens from 'config/constants/swapWarningTokens'
 import { ZxFetchResult } from "config/constants/types";
 // import { usingDifferentFactories, getFactoryNameByPair } from 'utils/factories'
@@ -362,11 +363,11 @@ export default function Swap({ history }: RouteComponentProps) {
       swap0xCallback()
         .then((hash) => {
           setSwap0xState({ attempting0xTxn: false, zxResponseToConfirm, swap0xErrorMessage: undefined, txHash0x: hash })
-          // console.log("handle0xSwap hash:", hash)
+          // LOG_VIEW("handle0xSwap hash:", hash)
         })
         .catch((error) => {
           setSwap0xState({ attempting0xTxn: false, zxResponseToConfirm, swap0xErrorMessage: error.toString(), txHash0x: undefined })
-          // console.log("handle0xSwap error:", error)
+          // LOG_VIEW("handle0xSwap error:", error)
         })
 
       setIs0xSwapping(false)
@@ -426,12 +427,12 @@ export default function Swap({ history }: RouteComponentProps) {
   }, [swapWarningCurrency])
 
   useEffect(() => {
-    // console.log("Swap noRoute, userHasSpecifiedInputOutput: ", noRoute, userHasSpecifiedInputOutput)
+    // LOG_VIEW("Swap noRoute, userHasSpecifiedInputOutput: ", noRoute, userHasSpecifiedInputOutput)
     if (noRoute && userHasSpecifiedInputOutput && isSupportedChainId(chainId) && chainId !== ChainId.TESTNET) {
-      // console.log("enalble 0x swap")
+      // LOG_VIEW("enalble 0x swap")
       setIs0xSwap(true)
     } else {
-      // console.log("disable 0x swap")
+      // LOG_VIEW("disable 0x swap")
       setIs0xSwap(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -440,12 +441,12 @@ export default function Swap({ history }: RouteComponentProps) {
   useEffect(() => {
     (async () => {
       let response: ZxFetchResult = null
-      // console.log("independentField, is0xSwap, parsedAmount: pass", independentField, is0xSwap, typedValue)
+      // LOG_VIEW("independentField, is0xSwap, parsedAmount: pass", independentField, is0xSwap, typedValue)
       if (is0xSwap) {
         setIsFetching(true)
-        // console.log("independentField, is0xSwap, parsedAmount: ", independentField, is0xSwap, typedValue, currencies, allowedSlippage)
+        // LOG_VIEW("independentField, is0xSwap, parsedAmount: ", independentField, is0xSwap, typedValue, currencies, allowedSlippage)
         if (independentField === Field.INPUT) {
-          // console.log("independentField INPUT, is0xSwap, parsedAmount: ", response)
+          // LOG_VIEW("independentField INPUT, is0xSwap, parsedAmount: ", response)
           response = await zxTradeExactIn(
             chainId,
             currencies.INPUT instanceof Token ? currencies.INPUT.address : currencies.INPUT.name,
@@ -454,7 +455,7 @@ export default function Swap({ history }: RouteComponentProps) {
             allowedSlippage
           )
         } else if (independentField === Field.OUTPUT) {
-          // console.log("independentField OUTPUT, is0xSwap, parsedAmount: ", response)
+          // LOG_VIEW("independentField OUTPUT, is0xSwap, parsedAmount: ", response)
           response = await zxTradeExactOut(
             chainId,
             currencies.INPUT instanceof Token ? currencies.INPUT.address : currencies.INPUT.name,
@@ -464,7 +465,7 @@ export default function Swap({ history }: RouteComponentProps) {
           )
         }
         setIsFetching(false)
-        // console.log("independentField, is0xSwap, parsedAmount: ", response)
+        // LOG_VIEW("independentField, is0xSwap, parsedAmount: ", response)
       }
       setZxResponse(response)
     })()

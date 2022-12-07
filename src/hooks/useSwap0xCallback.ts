@@ -7,6 +7,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useCurrency } from 'hooks/Tokens'
 import { useGasPrice } from 'state/user/hooks'
 import truncateHash from 'utils/truncateHash'
+import { LOG_VIEW } from 'config'
 import { ZxFetchResult } from 'config/constants/types'
 import isSupportedChainId from 'utils/isSupportedChainId'
 import { useSwapState, tryParseAmountFromBN } from 'state/swap/hooks'
@@ -37,7 +38,7 @@ export function useSwap0xCallback(
   zxResponse: ZxFetchResult | null | undefined, // trade to execute, required
   recipientAddressOrName: string | null, // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
 ): { state: SwapCallbackState; callback: null | (() => Promise<string>); error: string | null } {
-  // console.log("useSwap0xCallback: pass")
+  // LOG_VIEW("useSwap0xCallback: pass")
   const { account, chainId, library } = useActiveWeb3React()
   const gasPrice = useGasPrice()
 
@@ -55,7 +56,7 @@ export function useSwap0xCallback(
   const outputCurrency = useCurrency(outputCurrencyId)
 
   return useMemo(() => {
-    // console.log("useSwap0xCallback useMemo: pass")
+    // LOG_VIEW("useSwap0xCallback useMemo: pass")
     if (!contract || !zxResponse || !inputCurrency || !outputCurrency || !library || !account || !isSupportedChainId(chainId)) {
       return { state: SwapCallbackState.INVALID, callback: null, error: 'Missing dependencies' }
     }
@@ -69,15 +70,15 @@ export function useSwap0xCallback(
     return {
       state: SwapCallbackState.VALID,
       callback: async function onSwap(): Promise<string> {
-        // console.log("useSwap0xCallback useMemo onSwap: pass")
+        // LOG_VIEW("useSwap0xCallback useMemo onSwap: pass")
         let methodName: string = null
         let args: (string | string[])[] = null
         let value: string = null
 
-        // console.log("useSwap0xCallback useMemo onSwap: pass1")
+        // LOG_VIEW("useSwap0xCallback useMemo onSwap: pass1")
 
         if (inputCurrency === ETHER) {
-          // console.log("INPUT ETHER")
+          // LOG_VIEW("INPUT ETHER")
           methodName = 'swapExactETHForTokensOn0x'
           args = [
             zxResponse.response.buyTokenAddress,
@@ -88,7 +89,7 @@ export function useSwap0xCallback(
           ]
           value = zxResponse.sellAmount.toString()
         } else if (outputCurrency === ETHER) {
-          // console.log("OUTPUT ETHER")
+          // LOG_VIEW("OUTPUT ETHER")
           methodName = 'swapExactTokenForETHOn0x'
           args = [
             zxResponse.response.sellTokenAddress,
@@ -100,7 +101,7 @@ export function useSwap0xCallback(
             deadline
           ]
         } else {
-          // console.log("INPUT OUTPUT")
+          // LOG_VIEW("INPUT OUTPUT")
           methodName = 'swapExactTokensForTokensOn0x'
           args = [
             zxResponse.response.sellTokenAddress,
@@ -114,7 +115,7 @@ export function useSwap0xCallback(
           ]
         }
 
-        // console.log("swapCall: ", methodName, args, value, contract)
+        // LOG_VIEW("swapCall: ", methodName, args, value, contract)
 
         const swapCall: SwapCall = {
           parameters: { methodName, args, value },
@@ -145,7 +146,7 @@ export function useSwap0xCallback(
               })
           })
 
-        // console.log("estimatedGasAndError: ", estimatedGasAndError)
+        // LOG_VIEW("estimatedGasAndError: ", estimatedGasAndError)
 
         if (estimatedGasAndError.error) {
           throw estimatedGasAndError.error

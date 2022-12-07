@@ -7,7 +7,7 @@ import { harvestFarm, estimateGas } from 'utils/calls'
 import { BIG_ZERO } from 'utils/bigNumber'
 import getGasPrice from 'utils/getGasPrice'
 import { useMasterchef, useSousChef, useStakingContract } from 'hooks/useContract'
-import { DEFAULT_GAS_LIMIT } from 'config'
+import { DEFAULT_GAS_LIMIT, LOG_VIEW } from 'config'
 
 const options = {
   gasLimit: DEFAULT_GAS_LIMIT,
@@ -23,7 +23,7 @@ const options = {
 const harvestPool = async (stakingContract: Contract) => {
   const gasPrice = getGasPrice()
   const estimatedGas = estimateGas(stakingContract, 'withdrawRewards', [], 2000)
-  // console.log("harvestPool estimatedGas=", estimatedGas)
+  // LOG_VIEW("harvestPool estimatedGas=", estimatedGas)
   const tx = await stakingContract.withdrawRewards({ gasLimit: estimatedGas, gasPrice })
   
   // const tx = await stakingContract.withdrawRewards({ ...options, gasPrice })

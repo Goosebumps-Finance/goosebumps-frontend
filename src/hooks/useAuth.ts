@@ -37,11 +37,7 @@ const useAuth = () => {
       const detailedNetwork = linq.from(networks).where((x) => x.Name === network.value).single()
       if (connector) {
         // @ts-ignore
-        // const currentVersion = window.ethereum.networkVersion
-        // @ts-ignore
         const currentVersion = window.ethereum?.networkVersion ?? undefined
-        // @ts-ignore
-        // console.log("window.ethereum?.networkVersion ?? undefined: ", window.ethereum?.networkVersion ?? undefined)
         if (currentVersion !== detailedNetwork.chainId) {
           changeNetwork(detailedNetwork)
         }

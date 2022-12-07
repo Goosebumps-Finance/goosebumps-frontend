@@ -1,6 +1,7 @@
 import { Contract } from '@ethersproject/contracts'
 import { useEffect, useMemo, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { LOG_VIEW } from 'config'
 import { useBlock } from 'state/block/hooks'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useMulticallContract } from '../../hooks/useContract'
@@ -31,7 +32,7 @@ async function fetchChunk(
   minBlockNumber: number,
 ): Promise<{ results: string[]; blockNumber: number }> {
   // console.debug('Fetching chunk', multicallContract, chunk, minBlockNumber)
-  // console.log('Fetching chunk', multicallContract, chunk, minBlockNumber)
+  // LOG_VIEW('Fetching chunk', multicallContract, chunk, minBlockNumber)
   let resultsBlockNumber
   let returnData
   try {
@@ -71,7 +72,7 @@ async function fetchChunk(
     console.debug('Failed to fetch chunk inside retry', error)
     // throw error
   }
-  // console.log("dragon= resultsBlockNumber = ", resultsBlockNumber,"returnData = ", returnData)
+  // LOG_VIEW("dragon= resultsBlockNumber = ", resultsBlockNumber,"returnData = ", returnData)
   if (resultsBlockNumber !== undefined && resultsBlockNumber.toNumber() < minBlockNumber) {
     console.debug(`Fetched results for old block number: ${resultsBlockNumber.toString()} vs. ${minBlockNumber}`)
   }
@@ -176,8 +177,8 @@ export default function Updater(): null {
     const calls = outdatedCallKeys.map((key) => parseCallKey(key))
 
     const chunkedCalls = chunkArray(calls, CALL_CHUNK_SIZE)
-    // console.log("useEffect cancellations=", cancellations)
-    // console.log("useEffect currentBlock = ", currentBlock)
+    // LOG_VIEW("useEffect cancellations=", cancellations)
+    // LOG_VIEW("useEffect currentBlock = ", currentBlock)
     if (cancellations.current?.blockNumber !== currentBlock) {
       cancellations.current?.cancellations?.forEach((c) => {if(c) c()})
     }
@@ -189,16 +190,16 @@ export default function Updater(): null {
         fetchingBlockNumber: currentBlock,
       }),
     )
-      // console.log("useEffect chunkedCalls=", chunkedCalls)
+      // LOG_VIEW("useEffect chunkedCalls=", chunkedCalls)
     cancellations.current = {
       blockNumber: currentBlock,
       cancellations: chunkedCalls.map((chunk:any, index) => {
         if(chunk.chainId !== chainId) {
-          // console.log("useEffect here, chunk = ", chunk)
-          // console.log("useEffect here, chunkedCalls=", chunkedCalls)
+          // LOG_VIEW("useEffect here, chunk = ", chunk)
+          // LOG_VIEW("useEffect here, chunkedCalls=", chunkedCalls)
           // return null
         }
-        // console.log("useEffect cancellations: currentBlock = ", currentBlock, "chainId=", chainId)
+        // LOG_VIEW("useEffect cancellations: currentBlock = ", currentBlock, "chainId=", chainId)
         const { cancel, promise } = retry(() => fetchChunk(multicallContract, chunk, currentBlock), {
           n: Infinity,
           minWait: 2500,

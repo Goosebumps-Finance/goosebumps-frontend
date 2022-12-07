@@ -5,6 +5,7 @@ import { ChainId } from '@goosebumps/zx-sdk'
 import linq from 'linq'
 import { AppBody } from 'components/App'
 import ConnectWalletButton from 'components/ConnectWalletButton'
+import { LOG_VIEW } from 'config'
 import networks from 'config/constants/networks'
 import { State } from 'state/types'
 import { setNetworkInfo } from 'state/home'
@@ -55,14 +56,14 @@ const Bridge = () => {
       default:
         break
     }
-    // console.log("Bridge chainId = ", network.chainId)
+    // LOG_VIEW("Bridge chainId = ", network.chainId)
   }, [network])
 
   const onChangeFromNetwork = async (newNetwork) => {
     const detailedNetwork = linq.from(networks).where((x) => x.Name === newNetwork.value).single()
     const info = { ...newNetwork, chainId: detailedNetwork.chainId };
-    // console.log("onChangeFromNetwork info = ", info)
-    // console.log("onChangeFromNetwork fromIndex = ", fromIndex)
+    // LOG_VIEW("onChangeFromNetwork info = ", info)
+    // LOG_VIEW("onChangeFromNetwork fromIndex = ", fromIndex)
     await changeNetwork(detailedNetwork, setLoadingStatus)
     if (loadingStatus === 1) {
       dispatch(setNetworkInfo({ network: { ...newNetwork, chainId: detailedNetwork.chainId } }))
@@ -93,7 +94,7 @@ const Bridge = () => {
       default:
         return
     }
-    // console.log("onChangeToNetwork network = ", newNetwork, "_index=", _index)
+    // LOG_VIEW("onChangeToNetwork network = ", newNetwork, "_index=", _index)
     // setToIndex(_index)
   }
 

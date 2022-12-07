@@ -16,12 +16,12 @@ import { useFastFresh, useSlowFresh } from 'hooks/useRefresh'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { isSupportedChain } from 'utils'
 import { postAsyncData } from 'utils/requester'
-import { API_SERVER } from 'config'
+import { API_SERVER, LOG_VIEW } from 'config'
 import { getTokenInfos } from 'utils/getTokenInfos'
 import { calculatePricescale, calculateTokenscale } from 'utils/numberHelpers'
 import networks from 'config/constants/networks'
 import TradesModal from './components/TradesModal'
-import { mockData } from './mockData'
+// import { mockData } from './mockData'
 
 const HintText = styled.p`
   font-weight: bold;
@@ -93,13 +93,13 @@ const PortfolioTracker = () => {
     
     // const res = mockData
 
-    // console.log("fetchTokenData res=", res);
+    // LOG_VIEW("fetchTokenData res=", res);
     if(res) {
       setStatus(res.status);
       if(res.status === 200) {
         if(res.address === searchKey && res.address === params.address) {
           // const resFilter = _.filter(res.tokens, (a) => {return a.pair.smartContract.address.address === "0x145f83ad6108391cbf9ed554e5ce1dbd984437f8"})
-          // console.log("resFilter = ", resFilter)
+          // LOG_VIEW("resFilter = ", resFilter)
 
           await getLiveInfo(res.tokens, res.address);
           setLoadingStep(2);
@@ -131,7 +131,7 @@ const PortfolioTracker = () => {
       detailedNetwork,
       [params.address],
     )
-    // console.log("getLiveInfo getTokenInfos: infos = ", infos);
+    // LOG_VIEW("getLiveInfo getTokenInfos: infos = ", infos);
 
     if(infos === null) {
       setLoadingStep(-1);
@@ -165,7 +165,7 @@ const PortfolioTracker = () => {
           return buyPrice
         })
 
-        // console.log("trade.buyPrices: ", newTrade.buyPrices)
+        // LOG_VIEW("trade.buyPrices: ", newTrade.buyPrices)
         try {
           newTrade.avarageBuyPriceOfHoldings = newTrade.buyPrices.length
             ? linq
@@ -180,7 +180,7 @@ const PortfolioTracker = () => {
                 .reduce((a, b) => a + b)
             : 0
         } catch (error) {
-          console.log(error)
+          LOG_VIEW(error)
           newTrade.avarageBuyPriceOfHoldings = 0
         }
 
@@ -192,7 +192,7 @@ const PortfolioTracker = () => {
             : 0
         return newTrade
       })
-      // console.log(newItem);
+      // LOG_VIEW(newItem);
 
       const buysAndIns = linq
         .from(newItem.trades)
@@ -214,10 +214,10 @@ const PortfolioTracker = () => {
         if(Number.isNaN(newItem.avarageBuyPriceOfHoldings))
           newItem.avarageBuyPriceOfHoldings = 0;
       } catch (error) {
-        console.log(error)
+        LOG_VIEW(error)
         newItem.avarageBuyPriceOfHoldings = 0
       }
-      // console.log("item.trades: ", newItem.trades)
+      // LOG_VIEW("item.trades: ", newItem.trades)
       try {
         newItem.info.profit = {
           holdings:
@@ -232,7 +232,7 @@ const PortfolioTracker = () => {
             .reduce((x, y) => x + y),
         }
       } catch (error) {
-        console.log(error)
+        LOG_VIEW(error)
         newItem.info.profit = {
           holdings:
             newItem.info.isETH && newItem.info.balance > 0
@@ -253,8 +253,8 @@ const PortfolioTracker = () => {
       return newItem
     })
 
-    // console.log("here resAddress =", resAddress)
-    // console.log("here params.address =", params.address)
+    // LOG_VIEW("here resAddress =", resAddress)
+    // LOG_VIEW("here params.address =", params.address)
     if(resAddress !== params.address) 
       return;
 
@@ -265,13 +265,13 @@ const PortfolioTracker = () => {
       const bPrice = b.info.isETH ? b.info.balance * b.info.price * infos.ethPrice : b.info.balance * b.info.price;
       return bPrice - aPrice
     });
-    // console.log("newTokenInfos = ", newTokenInfos);
+    // LOG_VIEW("newTokenInfos = ", newTokenInfos);
     setTokenInfos(newTokenInfos)
   }  
 
   // At the beginning
   useEffect(() => {
-    // console.log("useEffect 1 searchKey = ", searchKey)
+    // LOG_VIEW("useEffect 1 searchKey = ", searchKey)
     // setParams(params);
     if(searchKey !== params.address) {
       dispatch(setNetworkInfo({
@@ -287,12 +287,12 @@ const PortfolioTracker = () => {
   }, [])
 
   useEffect(() => {
-    // console.log("params changed params=", params)
+    // LOG_VIEW("params changed params=", params)
     if(params.address === undefined) {
       setLoadingStep(0);
     } else if(params.address !== reqAddress) {
       if(!isStartLoading) {
-        // console.log("need fetch");
+        // LOG_VIEW("need fetch");
         setIsStartLoading(true);
         fetchTokenData(params.networkName, params.address);
       } else {
@@ -305,10 +305,10 @@ const PortfolioTracker = () => {
   }, [params])
   // Get params from url and set it to state variable
   useEffect(() => {
-    // console.log("useEffect 2")
-    // console.log("Params = ", params)
-    // console.log("CurrentParams = ", currentParams)
-    // console.log("searchKey=", searchKey, "!=", !searchKey);
+    // LOG_VIEW("useEffect 2")
+    // LOG_VIEW("Params = ", params)
+    // LOG_VIEW("CurrentParams = ", currentParams)
+    // LOG_VIEW("searchKey=", searchKey, "!=", !searchKey);
     if(params.address === undefined) {
       setLoadingStep(0);
     } else {
@@ -337,7 +337,7 @@ const PortfolioTracker = () => {
       if(loadingStep !== 2) { // if hint, then change step to loading
         setLoadingStep(1);
       }
-      // console.log("before FetchTokenData currentParams=", currentParams)
+      // LOG_VIEW("before FetchTokenData currentParams=", currentParams)
       if(!isStartLoading) {
         setIsStartLoading(true);
         // dispatch(fetchTokenData({network: params.networkName, address: params.address}));
@@ -348,7 +348,7 @@ const PortfolioTracker = () => {
   }, [slowRefresh])
   // When wallet connected, set params variable
   useEffect(() => {
-    // console.log("useEffect 3")
+    // LOG_VIEW("useEffect 3")
     if( connectedAddress && !searchKey ) {
       setTokenInfos([]);
       setIsStartLoading(false);
@@ -379,7 +379,7 @@ const PortfolioTracker = () => {
 
   // When searchKey changed, set params variable
   // useEffect(() => {
-  //   console.log("useEffect 4")
+  //   LOG_VIEW("useEffect 4")
   //   if(currentParams.address !== searchKey && ethers.utils.isAddress(searchKey)) {
   //     setLoadingStep(1);
   //     setTokenInfos([]);
@@ -390,8 +390,8 @@ const PortfolioTracker = () => {
 
   // Check loading data from backend
   // useEffect(() => {
-  //   console.log("useEffect 5")
-  //   // console.log("reqAddress = ", reqAddress)
+  //   LOG_VIEW("useEffect 5")
+  //   // LOG_VIEW("reqAddress = ", reqAddress)
   //   if(status === 200 && reqAddress === params.address) {
   //     setIsStartLoading(false);
   //     const getLiveInfo = async () => {
@@ -430,7 +430,7 @@ const PortfolioTracker = () => {
   //             return buyPrice
   //           })
 
-  //           // console.log("trade.buyPrices: ", newTrade.buyPrices)
+  //           // LOG_VIEW("trade.buyPrices: ", newTrade.buyPrices)
   //           try {
   //             newTrade.avarageBuyPriceOfHoldings = newTrade.buyPrices.length
   //               ? linq
@@ -445,7 +445,7 @@ const PortfolioTracker = () => {
   //                   .reduce((a, b) => a + b)
   //               : 0
   //           } catch (error) {
-  //             console.log(error)
+  //             LOG_VIEW(error)
   //             newTrade.avarageBuyPriceOfHoldings = 0
   //           }
 
@@ -457,13 +457,13 @@ const PortfolioTracker = () => {
   //               : 0
   //           return newTrade
   //         })
-  //         // console.log(newItem);
+  //         // LOG_VIEW(newItem);
 
   //         const buysAndIns = linq
   //           .from(newItem.trades)
   //           .where((x: any) => x.transactionType === 1 || x.transactionType === 3)
 
-  //         // console.log("buysAndIns: ", buysAndIns)
+  //         // LOG_VIEW("buysAndIns: ", buysAndIns)
   //         try {
   //           newItem.avarageBuyPriceOfHoldings =
   //             newItem.info.balance > 0
@@ -479,10 +479,10 @@ const PortfolioTracker = () => {
   //           if(Number.isNaN(newItem.avarageBuyPriceOfHoldings))
   //             newItem.avarageBuyPriceOfHoldings = 0;
   //         } catch (error) {
-  //           console.log(error)
+  //           LOG_VIEW(error)
   //           newItem.avarageBuyPriceOfHoldings = 0
   //         }
-  //         // console.log("item.trades: ", newItem.trades)
+  //         // LOG_VIEW("item.trades: ", newItem.trades)
   //         try {
   //           newItem.info.profit = {
   //             holdings:
@@ -497,7 +497,7 @@ const PortfolioTracker = () => {
   //               .reduce((x, y) => x + y),
   //           }
   //         } catch (error) {
-  //           console.log(error)
+  //           LOG_VIEW(error)
   //           newItem.info.profit = {
   //             holdings:
   //               newItem.info.isETH && newItem.info.balance > 0
@@ -520,7 +520,7 @@ const PortfolioTracker = () => {
 
   //       setCurEthPrice(infos.ethPrice)
   //       setTokenInfos(newTokenInfos)
-  //       // console.log("newTokenInfos = ", newTokenInfos)
+  //       // LOG_VIEW("newTokenInfos = ", newTokenInfos)
   //     }         
   //     getLiveInfo()
   //     setLoadingStep(2);

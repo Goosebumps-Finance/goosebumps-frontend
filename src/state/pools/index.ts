@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import BigNumber from 'bignumber.js'
 import { getChainId } from 'utils/getChainId'
+import { LOG_VIEW } from 'config'
 // import poolsConfig from 'config/constants/pools'
 import { newpools } from 'config/constants/pools'
 import {
@@ -187,9 +188,9 @@ export const fetchPoolsStakingLimitsAsync = () => async (dispatch, getState) => 
 export const fetchPoolsUserDataAsync =
   (account: string): AppThunk =>
     async (dispatch) => {
-      // console.log("test= fetchPoolsUserDataAsync")
+      // LOG_VIEW("test= fetchPoolsUserDataAsync")
       const allowances = await fetchPoolsAllowance(account)
-      // console.log("test= fetchPoolsUserDataAsync fetchPoolsAllowance: allowance=", allowances)
+      // LOG_VIEW("test= fetchPoolsUserDataAsync fetchPoolsAllowance: allowance=", allowances)
       const stakingTokenBalances = await fetchUserBalances(account)
       const stakedBalances = await fetchUserStakeBalances(account)
       const pendingRewards = await fetchUserPendingRewards(account)

@@ -6,6 +6,7 @@ import type {
 } from '@reduxjs/toolkit/dist/matchers'
 import { createAsyncThunk, createSlice, isPending, isFulfilled, isRejected } from '@reduxjs/toolkit'
 import stringify from 'fast-json-stable-stringify'
+import { LOG_VIEW } from 'config'
 // import farmsConfig from 'config/constants/farms'
 import { newfarms } from 'config/constants/farms'
 import isArchivedPid from 'utils/farmHelpers'
@@ -60,7 +61,7 @@ export const fetchFarmsPublicDataAsync = createAsyncThunk<
     // const farms = await fetchFarms(farmsWithPriceHelpers)
     const farms = await fetchFarms(farmsToFetch)
     const farmsWithPrices = getFarmsPrices(farms)
-    // console.log("farmsWithPrices: ", farmsWithPrices)
+    // LOG_VIEW("farmsWithPrices: ", farmsWithPrices)
 
     // Filter out price helper LP config farms
     const farmsWithoutHelperLps = farmsWithPrices.filter((farm: SerializedFarm) => {

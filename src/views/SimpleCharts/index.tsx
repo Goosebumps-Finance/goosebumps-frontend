@@ -5,6 +5,7 @@ import linq from 'linq';
 import Page from 'views/Page';
 import { ChainId } from '@goosebumps/zx-sdk'
 import styled from 'styled-components';
+import { LOG_VIEW } from 'config'
 import networks from 'config/constants/networks';
 import { mainnetTokens, testnetTokens } from 'config/constants/tokens'
 import { fetchAddressType, setNetworkInfo, setTimer } from 'state/home';
@@ -89,9 +90,9 @@ const SimpleCharts = (props) => {
     }, [])
     // Get params from url and set it to state variable
     useEffect(() => {
-        // console.log("Charts Params = ", params);
-        // console.log("Charts CurrentParams = ", currentParams);
-        // console.log("PathName=", location.pathname);
+        // LOG_VIEW("Charts Params = ", params);
+        // LOG_VIEW("Charts CurrentParams = ", currentParams);
+        // LOG_VIEW("PathName=", location.pathname);
         if (params.address !== reqAddress) {
             setReady(false);
         }
@@ -99,7 +100,7 @@ const SimpleCharts = (props) => {
             if (addressType === "Token") {
                 const _info: any = await getChartsInfo(params.address, selectedNetwork, params.pairAddress);
                 setInfo(_info);
-                // console.log("getChartInfo(", params.address, ")", _info)
+                // LOG_VIEW("getChartInfo(", params.address, ")", _info)
                 if (_info.pairs?.length !== 0 && _info.address === params.address && !isReady) {
                     setChartAddress(_info.pairs[0].smartContract.address.address);
                     setReqAddress(_info.address);
@@ -119,25 +120,25 @@ const SimpleCharts = (props) => {
 
     // Change Chart Colors
     // useEffect(() => {
-    //     // console.log("data title=", `dexscreener.charts.${params.networkName}.${chartAddress}`)
+    //     // LOG_VIEW("data title=", `dexscreener.charts.${params.networkName}.${chartAddress}`)
     //     const chartProperties = JSON.parse(localStorage.getItem(`dexscreener.charts.${params.networkName}.${chartAddress}`));
-    //     // console.log("data=", chartProperties)
+    //     // LOG_VIEW("data=", chartProperties)
     //     // if(chartProperties) {
     //     //     chartProperties.charts[0].sessions.properties.graphics.backgrounds.outOfSession.color = "#29FF62";
     //     //     localStorage.setItem(`dexscreener.charts.${params.networkName}.${chartAddress}`, JSON.stringify(chartProperties));
     //     // }
     //     const data = JSON.parse(window.localStorage.getItem("tradingview.chartproperties.mainSeriesProperties"));
-    //     // console.log("data =", data);
+    //     // LOG_VIEW("data =", data);
     //     // if(data) {
     //     //     data.style = 2;
     //     //     data.lineStyle.color = "#29FF62";
     //     //     window.localStorage.setItem("tradingview.chartproperties.mainSeriesProperties", JSON.stringify(data));
     //     // }
-    //     console.log("frameRef = ", frameRef);
+    //     LOG_VIEW("frameRef = ", frameRef);
     //     if(frameRef.current) {
     //         const frameWindow = frameRef.current?.contentWindow;
-    //         console.log("frameRef frameWindow=", frameWindow);
-    //         // console.log("frameRef storeage = ", frameWindow.localStorage.getItem("tradingview.chartproperties.mainSeriesProperties"))
+    //         LOG_VIEW("frameRef frameWindow=", frameWindow);
+    //         // LOG_VIEW("frameRef storeage = ", frameWindow.localStorage.getItem("tradingview.chartproperties.mainSeriesProperties"))
     //     }
 
     // }, [chartAddress, frameRef.current]);

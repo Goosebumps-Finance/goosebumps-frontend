@@ -1,3 +1,5 @@
+import { LOG_VIEW } from 'config'
+
 // 1 day, 7 days, 30 days, 1 year, 5 years
 const DAYS_TO_CALCULATE_AGAINST = [1, 7, 30, 365, 1825]
 
@@ -67,7 +69,7 @@ export const getPrincipalForInterest = (
 ) => {
   return DAYS_TO_CALCULATE_AGAINST.map((days) => {
     const apyAsDecimal = getApy(apr, compoundingFrequency, days, performanceFee)
-    // console.log('inside', interest, apyAsDecimal)
+    // LOG_VIEW('inside', interest, apyAsDecimal)
     // const apyAsBN = new BigNumber(apyAsDecimal).decimalPlaces(6, BigNumber.ROUND_DOWN).toNumber()
     return parseFloat((interest / apyAsDecimal).toFixed(2))
   })

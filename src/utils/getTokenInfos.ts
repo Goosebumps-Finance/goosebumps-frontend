@@ -1,5 +1,6 @@
 import { ethers } from 'ethers'
 import { Contract, Provider } from 'ethers-multicall'
+import { LOG_VIEW } from 'config'
 import pairAbi from 'config/abi/pair.json'
 import tokenAbi from 'config/abi/token.json'
 import { calculatePricescaleNew } from './numberHelpers'
@@ -90,7 +91,7 @@ export const getTokenInfos = async (pairs, network, addresses = []) => {
     })
     
     // calls.map(async (call) => {
-    //   // console.log("call = ", call);
+    //   // LOG_VIEW("call = ", call);
     //   const res = await ethcallProvider.all(call);
     //   responses = responses.concat(res);
     // })
@@ -178,7 +179,7 @@ export const getTokenInfos = async (pairs, network, addresses = []) => {
 
     return result
   } catch (err) {
-    console.log("getTokenInfos error=", err);
+    LOG_VIEW("getTokenInfos error=", err);
   }
   return null;
 }

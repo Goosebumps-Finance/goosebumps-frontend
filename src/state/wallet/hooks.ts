@@ -1,6 +1,7 @@
 import { Currency, CurrencyAmount, ETHER, JSBI, Token, TokenAmount } from '@goosebumps/zx-sdk'
 import { useMemo } from 'react'
 import { useWeb3React } from '@web3-react/core'
+import { LOG_VIEW } from 'config'
 import ERC20_INTERFACE from 'config/abi/erc20'
 import { useAllTokens } from 'hooks/Tokens'
 import { useMulticallContract } from 'hooks/useContract'
@@ -31,7 +32,7 @@ export function useBNBBalances(uncheckedAddresses?: (string | undefined)[]): {
     addresses.map((address) => [address]),
   )
 
-  // console.log("useBNBBalances results = ", results)
+  // LOG_VIEW("useBNBBalances results = ", results)
 
 
   return useMemo(
@@ -107,12 +108,12 @@ export function useCurrencyBalances(
   const tokenBalances = useTokenBalances(account, tokens)
   const containsBNB: boolean = useMemo(() => currencies?.some((currency) => currency === ETHER) ?? false, [currencies])
   const ethBalance = useBNBBalances(containsBNB ? [account] : [])
-  // console.log("useCurrencyBalances tokens=", tokens)
-  // console.log("useCurrencyBalances tokenBalances=", tokenBalances)
-  // console.log("useCurrencyBalances account=", account)
-  // console.log("useCurrencyBalances currencies=", currencies)
-  // console.log("useCurrencyBalances ethBalance=", ethBalance)
-  // console.log("useCurrencyBalances containsBNB=", containsBNB)
+  // LOG_VIEW("useCurrencyBalances tokens=", tokens)
+  // LOG_VIEW("useCurrencyBalances tokenBalances=", tokenBalances)
+  // LOG_VIEW("useCurrencyBalances account=", account)
+  // LOG_VIEW("useCurrencyBalances currencies=", currencies)
+  // LOG_VIEW("useCurrencyBalances ethBalance=", ethBalance)
+  // LOG_VIEW("useCurrencyBalances containsBNB=", containsBNB)
   return useMemo(
     () =>
       currencies?.map((currency) => {

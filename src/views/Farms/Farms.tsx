@@ -5,6 +5,7 @@ import { useWeb3React } from '@web3-react/core'
 import { Image, Heading, RowType, Toggle, Text, Button, ArrowForwardIcon, Flex } from '@goosebumps/uikit'
 import { ChainId } from '@goosebumps/zx-sdk'
 import { useDispatch, useSelector } from 'react-redux'
+import { LOG_VIEW } from 'config'
 import { setNetworkInfo } from 'state/home'
 import styled from 'styled-components'
 import FlexLayout from 'components/Layout/Flex'
@@ -139,7 +140,7 @@ const Farms: React.FC = () => {
   }, [])
 
   // useEffect(() => {
-  //   console.log("Farm:", network);
+  //   LOG_VIEW("Farm:", network);
   // }, [network])
 
   // const isArchived = pathname.includes('archived')

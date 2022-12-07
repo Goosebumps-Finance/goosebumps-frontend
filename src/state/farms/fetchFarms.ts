@@ -1,3 +1,4 @@
+import { LOG_VIEW } from 'config'
 import { SerializedFarmConfig } from 'config/constants/types'
 import BigNumber from 'bignumber.js'
 import { BIG_TEN, BIG_ZERO } from '../../utils/bigNumber'
@@ -6,40 +7,40 @@ import { fetchMasterChefData } from './fetchMasterChefData'
 
 const fetchFarms = async (farmsToFetch: SerializedFarmConfig[]) => {
   const farmResult = await fetchPublicFarmsData(farmsToFetch)
-  // console.log("farmResult: ", farmResult)
+  // LOG_VIEW("farmResult: ", farmResult)
   
   // const masterChefResult = farmsToFetch[0].targetAddresses !== undefined ? null : (await fetchMasterChefData(farmsToFetch))
 
   return farmsToFetch.map((farm, index) => {
     const [tokenBalanceLP, quoteTokenBalanceLP, lpTokenBalanceMC, lpTotalSupply, tokenDecimals, quoteTokenDecimals] =
       farmResult[index]
-    // console.log("xxxx start: ")
-    // console.log("xxxx farmsToFetch[index].lpSymbol: ", farmsToFetch[index].lpSymbol)
-    // console.log("xxxx farmsToFetch[index]: ", farmsToFetch[index])
-    // console.log("xxxx lpTokenBalanceMC: ", lpTokenBalanceMC)
-    // console.log("xxxx lpTotalSupply: ", lpTotalSupply)
+    // LOG_VIEW("xxxx start: ")
+    // LOG_VIEW("xxxx farmsToFetch[index].lpSymbol: ", farmsToFetch[index].lpSymbol)
+    // LOG_VIEW("xxxx farmsToFetch[index]: ", farmsToFetch[index])
+    // LOG_VIEW("xxxx lpTokenBalanceMC: ", lpTokenBalanceMC)
+    // LOG_VIEW("xxxx lpTotalSupply: ", lpTotalSupply)
 
     // const [info, totalAllocPoint] = masterChefResult[index]
 
     // Ratio in % of LP tokens that are staked in the MC, vs the total number in circulation
     const lpTokenRatio = new BigNumber(lpTokenBalanceMC).div(new BigNumber(lpTotalSupply))
-    // console.log("xxxx lpTokenRatio: ", lpTokenRatio)
+    // LOG_VIEW("xxxx lpTokenRatio: ", lpTokenRatio)
 
     // Raw amount of token in the LP, including those not staked
     const tokenAmountTotal = new BigNumber(tokenBalanceLP).div(BIG_TEN.pow(tokenDecimals))
-    // console.log("xxxx tokenAmountTotal: ", tokenAmountTotal)
+    // LOG_VIEW("xxxx tokenAmountTotal: ", tokenAmountTotal)
     const quoteTokenAmountTotal = new BigNumber(quoteTokenBalanceLP).div(BIG_TEN.pow(quoteTokenDecimals))
-    // console.log("xxxx quoteTokenAmountTotal: ", quoteTokenAmountTotal)
+    // LOG_VIEW("xxxx quoteTokenAmountTotal: ", quoteTokenAmountTotal)
 
     // Amount of quoteToken in the LP that are staked in the MC
     const quoteTokenAmountMc = quoteTokenAmountTotal.times(lpTokenRatio)
-    // console.log("xxxx quoteTokenAmountMc: ", quoteTokenAmountMc)
+    // LOG_VIEW("xxxx quoteTokenAmountMc: ", quoteTokenAmountMc)
 
     // Total staked in LP, in quote token value
     const lpTotalInQuoteToken = quoteTokenAmountMc.times(new BigNumber(2))
-    // console.log("xxxx lpTotalInQuoteToken: ", lpTotalInQuoteToken)
+    // LOG_VIEW("xxxx lpTotalInQuoteToken: ", lpTotalInQuoteToken)
 
-    // console.log("xxxx end: ")
+    // LOG_VIEW("xxxx end: ")
 
     // const allocPoint = info ? new BigNumber(info.allocPoint?._hex) : BIG_ZERO
     const allocPoint = BIG_ZERO

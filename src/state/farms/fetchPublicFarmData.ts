@@ -1,3 +1,4 @@
+import { LOG_VIEW } from 'config'
 import erc20 from 'config/abi/erc20.json'
 import { chunk } from 'lodash'
 import { getAddress, getMasterChefAddress } from 'utils/addressHelpers'
@@ -10,7 +11,7 @@ const fetchFarmCalls = (farm: SerializedFarm) => {
   const { lpAddresses, treasuryAddresses, token, quoteToken } = farm
   const lpAddress = getAddress(lpAddresses)
   const treasuryAddress = getAddress(treasuryAddresses)
-  // console.log("xxxx treasuryAddress: ", treasuryAddress !== undefined ? treasuryAddress : getMasterChefAddress())
+  // LOG_VIEW("xxxx treasuryAddress: ", treasuryAddress !== undefined ? treasuryAddress : getMasterChefAddress())
   return [
     // Balance of token in the LP contract
     {

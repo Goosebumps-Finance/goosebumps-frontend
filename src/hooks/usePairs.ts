@@ -56,9 +56,9 @@
 //   )
 
 //   const results = useMultipleContractSingleData(Object.entries(pairTokens).map(([pair]) => pair), PAIR_INTERFACE, 'getReserves')
-//   // console.log('[usePairs] = pairTokens', pairTokens)
-//   // console.log('[usePairs] = Object.entries(pairTokens).map(([pair]) => pair)', Object.entries(pairTokens).map(([pair]) => pair))
-//   // console.log('[usePairs] = results', results)
+//   // LOG_VIEW('[usePairs] = pairTokens', pairTokens)
+//   // LOG_VIEW('[usePairs] = Object.entries(pairTokens).map(([pair]) => pair)', Object.entries(pairTokens).map(([pair]) => pair))
+//   // LOG_VIEW('[usePairs] = results', results)
 
 //   return useMemo(() => {
 //     return results.map((result) => {
@@ -75,14 +75,14 @@
 //       const reserve0 = reserves[0]
 //       const reserve1 = reserves[1]
 //       const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA]
-//       // console.log('[usePairs] = pass', result)
-//       // console.log('[usePairs] = token0', token0)
-//       // console.log('[usePairs] = token1', token1)
-//       // console.log('[usePairs] = reserve0', reserve0)
-//       // console.log('[usePairs] = reserve1', reserve1)
-//       // console.log('[usePairs] = TokenAmount', new TokenAmount(token0, reserve0.toString()))
-//       // console.log('[usePairs] = TokenAmount', new TokenAmount(token0, reserve0))
-//       // console.log('[usePairs] = new Pair', new Pair(new TokenAmount(token0, reserve0.toString()), new TokenAmount(token1, reserve1.toString()), pairToken.factory, pairToken.initCodeHash))
+//       // LOG_VIEW('[usePairs] = pass', result)
+//       // LOG_VIEW('[usePairs] = token0', token0)
+//       // LOG_VIEW('[usePairs] = token1', token1)
+//       // LOG_VIEW('[usePairs] = reserve0', reserve0)
+//       // LOG_VIEW('[usePairs] = reserve1', reserve1)
+//       // LOG_VIEW('[usePairs] = TokenAmount', new TokenAmount(token0, reserve0.toString()))
+//       // LOG_VIEW('[usePairs] = TokenAmount', new TokenAmount(token0, reserve0))
+//       // LOG_VIEW('[usePairs] = new Pair', new Pair(new TokenAmount(token0, reserve0.toString()), new TokenAmount(token1, reserve1.toString()), pairToken.factory, pairToken.initCodeHash))
 
 //       return [
 //         PairState.EXISTS,
@@ -107,6 +107,8 @@ import isSupportedChainId from 'utils/isSupportedChainId'
 
 import { useMultipleContractSingleData } from '../state/multicall/hooks'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
+
+import { LOG_VIEW } from 'config'
 
 const PAIR_INTERFACE = new Interface(IGoosebumpsPairABI)
 

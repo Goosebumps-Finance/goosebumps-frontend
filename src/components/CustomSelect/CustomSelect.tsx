@@ -183,7 +183,7 @@ const CustomSelect: React.FunctionComponent<SelectProps> = ({
   }, [selIndex])
 
   // useEffect(() => {
-  //   console.log("CustomSelect: selectedOptionIndex, selIndex", selectedOptionIndex, selIndex)
+  //   LOG_VIEW("CustomSelect: selectedOptionIndex, selIndex", selectedOptionIndex, selIndex)
   //   if (selectedOptionIndex !== selIndex)
   //     setSelectedOptionIndex(selIndex)
   // }, [selectedOptionIndex])

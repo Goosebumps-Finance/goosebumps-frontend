@@ -118,12 +118,12 @@
  */
 // export function useTradeExactIn(chainId: ChainId | undefined, currencyAmountIn?: CurrencyAmount, currencyOut?: Currency): Trade | null {
 //   const allowedPairs = useAllCommonPairs(currencyAmountIn?.currency, currencyOut)
-//   // console.log('[allowedPairs].useTradeExactIn.allowedPairs=', allowedPairs)
+//   // LOG_VIEW('[allowedPairs].useTradeExactIn.allowedPairs=', allowedPairs)
 
 //   return useMemo(() => {
 //     if (isSupportedChainId(chainId) && currencyAmountIn && currencyOut && allowedPairs.length > 0) {
 //       const numRes = (window?.location?.href?.toLowerCase().indexOf("onlydirect") !== -1) ? 1 : 3
-//       // console.log("[allowedPairs].useTradeExactIn.numRes =", numRes)
+//       // LOG_VIEW("[allowedPairs].useTradeExactIn.numRes =", numRes)
 //       const trades = Trade.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, { maxHops: numRes, maxNumResults: 3 })
 //       const sortedTrades = trades.sort((a, b) => sortTrades(chainId, 3, a, b))
 //       return sortedTrades[0] ?? null
@@ -136,14 +136,14 @@
  * Returns the best trade for the token in to the exact amount of token out
  */
 // export function useTradeExactOut(chainId: ChainId | undefined, currencyIn?: Currency, currencyAmountOut?: CurrencyAmount): Trade | null {
-//   // console.log('[allowedPairs].useTradeExactOut.start=', currencyIn, currencyAmountOut?.currency)
+//   // LOG_VIEW('[allowedPairs].useTradeExactOut.start=', currencyIn, currencyAmountOut?.currency)
 //   const allowedPairs = useAllCommonPairs(currencyIn, currencyAmountOut?.currency)
-//   // console.log('[allowedPairs].useTradeExactOut.allowedPairs=', allowedPairs)
+//   // LOG_VIEW('[allowedPairs].useTradeExactOut.allowedPairs=', allowedPairs)
 
 //   return useMemo(() => {
 //     if (isSupportedChainId(chainId) && currencyIn && currencyAmountOut && allowedPairs.length > 0) {
 //       const numRes = (window?.location?.href?.toLowerCase().indexOf("onlydirect") !== -1) ? 1 : 3
-//       // console.log("[allowedPairs].useTradeExactOut.numRes=", numRes)
+//       // LOG_VIEW("[allowedPairs].useTradeExactOut.numRes=", numRes)
 //       const trades = Trade.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, { maxHops: numRes, maxNumResults: 3 })
 //       const sortedTrades = trades.sort((a, b) => sortTrades(chainId, 3, a, b))
 //       return sortedTrades[0] ?? null
@@ -192,6 +192,7 @@ import { PairState, usePairs } from './usePairs'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
 
 import { useUnsupportedTokens } from './Tokens'
+import { LOG_VIEW } from 'config'
 
 function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
   const { chainId } = useActiveWeb3React()

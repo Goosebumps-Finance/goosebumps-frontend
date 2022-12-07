@@ -1,6 +1,6 @@
 import { BigNumber } from "@ethersproject/bignumber"
 import { ChainId } from "@goosebumps/zx-sdk"
-import { SWAP_FEE_0X } from 'config'
+import { SWAP_FEE_0X, LOG_VIEW } from 'config'
 import { ZxFetchResult } from 'config/constants/types'
 import getGasPrice from './getGasPrice'
 
@@ -16,7 +16,7 @@ export const getAsyncData = (url, params) => {
   if (params !== undefined && params !== null) {
     url = `${url}?${new URLSearchParams(params)}`
   }
-  // console.log('getAsyncData url = ', url, ' params=', params)
+  // LOG_VIEW('getAsyncData url = ', url, ' params=', params)
   return fetch(url, {
     method: 'GET',
     headers: {
@@ -49,7 +49,7 @@ export async function zxTradeExactIn(
   sellTokenAmount: BigNumber,
   slippage: number,
 ): Promise<ZxFetchResult> {
-  // console.log("zxTradeExactIn: ", slippage)
+  // LOG_VIEW("zxTradeExactIn: ", slippage)
   let response: any | null = null
   let fetchError: string | null = null
   try {
@@ -60,9 +60,9 @@ export async function zxTradeExactIn(
       slippagePercentage: slippage / 10000,
       gasPrice: getGasPrice(),
     });
-    // console.log("zxTradeExactIn", response)
+    // LOG_VIEW("zxTradeExactIn", response)
   } catch (err) {
-    console.log("zxTradeExactIn fetch err", err)
+    LOG_VIEW("zxTradeExactIn fetch err", err)
   }
 
   if (response) {
@@ -108,7 +108,7 @@ export async function zxTradeExactOut(
   buyTokenAmount: BigNumber,
   slippage: number
 ): Promise<ZxFetchResult> {
-  // console.log("zxTradeExactOut: ", slippage)
+  // LOG_VIEW("zxTradeExactOut: ", slippage)
   let response: any | null = null
   let fetchError: string | null = null
   try {
@@ -119,9 +119,9 @@ export async function zxTradeExactOut(
       slippagePercentage: slippage / 10000,
       gasPrice: getGasPrice(),
     });
-    // console.log("zxTradeExactOut", response)
+    // LOG_VIEW("zxTradeExactOut", response)
   } catch (err) {
-    console.log("zxTradeExactOut fetch err", err)
+    LOG_VIEW("zxTradeExactOut fetch err", err)
   }
 
   if (response) {

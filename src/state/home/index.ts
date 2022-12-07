@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 // import { ChainId } from '@goosebumps/zx-sdk'
 import linq from 'linq'
-import { API_SERVER, BASE_URL } from 'config'
+import { API_SERVER, BASE_URL, LOG_VIEW } from 'config'
 import { HomeState } from 'state/types'
 import { getChainId } from 'utils/getChainId'
 import { getAsyncData } from 'utils/requester'
@@ -73,15 +73,15 @@ export const HomeSlice = createSlice({
   initialState,
   reducers: {
     setTimer: (state, action) => {
-      // console.log("setNetworkInfo state.timer =", state.timer)
+      // LOG_VIEW("setNetworkInfo state.timer =", state.timer)
       if (state.timer) {
-        // console.log("setNetworkInfo clearTimeout=", state.timer)
+        // LOG_VIEW("setNetworkInfo clearTimeout=", state.timer)
         clearTimeout(state.timer);
       }
       state.timer = action.payload.timer
     },
     setNetworkInfo: (state, action) => {
-      // console.log("setNetworkInfo action=", action.payload)
+      // LOG_VIEW("setNetworkInfo action=", action.payload)
       // let chainId: number
       // switch (action.payload.network.chainId) {
       //   // case ChainId.ETHEREUM:
@@ -95,12 +95,12 @@ export const HomeSlice = createSlice({
       //     break
       // }
       // window.localStorage.setItem("SELECTED_CHAIN_ID", `${chainId}`)
-      // console.log("setNetworkInfo payload =", action.payload);
+      // LOG_VIEW("setNetworkInfo payload =", action.payload);
       window.localStorage.setItem("SELECTED_CHAIN_ID", `${action.payload.network.chainId}`)
       if (action.payload.searchKey !== undefined) {
         state.searchKey = action.payload.searchKey
         // const setSearchKey = (state1, action1) => {
-        //   console.log("setNetworkInfo state1=", state1, "action1=", action1)
+        //   LOG_VIEW("setNetworkInfo state1=", state1, "action1=", action1)
         //   // state1.searchKey = action1.payload.searchKey;
         //   return {
         //     searchKey: action1.payload.searchKey
@@ -110,30 +110,30 @@ export const HomeSlice = createSlice({
         // timer = setTimeout(() => setSearchKey(state, action), 1000)
       }
       if (action.payload.network && action.payload.network.chainId !== state.network.chainId) {
-        // console.log("setNetworkInfo: network changed")
+        // LOG_VIEW("setNetworkInfo: network changed")
         state.network = action.payload.network
         // if (isStakeOrFarm()) {
         //   window?.location?.reload()
         // }
         if (window?.location?.href?.toLowerCase().indexOf("charts") !== -1) {
-          // console.log("setNetworkInfo on charts")
+          // LOG_VIEW("setNetworkInfo on charts")
           window.location.href = `${BASE_URL}/charts`
         } else if (window?.location?.href?.toLowerCase().indexOf("portfolio-tracker") !== -1) {
-          // console.log("setNetworkInfo on portfolio-tracker")
+          // LOG_VIEW("setNetworkInfo on portfolio-tracker")
           window.location.href = `${BASE_URL}/portfolio-tracker`
           // window.alert(`Please visit portfolio tracker page again after chain switching!`)
         } else if (window?.location?.href) {
-          // console.log("setNetworkInfo on other part")
+          // LOG_VIEW("setNetworkInfo on other part")
           window?.location?.reload()
         } else {
-          // console.log("setNetworkInfo on exception")
+          // LOG_VIEW("setNetworkInfo on exception")
           // eslint-disable-next-line no-alert
           window.alert(`Please refresh website to switch network correctly!`)
         }
       }
     },
     setAddressType: (state, action) => {
-      // console.log("setAddressType, action=", action)
+      // LOG_VIEW("setAddressType, action=", action)
       state.addressType = action.payload.addressType
     }
   },

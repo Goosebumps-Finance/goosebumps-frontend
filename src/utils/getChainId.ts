@@ -1,4 +1,5 @@
 import { ChainId } from '@goosebumps/zx-sdk'
+import { LOG_VIEW } from 'config'
 import isSupportedChainId from './isSupportedChainId'
 
 export const getChainId = (): number => {
@@ -11,7 +12,7 @@ export const getChainId = (): number => {
     }
     return chainId
   } catch (error) {
-    // console.log("getChainId error", error)
+    // LOG_VIEW("getChainId error", error)
     return ChainId.MAINNET
   }
 }

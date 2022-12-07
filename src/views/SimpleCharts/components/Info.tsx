@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import NumberFormat from 'react-number-format'
+import { LOG_VIEW } from 'config'
 import { useFastFresh } from 'hooks/useRefresh'
 import { getTokenInfo } from 'utils/getTokenInfos'
 import { calculatePricescale } from 'utils/numberHelpers'
@@ -23,20 +24,20 @@ const Info = ({ info, network, setPair, tokenAddress }) => {
   const [hasCMC, setHasCMC] = useState(false);
   
   const selCurrency = useCurrency(tokenAddress);
-  // console.log("selCurrency = ", selCurrency)
+  // LOG_VIEW("selCurrency = ", selCurrency)
 
   useEffect(() => {
     if (!info) return;
-    // console.log("bug= getData loading = ", loading)
-    // console.log("bug= getData liveInfo = ", liveInfo)
+    // LOG_VIEW("bug= getData loading = ", loading)
+    // LOG_VIEW("bug= getData liveInfo = ", liveInfo)
     // @ts-ignore
     setHasCMC(info.cmc && Object.hasOwn(info.cmc, "id"));
-    // console.log("hasCMC=",info.cmc && Object.hasOwn(info.cmc, "id"))
+    // LOG_VIEW("hasCMC=",info.cmc && Object.hasOwn(info.cmc, "id"))
     // setHasCMC(info.cmc && false);
-    // console.log("hasCMC=",info.cmc && false)
+    // LOG_VIEW("hasCMC=",info.cmc && false)
     const getData = async () => {
       const res = await getTokenInfo(info.pair, network)
-      // console.log("setLiveInfo res = ", res)
+      // LOG_VIEW("setLiveInfo res = ", res)
       if (res) {
         setLiveInfo(res)
         if (loading) setLoading(false)
@@ -88,7 +89,7 @@ const Info = ({ info, network, setPair, tokenAddress }) => {
 
   const onPairChange = (e) => {
     // window.location = `/charts/${network.Name}/${info.address}/${e.target.value}`;
-    // console.log("setPair=", setPair, e.target.value)
+    // LOG_VIEW("setPair=", setPair, e.target.value)
     if (setPair) {
       setPair(e.target.value)
     }

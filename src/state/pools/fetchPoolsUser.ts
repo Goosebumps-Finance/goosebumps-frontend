@@ -1,3 +1,4 @@
+import { LOG_VIEW } from 'config'
 // import poolsConfig from 'config/constants/pools'
 import { newpools } from 'config/constants/pools'
 // import sousChefABI from 'config/abi/sousChef.json'
@@ -24,13 +25,13 @@ export const fetchPoolsAllowance = async (account) => {
     name: 'allowance',
     params: [account, getAddress(pool.approveAddresses)],
   }))
-  // console.log("test= fetchPoolsAllowance calls=", calls)
+  // LOG_VIEW("test= fetchPoolsAllowance calls=", calls)
   nonBnbPools.map((pool) => {
-    // console.log("test= fetchPoolsAllowance pool.address=", pool.stakingToken.address)
+    // LOG_VIEW("test= fetchPoolsAllowance pool.address=", pool.stakingToken.address)
     return {address: pool.stakingToken.address}
   })
   const allowances = await multicall(erc20ABI, calls)
-  // console.log("test= multicall allowances=", allowances)
+  // LOG_VIEW("test= multicall allowances=", allowances)
   return nonBnbPools.reduce(
     (acc, pool, index) => ({ ...acc, [pool.sousId]: new BigNumber(allowances[index]).toJSON() }),
     {},

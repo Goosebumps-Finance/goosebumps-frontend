@@ -1,4 +1,4 @@
-import { API_SERVER } from 'config'
+import { API_SERVER, LOG_VIEW } from 'config'
 import { ethers } from 'ethers'
 // import { mockLatestTradeData } from "views/Charts/mockChartData";
 import { getAsyncData } from './requester'
@@ -9,10 +9,10 @@ export const getChartsInfo = async (address, network, pairAddress) => {
   //     { address: address, network: network.Name }
   // );
   // const pairs = mockPairsData;
-  // console.log('getChartsInfo address=', address, ' network =', network, ' pairAddress=', pairAddress)
+  // LOG_VIEW('getChartsInfo address=', address, ' network =', network, ' pairAddress=', pairAddress)
   if (address === '' || network === null) return [];
   const pairs = await getAsyncData(`${API_SERVER}api/Charts/GetPairs`, { address, network: network.Name })
-  // console.log("getChartsInfo pairs=", pairs)
+  // LOG_VIEW("getChartsInfo pairs=", pairs)
   let pair
 
   if (pairAddress == null) {
@@ -40,8 +40,8 @@ export const getChartsInfo = async (address, network, pairAddress) => {
   //   address: ethers.utils.getAddress(address),
   //   network: network.Name,
   // })
-  // // console.log("getChartsInfo info=", info)
-  // // console.log('getChartsInfo cmc=', cmc)
+  // // LOG_VIEW("getChartsInfo info=", info)
+  // // LOG_VIEW('getChartsInfo cmc=', cmc)
 
   // if (cmc != null && cmc.id) {
   //   info.cmc = cmc
@@ -66,7 +66,7 @@ export const getLatestTrades = async (pair, network, startTime, endTime, limit =
   //   });
   // const res = mockLatestTradeData;
   let params = {}
-  // console.log('getLatestTrades : pair = ', pair, ' network: ', network)
+  // LOG_VIEW('getLatestTrades : pair = ', pair, ' network: ', network)
   if (limit === 20) {
     params = {
       token0: pair.buyCurrency.address,
@@ -87,8 +87,8 @@ export const getLatestTrades = async (pair, network, startTime, endTime, limit =
       endTime,
     }
   }
-  // console.log('getLatestTrades params = ', params)
+  // LOG_VIEW('getLatestTrades params = ', params)
   const res = await getAsyncData(`${API_SERVER}api/Charts/GetLatestTrades`, params)
-  // console.log('GetLatestTrades: res = ', res)
+  // LOG_VIEW('GetLatestTrades: res = ', res)
   return res
 }

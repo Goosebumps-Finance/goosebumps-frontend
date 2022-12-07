@@ -1,5 +1,6 @@
 import { Button, Flex, Text } from '@goosebumps/uikit'
 import BigNumber from 'bignumber.js'
+import { LOG_VIEW } from 'config'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { useTranslation } from 'contexts/Localization'
 import { useERC20 } from 'hooks/useContract'
@@ -31,7 +32,7 @@ interface FarmCardActionsProps {
 }
 
 const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidityUrl, cakePrice, lpLabel }) => {
-  // console.log("CardActions pass", farm.userData)
+  // LOG_VIEW("CardActions pass", farm.userData)
   const { t } = useTranslation()
   const { toastError } = useToast()
   const [requestedApproval, setRequestedApproval] = useState(false)

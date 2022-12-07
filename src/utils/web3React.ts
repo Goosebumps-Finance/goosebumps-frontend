@@ -15,7 +15,6 @@ import getNodeUrl from './getRpcUrl'
 import isSupportedChainId from './isSupportedChainId'
 
 const POLLING_INTERVAL = 12000
-// console.log("ChainId.MAINNET = ", ChainId.MAINNET, " ChainId.TESTNET = ", ChainId.TESTNET)
 // const injected = new InjectedConnector({ supportedChainIds: [ChainId.MAINNET, ChainId.TESTNET, ChainId.ETHEREUM, ChainId.POLYGON] })
 const injected = new InjectedConnector({ supportedChainIds: [ChainId.MAINNET, ChainId.TESTNET] })
 
